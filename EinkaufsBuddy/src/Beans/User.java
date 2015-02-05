@@ -159,8 +159,7 @@ public class User {
                     }  
                 }  
             } catch (Exception e) {  
-               System.out.println("FEHLER");
-            System.out.println(e);  
+                System.out.println(e);  
             } finally {  
                 try {  
                     con.close();  
