@@ -13,8 +13,20 @@
     <f:view>  
         <p>Du bist nun eingeloggt!</p>  
         <p>Hallo, #{user.firstName}</p>  
+        <p>#{user.lastName}</p>
+        <p>#{user.email}</p>
+        <p>#{user.password}</p>
+        <p>#{user.birthday}</p>
+        <p>#{user.car}</p>
+        <p>#{user.abouttext}</p>
+        <p>#{user.street}</p>
+        <p>#{user.plz}</p>
+        <p>#{user.phone}</p>
         <h:form>  
             <p>  
+           		 <h:commandLink action="#{user.changeData}" value="Ändern">
+     				<f:param name="email" value="#{user.email}" />
+  </h:commandLink>
                 <h:commandLink value="logout" action="#{user.logout}" />  
             </p>  
         </h:form>  

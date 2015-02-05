@@ -1,24 +1,25 @@
 package Beans;  
   
-import java.sql.Connection;  
+import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;  
-import java.sql.ResultSet;  
-import java.sql.SQLException;  
-  
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
 
-import javax.faces.bean.ManagedBean;  
-import javax.faces.bean.RequestScoped;  
-import javax.faces.context.FacesContext;  
-import javax.naming.Context;  
-import javax.naming.InitialContext;  
-import javax.naming.NamingException;  
-import javax.sql.DataSource;  
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
   
 @ManagedBean(name = "user")  
 @RequestScoped  
 public class User {  
-  
+	
+	private int id;
     private String firstName;  
     private String lastName;  
     private String email;  
@@ -42,8 +43,20 @@ public class User {
             e.printStackTrace();  
         }  
     }  
-  
-    public String getDbPassword() {  
+    
+      
+    public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	public String getDbPassword() {  
         return dbPassword;  
     }  
   
@@ -138,6 +151,41 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	public String updateInfos() {
+		
+		//TODO: Is kacke, schön machen! @Christoph
+		
+		  int i = 0;  
+	      PreparedStatement ps = null;  
+	      Connection con = null;  
+	      try {  
+	                if (ds != null) {  
+	                    con = ds.getConnection();  
+	                    if (con != null) {  
+	                    	String sql = "UPDATE member set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' where mail ='" + email + "';";
+	                    	System.out.println(sql);
+	                    	ps = con.prepareStatement(sql);  
+	                        i = ps.executeUpdate();  
+	                        System.out.println("Daten erfolgreich geändert");  
+	                    }  
+	                }  
+	            } catch (Exception e) {  
+	                System.out.println(e);  
+	            } finally {  
+	                try {  
+	                    con.close();  
+	                    ps.close();  
+	                } catch (Exception e) {  
+	                    e.printStackTrace();  
+	                }  
+	            }  
+
+	        if (i > 0) {  
+	           return "success";  
+	        } else  
+	            return "unsuccess";  
+	}
 
 	public String add() {  
         int i = 0;  
@@ -185,14 +233,24 @@ public class User {
                 try {  
                     con = ds.getConnection();  
                     if (con != null) {  
-                        String sql = "select mail, password_hash, name from member where mail = '"  
+                        String sql = "select id, mail, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone from member where mail = '"  
                                 + uName + "'";  
                         ps = con.prepareStatement(sql);  
                         rs = ps.executeQuery();  
                         rs.next();  
                         dbName = rs.getString("mail");  
                         dbPassword = rs.getString("password_hash");  
+                        id = rs.getInt("id");
                         firstName = rs.getString("name");
+                        lastName = rs.getString("last_name");  
+                        email = rs.getString("mail");
+                        password = rs.getString("password_hash");
+                        birthday = rs.getDate("birthdate");
+                        car = rs.getInt("car");
+                        abouttext = rs.getString("abouttext");
+                        street = rs.getString("street");
+                        plz = rs.getInt("plz");
+                        phone = rs.getString("phone");
                     }  
                 } catch (SQLException sqle) {  
                     sqle.printStackTrace();  
@@ -200,11 +258,26 @@ public class User {
             }  
         }  
     }  
-  
+    
+	public String getMailParam(FacesContext fc){
+		 
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		return params.get("email");
+ 
+	}
+    
+    public String changeData(){
+    	FacesContext fc = FacesContext.getCurrentInstance();
+		this.email = getMailParam(fc);
+ 
+    	dbData(email);
+    	return "changedata";
+    }
     public String login() {  
         dbData(email);  
-        if (email.equals(dbName) && password.equals(dbPassword)) {  
-            return "output";  
+        if (email.equals(dbName) && password.equals(dbPassword)) { 
+        	System.out.println(firstName + " " + lastName + " " + email + " " + password + " " + birthday + " " + car + " " + abouttext + " " + street + " " + plz + " " + phone);
+            return "success";  
         } else  
             return "invalid";  
     }  

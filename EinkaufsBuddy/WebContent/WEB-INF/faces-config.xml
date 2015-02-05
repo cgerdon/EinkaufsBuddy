@@ -40,4 +40,14 @@
             <to-view-id>/unsuccess.xhtml</to-view-id>  
         </navigation-case>  
     </navigation-rule>  
+    
+     <navigation-rule>  
+        <description>user change data</description>  
+        <from-view-id>/success.xhtml</from-view-id>  
+        <navigation-case>  
+            <from-action>#{user.changeData}</from-action>  
+            <from-outcome>changedata</from-outcome>  
+            <to-view-id>/changeuserdata.xhtml</to-view-id>  
+        </navigation-case>  
+    </navigation-rule>  
 </faces-config>  

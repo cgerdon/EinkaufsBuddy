@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core">  
+  
+<h:head>  
+    <title>Yeehaaaaaw</title>  
+</h:head>  
+<h:body>  
+#{user.email}
+    <f:view>  
+     <h:form id="registerForm">  
+            <table>  
+            <tr>  
+                    <td><h:outputText value="Mail" /></td>  
+                    <td><h:inputText id="mail" value="#{user.email}"  
+                            required="true" requiredMessage="Bitte Vornamen angeben" /></td>  
+                    <td><h:message for="fname" style="color:red" /></td>  
+                </tr>  
+                <tr>  
+                    <td><h:outputText value="Vorname" /></td>  
+                    <td><h:inputText id="fname" value="#{user.firstName}"  
+                            required="true" requiredMessage="Bitte Vornamen angeben" /></td>  
+                    <td><h:message for="fname" style="color:red" /></td>  
+                </tr>  
+                <tr>  
+                    <td><h:outputText value="Nachname:" /></td>  
+                    <td><h:inputText id="lname" value="#{user.lastName}"  
+                            required="true" requiredMessage="Bitte Nachname angeben" /></td>  
+                    <td><h:message for="lname" style="color:red" /></td>  
+                </tr>  
+                <tr>  
+                    <td><h:outputText value="Passwort:" /></td>  
+                    <td><h:inputSecret id="psw" value="#{user.password}"  
+                            required="true" requiredMessage="Bitte Passwort angeben" /></td>  
+                    <td><h:message for="psw" style="color:red" /></td>  
+                </tr>  
+                <tr>
+                    <td><h:commandButton value="Speichern" action="#{user.updateInfos}" /></td>  
+                </tr>  
+                
+     </table>  
+        </h:form>  
+    </f:view>  
+</h:body>  
+</html>  

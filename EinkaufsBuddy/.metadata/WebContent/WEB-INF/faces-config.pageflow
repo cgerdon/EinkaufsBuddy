@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14228925495130" configfile="/EinkaufsBuddy/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14228925495130" configfile="/EinkaufsBuddy/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" comment="login user" x="122" y="370" id="pf14231465251220" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14231465251231 pf142314656075410" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="success.xhtml" x="338" y="562" id="pf14231465251233" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf142314661620113" inlinks="pf14231465251234 pf142314656075410" path="/success.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="error.xhtml" x="65" y="180" id="pf14231465251235" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14231465251231" path="/error.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="register.xhtml" comment="register new user" x="122" y="754" id="pf14231465251236" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14231465251234 pf14231465251237" path="/register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="unsuccess.xhtml" x="420" y="708" id="pf14231465251238" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14231465251237" path="/unsuccess.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="changeuserdata.xhtml" id="pf142314661620114" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf142314661620113" path="/changeuserdata.xhtml"/>
+  <links id="pf14231465251231" target="pf14231465251235" source="pf14231465251220" outcome="invalid" fromaction="#{user.login}"/>
+  <links id="pf14231465251234" target="pf14231465251233" source="pf14231465251236" outcome="success" fromaction="#{user.add}"/>
+  <links id="pf14231465251237" target="pf14231465251238" source="pf14231465251236" outcome="unsuccess" fromaction="#{user.add}"/>
+  <links id="pf142314656075410" target="pf14231465251233" source="pf14231465251220" outcome="output" fromaction="#{user.login}"/>
+  <links id="pf142314661620113" target="pf142314661620114" source="pf14231465251233" outcome="changedata" fromaction="#{user.changeData}"/>
+</pageflow:Pageflow>
