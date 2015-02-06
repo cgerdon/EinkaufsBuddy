@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<head>
+  <title>EinkaufsBuddy</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css" /> 
+</head>
+<body>
+
+  <div id="header">
+    <ui:insert name="header">
+    	<h:graphicImage value="/images/logo.png"/>
+      	<h1>EinkaufsBuddy Default</h1>
+    </ui:insert>
+  </div>
+  
+  <div id="content">
+    <ui:insert name="content"/>
+  </div>
+  
+  <div id="footer">
+    <ui:insert name="footer">
+     	 <h:outputText value="Copyright (c) EinkaufsBuddy2015"/>
+    </ui:insert>
+  </div>
+  
+</body>
+</html>
