@@ -1,10 +1,10 @@
 package Beans;  
   
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
@@ -153,9 +153,7 @@ public class User {
 	}
 	
 	public String updateInfos() {
-		
-		//TODO: Is kacke, schön machen! @Christoph
-		
+		//TODO:Christoph	sieht mistig aus, schön machen.
 		  int i = 0;  
 	      PreparedStatement ps = null;  
 	      Connection con = null;  
@@ -163,7 +161,9 @@ public class User {
 	                if (ds != null) {  
 	                    con = ds.getConnection();  
 	                    if (con != null) {  
-	                    	String sql = "UPDATE member set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' where mail ='" + email + "';";
+	                    	String sql = "UPDATE member set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' , car='" + car + "' , abouttext='" + abouttext + "' , street='" + street + "' , plz='" + plz + "' , phone='" + phone + "' where mail ='" + email + "';";
+	                    //	private Date birthday;
+
 	                    	System.out.println(sql);
 	                    	ps = con.prepareStatement(sql);  
 	                        i = ps.executeUpdate();  
