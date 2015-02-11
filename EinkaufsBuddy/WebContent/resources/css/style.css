@@ -1,7 +1,8 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
 
-
-
+.red{
+	
+	color:red;
+}
 .login-submit {
   /* border: 1px solid #3079ed; */
   border: 0px;
@@ -13,6 +14,7 @@
 
 .login-submit:hover {
   /* border: 1px solid #2f5bb7; */
+  color: red;
   border: 0px;
   text-shadow: 0 1px rgba(0,0,0,0.3);
   background-color: #357ae8;

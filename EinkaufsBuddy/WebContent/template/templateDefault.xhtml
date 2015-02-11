@@ -8,14 +8,19 @@
 
 <head>
   <title>EinkaufsBuddy</title>
-  <link rel="stylesheet" href="css/style.css" type="text/css" /> 
+  <h:outputStylesheet name="css/style.css"/>
 </head>
 <body>
 
   <div id="header">
     <ui:insert name="header">
-    	<h:graphicImage value="/images/logo.png"/>
-      	<h1>EinkaufsBuddy Default</h1>
+      
+
+   <h:graphicImage value="../resources/images/logo.png" alt="EinkaufsBuddy"/>
+                          
+
+         	
+      	
     </ui:insert>
   </div>
   
@@ -25,7 +30,9 @@
   
   <div id="footer">
     <ui:insert name="footer">
-     	 <h:outputText value="Copyright (c) EinkaufsBuddy2015"/>
+       <p>  <h:outputLink value="../About Us/Impressum.xhtml">Impressum</h:outputLink>  </p>
+        <p> <h:outputLink value="../About Us/Kontakt.xhtml">Kontakt</h:outputLink>  </p>
+     	<p> <h:outputText value="Copyright (c) EinkaufsBuddy2015"/></p>
     </ui:insert>
   </div>
   
