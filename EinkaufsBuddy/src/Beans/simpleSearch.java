@@ -91,6 +91,7 @@ public class simpleSearch {
                      rs = ps.executeQuery();  
                     
                      while(rs.next()) {
+                    	 //TODO:Christoph	hier das hier https://developers.google.com/maps/documentation/distancematrix/?hl=de
                          nearAds.add(rs.getString("text"));
                      }
                  }  
