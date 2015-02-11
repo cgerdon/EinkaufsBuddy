@@ -1,8 +1,19 @@
 
-.red{
-	
+
+h1{
 	color:red;
 }
+
+
+
+#content{
+	background-color: red;
+}
+
+#footer{
+	background-color: green;
+}
+
 .login-submit {
   /* border: 1px solid #3079ed; */
   border: 0px;

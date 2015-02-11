@@ -1,40 +1,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<h:html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<head>
+<h:head>
   <title>EinkaufsBuddy</title>
-  <h:outputStylesheet name="css/style.css"/>
-</head>
-<body>
+  <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
 
-  <div id="header">
-    <ui:insert name="header">
-      
+<h:body>
+	<h:panelGroup id="page" layout="block">
+	
+	    <h:panelGroup id="header" layout="block">
+	    	<ui:insert name="header">
+	    		<ui:include src="header.xhtml" />
+			</ui:insert>
+		</h:panelGroup>
 
-   <h:graphicImage value="../resources/images/logo.png" alt="EinkaufsBuddy"/>
-                          
+		<h:panelGroup id="container" layout="block">
+	        <h:panelGroup id="content" layout="block">
+				<ui:insert name="content">
+					<h1> Content-Container </h1>
+				</ui:insert>
+			</h:panelGroup>
+		</h:panelGroup>
 
-         	
-      	
-    </ui:insert>
-  </div>
-  
-  <div id="content">
-    <ui:insert name="content"/>
-  </div>
-  
-  <div id="footer">
-    <ui:insert name="footer">
-       <p>  <h:outputLink value="../About Us/Impressum.xhtml">Impressum</h:outputLink>  </p>
-        <p> <h:outputLink value="../About Us/Kontakt.xhtml">Kontakt</h:outputLink>  </p>
-     	<p> <h:outputText value="Copyright (c) EinkaufsBuddy2015"/></p>
-    </ui:insert>
-  </div>
-  
-</body>
-</html>
+		<h:panelGroup id="footer" layout="block">
+			<ui:insert name="footer">
+	    		<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</h:panelGroup>
+
+	</h:panelGroup>
+</h:body>
+
+</h:html>
