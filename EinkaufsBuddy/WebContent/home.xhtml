@@ -1,23 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="template/master.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+ <ui:define name="content">
 
-<h:head>
-	<title>EinkaufsBuddy - Startseite</title>
-</h:head>
-<h:body>
-	<h:panelGrid id="panel" columns="2" border="1" cellpadding="10"
-		cellspacing="1">
-		<f:facet name="header">
+	<h:panelGrid id="panel1" columns="2" border="1" cellpadding="10" cellspacing="1">
+		<f:facet name="header1">
 			<h:outputText value="Willkommen auf EinkaufsBuddy.de" />
 		</f:facet>
+		
 		<h:outputLabel value="Bereits ein Mitglied?" />
-		<h:outputLink value="login.xhtml">Einloggen</h:outputLink>
+		<h:outputLink value="../login.xhtml">Einloggen</h:outputLink>
+		
 		<h:outputLabel value="Noch kein Mitglied?" />
-		<h:outputLink value="register.xhtml">Registrieren</h:outputLink>
+		<h:outputLink value="../register.xhtml">Registrieren</h:outputLink>
 	</h:panelGrid>
-</h:body>
-</html>
+	
+	<h:panelGrid id="panel2" columns="3" border="1" cellpadding="10" cellspacing="1">
+		<f:facet name="headerEinfacheSuche">
+			<h:outputText value="Einfache Suche" />
+		</f:facet>
+		
+		<h:outputText value="PLZ" />  
+        <h:inputText id="plz" value="#{simpleSearch.plzInput}"  
+                            required="true" requiredMessage="Bitte PLZ eingeben" />  
+        <h:message for="plz" style="color:red" /> 
+
+	
+	<h:commandButton value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
+   </h:panelGrid>
+</ui:define>
+</ui:composition>

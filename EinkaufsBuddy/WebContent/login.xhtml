@@ -1,44 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
- 
-<html xmlns="http://www.w3.org/1999/xhtml"  
-    xmlns:h="http://java.sun.com/jsf/html"  
-    xmlns:f="http://java.sun.com/jsf/core">  
+<ui:composition template="template/master.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+<ui:define name="content">
+	<h:form>
+		<h:panelGrid columns="3">
+		    <h:outputLabel value="Mailadresse: " />
+		 	<h:inputText id="inputEmail" value="#{user.email}"  
+				required="true" requiredMessage="Mail muss ausgefüllt sein" />  
+			<h:message for="inputName" style="color:red" />
 
-<h:head>  
-    <title>Einloggen</title>  
-  <h:outputStylesheet library="css" name="style.css"  />
-</h:head>
-  
-<h:body>  
-    <f:view>  
-        <h:form id="loginForm">  
-            <table frame="box">  
-                <tr>  
-                    <th>Login</th>  
-                </tr>  
-                <tr>  
-                    <td><h:outputText value="Mailadresse:" /></td>  
-                    <td><h:inputText id="inputEmail" value="#{user.email}"  
-                            required="true" requiredMessage="Mail muss ausgefüllt sein" />  
-                    </td>  
-                    <td><h:message for="inputName" style="color:red" /></td>  
-                </tr>  
-                <tr>  
-                    <td><h:outputText value="Passwort:" /></td>  
-                    <td ><h:inputSecret id="inputPassword" value="#{user.password}"  
-                            required="true"  
-                            requiredMessage="Passwort muss ausgefüllt sein" /></td>  
-                    <td><h:message for="inputPassword" style="color:red" /></td>  
-                </tr>  
-                <tr>  
-                    <td ><h:commandButton class="login-submit" value="Login" action="#{user.login}" /></td>  
-                    <td><h:outputText value="Ich bin kein Mitglied" />   
-                        <h:outputLink value="register.xhtml">Registrieren</h:outputLink>  
-                    </td>  
-                </tr>  
-            </table>  
-        </h:form>  
-    </f:view>  
-</h:body>  
-</html>  
+		    <h:outputLabel value="Passwort: " />
+			<h:inputSecret id="inputPassword" value="#{user.password}"  
+				 required="true" requiredMessage="Passwort muss ausgefüllt sein" />  
+			<h:message for="inputPassword" style="color:red" /> 
+			<h:commandButton class="login-submit" value="Login" action="#{user.login}" />               
+			<h:outputText value="Ich bin kein Mitglied" />                     
+			<h:outputLink value="register.xhtml">Registrieren</h:outputLink>  
+		</h:panelGrid>
+	</h:form>
+					
+</ui:define>
+</ui:composition>
