@@ -1,0 +1,15 @@
+<ui:composition template="../template/templateDefault.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+ <ui:define name="content">
+ 
+	<ui:repeat var="ads" value="#{simpleSearch.searchSimple}">
+		<h1>#{ads}</h1>
+	</ui:repeat>
+ 
+</ui:define>
+</ui:composition>
