@@ -51,14 +51,6 @@
         </navigation-case>  
     </navigation-rule>  
     
-     <navigation-rule>  
-        <description>SearchResult</description>  
-        <from-view-id>Home/home.xhtml</from-view-id>  
-        <navigation-case>  
-            <from-action>#{simpleSearch.searchSimple}</from-action>  
-            <from-outcome>simpleSearchResult</from-outcome>  
-            <to-view-id>Home/simpleSearchResult.xhtml</to-view-id>  
-        </navigation-case>  
-    </navigation-rule>  
+ 
     
 </faces-config>  
