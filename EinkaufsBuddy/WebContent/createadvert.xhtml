@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core">  
+  
+<h:head>  
+    <title>Inserat anlegen</title>  
+</h:head>  
+<h:body>  
+    <f:view>  
+        <h:form id="createadvertForm">  
+            <table>  
+                <tr>  
+                    <td><h:outputText value="Bevorzugter Markt:" /></td>  
+                    <td><h:inputText id="fav_market" value="#{advert.fav_market}"  
+                            required="true" requiredMessage="Bitte den bevorzugten Markt angeben" >
+                        </h:inputText></td>  
+                    <td><h:message for="fav_market" style="color:red" /></td>  
+                </tr>  
+                <tr>  
+                    <td><h:outputText value="Datum:" /></td>  
+                    <td><h:inputText id="date" value="#{advert.date}"  
+                            required="true" requiredMessage="Bitte Datum angeben" >
+                            <f:convertDateTime pattern="yyyy-mm-dd" />
+                            </h:inputText></td>  
+                    <td><h:message for="date" style="color:red" /></td>  
+                </tr>
+                <tr>  
+                    <td><h:outputText value="Budget in Euro:" /></td>  
+                    <td><h:inputText id="limit" value="#{advert.limit}"  
+                            required="true" requiredMessage="Bitte Budget angeben" /></td>  
+                    <td><h:message for="limit" style="color:red" /></td>  
+                </tr>    
+                <tr>  
+                    <td><h:outputText value="Vergütung in Euro:" /></td>  
+                    <td><h:inputText id="income" value="#{advert.income}"  
+                            required="true" requiredMessage="Bitte Vergütung angeben" /></td>  
+                    <td><h:message for="income" style="color:red" /></td>  
+                </tr> 
+                <tr>
+                    <td><h:outputText value="Einkaufsliste:" /></td>  
+                    <td><h:inputTextarea id="text" value="#{advert.text}"  
+                            required="true" requiredMessage="Bitte Einkaufsliste angeben" /></td>  
+                    <td><h:message for="text" style="color:red" /></td>
+                </tr> 
+                <tr>  
+                    <td><h:outputText value="Aktivschaltung:" /></td>
+                    <td><h:selectBooleanCheckbox id="active" value="#{advert.status}" /></td>  
+                </tr>  
+                <tr>  
+                    <td />  
+                    <td><h:commandButton value="Speichern" action="#{advert.add}" /></td>  
+                </tr>  
+                <tr>  
+                    <td><h:outputLink value="home.xhtml">Abbrechen und zurück</h:outputLink></td>  
+                </tr>  
+            </table>  
+        </h:form>  
+    </f:view>  
+</h:body>  
+</html>  
