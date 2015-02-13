@@ -7,5 +7,18 @@
 								
 		<h1> Header-Container </h1>
 		<h:graphicImage value="../resources/images/logo.png" alt="EinkaufsBuddy"/>
-
+		
+		<h:form id="menu">
+			<p:menubar id="horizontalMenu">
+			
+				<p:menuitem value="Home" outcome="/home/home"/>
+				
+ 				<p:submenu label="About US">
+					<p:menuitem value="Kontakt" outcome="/About Us/Kontakt"/>
+					<p:menuitem value="Impressum" outcome="/About Us/Impressum"/>
+				</p:submenu> 
+				
+			</p:menubar>
+		</h:form>
+		
 </ui:composition>

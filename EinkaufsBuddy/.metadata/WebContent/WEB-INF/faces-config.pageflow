@@ -6,12 +6,13 @@
   <nodes xsi:type="pageflow:PFPage" name="register.xhtml" comment="register new user" x="122" y="754" id="pf14231465251236" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14231465251234 pf14231465251237" path="/register.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="unsuccess.xhtml" x="338" y="946" id="pf14231465251238" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14231465251237" path="/unsuccess.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="changeuserdata.xhtml" x="554" y="562" id="pf142314661620114" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf142314661620113" path="/changeuserdata.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="Home/home.xhtml" comment="SearchResult" id="pf14238349977910" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14238349977911" path="Home/home.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="Home/simpleSearchResult.xhtml" id="pf14238349977922" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf14238349977911" path="/Home/simpleSearchResult.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Home/home.xhtml" comment="SearchResult" x="122" y="1330" id="pf14238349977910" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14238370527623" path="/home/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Home/simpleSearchResult.xhtml" x="122" y="1714" id="pf14238349977922" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" path="/Home/simpleSearchResult.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Home/simpleSearchResult.xhtml" x="338" y="1330" id="pf14238370527634" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf14238370527623" path="/home/alt_simpleSearchResult.xhtml"/>
   <links id="pf14231465251231" target="pf14231465251235" source="pf14231465251220" outcome="invalid" fromaction="#{user.login}"/>
   <links id="pf14231465251234" target="pf14231465251233" source="pf14231465251236" outcome="success" fromaction="#{user.add}"/>
   <links id="pf14231465251237" target="pf14231465251238" source="pf14231465251236" outcome="unsuccess" fromaction="#{user.add}"/>
   <links id="pf142314656075410" target="pf14231465251233" source="pf14231465251220" outcome="output" fromaction="#{user.login}"/>
   <links id="pf142314661620113" target="pf142314661620114" source="pf14231465251233" outcome="changedata" fromaction="#{user.changeData}"/>
-  <links id="pf14238349977911" target="pf14238349977922" source="pf14238349977910" outcome="simpleSearchResult" fromaction="#{simpleSearch.searchSimple}"/>
+  <links id="pf14238370527623" target="pf14238370527634" source="pf14238349977910" outcome="nearAdsList" fromaction="#{simpleSearch.searchSimple}"/>
 </pageflow:Pageflow>
