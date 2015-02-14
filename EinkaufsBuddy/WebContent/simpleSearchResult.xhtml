@@ -5,11 +5,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
     
- <ui:define name="content">
- 
-	<ui:repeat var="ads" value="#{simpleSearch.nearAdsList}">
-		<h1>#{ads}</h1>
-	</ui:repeat>
- 
-</ui:define>
+	<ui:define name="content">
+		<ui:repeat var="ads" value="#{simpleSearch.nearAdsList}">
+			<h1>#{ads}</h1> 
+		</ui:repeat>
+	</ui:define>
+  
 </ui:composition>

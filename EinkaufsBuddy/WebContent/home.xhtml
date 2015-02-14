@@ -5,7 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
     
- <ui:define name="content">
+	<ui:define name="content">
+	<h:form>  
+         <h:panelGrid column="3">
+                    <h:outputText value="PLZ" />
+                    <h:inputText id="plz" value="#{simpleSearch.plzInput}"  
+                            required="true" requiredMessage="Bitte PLZ eingeben" />
+                    <h:message for="plz" style="color:red" /> 
+                
+                    <h:commandButton value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
+          	</h:panelGrid>
+        </h:form>  
 
 	<h:panelGrid id="panel1" columns="2" border="1" cellpadding="10" cellspacing="1">
 		<f:facet name="header1">
@@ -13,24 +23,13 @@
 		</f:facet>
 		
 		<h:outputLabel value="Bereits ein Mitglied?" />
-		<h:outputLink value="../login.xhtml">Einloggen</h:outputLink>
+		<h:outputLink value="login.xhtml">Einloggen</h:outputLink>
 		
 		<h:outputLabel value="Noch kein Mitglied?" />
-		<h:outputLink value="../register.xhtml">Registrieren</h:outputLink>
+		<h:outputLink value="register.xhtml">Registrieren</h:outputLink>
 	</h:panelGrid>
 	
-	<h:panelGrid id="panel2" columns="3" border="1" cellpadding="10" cellspacing="1">
-		<f:facet name="headerEinfacheSuche">
-			<h:outputText value="Einfache Suche" />
-		</f:facet>
-		
-		<h:outputText value="PLZ" />  
-        <h:inputText id="plz" value="#{simpleSearch.plzInput}"  
-                            required="true" requiredMessage="Bitte PLZ eingeben" />  
-        <h:message for="plz" style="color:red" /> 
 
-	
-	<h:commandButton value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
-   </h:panelGrid>
-</ui:define>
+	</ui:define>
+  
 </ui:composition>
