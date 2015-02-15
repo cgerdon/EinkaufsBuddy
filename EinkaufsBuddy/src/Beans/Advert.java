@@ -91,8 +91,6 @@ public class Advert {
 	}
 
 
-
-
 	public void setDate(String date) {
 		this.date = date;
 	}
