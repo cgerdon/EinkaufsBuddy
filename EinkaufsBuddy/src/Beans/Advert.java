@@ -84,8 +84,6 @@ public class Advert {
 	}
 
 
-
-
 	/*public String getDate() {
 		return date;
 	}
