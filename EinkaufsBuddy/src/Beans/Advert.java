@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 //import java.io.Serializable;
 
+
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -15,17 +19,21 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import org.primefaces.event.SelectEvent;
   
 @ManagedBean(name = "advert")  
 @RequestScoped  
 public class Advert {  
 	
 	private int ad_id;
-    private String advertiser_id;  
+    private int advertiser_id; 
     private Date date;
+    //private String date;
     private int fk_time_id;
     private double income;
     private double limit;
+    private int fk_category;
     private String text;
     private boolean status;
     private String fav_market;
@@ -43,8 +51,11 @@ public class Advert {
         }  
     }  
     
-      
-    
+    public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));  
+    }
 	
 	public int getAd_id() {
 		return ad_id;
@@ -61,31 +72,40 @@ public class Advert {
 
 
 
-	public String getAdvertiser_id() {
+	public int getAdvertiser_id() {
 		return advertiser_id;
 	}
 
 
 
 
-	public void setAdvertiser_id(String advertiser_id) {
+	public void setAdvertiser_id(int advertiser_id) {
 		this.advertiser_id = advertiser_id;
 	}
 
 
 
 
-	public Date getDate() {
+	/*public String getDate() {
 		return date;
 	}
 
 
 
 
+	public void setDate(String date) {
+		this.date = date;
+	}
+*/
+	public Date getDate() {
+		return date;
+	}
+
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	
 
 
 
@@ -116,6 +136,13 @@ public class Advert {
 
 
 
+	public int getFk_category() {
+		return fk_category;
+	}
+
+	public void setFk_category(int fk_category) {
+		this.fk_category = fk_category;
+	}
 
 	public double getLimit() {
 		return limit;
@@ -225,10 +252,8 @@ public class Advert {
 
 
 	public void setDs(DataSource ds) {
-		this.ds = ds;
-		System.out.println("test2");  
+		this.ds = ds;  
 	}
-
 
 
 /*Inserat muss man ändern können
@@ -241,8 +266,9 @@ public class Advert {
 	                if (ds != null) {  
 	                    con = ds.getConnection();  
 	                    if (con != null) {  
-	                    	String sql = "UPDATE member set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' , car='" + car + "' , abouttext='" + abouttext + "' , street='" + street + "' , plz='" + plz + "' , phone='" + phone + "' where mail ='" + email + "';";
-	                    //	private Date birthday;
+	                    	if (birthday == null){
+	                    	}
+	                    	String sql = "UPDATE ad set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' , car='" + car + "' , abouttext='" + abouttext + "' , street='" + street + "' , plz='" + plz + "' , phone='" + phone + "', birthdate='" + new SimpleDateFormat("yyyy-MM-dd").format(birthday) + "' where mail ='" + email + "';";
 
 	                    	System.out.println(sql);
 	                    	ps = con.prepareStatement(sql);  
@@ -270,21 +296,41 @@ public class Advert {
 	public String add() {  
         int i = 0;
         System.out.println("test3");
+        System.out.println(ad_id);
+        System.out.println(advertiser_id);
+        System.out.println(fk_time_id);
+        System.out.println(limit);
+        System.out.println(income);
+        System.out.println(text);
+        System.out.println(fk_category);
+        System.out.println(status);
+        System.out.println(fav_market);
+        System.out.println(date);
+        System.out.println(buyer_id);
+        
              PreparedStatement ps = null;  
             Connection con = null;  
             try {  
                 if (ds != null) {  
                     con = ds.getConnection();  
-                    if (con != null) {  
-                        String sql = "INSERT INTO ad(limit, income, text, status, fav_market) VALUES(?,?,?,?,?)";  
+                    if (con != null) { 
+                    	//new SimpleDateFormat("yyyy-MM-dd").format(date);
+                        String sql = "INSERT INTO ad(id, advertiser_id, fk_time, limit, income, text, fk_category, status, fav_market, date, buyer_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";  
                         ps = con.prepareStatement(sql);  
-                        //ps.setDate(1, date);  
-                        ps.setDouble(1, limit);  
-                        ps.setDouble(2, income);  
-                        ps.setString(3, text);
-                        ps.setBoolean(4, status); 
-                        ps.setString(5, fav_market);
-                        //ps.setString(6, "0000-00-00"); 
+                        ps.setInt(1, ad_id);
+                        ps.setInt(2, advertiser_id); 
+                        ps.setInt(3, fk_time_id);  
+                        ps.setDouble(4, limit);  
+                        ps.setDouble(5, income);  
+                        ps.setString(6, text);
+                        ps.setInt(7, fk_category);
+                        ps.setBoolean(8, status); 
+                        ps.setString(9, fav_market);
+                        //ps.setString(10, "0000-00-00");
+                        //ps.setDate(10, date);
+                        //ps.setDate(10, new SimpleDateFormat("yyyy-MM-dd").format(date));
+                        ps.setString(10, new SimpleDateFormat("yyyy-MM-dd").format(date));
+                        ps.setInt(11,buyer_id);
                         i = ps.executeUpdate();  
                         System.out.println("Inserat erfolgreich angelegt");  
                     }  
