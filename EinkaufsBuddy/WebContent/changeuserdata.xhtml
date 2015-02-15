@@ -7,64 +7,51 @@
     
 <ui:define name="content">
 		<h:form id="registerForm">
-			<table>
-			<tr>
-					<td><h:outputText value="Mail"  /></td>
-					<td><h:inputText id="mailsichtbar" value="#{user.email}" disabled="true" /></td>
-				</tr>
-				<tr>
-				<td><h:inputHidden id="mail" value="#{user.email}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Vorname" /></td>
-					<td><h:inputText id="fname" value="#{user.firstName}"
-							required="true" requiredMessage="Bitte Vornamen angeben" /></td>
-					<td><h:message for="fname" style="color:red" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Nachname:" /></td>
-					<td><h:inputText id="lname" value="#{user.lastName}"
-							required="true" requiredMessage="Bitte Nachname angeben" /></td>
-					<td><h:message for="lname" style="color:red" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Passwort:" /></td>
-					<td><h:inputSecret id="psw" value="#{user.password}"
-							required="true" requiredMessage="Bitte Passwort angeben" /></td>
-					<td><h:message for="psw" style="color:red" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Geb:" /></td>
-					<td><p:calendar id="german" value="#{user.birthday}" locale="de" navigator="true" pattern="yyyy-MMM-dd" />
-					</td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Auto:" /></td>
-					<td><h:inputText id="car" value="#{user.car}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Über:" /></td>
-					<td><h:inputText id="abouttext" value="#{user.abouttext}" />
-					</td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Straße:" /></td>
-					<td><h:inputText id="street" value="#{user.street}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="PLZ:" /></td>
-					<td><h:inputText id="plz" value="#{user.plz}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Tel:" /></td>
-					<td><h:inputText id="tel" value="#{user.phone}" /></td>
-				</tr>
-				<tr>
-					<td><h:commandButton value="Speichern" action="#{user.updateInfos}">
-					</h:commandButton></td>
-				</tr>
+			<h:panelGrid columns="3">
+					<h:outputText value="Mail"  />
+					<h:inputText id="mailsichtbar" value="#{user.email}" disabled="true" />
+	
+					<h:inputHidden id="mail" value="#{user.email}" />
+			
+		
+					<h:outputText value="Vorname" />
+					<h:inputText id="fname" value="#{user.firstName}"
+							required="true" requiredMessage="Bitte Vornamen angeben" />
+					<h:message for="fname" style="color:red" />
 
-			</table>
+					<h:outputText value="Nachname:" />
+					<h:inputText id="lname" value="#{user.lastName}"
+							required="true" requiredMessage="Bitte Nachname angeben" />
+					<h:message for="lname" style="color:red" />
+		
+					<h:outputText value="Passwort:" />
+					<h:inputSecret id="psw" value="#{user.password}"
+							required="true" requiredMessage="Bitte Passwort angeben" />
+					<h:message for="psw" style="color:red" />
+			</h:panelGrid>		
+			<h:panelGrid columns="2">
+					<h:outputText value="Geb:" />
+					<p:calendar id="german" value="#{user.birthday}" locale="de" navigator="true" pattern="yyyy-MMM-dd" />
+
+					<h:outputText value="Auto:" />
+					<h:inputText id="car" value="#{user.car}" />
+	
+					<h:outputText value="Über:" />
+					<h:inputText id="abouttext" value="#{user.abouttext}" />
+					
+
+					<h:outputText value="Straße:" />
+					<h:inputText id="street" value="#{user.street}" />
+				
+					<h:outputText value="PLZ:" />
+					<h:inputText id="plz" value="#{user.plz}" />
+	
+					<h:outputText value="Tel:" />
+					<h:inputText id="tel" value="#{user.phone}" />
+			</h:panelGrid>
+				
+					<h:commandButton value="Speichern" action="#{user.updateInfos}"/>
+
 		</h:form>
 </ui:define>
   
