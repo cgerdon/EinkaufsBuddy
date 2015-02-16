@@ -23,16 +23,14 @@
 			</ui:insert>
 		</h:panelGroup>
 		
-		<h:panelGroup id="container" layout="block">
+		<h:panelGroup id="container2" layout="block">
 	        <h:panelGroup id="sidebox" layout="block">
-				<ui:insert name="sidebox">
-					<h1> Sidebox-Container </h1>
+		    	<ui:insert name="sidebox">
+		    		<ui:include src="sidebox.xhtml" />
 				</ui:insert>
 			</h:panelGroup>		
 	        <h:panelGroup id="content" layout="block">
-				<ui:insert name="content">
-					<h1> Content-Container </h1>
-				</ui:insert>
+				<ui:insert name="content"/>
 			</h:panelGroup>
 		</h:panelGroup>
 

@@ -1,15 +1,71 @@
-/*** master 
+/*** master ***/
+h1{
+	color:red;
+}
+
+#page {
+	margin-right: 5em;
+	margin-left: 5em;
+}
+
+#container {
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #D5FF95;
+	border-radius: 5px;
+}
+
+/*** mastersidebox ***/
+
+#container2 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #D5FF95;
+	border-radius: 5px;
+}
+
+#sidebox {
+	padding-top: 50px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	float: left;
+	width: 15%;
+	background-color: grey;
+	border-radius: 5px;
+	text-align:center;
+}
+
+#content {
+	padding: 5px;
+	width: 80%;
+	margin-left: auto;
+	background-color: green;
+	border-radius: 5px;
+}
+
+/*** header ***/
+
+#logo{
+ 	width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+#logo-link{
+	color: white;
+}
+/*** header - Primeface-Menü 
  .ui-menubar Container element of menubar. 
  .ui-menu-list List container 
  .ui-menuitem Each menu item 
  .ui-menuitem-link Anchor element in a link item 
  .ui-menuitem-text Text element in an item
- .ui-menuitem-link:hover {
-	box-shadow: none !important;
-	background-color: #D5FF95 !important;
-}
 ***/
- 
 ul li.ui-menuitem-active>a{
     background-image: none !important;
     background-color: #D5FF95 !important;
@@ -27,31 +83,6 @@ ul li.ui-menuitem-active>a{
 	background-color: #D5FF95 !important;
 	box-shadow: none !important;
  }
-
-#page {
-	margin-right: 5em;
-	margin-left: 5em;
-}
-
-#container {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	background-color: #D5FF95;
-	border-radius: 5px;
-	padding: 5px;
-}
-
-/*** header ***/
-
-#logo{
- 	width: 50px;
-    height: 50px;
-    border-radius: 5px;
-}
-
-#logo-link{
-	color: white;
-}
 
 /*** footer ***/
 
@@ -88,9 +119,7 @@ ul li.ui-menuitem-active>a{
 
 /*** Test ***/
 
-h1{
-	color:red;
-}
+
 
 .login-submit {
   /* border: 1px solid #3079ed; */
