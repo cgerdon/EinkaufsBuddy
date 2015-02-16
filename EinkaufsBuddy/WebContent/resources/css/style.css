@@ -4,10 +4,33 @@
  .ui-menuitem Each menu item 
  .ui-menuitem-link Anchor element in a link item 
  .ui-menuitem-text Text element in an item
+ .ui-menuitem-link:hover {
+	box-shadow: none !important;
+	background-color: #D5FF95 !important;
+}
 ***/
+ 
+ul li.ui-menuitem-active>a{
+    background-image: none !important;
+    background-color: #D5FF95 !important;
+    box-shadow: none !important;
+}
+
+.ui-menubar {
+	background-color: #D5FF95 !important;
+	border: none;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.ui-menu-list {
+	background-color: #D5FF95 !important;
+	box-shadow: none !important;
+ }
+
 #page {
-	margin-right: 50px;
-	margin-left: 50px;
+	margin-right: 5em;
+	margin-left: 5em;
 }
 
 #container {
@@ -23,6 +46,7 @@
 #logo{
  	width: 50px;
     height: 50px;
+    border-radius: 5px;
 }
 
 #logo-link{
