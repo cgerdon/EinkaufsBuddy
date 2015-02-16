@@ -10,7 +10,8 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -20,8 +21,9 @@ import javax.sql.DataSource;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
   
-@ManagedBean(name = "user")  
-@RequestScoped  
+@ManagedBean(name = "user") 
+//@RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
+@SessionScoped  
 public class User {  
 	
 	private int id;

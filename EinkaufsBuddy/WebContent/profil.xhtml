@@ -6,18 +6,18 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das ist deine Profilseite! </h1>
-		 
-        <p>Hallo, #{user.firstName}</p>  
-        <p>#{user.lastName}</p>
-        <p>#{user.email}</p>
-        <p>#{user.password}</p>
-        <p>#{user.birthday}</p>
-        <p>#{user.car}</p>
-        <p>#{user.abouttext}</p>
-        <p>#{user.street}</p>
-        <p>#{user.plz}</p>
-        <p>#{user.phone}</p>
+		<h1>Das ist deine Profilseite!</h1>
+		
+      	<h:outputText value="#{user.firstName}"/>
+      	<h:outputText value="#{user.lastName}"/>
+      	<h:outputText value="#{user.email}"/>
+        <h:outputText value="#{user.password}"/>
+        <h:outputText value="#{user.birthday}"/>
+        <h:outputText value="#{user.car}"/>
+        <h:outputText value="#{user.abouttext}"/>
+        <h:outputText value="#{user.street}"/>
+        <h:outputText value="#{user.plz}"/>
+        <h:outputText value="#{user.phone}"/>
         
         <h:form>  
 	        <h:commandButton action="#{user.changeData}" value="Ändern">

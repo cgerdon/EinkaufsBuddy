@@ -9,17 +9,16 @@
 	<h1> Willkommen auf EinkaufsBuddy!</h1>
 	
 	<h:form  id="simplesearchform">
-     <h:panelGrid columns="1">
-     		<h:panelGroup>
-                    <h:outputLabel value="PLZ" />
-                    <h:inputText id="plz" value="#{simpleSearch.plzInput}"  
-                            required="true" requiredMessage="Bitte PLZ eingeben" />
-                    <h:message for="plz" style="color:red" /> 
-        	</h:panelGroup>
-			     
-                    <h:commandButton  id="simplesearchsubmit" value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
+ 
+	 <h:panelGrid columns="3" >
+        <p:inputText id="plz" value="#{simpleSearch.plzInput}" required="true" requiredMessage="Bitte PLZ eingeben" />
+        <h:message for="plz" style="color:red" /> 
+        <p:watermark for="plz" value="PLZ, z.B. 67059" id="watermark" />
+    </h:panelGrid>	     
+    
+       <h:commandButton  id="simplesearchsubmit" value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
             
-          	</h:panelGrid>
+        
       </h:form>
 
 	</ui:define>

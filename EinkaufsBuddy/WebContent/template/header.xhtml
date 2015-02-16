@@ -10,12 +10,30 @@
 		<h:graphicImage id="logo" value="resources/images/logo.png" alt="EinkaufsBuddy"/>
 	</h:outputLink>	
 	
-
-		<h:panelGrid columns="2" id="registrierenlogin">
+	<h:form id="logout">
+		
 			<h:button class="registrierenloginbutton" value="Registrieren" outcome="register" />
+			
 			<h:button class="registrierenloginbutton" value="Login" outcome="login" />
-		</h:panelGrid>
+	<p:commandButton id="login-window" value="Login" type="button" />
+   		<p:overlayPanel id="imagePanel" for="login-window" hideEffect="fade">
+        	<h:panelGrid columns="3">
+		    <h:outputLabel value="Mailadresse: " />
+		 	<h:inputText id="inputEmail" value="#{user.email}" />  
+			<h:message for="inputEmail" style="color:red" />
 
+		    <h:outputLabel value="Passwort: " />
+			<h:inputSecret id="inputPassword" value="#{user.password}"  
+				 required="true" requiredMessage="Passwort muss ausgefüllt sein" />  
+			<h:message for="inputPassword" style="color:red" /> 
+			<h:commandButton class="login-submit" value="Login" action="#{user.login}" />               
+
+		</h:panelGrid>
+  	  </p:overlayPanel>
+		
+	</h:form>
+	
+	
 		
 	 	<h:form id="menu">
 			<p:menubar id="horizontalMenu">
