@@ -1,20 +1,22 @@
-/*** master ***/
-
-body {
-	
+/*** master 
+ .ui-menubar Container element of menubar. 
+ .ui-menu-list List container 
+ .ui-menuitem Each menu item 
+ .ui-menuitem-link Anchor element in a link item 
+ .ui-menuitem-text Text element in an item
+***/
+#page {
+	margin-right: 50px;
+	margin-left: 50px;
 }
 
-#content{
-	background-color: blue;
+#container {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #D5FF95;
+	border-radius: 5px;
+	padding: 5px;
 }
-
-h1 {font-size: 48px;}
-h2 {font-size: 1.5em;}
-
-p {
-	font: 16px/1.5em;
-}
-
 
 /*** header ***/
 
@@ -30,11 +32,25 @@ p {
 /*** footer ***/
 
 #footer {
-	background-color: green;
+	background-color: #D5FF95;
+	border-radius: 5px;
+	padding: 5px;
 }
 
-#footer-links {
+#footer-links-container {
 	margin-left: auto;
+}
+
+.footer-links {
+	margin-left: 10px;
+	font-size: 80%; 
+	color: #000000; 
+	text-decoration: none; 
+	text-underline: none; 
+}
+
+.footer-links:hover {
+	color: green; 
 }
 
 #footer-copyright {
