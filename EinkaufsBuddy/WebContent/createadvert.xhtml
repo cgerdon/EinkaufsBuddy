@@ -7,38 +7,51 @@
     
 <ui:define name="content">
         <h:form id="createadvertForm">  
-			<h:panelGrid columns="3">
+			<h:panelGrid columns="1">
+			
+			<h:panelGroup>
 				<h:outputText value="Bevorzugter Markt:" />
 				<h:inputText id="fav_market" value="#{advert.fav_market}"  
 					required="true" requiredMessage="Bitte den bevorzugten Markt angeben" >
 				</h:inputText>
 				<h:message for="fav_market" style="color:red" />
-          
+			</h:panelGroup>	
+			
+			<h:panelGroup>
 				<h:outputText value="Datum:" />
 				<h:inputText id="date" value="#{advert.date}"  
 					required="true" requiredMessage="Bitte Datum angeben" >
 					<f:convertDateTime pattern="yyyy-mm-dd" />
 				</h:inputText>
 				<h:message for="date" style="color:red" />
-               
+			</h:panelGroup>	
+			
+			<h:panelGroup>  
 				<h:outputText value="Budget in Euro:" />  
 				<h:inputText id="limit" value="#{advert.limit}"  
 					required="true" requiredMessage="Bitte Budget angeben" />
 				<h:message for="limit" style="color:red" /> 
-             
+            </h:panelGroup> 
+            
+			<h:panelGroup>
 				<h:outputText value="Vergütung in Euro:" />  
 				<h:inputText id="income" value="#{advert.income}"  
 					required="true" requiredMessage="Bitte Vergütung angeben" /> 
 				<h:message for="income" style="color:red" />  
-  
+  			</h:panelGroup>
+  			
+			<h:panelGroup>  
 				<h:outputText value="Einkaufsliste:" /> 
 				<h:inputTextarea id="text" value="#{advert.text}"  
 					required="true" requiredMessage="Bitte Einkaufsliste angeben" /> 
 				<h:message for="text" style="color:red" />
-			</h:panelGrid>
-			<h:panelGrid columns="2">    
+			</h:panelGroup>	
+			
+			<h:panelGroup>   
         		<h:outputText value="Aktivschaltung:" />
 				<h:selectBooleanCheckbox id="active" value="#{advert.status}" /> 
+			</h:panelGroup>	
+			
 			</h:panelGrid>
                  
 				<h:commandButton value="Speichern" action="#{advert.add}" /> 

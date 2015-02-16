@@ -3,10 +3,19 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">				
-				
-		<p> <h:outputLink value="Impressum.xhtml">Impressum</h:outputLink> </p>
-		<p> <h:outputLink value="Kontakt.xhtml">Kontakt</h:outputLink> </p>
-		<p> <h:outputText value="Copyright (c) EinkaufsBuddy2015"/> </p>
-				
+	xmlns:p="http://primefaces.org/ui">			
+
+	
+	    <h:panelGrid id="footer-links" columns="5">		
+						
+			<h:outputLink value="Impressum.xhtml">Impressum</h:outputLink>
+			<h:outputLink value="Kontakt.xhtml">Kontakt</h:outputLink>
+			
+		</h:panelGrid>
+		
+		
+		<h:panelGroup id="footer-copyright" layout="block">
+			<h:outputText id="copyright" value="EinkaufsBuddy 2015"/>
+		</h:panelGroup>				
+
 </ui:composition>

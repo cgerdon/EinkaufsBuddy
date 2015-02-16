@@ -1,5 +1,19 @@
 /*** master ***/
 
+body {
+	
+}
+
+#content{
+	background-color: blue;
+}
+
+h1 {font-size: 48px;}
+h2 {font-size: 1.5em;}
+
+p {
+	font: 16px/1.5em;
+}
 
 
 /*** header ***/
@@ -13,18 +27,29 @@
 	color: white;
 }
 
+/*** footer ***/
+
+#footer {
+	background-color: green;
+}
+
+#footer-links {
+	margin-left: auto;
+}
+
+#footer-copyright {
+	text-align:center;
+}
+
+#copyright {
+	font-size: 80%;
+	font-weight: bold;
+}
+
 /*** Test ***/
 
 h1{
 	color:red;
-}
-
-#content{
-	background-color: green;
-}
-
-#footer{
-	background-color: green;
 }
 
 .login-submit {
