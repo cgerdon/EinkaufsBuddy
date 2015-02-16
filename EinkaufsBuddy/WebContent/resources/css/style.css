@@ -4,15 +4,12 @@ h1{
 }
 
 #page {
-	margin-right: 5em;
-	margin-left: 5em;
+	margin-right: 5%;
+	margin-left: 5%;
 }
 
 #container {
-	padding-left: 1em;
-	padding-right: 1em;
-	padding-bottom: 5px;
-	padding-top: 5px;
+	padding: 5px 1em;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	background-color: #D5FF95;
@@ -24,7 +21,7 @@ h1{
 #container2 {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	background-color: #D5FF95;
+	background-color: #EEEEEE;
 	border-radius: 5px;
 }
 
@@ -35,7 +32,7 @@ h1{
 	padding-bottom: 5px;
 	float: left;
 	width: 15%;
-	background-color: grey;
+	background-color: #D5FF95;
 	border-radius: 5px;
 	text-align:center;
 }
@@ -44,7 +41,7 @@ h1{
 	padding: 5px;
 	width: 80%;
 	margin-left: auto;
-	background-color: green;
+	background-color: #D5FF95;
 	border-radius: 5px;
 }
 
@@ -59,6 +56,25 @@ h1{
 #logo-link{
 	color: white;
 }
+
+#registrierenlogin{
+	margin-left: auto;
+	margin-top: -25px;
+}
+
+#logout{
+	padding-left: 95%;
+	margin-top: -25px;
+}
+
+.registrierenloginbutton {
+	background-color: green;
+}
+
+.registrierenloginbutton:hover {
+	background-color: #D5FF95;
+}
+
 /*** header - Primeface-Menü 
  .ui-menubar Container element of menubar. 
  .ui-menu-list List container 
@@ -117,24 +133,7 @@ ul li.ui-menuitem-active>a{
 	font-weight: bold;
 }
 
-/*** Test ***/
-
-
-
-.login-submit {
-  /* border: 1px solid #3079ed; */
-  border: 0px;
-  color: #fff;
-  text-shadow: 0 1px rgba(0,0,0,0.1); 
-  background-color: #4d90fe;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#4787ed)); */
-}
-
-.login-submit:hover {
-  /* border: 1px solid #2f5bb7; */
-  color: red;
-  border: 0px;
-  text-shadow: 0 1px rgba(0,0,0,0.3);
-  background-color: #357ae8;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
+/*** Startseite Logout ***/
+#simplesearchform{
+	padding: 1em 45%;
 }

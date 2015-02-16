@@ -10,12 +10,11 @@
 		<h:graphicImage id="logo" value="resources/images/logo.png" alt="EinkaufsBuddy"/>
 	</h:outputLink>	
 	
-
-		<h:panelGrid columns="2" id="registrierenlogin">
-			<h:button class="registrierenloginbutton" value="Registrieren" outcome="register" />
-			<h:button class="registrierenloginbutton" value="Login" outcome="login" />
+ 	<h:form id="logout">  
+		<h:panelGrid columns="1" >
+			<h:commandButton class="registrierenloginbutton" value="logout" action="#{user.logout}"/>  
 		</h:panelGrid>
-
+ 	</h:form>  
 		
 	 	<h:form id="menu">
 			<p:menubar id="horizontalMenu">
@@ -34,5 +33,3 @@
 		</h:form>
 		
 </ui:composition>
-
- 

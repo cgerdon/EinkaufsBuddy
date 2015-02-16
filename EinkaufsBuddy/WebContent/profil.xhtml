@@ -1,4 +1,4 @@
-<ui:composition template="template/master.xhtml"
+<ui:composition template="template/logoutmaster.xhtml"
  	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -20,10 +20,9 @@
         <p>#{user.phone}</p>
         
         <h:form>  
-	        <h:commandLink action="#{user.changeData}" value="Ändern">
+	        <h:commandButton action="#{user.changeData}" value="Ändern">
 	     		<f:param name="email" value="#{user.email}" />
-	     	</h:commandLink>
-	        <h:commandLink value="logout" action="#{user.logout}"/>  
+	     	</h:commandButton>
         </h:form>  
 	</ui:define>
   

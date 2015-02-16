@@ -6,30 +6,21 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-	<h1> Willkommen auf EinkaufsBuddy</h1>
+	<h1> Willkommen auf EinkaufsBuddy!</h1>
 	
-	<h:form> 
-	<h:panelGrid id="panel1" columns="2" border="1" cellpadding="10" cellspacing="1">
-		<f:facet name="header1">
-			<h:outputText value="Willkommen auf EinkaufsBuddy.de" />
-		</f:facet>
-		
-		<h:outputLabel value="Bereits ein Mitglied?" />
-		<h:outputLink value="login.xhtml">Einloggen</h:outputLink>
-		
-		<h:outputLabel value="Noch kein Mitglied?" />
-		<h:outputLink value="register.xhtml">Registrieren</h:outputLink>
-	</h:panelGrid>
-	 
-     <h:panelGrid column="3">
-                    <h:outputText value="PLZ" />
+	<h:form  id="simplesearchform">
+     <h:panelGrid columns="1">
+     		<h:panelGroup>
+                    <h:outputLabel value="PLZ" />
                     <h:inputText id="plz" value="#{simpleSearch.plzInput}"  
                             required="true" requiredMessage="Bitte PLZ eingeben" />
                     <h:message for="plz" style="color:red" /> 
-                
-                    <h:commandButton value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
+        	</h:panelGroup>
+			     
+                    <h:commandButton  id="simplesearchsubmit" value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
+            
           	</h:panelGrid>
-        </h:form>  
+      </h:form>
 
 	</ui:define>
   
