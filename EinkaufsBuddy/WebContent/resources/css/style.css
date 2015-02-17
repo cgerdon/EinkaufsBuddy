@@ -47,33 +47,45 @@ h1{
 
 /*** header ***/
 
-#logo{
+#logo {
  	width: 50px;
     height: 50px;
     border-radius: 5px;
 }
 
-#logo-link{
+#logo-link {
 	color: white;
 }
 
-#registrierenlogin{
-	margin-left: auto;
-	margin-top: -25px;
+.ui-button-text {
+	margin: 0px !important;
+	padding: 0px !important;
+	font-family: 'Times New Roman';
+	font-size: 1em;
+	color: black;
+	font-weight: normal;
 }
 
-#logout{
-	padding-left: 95%;
-	margin-top: -25px;
+.ui-button.ui-state-default {
+	background-color: green !important;
+	padding: 0px !important;
+	margin-top: 0px !important;
+	font-size: 1em;
+	width: 100px;
+	height: 25px;
+	box-shadow: none !important;
+	text-shadow: none !important;
+}
+.ui-button.ui-state-hover {
+	background-color: #D5FF95 !important;
+	box-shadow: none !important;
 }
 
-.registrierenloginbutton {
-	background-color: green;
+.login-logout-form{
+	float: right;
+	text-align: right;
 }
 
-.registrierenloginbutton:hover {
-	background-color: #D5FF95;
-}
 
 /*** header - Primeface-Menü 
  .ui-menubar Container element of menubar. 
@@ -135,5 +147,19 @@ ul li.ui-menuitem-active>a{
 
 /*** Startseite Logout ***/
 #simplesearchform{
-	padding: 1em 45%;
+	padding-top: 10em;
+	padding-bottom: 10em;
+	text-align: center;
+}
+
+.simplesearchformmittig{
+	margin: auto;
+}
+
+/*** SearchResults ***/
+
+.message{
+	width: 20px;
+    height: 20px;
+    border-radius: 1px;
 }

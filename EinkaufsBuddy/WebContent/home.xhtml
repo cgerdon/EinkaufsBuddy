@@ -6,20 +6,22 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
+	
 	<h1> Willkommen auf EinkaufsBuddy!</h1>
 	
 	<h:form  id="simplesearchform">
- 
-	 <h:panelGrid columns="3" >
-        <p:inputText id="plz" value="#{simpleSearch.plzInput}" required="true" requiredMessage="Bitte PLZ eingeben" />
-        <h:message for="plz" style="color:red" /> 
-        <p:watermark for="plz" value="PLZ, z.B. 67059" id="watermark" />
-    </h:panelGrid>	     
-    
-       <h:commandButton  id="simplesearchsubmit" value="Inserate anzeigen" action="#{simpleSearch.searchSimple}" />  
-            
-        
-      </h:form>
+		<h:panelGrid columns="1" styleClass="simplesearchformmittig">
+		<h:panelGroup layout="block">
+ 		<p:inputText id="plz" value="#{simpleSearch.plzInput}" required="true" requiredMessage="Bitte PLZ eingeben" />
+			<h:message for="plz" style="color:red" /> 
+			<p:watermark for="plz" value="PLZ, z.B. 67059" id="watermark" />
+       </h:panelGroup>
+       
+       <h:panelGroup layout="block">
+		<h:commandButton  id="simplesearchsubmit" value="suchen" action="#{simpleSearch.searchSimple}" />  
+		</h:panelGroup>
+	</h:panelGrid>
+	</h:form>
 
 	</ui:define>
   

@@ -9,23 +9,29 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>EinkaufsBuddy</title>
-	<h:outputStylesheet library="css" name="style.css"/>
+  <title>EinkaufsBuddy</title>
+  <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 
 <h:body>
-	<h:outputStylesheet library="css" name="style.css"/>
-  	
+
   	<h:panelGroup id="page" layout="block">
 	
-	    <h:panelGroup id="header" layout="block">
-	    	<ui:insert name="header">
-	    		<ui:include src="header.xhtml" />
+	    <h:panelGroup id="logoutheader" layout="block">
+	    	<ui:insert name="logoutheader">
+	    		<ui:include src="logoutheader.xhtml" />
 			</ui:insert>
 		</h:panelGroup>
 		
-		<h:panelGroup id="container" layout="block">	
+		<h:panelGroup id="container2" layout="block">
+	        <h:panelGroup id="sidebox" layout="block">
+		    	<ui:insert name="sidebox">
+		    		<ui:include src="sidebox.xhtml" />
+				</ui:insert>
+			</h:panelGroup>		
+	        <h:panelGroup id="content" layout="block">
 				<ui:insert name="content"/>
+			</h:panelGroup>
 		</h:panelGroup>
 
 		<h:panelGroup id="footer" layout="block">

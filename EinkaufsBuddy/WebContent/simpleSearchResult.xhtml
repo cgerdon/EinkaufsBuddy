@@ -6,9 +6,48 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<ui:repeat var="ads" value="#{simpleSearch.nearAdsList}">
-			<h1>#{ads}</h1> 
-		</ui:repeat>
+		<h:form>
+			<h:outputText value=" XX Inserate gefunden" />
+			<h:outputText value=" Sortieren nach" />
+			<h:commandButton value="Entfernung" />
+			<h:commandButton value="Datum" />
+		</h:form>
+		
+		
+			<ui:repeat var="ads" value="#{simpleSearch.nearAdsList}">
+				<h:form>
+					<h:panelGrid columns="2" border="1">
+						<h:panelGroup>
+							
+							<h:outputText value="xX-Datum-Xx" />
+							<h:outputText value=" - Moins" />
+						<br/>
+							<h:outputText value=" xxx Entfernung" />
+							<h:outputText value=" - XX €" />
+						<br/>	
+							<h:outputText value="Inserat von Max Müller" />
+							<h:outputLink outcome="home">
+								<h:graphicImage class="message" value="resources/images/message.png" alt="message"/>
+							</h:outputLink>
+						<br/>	
+							<h:outputLabel value="Merken:" />
+							<p:inputSwitch value="#{selectBooleanView.value1}" />
+							<h:outputText value=" Verdienst: XX €" />
+						</h:panelGroup>
+						
+						
+						<h:panelGroup>
+						
+							<h:outputText value="#{ads}"/>
+						<br/>	
+							<h:commandButton value="Detailansicht" />
+						<br/>	
+							<h:outputText value="Kategorie: Baumarkt"/>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:form>	
+			</ui:repeat>
+		
 	</ui:define>
   
 </ui:composition>

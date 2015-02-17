@@ -10,11 +10,9 @@
 		<h:graphicImage id="logo" value="resources/images/logo.png" alt="EinkaufsBuddy"/>
 	</h:outputLink>	
 	
- 	<h:form id="logout">  
-		<h:panelGrid columns="1" >
-			<h:commandButton class="registrierenloginbutton" value="logout" action="#{user.logout}"/>  
-		</h:panelGrid>
- 	</h:form>  
+ 	<h:form styleClass="login-logout-form">  
+			<p:commandButton value="Logout" action="#{user.logout}"/>  
+ 	</h:form>
 		
 	 	<h:form id="menu">
 			<p:menubar id="horizontalMenu">

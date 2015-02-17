@@ -5,6 +5,23 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">			
 
-	 sidebox 		
+	<h:outputText value="Datum:" />
+	<p:outputLabel for="von" value="Von:" />
+	<p:calendar id="von" navigator="true" pattern="yyyy-MMM-dd" />
+	<p:outputLabel for="bis" value="Bis:" />
+	<p:calendar id="bis" navigator="true" pattern="yyyy-MMM-dd" />
 
+
+	
+		<h:outputLabel value="Entfernung:" />
+        <p:inputText id="entfernung" value="#{sliderView.number1}" />
+        <p:slider for="entfernung" />
+        
+ 		<h:outputLabel value="Einkaufslimit:" />
+        <p:inputText id="einkaufslimit" value="#{sliderView.number1}" />
+        <p:slider for="einkaufslimit" />
+
+    
+    <h:commandButton value="Aktualisieren" />
+	
 </ui:composition>
