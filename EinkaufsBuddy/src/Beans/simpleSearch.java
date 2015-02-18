@@ -111,7 +111,8 @@ public class simpleSearch {
                          }
                      BufferedReader reader = null;
                      try {
-                         URL url = new URL("http://maps.googleapis.com/maps/api/distancematrix/json?origins=76137%20DE&destinations=76829%20DE|76131%20DE&mode=car&language=de-DE&sensor=false");
+                         URL url = new URL("http://maps.googleapis.com/maps/api/distancematrix/json?origins=" + plzInput + "%20DE&destinations=76829%20DE|76131%20DE&mode=car&language=de-DE&sensor=false");
+                         System.out.println(url);
                          reader = new BufferedReader(new InputStreamReader(url.openStream()));
                          
                          int read;
