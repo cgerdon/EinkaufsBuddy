@@ -37,7 +37,8 @@ public class simpleSearch {
 	private int id;
 	private int limit;
 	private int income;
-	private List<String> nearAdsList;
+	private List<SimpleSearchResults> AdvertList;
+	
 	
 	DataSource ds;
 
@@ -51,6 +52,19 @@ public class simpleSearch {
 	}
 	
 	
+	
+	public List<SimpleSearchResults> getAdvertList() {
+		return AdvertList;
+	}
+
+
+
+	public void setAdvertList(List<SimpleSearchResults> advertList) {
+		AdvertList = advertList;
+	}
+
+
+
 	public String getName() {
 		return name;
 	}
@@ -67,6 +81,10 @@ public class simpleSearch {
 		return vorname;
 	}
 
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 
 	public void setVorname(String vorname) {
@@ -139,7 +157,6 @@ public class simpleSearch {
 	public String searchSimple() throws IOException, JSONException, URISyntaxException {
 		
 		 PreparedStatement ps = null;  
-		 List<String> nearAds = new ArrayList<String>();
 		 List<String> Adressen = new ArrayList<String>();
 		 
 		 StringBuffer buffer = new StringBuffer();
@@ -150,16 +167,24 @@ public class simpleSearch {
              try {  
                  con = ds.getConnection();  
                  if (con != null) {  
-                     String sql = "SELECT member.name, member.lastname ad.text, member.plz, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id;";
+                     String sql = "SELECT member.name, member.last_name, ad.text, member.plz, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id;";
                      ps = con.prepareStatement(sql);  
                      rs = ps.executeQuery();  
                     
                      while(rs.next()) {
                     	 //TODO:Christoph
-                  
-                    	 
-                         nearAds.add(rs.getString("text"));
-                         Adressen.add(rs.getString("street").replaceAll("\\s","+") + "+" + rs.getString("plz").replaceAll("\\s","+"));
+//                    	System.out.println(rs.getString("street"));
+//                    	System.out.println(rs.getString("name"));
+//                    	System.out.println(rs.getString("last_name"));
+//                    	System.out.println(rs.getString("text"));
+//                    	System.out.println(rs.getInt("plz"));
+//                    	System.out.println(rs.getInt("id"));
+//                    	System.out.println(rs.getDouble("limit"));
+//                    	System.out.println(rs.getDouble("income"));
+                    	SimpleSearchResults TempObj = new SimpleSearchResults(rs.getString("text"), rs.getInt("plz"), rs.getString("street"), rs.getString("name"), rs.getString("last_name"), rs.getInt("id"), rs.getDouble("limit"), rs.getDouble("income"), 0);
+                    	//AdvertList.add(TempObj);
+                    	AdvertList.add(TempObj);
+                    	Adressen.add(rs.getString("street").replaceAll("\\s","+") + "+" + rs.getString("plz").replaceAll("\\s","+"));
                          }
                      BufferedReader reader = null;
                      try {
@@ -201,8 +226,8 @@ public class simpleSearch {
                  JSONObject distance = elem.getJSONObject("distance");
                  System.out.println(distance.getString("value"));
              }}
-         //System.out.println(buffer.toString());
-         nearAdsList = nearAds;
+         System.out.println(AdvertList);
+         System.out.println(buffer.toString());
 		return "simpleSearchResult";
 	}
 
