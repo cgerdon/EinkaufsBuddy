@@ -32,12 +32,8 @@ public class simpleSearch {
 	private String text;
 	private int plzDB;
 	private String streetDB;
-	private String name;
-	private String vorname;
-	private int id;
-	private int limit;
-	private int income;
-	private List<SimpleSearchResults> AdvertList;
+	SimpleSearchResults[] AdvertList = new SimpleSearchResults[999];
+	// private List<SimpleSearchResults> AdvertList;
 
 	DataSource ds;
 
@@ -50,53 +46,14 @@ public class simpleSearch {
 		}
 	}
 
-	public List<SimpleSearchResults> getAdvertList() {
+	public SimpleSearchResults[] getAdvertList() {
 		return AdvertList;
 	}
 
-	public void setAdvertList(List<SimpleSearchResults> advertList) {
+	public void setAdvertList(SimpleSearchResults[] advertList) {
 		AdvertList = advertList;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getVorname() {
-		return vorname;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setVorname(String vorname) {
-		this.vorname = vorname;
-	}
-
-	public int getLimit() {
-		return limit;
-	}
-
-	public void setLimit(int limit) {
-		this.limit = limit;
-	}
-
-	public int getIncome() {
-		return income;
-	}
-
-	public void setIncome(int income) {
-		this.income = income;
-	}
-
-	public int getId() {
-		return id;
-	}
 
 	public int getPlzInput() {
 		return plzInput;
@@ -147,9 +104,8 @@ public class simpleSearch {
 					String sql = "SELECT member.name, member.last_name, ad.text, member.plz, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-
+					int i = 0;
 					while (rs.next()) {
-						// TODO:Christoph
 						SimpleSearchResults TempObj = new SimpleSearchResults(
 								rs.getString("text"), rs.getInt("plz"),
 								rs.getString("street"), rs.getString("name"),
@@ -157,7 +113,8 @@ public class simpleSearch {
 								rs.getDouble("limit"), rs.getDouble("income"),
 								0);
 						// AdvertList.add(i, TempObj);
-
+						AdvertList[i] = TempObj;
+						i = i + 1;
 						Adressen.add(rs.getString("street").replaceAll("\\s",
 								"+")
 								+ "+"
@@ -204,10 +161,14 @@ public class simpleSearch {
 				JSONObject elem = elements.getJSONObject(j);
 				JSONObject distance = elem.getJSONObject("distance");
 				System.out.println(distance.getString("value"));
+				AdvertList[j].setDistance(Integer.parseInt(distance
+						.getString("value")));
 			}
 		}
-		System.out.println(AdvertList);
-
+		System.out.println("*****Hier starten die Inserate*****");
+		System.out.println(AdvertList[0].toString());
+		System.out.println(AdvertList[1].toString());
+		System.out.println(AdvertList[2].toString());
 		return "simpleSearchResult";
 	}
 
