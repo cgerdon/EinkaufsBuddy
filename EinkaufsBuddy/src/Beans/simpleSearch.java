@@ -27,11 +27,16 @@ import org.primefaces.json.JSONObject;
 @ManagedBean(name = "simpleSearch")
 @RequestScoped
 public class simpleSearch {
-
+	
 	private int plzInput;
 	private String text;
 	private int plzDB;
 	private String streetDB;
+	private String name;
+	private String vorname;
+	private int id;
+	private int limit;
+	private int income;
 	private List<String> nearAdsList;
 	
 	DataSource ds;
@@ -45,13 +50,59 @@ public class simpleSearch {
 		}
 	}
 	
-	public List<String> getNearAdsList() {
-		return nearAdsList;
+	
+	public String getName() {
+		return name;
 	}
 
-	public void setNearAdsList(List<String> nearAdsList) {
-		this.nearAdsList = nearAdsList;
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
+
+	public String getVorname() {
+		return vorname;
+	}
+
+
+
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
+	}
+
+
+
+	public int getLimit() {
+		return limit;
+	}
+
+
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+
+
+	public int getIncome() {
+		return income;
+	}
+
+
+
+	public void setIncome(int income) {
+		this.income = income;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
 
 	public int getPlzInput() {
 		return plzInput;
@@ -86,7 +137,7 @@ public class simpleSearch {
 	}
 
 	public String searchSimple() throws IOException, JSONException, URISyntaxException {
-		//System.out.println(plzInput);
+		
 		 PreparedStatement ps = null;  
 		 List<String> nearAds = new ArrayList<String>();
 		 List<String> Adressen = new ArrayList<String>();
@@ -99,7 +150,7 @@ public class simpleSearch {
              try {  
                  con = ds.getConnection();  
                  if (con != null) {  
-                     String sql = "SELECT ad.text, member.plz, member.street from ad LEFT JOIN member ON ad.advertiser_id=member.id;";
+                     String sql = "SELECT member.name, member.lastname ad.text, member.plz, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id;";
                      ps = con.prepareStatement(sql);  
                      rs = ps.executeQuery();  
                     
