@@ -3,10 +3,8 @@ package Beans;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -106,20 +104,20 @@ public class simpleSearch {
                      rs = ps.executeQuery();  
                     
                      while(rs.next()) {
-                    	 //TODO:Christoph	hier das hier https://developers.google.com/maps/documentation/distancematrix/?hl=de
-                    	 //http://maps.googleapis.com/maps/api/distancematrix/json?origins=76137%20DE&destinations=76829%20DE|76131%20DE&mode=car&language=de-DE&sensor=false
-//                    	 Beispiel JSON mit 2 adressen
+                    	 //TODO:Christoph
+                  
                     	 
                          nearAds.add(rs.getString("text"));
                          Adressen.add(rs.getString("street") + " " + rs.getString("plz"));
                          }
                      BufferedReader reader = null;
                      try {
-                         String tempurl = "http://maps.googleapis.com/maps/api/distancematrix/json?origins=" + plzInput + "%20DE&destinations=";
+                         String tempurl = "/maps/api/distancematrix/json?origins=" + plzInput + " DE&destinations=";
                          for (String adr : Adressen) {
                         	 tempurl +=  adr + " DE|";}
                          tempurl += "&mode=car&language=de-DE&sensor=false";
-                       	URL url = new URL(URLEncoder.encode(tempurl,"UTF-8"));
+                       	@SuppressWarnings("deprecation")
+						URL url = new URL("http","maps.googleapis.com",URLEncoder.encode(tempurl));
 
                          System.out.println(url);
                          reader = new BufferedReader(new InputStreamReader(url.openStream()));
