@@ -1,0 +1,37 @@
+<ui:composition template="template/master.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+	<ui:define name="content">
+		<h1>Das sind deine Nachrichten! </h1>
+		
+		
+		
+		<h:form>
+			<h:panelGrid columns="1">
+				<h:panelGroup>
+					<h:outputText value="meineDaten"/>
+				<br/>
+					<h:outputText value="meinText"/>
+				</h:panelGroup>
+	
+				<h:panelGroup>
+					<h:outputText value="deineDaten"/>
+				<br/>
+					<h:outputText value="deinText"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<h:inputTextarea/>
+					<h:commandButton value="senden" action="#{message.showMessage}"/>				
+				</h:panelGroup>
+			
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+  
+</ui:composition>
