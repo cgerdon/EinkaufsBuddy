@@ -3,7 +3,11 @@ package Beans;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,7 +87,7 @@ public class simpleSearch {
 		this.streetDB = streetDB;
 	}
 
-	public String searchSimple() throws IOException, JSONException {
+	public String searchSimple() throws IOException, JSONException, URISyntaxException {
 		//System.out.println(plzInput);
 		 PreparedStatement ps = null;  
 		 List<String> nearAds = new ArrayList<String>();
@@ -111,7 +115,12 @@ public class simpleSearch {
                          }
                      BufferedReader reader = null;
                      try {
-                         URL url = new URL("http://maps.googleapis.com/maps/api/distancematrix/json?origins=" + plzInput + "%20DE&destinations=76829%20DE|76131%20DE&mode=car&language=de-DE&sensor=false");
+                         String tempurl = "http://maps.googleapis.com/maps/api/distancematrix/json?origins=" + plzInput + "%20DE&destinations=";
+                         for (String adr : Adressen) {
+                        	 tempurl +=  adr + " DE|";}
+                         tempurl += "&mode=car&language=de-DE&sensor=false";
+                       	URL url = new URL(URLEncoder.encode(tempurl,"UTF-8"));
+
                          System.out.println(url);
                          reader = new BufferedReader(new InputStreamReader(url.openStream()));
                          
