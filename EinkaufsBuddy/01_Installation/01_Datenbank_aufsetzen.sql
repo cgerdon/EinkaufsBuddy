@@ -145,10 +145,10 @@ INSERT INTO `days_available` (`id`, `day`) VALUES (4, 'Donnerstag');
 INSERT INTO `days_available` (`id`, `day`) VALUES (5, 'Freitag');
 INSERT INTO `days_available` (`id`, `day`) VALUES (6, 'Samstag');
 
-INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (1, 'cgerdon@gmail.com', 'asdf', 'Christoph', 'Gerdon', '1987-10-19', 1, 'Das bin Ich!', 1, NULL, 'Luise-Riegger-Straße 54', 76137, '01719028828');
-INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (2, 'achim@gmx.de', 'achim', 'Achim', 'Adam', '1980-01-01', 1, 'Der Achim', 1, NULL, 'Müllerweg 123', 76829, '0190123456');
+INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (1, 'cgerdon@gmail.com', 'asdf', 'Christoph', 'Gerdon', '1987-10-19', 1, 'Das bin Ich!', 1, NULL, 'Luise-Riegger-Strasse 54', 76137, '01719028828');
+INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (2, 'achim@gmx.de', 'achim', 'Achim', 'Adam', '1980-01-01', 1, 'Der Achim', 1, NULL, 'Muellerweg 123', 76829, '0190123456');
 INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (3, 'Beate@web.de', 'beate', 'Beate', 'Braun', '1955-05-05', 0, 'Beate in da house', 3, NULL, 'Weinweg 5', 68165, '051512535123');
-INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (4, 'carmen@gmail.com', 'carmen', 'Carmen', 'Schmörebröd', '1990-12-24', 1, 'Knäckebrot fetzt arg', 2, NULL, 'Ikealand 1', 10823, '0049123456778');
+INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (4, 'carmen@gmail.com', 'carmen', 'Carmen', 'Schmörebröd', '1990-12-24', 1, 'Knaeckebrot fetzt arg', 2, NULL, 'Emil-Heckel-Stra�e 18', 68163, '0049123456778');
 INSERT INTO `member` (`id`, `mail`, `password_hash`, `name`, `last_name`, `birthdate`, `car`, `abouttext`, `fk_sex`, `picture`, `street`, `plz`, `phone`) VALUES (5, 'dada@dudu.com', 'dada', 'Dada', 'Dudu', '1918-12-11', 0, 'gna', 3, NULL, 'Ja!', 76137, '0727171458525');
 
 INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (1, 1, 1);
