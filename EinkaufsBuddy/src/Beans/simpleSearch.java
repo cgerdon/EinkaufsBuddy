@@ -28,7 +28,7 @@ import org.primefaces.json.JSONObject;
 @RequestScoped
 public class simpleSearch {
 
-	private int plzInput;
+	private Integer plzInput;
 	private String text;
 	private int plzDB;
 	private String streetDB;
@@ -55,11 +55,11 @@ public class simpleSearch {
 	}
 
 
-	public int getPlzInput() {
+	public Integer getPlzInput() {
 		return plzInput;
 	}
 
-	public void setPlzInput(int plzInput) {
+	public void setPlzInput(Integer plzInput) {
 		this.plzInput = plzInput;
 	}
 
