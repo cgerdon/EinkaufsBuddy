@@ -6,18 +6,27 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das sind deine Nachrichten! </h1>
+		<h1>Das ist der Nachrichtenverlauf mit XXX! </h1>
 		
 		
 		
 		<h:form>
 			<h:panelGrid columns="1">
 				<h:panelGroup>
-					<h:outputText value="Nachrichten von: XXX"/>
+					<h:outputText value="meineDaten"/>
 				<br/>
-					<h:outputText value="Text"/>
+					<h:outputText value="meinText"/>
+				</h:panelGroup>
+	
+				<h:panelGroup>
+					<h:outputText value="deineDaten"/>
 				<br/>
-					<h:commandButton value="Nachrichtenverlauf ansehen" action="messagedetail"/>				
+					<h:outputText value="deinText"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<h:inputTextarea/>
+					<h:commandButton value="senden" action="#{message.showMessage}"/>				
 				</h:panelGroup>
 			
 			</h:panelGrid>
