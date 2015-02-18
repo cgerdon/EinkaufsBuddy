@@ -303,23 +303,20 @@ public class Advert {
                 if (ds != null) {  
                     con = ds.getConnection();  
                     if (con != null) { 
-                    	//new SimpleDateFormat("yyyy-MM-dd").format(date);
-                        String sql = "INSERT INTO ad(id, advertiser_id, fk_time, limit, income, text, fk_category, status, fav_market, date, buyer_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";  
+                    	//INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(3, '2014-11-05', 3, 10, 1, 'Hallo, ich mag bitte eine Flasche Schnaps haben!', 1, 0, 'Aldi', NULL),
+                        String sql = "INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(?,?,?,?,?,?,?,?,?,?)";  
                         ps = con.prepareStatement(sql);  
-                        ps.setInt(1, ad_id);
-                        ps.setInt(2, advertiser_id); 
-                        ps.setInt(3, fk_time_id);  
+                        ps.setInt(1, 1);
+                        ps.setString(2, new SimpleDateFormat("yyyy-MM-dd").format(date));
+                        ps.setInt(3, 2);  
                         ps.setDouble(4, limit);  
                         ps.setDouble(5, income);  
                         ps.setString(6, text);
-                        ps.setInt(7, fk_category);
+                        ps.setInt(7, 1);
                         ps.setBoolean(8, status); 
                         ps.setString(9, fav_market);
-                        //ps.setString(10, "0000-00-00");
-                        //ps.setDate(10, date);
-                        //ps.setDate(10, new SimpleDateFormat("yyyy-MM-dd").format(date));
-                        ps.setString(10, new SimpleDateFormat("yyyy-MM-dd").format(date));
-                        ps.setInt(11,buyer_id);
+                        ps.setString(10, null);
+                        System.out.println(ps.toString());
                         i = ps.executeUpdate();  
                         System.out.println("Inserat erfolgreich angelegt");  
                     }  
