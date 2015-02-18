@@ -108,18 +108,19 @@ public class simpleSearch {
                   
                     	 
                          nearAds.add(rs.getString("text"));
-                         Adressen.add(rs.getString("street") + " " + rs.getString("plz"));
+                         Adressen.add(rs.getString("street").replaceAll("\\s","+") + "+" + rs.getString("plz").replaceAll("\\s","+"));
                          }
                      BufferedReader reader = null;
                      try {
-                         String tempurl = "/maps/api/distancematrix/json?origins=" + plzInput + " DE&destinations=";
+                         String tempurl = "/maps/api/distancematrix/json?origins=" + plzInput + "+DE&destinations=";
                          for (String adr : Adressen) {
-                        	 tempurl +=  adr + " DE|";}
-                         tempurl += "&mode=car&language=de-DE&sensor=false";
-                       	@SuppressWarnings("deprecation")
-						URL url = new URL("http","maps.googleapis.com",URLEncoder.encode(tempurl));
+                        	 tempurl +=  adr + "+DE|";}
+                        tempurl += "&mode=car&language=de-DE&sensor=false";
+						URL url = new URL("https","maps.googleapis.com",tempurl);
+						
 
                          System.out.println(url);
+
                          reader = new BufferedReader(new InputStreamReader(url.openStream()));
                          
                          int read;
