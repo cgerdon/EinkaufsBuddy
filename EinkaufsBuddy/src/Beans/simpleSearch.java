@@ -32,8 +32,8 @@ public class simpleSearch {
 	private String text;
 	private int plzDB;
 	private String streetDB;
-	ArrayList<SimpleSearchResults> eineListe = new ArrayList<SimpleSearchResults>();
-	SimpleSearchResults[] AdvertList = new SimpleSearchResults[999];
+	ArrayList<SimpleSearchResults> AdvertList = new ArrayList<SimpleSearchResults>();
+	//SimpleSearchResults[] AdvertList = new SimpleSearchResults[999];
 	DataSource ds;
 
 	public simpleSearch() {
@@ -45,22 +45,13 @@ public class simpleSearch {
 		}
 	}
 
-	public SimpleSearchResults[] getAdvertList() {
+	
+	public ArrayList<SimpleSearchResults> getEineListe() {
 		return AdvertList;
 	}
 
-	public void setAdvertList(SimpleSearchResults[] advertList) {
-		AdvertList = advertList;
-	}
-
-
-	
-	public ArrayList<SimpleSearchResults> getEineListe() {
-		return eineListe;
-	}
-
 	public void setEineListe(ArrayList<SimpleSearchResults> eineListe) {
-		this.eineListe = eineListe;
+		this.AdvertList = eineListe;
 	}
 
 	public Integer getPlzInput() {
@@ -121,8 +112,7 @@ public class simpleSearch {
 								rs.getDouble("limit"), rs.getDouble("income"),
 								0);
 						// AdvertList.add(i, TempObj);
-						AdvertList[i] = TempObj;
-						eineListe.add(TempObj);
+						AdvertList.add(TempObj);
 						i = i + 1;
 						Adressen.add(rs.getString("street").replaceAll("\\s",
 								"+")
@@ -170,18 +160,13 @@ public class simpleSearch {
 				JSONObject elem = elements.getJSONObject(j);
 				JSONObject distance = elem.getJSONObject("distance");
 				System.out.println(distance.getString("value"));
-				AdvertList[j].setDistance(Integer.parseInt(distance
-						.getString("value")));
-				SimpleSearchResults asdf = eineListe.get(j);
+				SimpleSearchResults asdf = AdvertList.get(j);
 				asdf.setDistance(Integer.parseInt(distance
 						.getString("value")));
-				eineListe.set(j, asdf);
+				AdvertList.set(j, asdf);
 			}
 		}
-		System.out.println("*****Hier starten die Inserate*****");
-		System.out.println(AdvertList[0].toString());
-		System.out.println(AdvertList[1].toString());
-		System.out.println(AdvertList[2].toString());
+		
 		return "simpleSearchResult";
 	}
 
