@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 //import java.util.Date;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,6 +18,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+
 @ManagedBean(name = "message") 
 @SessionScoped  
 
@@ -21,7 +26,7 @@ public class message {
 	
 	private int ms_id;
  //   private Date ms_time;
- //   private String ms_text;
+    private String ms_text;
     
 /*	private int ms_receiverId;	
     private String ms_receiverFirstName;  
@@ -56,7 +61,14 @@ public class message {
 	}
 
 
+	public String getMs_text() {
+		return ms_text;
+	}
 
+
+	public void setMs_text(String ms_text) {
+		this.ms_text = ms_text;
+	}
 
 
 	public int getMs_senderId() {
@@ -68,33 +80,81 @@ public class message {
 		this.ms_senderId = ms_senderId;
 	}
 
-	public String showMessage() { 
-       
- /*        System.out.println(ms_time);
-        System.out.println(ms_text);
-      System.out.println(ms_receiverId);
-        System.out.println(ms_receiverFirstName);
-        System.out.println(ms_receiverLastName);
-        System.out.println(ms_receiverPicture);
-  */      
-  /*       System.out.println(ms_senderFirstName);
-        System.out.println(ms_senderLastName);
-        System.out.println(ms_senderPicture);
- */       
+	List<String> messagedetails = new ArrayList<String>();
+
+	public List<String> getMessagedetails() {
+		return messagedetails;
+	}
+
+
+	public void setMessagedetails(List<String> messagedetails) {
+		this.messagedetails = messagedetails;
+	}
+
+
+	public String showMessage() {  
+         
             PreparedStatement ps = null;  
-            Connection con = null;
-    	//	ResultSet rs = null;
+            Connection con = null;  
+            ResultSet rs = null;  
+  
+            if (ds != null) {  
+                try {  
+                    con = ds.getConnection();  
+                    if (con != null) {  
+                        String sql = "SELECT message.id, message.sender_id, message.text FROM message" ;  
+                        ps = con.prepareStatement(sql);  
+                        rs = ps.executeQuery();
+                       
+                        while (rs.next()) {  
+                        	ms_id = rs.getInt("message.id");
+                        	//messagedetails.add(rs.getString("message.text"));
+                        	
+	                        ms_senderId = rs.getInt("message.sender_id");  
+	                        ms_text = rs.getString("message.text");
+	                        /* firstName = rs.getString("name");
+	                        lastName = rs.getString("last_name");  
+	                        email = rs.getString("mail");
+	                        password = rs.getString("password_hash");
+	                        birthday = rs.getDate("birthdate");
+	                        car = rs.getInt("car");
+	                        abouttext = rs.getString("abouttext");
+	                        street = rs.getString("street");
+	                        plz = rs.getInt("plz");
+	                        phone = rs.getString("phone");*/
+	                        System.out.println (ms_id + " " + ms_senderId + " " + ms_text);
+                        }
+                    }  
+                } catch (SQLException sqle) {  
+                    sqle.printStackTrace();  
+                }  
+            } 
+            
+           
+            return "messagedetail";
+        }  
+     
+	
+	public String writeMessage() {  
+        int i = 0;
+        
+            PreparedStatement ps = null;  
+            Connection con = null;  
             try {  
                 if (ds != null) {  
                     con = ds.getConnection();  
                     if (con != null) { 
-                        String sql = "SELECT message.id, message.sender_id FROM message WHERE message.id=1;";
-        				//????
-                        ps = con.prepareStatement(sql);
-                        /*rs = ps.executeQuery(); 
-                        rs.setInt(1, ms_id);
-                        rs.setInt(2, ms_senderId);
-                   */
+                    	//INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(3, '2014-11-05', 3, 10, 1, 'Hallo, ich mag bitte eine Flasche Schnaps haben!', 1, 0, 'Aldi', NULL),
+                        String sql = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `ad_id`, `text`) VALUES(?,?,?,?,?)";  
+                        ps = con.prepareStatement(sql);  
+                        ps.setInt(1, 1);
+                        ps.setInt(2, 2);  
+                        ps.setString(3, "2015-01-06 15:00:00");
+                        ps.setInt(4, 3);  
+                        ps.setString(5, "Give me more");  
+                       // System.out.println(ps.toString());
+                        i = ps.executeUpdate();  
+                        System.out.println("Message erfolgreich eingepflegt");  
                     }  
                 }  
             } catch (Exception e) {  
@@ -107,10 +167,11 @@ public class message {
                     e.printStackTrace();  
                 }  
             }  
-            
-            System.out.println(ms_id);
-            System.out.println(ms_senderId);
-            return "message";
+         
+        if (i > 0) {  
+            return "messagedetails";  
+        } else  
+            return "unsuccess";  
     }   
     
     
