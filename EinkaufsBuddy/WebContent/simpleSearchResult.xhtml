@@ -22,17 +22,17 @@
 							<h:outputText value="xX-Datum-Xx" />
 							<h:outputText value=" - Moins" />
 						<br/>
-							<h:outputText value=" xxx Entfernung" />
-							<h:outputText value=" - XX €" />
+							<h:outputText value=" #{ads.distance}m Entfernung" />
+							<h:outputText value=" #{ads.limit}  €" />
 						<br/>	
-							<h:outputText value="Inserat von Max Müller" />
+							<h:outputText value="Inserat von #{ads.name} #{ads.last_name}" />
 							<h:outputLink outcome="home">
 								<h:graphicImage class="message" value="resources/images/message.png" alt="message"/>
 							</h:outputLink>
 						<br/>	
 							<h:outputLabel value="Merken:" />
 							<p:inputSwitch value="#{selectBooleanView.value1}" />
-							<h:outputText value=" Verdienst: XX €" />
+							<h:outputText value=" Verdienst: #{ads.income} €" />
 						</h:panelGroup>
 						
 						
