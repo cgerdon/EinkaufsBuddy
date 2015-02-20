@@ -29,11 +29,13 @@ import org.primefaces.json.JSONObject;
 public class simpleSearch {
 
 	private Integer plzInput;
+	
 	private String text;
+	private int summeAds;
 	private int plzDB;
 	private String streetDB;
 	ArrayList<SimpleSearchResults> AdvertList = new ArrayList<SimpleSearchResults>();
-	//SimpleSearchResults[] AdvertList = new SimpleSearchResults[999];
+
 	DataSource ds;
 
 	public simpleSearch() {
@@ -46,13 +48,34 @@ public class simpleSearch {
 	}
 
 	
-	public ArrayList<SimpleSearchResults> getEineListe() {
+	
+	
+	public ArrayList<SimpleSearchResults> getAdvertList() {
 		return AdvertList;
 	}
 
-	public void setEineListe(ArrayList<SimpleSearchResults> eineListe) {
-		this.AdvertList = eineListe;
+
+
+
+	public void setAdvertList(ArrayList<SimpleSearchResults> advertList) {
+		AdvertList = advertList;
 	}
+
+
+
+
+	public DataSource getDs() {
+		return ds;
+	}
+
+
+
+
+	public void setDs(DataSource ds) {
+		this.ds = ds;
+	}
+
+
 
 	public Integer getPlzInput() {
 		return plzInput;
@@ -84,6 +107,10 @@ public class simpleSearch {
 
 	public void setStreetDB(String streetDB) {
 		this.streetDB = streetDB;
+	}
+	
+	public void summe(){
+		setSummeAds(AdvertList.size());
 	}
 
 	public String searchSimple() throws IOException, JSONException,
@@ -166,8 +193,22 @@ public class simpleSearch {
 				AdvertList.set(j, asdf);
 			}
 		}
-		
+		summe();
 		return "simpleSearchResult";
+	}
+
+
+
+
+	public int getSummeAds() {
+		return summeAds;
+	}
+
+
+
+
+	public void setSummeAds(int summeAds) {
+		this.summeAds = summeAds;
 	}
 
 }

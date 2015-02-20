@@ -7,14 +7,14 @@
     
 	<ui:define name="content">
 		<h:form>
-			<h:outputText value=" XX Inserate gefunden" />
+			<h:outputText value="#{simpleSearch.summeAds} Inserate gefunden" />
 			<h:outputText value=" Sortieren nach" />
 			<h:commandButton value="Entfernung" />
 			<h:commandButton value="Datum" />
 		</h:form>
 		
 		
-			<ui:repeat var="ads" value="#{simpleSearch.eineListe}">
+			<ui:repeat var="ads" value="#{simpleSearch.advertList}">
 				<h:form>
 					<h:panelGrid columns="2" border="1">
 						<h:panelGroup>
