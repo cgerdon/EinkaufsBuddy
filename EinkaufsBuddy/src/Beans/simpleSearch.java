@@ -32,6 +32,7 @@ public class simpleSearch {
 	private String text;
 	private int plzDB;
 	private String streetDB;
+	ArrayList<SimpleSearchResults> eineListe = new ArrayList<SimpleSearchResults>();
 	SimpleSearchResults[] AdvertList = new SimpleSearchResults[999];
 	DataSource ds;
 
@@ -52,6 +53,15 @@ public class simpleSearch {
 		AdvertList = advertList;
 	}
 
+
+	
+	public ArrayList<SimpleSearchResults> getEineListe() {
+		return eineListe;
+	}
+
+	public void setEineListe(ArrayList<SimpleSearchResults> eineListe) {
+		this.eineListe = eineListe;
+	}
 
 	public Integer getPlzInput() {
 		return plzInput;
@@ -112,6 +122,7 @@ public class simpleSearch {
 								0);
 						// AdvertList.add(i, TempObj);
 						AdvertList[i] = TempObj;
+						eineListe.add(TempObj);
 						i = i + 1;
 						Adressen.add(rs.getString("street").replaceAll("\\s",
 								"+")
@@ -161,6 +172,10 @@ public class simpleSearch {
 				System.out.println(distance.getString("value"));
 				AdvertList[j].setDistance(Integer.parseInt(distance
 						.getString("value")));
+				SimpleSearchResults asdf = eineListe.get(j);
+				asdf.setDistance(Integer.parseInt(distance
+						.getString("value")));
+				eineListe.set(j, asdf);
 			}
 		}
 		System.out.println("*****Hier starten die Inserate*****");
