@@ -14,7 +14,7 @@
 		</h:form>
 		
 		
-			<ui:repeat var="ads" value="#{simpleSearch.nearAdsList}">
+			<ui:repeat var="ads" value="#{simpleSearch.advertList}">
 				<h:form>
 					<h:panelGrid columns="2" border="1">
 						<h:panelGroup>
@@ -38,7 +38,7 @@
 						
 						<h:panelGroup>
 						
-							<h:outputText value="#{ads}"/>
+							<h:outputText value="#{ads.text}"/>
 						<br/>	
 							<h:commandButton value="Detailansicht" />
 						<br/>	

@@ -33,8 +33,6 @@ public class simpleSearch {
 	private int plzDB;
 	private String streetDB;
 	SimpleSearchResults[] AdvertList = new SimpleSearchResults[999];
-	// private List<SimpleSearchResults> AdvertList;
-
 	DataSource ds;
 
 	public simpleSearch() {
