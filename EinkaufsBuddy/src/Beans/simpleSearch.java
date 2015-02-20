@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +28,7 @@ import org.primefaces.json.JSONObject;
 public class simpleSearch {
 
 	private Integer plzInput;
-	
+
 	private String text;
 	private int summeAds;
 	private int plzDB;
@@ -47,35 +46,21 @@ public class simpleSearch {
 		}
 	}
 
-	
-	
-	
 	public ArrayList<SimpleSearchResults> getAdvertList() {
 		return AdvertList;
 	}
-
-
-
 
 	public void setAdvertList(ArrayList<SimpleSearchResults> advertList) {
 		AdvertList = advertList;
 	}
 
-
-
-
 	public DataSource getDs() {
 		return ds;
 	}
 
-
-
-
 	public void setDs(DataSource ds) {
 		this.ds = ds;
 	}
-
-
 
 	public Integer getPlzInput() {
 		return plzInput;
@@ -108,8 +93,8 @@ public class simpleSearch {
 	public void setStreetDB(String streetDB) {
 		this.streetDB = streetDB;
 	}
-	
-	public void summe(){
+
+	public void summe() {
 		setSummeAds(AdvertList.size());
 	}
 
@@ -157,8 +142,6 @@ public class simpleSearch {
 						URL url = new URL("https", "maps.googleapis.com",
 								tempurl);
 
-						System.out.println(url);
-
 						reader = new BufferedReader(new InputStreamReader(
 								url.openStream()));
 
@@ -186,10 +169,8 @@ public class simpleSearch {
 			for (int j = 0; j < elements.length(); j++) {
 				JSONObject elem = elements.getJSONObject(j);
 				JSONObject distance = elem.getJSONObject("distance");
-				System.out.println(distance.getString("value"));
 				SimpleSearchResults asdf = AdvertList.get(j);
-				asdf.setDistance(Integer.parseInt(distance
-						.getString("value")));
+				asdf.setDistance(Integer.parseInt(distance.getString("value")));
 				AdvertList.set(j, asdf);
 			}
 		}
@@ -197,15 +178,9 @@ public class simpleSearch {
 		return "simpleSearchResult";
 	}
 
-
-
-
 	public int getSummeAds() {
 		return summeAds;
 	}
-
-
-
 
 	public void setSummeAds(int summeAds) {
 		this.summeAds = summeAds;
