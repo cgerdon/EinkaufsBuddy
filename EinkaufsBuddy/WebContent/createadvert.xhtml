@@ -26,6 +26,16 @@
 				<h:message for="date" style="color:red" />
 			</h:panelGroup>	
 			
+			<h:panelGroup>
+				<h:outputText value="Zeit der Anlieferung:" />
+				<h:selectOneRadio value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben">
+					<f:selectItem itemValue="1" itemLabel="Vormittag"/>
+					<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
+					<f:selectItem itemValue="3" itemLabel="Abend"/>
+				</h:selectOneRadio>
+				<h:message for="fk_time_id" style="color:red" />
+			</h:panelGroup>	
+			
 			<h:panelGroup>  
 				<h:outputText value="Budget in Euro:" />  
 				<h:inputText id="limit" value="#{advert.limit}"  

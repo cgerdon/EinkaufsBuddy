@@ -2,8 +2,12 @@ package Beans;
   
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -22,7 +26,6 @@ public class Advert {
 	private int ad_id;
     private int advertiser_id; 
     private Date date;
-    //private String date;
     private int fk_time_id;
     private double income;
     private double limit;
@@ -59,7 +62,7 @@ public class Advert {
 
 	public void setAd_id(int ad_id) {
 		this.ad_id = ad_id;
-		System.out.println("test1");  
+  
 	}
 
 
@@ -77,15 +80,6 @@ public class Advert {
 	}
 
 
-	/*public String getDate() {
-		return date;
-	}
-
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-*/
 	public Date getDate() {
 		return date;
 	}
@@ -245,7 +239,7 @@ public class Advert {
 	}
 
 
-/*Inserat muss man ändern können
+	//Inserat muss man ändern können
 	public String updateInfos() {
 		//TODO:Christoph	sieht mistig aus, schön machen.
 		  int i = 0;  
@@ -255,9 +249,8 @@ public class Advert {
 	                if (ds != null) {  
 	                    con = ds.getConnection();  
 	                    if (con != null) {  
-	                    	if (birthday == null){
-	                    	}
-	                    	String sql = "UPDATE ad set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' , car='" + car + "' , abouttext='" + abouttext + "' , street='" + street + "' , plz='" + plz + "' , phone='" + phone + "', birthdate='" + new SimpleDateFormat("yyyy-MM-dd").format(birthday) + "' where mail ='" + email + "';";
+	                    	
+	                    	String sql = "UPDATE ad set date='" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', fk_timt_id ='" + fk_time_id + "', limit'" + limit + "' , text='" + text + "' , fk_category='" + fk_category + "' , status='" + status + "' , fav_market='" + fav_market + "' where id ='" + ad_id + "';";
 
 	                    	System.out.println(sql);
 	                    	ps = con.prepareStatement(sql);  
@@ -277,16 +270,18 @@ public class Advert {
 	            }  
 
 	        if (i > 0) {  
-	           return "success";  
+	           return "successad";  
 	        } else  
 	            return "unsuccess";  
 	}
-*/
+
 	public String add() {  
         int i = 0;
-        System.out.println("test3");
-        System.out.println(ad_id);
+        
+        
+        //advertiser_id ist die user id --> muss irgendwie da rein kommen
         System.out.println(advertiser_id);
+        System.out.println(date);
         System.out.println(fk_time_id);
         System.out.println(limit);
         System.out.println(income);
@@ -294,21 +289,23 @@ public class Advert {
         System.out.println(fk_category);
         System.out.println(status);
         System.out.println(fav_market);
-        System.out.println(date);
         System.out.println(buyer_id);
         
-             PreparedStatement ps = null;  
-            Connection con = null;  
+            PreparedStatement ps = null;  
+            Connection con = null;
+            ResultSet rs = null; 
             try {  
                 if (ds != null) {  
                     con = ds.getConnection();  
                     if (con != null) { 
                     	//INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(3, '2014-11-05', 3, 10, 1, 'Hallo, ich mag bitte eine Flasche Schnaps haben!', 1, 0, 'Aldi', NULL),
                         String sql = "INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(?,?,?,?,?,?,?,?,?,?)";  
-                        ps = con.prepareStatement(sql);  
+                        ps = con.prepareStatement(sql);    
+                        rs = ps.executeQuery();  
+                        rs.next(); 
                         ps.setInt(1, 1);
                         ps.setString(2, new SimpleDateFormat("yyyy-MM-dd").format(date));
-                        ps.setInt(3, 2);  
+                        ps.setInt(3, fk_time_id);  
                         ps.setDouble(4, limit);  
                         ps.setDouble(5, income);  
                         ps.setString(6, text);
@@ -317,7 +314,7 @@ public class Advert {
                         ps.setString(9, fav_market);
                         ps.setString(10, null);
                         System.out.println(ps.toString());
-                        i = ps.executeUpdate();  
+                        i = ps.executeUpdate();
                         System.out.println("Inserat erfolgreich angelegt");  
                     }  
                 }  
@@ -333,10 +330,65 @@ public class Advert {
             }  
          
         if (i > 0) {  
-            return "success";  
+            return "successad";  
         } else  
             return "unsuccess";  
     }   
+	
+	public void dbData(int ad_id) {  
+            PreparedStatement ps = null;  
+            Connection con = null;  
+            ResultSet rs = null;  
+  
+            if (ds != null) {  
+                try {  
+                    con = ds.getConnection();  
+                    if (con != null) {  
+                        String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where id = '"  
+                                + ad_id + "'";  
+                        ps = con.prepareStatement(sql);  
+                        rs = ps.executeQuery();  
+                        rs.next();  
+                        ad_id = rs.getInt("id");
+                        advertiser_id = rs.getInt("advertiser_id");
+                        date = rs.getDate(new SimpleDateFormat("yyyy-MM-dd").format(date));  
+                        fk_time_id = rs.getInt("fk_time_id");
+                        limit = rs.getDouble("limit");
+                        income = rs.getDouble("income");
+                        text = rs.getString("text");
+                        fk_category = rs.getInt("fk_category");
+                        status = rs.getBoolean("status");
+                        fav_market = rs.getString("fav_market");
+                        buyer_id = rs.getInt("buyer_id");
+                    }  
+                } catch (SQLException sqle) {  
+                    sqle.printStackTrace();  
+                }    
+        }  
+    }  
     
+	public String getIDParam(FacesContext fc){
+		 
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		return params.get("ad_id");
+ 
+	}
+    
+    public String changeData(){
+    	FacesContext fc = FacesContext.getCurrentInstance();
+		this.ad_id = Integer.parseInt(getIDParam(fc));
+ 
+    	dbData(ad_id);
+    	return "changedata";
+    }
+	
+  /*  public String showown(){
+    	
+    	
+    }
+    
+    public String showothers(){
+    	
+    }*/
 	
 }  

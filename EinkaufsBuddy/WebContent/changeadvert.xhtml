@@ -1,0 +1,65 @@
+<ui:composition template="template/master.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+<ui:define name="content">
+		<h:form id="registerForm">
+			<h:panelGrid columns="3">
+					
+					<h:outputText value="Bevorzugter Markt:" />
+					<h:inputText id="fav_market" value="#{advert.fav_market}" disabled="true"/>
+					<h:inputHidden id="fav_market" value="#{advert.fav_market}" />
+			
+
+					<h:outputText value="Datum:" />
+					<h:inputText id="date" value="#{advert.date}" required="true" requiredMessage="Bitte Datum angeben" >
+						<f:convertDateTime pattern="yyyy-mm-dd" />
+					</h:inputText>
+					<h:message for="date" style="color:red" />
+
+			
+					<h:outputText value="Zeit der Anlieferung:" />
+					<h:selectOneRadio value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben">
+						<f:selectItem itemValue="1" itemLabel="Vormittag"/>
+						<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
+						<f:selectItem itemValue="3" itemLabel="Abend"/>
+					</h:selectOneRadio>
+					<h:message for="fk_time_id" style="color:red" />
+			
+			
+			 
+					<h:outputText value="Budget in Euro:" />  
+					<h:inputText id="limit" value="#{advert.limit}"  
+						required="true" requiredMessage="Bitte Budget angeben" />
+					<h:message for="limit" style="color:red" /> 
+          
+            
+			
+					<h:outputText value="Vergütung in Euro:" />  
+					<h:inputText id="income" value="#{advert.income}"  
+						required="true" requiredMessage="Bitte Vergütung angeben" /> 
+					<h:message for="income" style="color:red" />  
+  			
+  			
+			  
+					<h:outputText value="Einkaufsliste:" /> 
+					<h:inputTextarea id="text" value="#{advert.text}"  
+						required="true" requiredMessage="Bitte Einkaufsliste angeben" /> 
+					<h:message for="text" style="color:red" />
+			  
+        			<h:outputText value="Aktivschaltung:" />
+					<h:selectBooleanCheckbox id="active" value="#{advert.status}" /> 
+					
+					
+			</h:panelGrid>		
+		
+				
+					<h:commandButton value="Speichern" action="#{user.updateInfos}"/>
+
+		</h:form>
+</ui:define>
+  
+</ui:composition> 

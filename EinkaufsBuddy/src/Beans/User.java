@@ -298,7 +298,7 @@ public class User {
     public String login() {  
         dbData(email);  
         if (email.equals(dbName) && password.equals(dbPassword)) { 
-        	System.out.println(firstName + " " + lastName + " " + email + " " + password + " " + birthday + " " + car + " " + abouttext + " " + street + " " + plz + " " + phone);
+        	System.out.println(id + " " + firstName + " " + lastName + " " + email + " " + password + " " + birthday + " " + car + " " + abouttext + " " + street + " " + plz + " " + phone);
             return "success";  
         } else  
             return "invalid";  
