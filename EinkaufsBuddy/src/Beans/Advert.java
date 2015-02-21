@@ -34,8 +34,6 @@ public class Advert {
     private boolean status;
     private String fav_market;
     private int buyer_id;
-    private String dbPassword;  
-    private String dbName;  
     DataSource ds;  
   
     public Advert() {  
@@ -197,36 +195,6 @@ public class Advert {
 	}
 
 
-
-
-	public String getDbPassword() {
-		return dbPassword;
-	}
-
-
-
-
-	public void setDbPassword(String dbPassword) {
-		this.dbPassword = dbPassword;
-	}
-
-
-
-
-	public String getDbName() {
-		return dbName;
-	}
-
-
-
-
-	public void setDbName(String dbName) {
-		this.dbName = dbName;
-	}
-
-
-
-
 	public DataSource getDs() {
 		return ds;
 	}
@@ -277,7 +245,10 @@ public class Advert {
 
 	public String add() {  
         int i = 0;
-        
+        //hier soll die userid über die user bean abgeholt und in advertiser_id geschrieben werden --> tut es aber noch nicht
+        User user_id = new User ();
+        user_id.dbData(id);
+        advertiser_id = user_id.getId();
         
         //advertiser_id ist die user id --> muss irgendwie da rein kommen
         System.out.println(advertiser_id);
@@ -309,7 +280,7 @@ public class Advert {
                         ps.setDouble(4, limit);  
                         ps.setDouble(5, income);  
                         ps.setString(6, text);
-                        ps.setInt(7, 1);
+                        ps.setInt(7,fk_category);
                         ps.setBoolean(8, status); 
                         ps.setString(9, fav_market);
                         ps.setString(10, null);
@@ -367,7 +338,7 @@ public class Advert {
         }  
     }  
     
-	public String getIDParam(FacesContext fc){
+/*	public String getIDParam(FacesContext fc){
 		 
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		return params.get("ad_id");
@@ -382,7 +353,7 @@ public class Advert {
     	return "changedata";
     }
 	
-  /*  public String showown(){
+ public String showown(){
     	
     	
     }

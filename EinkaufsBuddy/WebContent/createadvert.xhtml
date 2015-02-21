@@ -18,6 +18,18 @@
 			</h:panelGroup>	
 			
 			<h:panelGroup>
+				<h:outputText value="Art des Marktes:" />
+				<h:selectOneListbox value="#{advert.fk_category}" size="3" required="true" requiredMessage="Bitte Art des Marktes angeben">
+					<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
+					<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
+					<f:selectItem itemValue="3" itemLabel="Apotheke"/>
+					<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
+					<f:selectItem itemValue="5" itemLabel="Bäcker"/>
+				</h:selectOneListbox>
+				<h:message for="fk_category" style="color:red" />
+			</h:panelGroup>	
+			
+			<h:panelGroup>
 				<h:outputText value="Datum:" />
 				<h:inputText id="date" value="#{advert.date}"  
 					required="true" requiredMessage="Bitte Datum angeben" >
