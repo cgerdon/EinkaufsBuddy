@@ -272,7 +272,7 @@ public class Advert {
                     	//INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(3, '2014-11-05', 3, 10, 1, 'Hallo, ich mag bitte eine Flasche Schnaps haben!', 1, 0, 'Aldi', NULL),
                         String sql = "INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(?,?,?,?,?,?,?,?,?,?)";  
                         ps = con.prepareStatement(sql);    
-                        ps.setInt(1, 1); //advertiser_id fehlt noch
+                        ps.setInt(1, 1); //advertiser_id fehlt noch...
                         ps.setString(2, new SimpleDateFormat("yyyy-MM-dd").format(date));
                         ps.setInt(3, fk_time_id);  
                         ps.setDouble(4, limit);  
