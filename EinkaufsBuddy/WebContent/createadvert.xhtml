@@ -19,12 +19,13 @@
 			
 			<h:panelGroup>
 				<h:outputText value="Art des Marktes:" />
-				<h:selectOneListbox value="#{advert.fk_category}" size="3" required="true" requiredMessage="Bitte Art des Marktes angeben">
+				<h:selectOneListbox id="fk_category" value="#{advert.fk_category}" size="3" required="true" requiredMessage="Bitte Art des Marktes angeben">
 					<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
 					<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
 					<f:selectItem itemValue="3" itemLabel="Apotheke"/>
 					<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
 					<f:selectItem itemValue="5" itemLabel="Bäcker"/>
+					<f:selectItem itemValue="6" itemLabel="anderer"/>
 				</h:selectOneListbox>
 				<h:message for="fk_category" style="color:red" />
 			</h:panelGroup>	
@@ -40,7 +41,7 @@
 			
 			<h:panelGroup>
 				<h:outputText value="Zeit der Anlieferung:" />
-				<h:selectOneRadio value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben">
+				<h:selectOneRadio id="fk_time_id" value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben">
 					<f:selectItem itemValue="1" itemLabel="Vormittag"/>
 					<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
 					<f:selectItem itemValue="3" itemLabel="Abend"/>

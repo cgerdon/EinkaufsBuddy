@@ -246,9 +246,10 @@ public class Advert {
 	public String add() {  
         int i = 0;
         //hier soll die userid über die user bean abgeholt und in advertiser_id geschrieben werden --> tut es aber noch nicht
-        User user_id = new User ();
-        user_id.dbData(id);
+       /*User user_id = new User ();
+        user_id.dbData(uName);
         advertiser_id = user_id.getId();
+        */
         
         //advertiser_id ist die user id --> muss irgendwie da rein kommen
         System.out.println(advertiser_id);
@@ -264,7 +265,6 @@ public class Advert {
         
             PreparedStatement ps = null;  
             Connection con = null;
-            ResultSet rs = null; 
             try {  
                 if (ds != null) {  
                     con = ds.getConnection();  
@@ -272,9 +272,7 @@ public class Advert {
                     	//INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(3, '2014-11-05', 3, 10, 1, 'Hallo, ich mag bitte eine Flasche Schnaps haben!', 1, 0, 'Aldi', NULL),
                         String sql = "INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(?,?,?,?,?,?,?,?,?,?)";  
                         ps = con.prepareStatement(sql);    
-                        rs = ps.executeQuery();  
-                        rs.next(); 
-                        ps.setInt(1, 1);
+                        ps.setInt(1, 1); //advertiser_id fehlt noch
                         ps.setString(2, new SimpleDateFormat("yyyy-MM-dd").format(date));
                         ps.setInt(3, fk_time_id);  
                         ps.setDouble(4, limit);  
