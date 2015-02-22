@@ -15,8 +15,8 @@
         <from-view-id>/login.xhtml</from-view-id>  
         <navigation-case>  
             <from-action>#{user.login}</from-action>  
-            <from-outcome>output</from-outcome>  
-            <to-view-id>/success.xhtml</to-view-id>  
+            <from-outcome>profil</from-outcome>  
+            <to-view-id>/profil.xhtml</to-view-id>  
         </navigation-case>  
   
         <navigation-case>  
@@ -92,6 +92,17 @@
            	<from-action>#{simpleSearch.searchSimple}</from-action>   
             <from-outcome>simpleSearchResult</from-outcome>  
             <to-view-id>/simpleSearchResult.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule>  
+    
+     <navigation-rule>  
+        <description>profilchange</description>  
+        <from-view-id>/profilchange.xhtml</from-view-id>  
+        <navigation-case>       
+           	<from-action>#{user.profilchange(firstName.value, lastName.value, birthday.value, car.value, phone.value, email.value, password.value, street.value, plz.value, abouttext.value)}</from-action>   
+            <from-outcome>profil</from-outcome>  
+            <to-view-id>/profil.xhtml</to-view-id> 
             <redirect/>
         </navigation-case>  
     </navigation-rule>  

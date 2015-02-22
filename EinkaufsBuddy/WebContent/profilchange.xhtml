@@ -1,0 +1,44 @@
+<ui:composition template="template/logoutmaster.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+	<ui:define name="content">
+		<h1>Profilseite ändern...</h1>
+		
+		<h:form>  
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Vorname: "/>
+				<h:inputText value="#{user.firstName}" binding="#{firstName}"/>
+		      	<h:outputLabel value="Nachname: "/>
+		      	<h:inputText value="#{user.lastName}" binding="#{lastName}"/>
+		        <h:outputLabel value="Geburtstag: "/>
+		        
+		        <p:calendar id="german" value="#{user.birthday}" locale="de" navigator="true" pattern="dd.MM.yyyy" binding="#{birthday}"/>
+		        <h:outputLabel value="Auto: "/>
+		        <h:inputText value="#{user.car}" binding="#{car}"/>
+		        <h:outputLabel value="Telefon: "/>
+		        <h:inputText value="#{user.phone}" binding="#{phone}"/>
+
+				<h:outputLabel value="E-Mail: "/>
+		      	<h:outputText value="#{user.email}" binding="#{email}"/>     	
+		      	<h:outputLabel value="Passwort: "/>
+		        <h:inputText value="#{user.password}" binding="#{password}"/>
+  		        
+		        <h:outputLabel value="Straße: "/>
+		        <h:inputText value="#{user.street}" binding="#{street}"/>
+		        <h:outputLabel value="PLZ: "/>
+		        <h:inputText value="#{user.plz}" binding="#{plz}"/>
+      
+		        <h:outputLabel value="Über dich: "/>
+		        <h:inputText value="#{user.abouttext}" binding="#{abouttext}"/>
+   
+        	</h:panelGrid>
+      
+	        <h:commandButton action="#{user.profilchange(firstName.value, lastName.value, birthday.value, car.value, phone.value, email.value, password.value, street.value, plz.value, abouttext.value)}" value="Ändern"/>
+        </h:form>  
+	</ui:define>
+  
+</ui:composition>

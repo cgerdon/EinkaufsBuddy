@@ -44,7 +44,7 @@ public class User {
     
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
      
@@ -280,6 +280,14 @@ public class User {
             }  
         }  
     }  
+	
+    public String changeData(){
+    	FacesContext fc = FacesContext.getCurrentInstance();
+		this.email = getMailParam(fc);
+ 
+    	dbData(email);
+    	return "changedata";
+    }
     
 	public String getMailParam(FacesContext fc){
 		 
@@ -288,18 +296,11 @@ public class User {
  
 	}
     
-    public String changeData(){
-    	FacesContext fc = FacesContext.getCurrentInstance();
-		this.email = getMailParam(fc);
- 
-    	dbData(email);
-    	return "changedata";
-    }
     public String login() {  
         dbData(email);  
         if (email.equals(dbName) && password.equals(dbPassword)) { 
         	System.out.println(id + " " + firstName + " " + lastName + " " + email + " " + password + " " + birthday + " " + car + " " + abouttext + " " + street + " " + plz + " " + phone);
-            return "success";  
+            return "profil";  
         } else  
             return "invalid";  
     }  
@@ -311,4 +312,48 @@ public class User {
                 .getApplication().getNavigationHandler()  
                 .handleNavigation(FacesContext.getCurrentInstance(), null, "/login.xhtml");  
     }  
+    
+    
+// Mathias hinzugefügt: profilchange
+    
+public String profilchange(String firstName, String lastName, Date birthday, int car, String phone, String email, String password, String street, int plz, String abouttext) {
+
+	int i = 0;  
+      PreparedStatement ps = null;  
+      Connection con = null;  
+      try {  
+                if (ds != null) {  
+                    con = ds.getConnection();  
+                    if (con != null) {  
+                    	if (birthday == null){
+                    	}
+                    	String sql = "UPDATE member set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' , car='" + car + "' , abouttext='" + abouttext + "' , street='" + street + "' , plz='" + plz + "' , phone='" + phone + "', birthdate='" + new SimpleDateFormat("yyyy-MM-dd").format(birthday) + "' where mail ='" + email + "';";
+
+                    	System.out.println(sql);
+                    	ps = con.prepareStatement(sql);  
+                        i = ps.executeUpdate();  
+                        System.out.println("Daten erfolgreich geändert");  
+                    }  
+                }  
+            } catch (Exception e) {  
+                System.out.println(e);  
+            } finally {  
+                try {  
+                    con.close();  
+                    ps.close();  
+                } catch (Exception e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+
+        if (i > 0) {  
+           return "profil";  
+        } else  
+            return "unsuccess";  
+}   
+    
+    
+    
+    
+    
 }  

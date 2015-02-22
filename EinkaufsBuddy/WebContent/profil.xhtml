@@ -6,23 +6,39 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das ist deine Profilseite!</h1>
+		<h1>Profilseite!</h1>
 		
-      	<h:outputText value="#{user.firstName}"/>
-      	<h:outputText value="#{user.lastName}"/>
-      	<h:outputText value="#{user.email}"/>
-        <h:outputText value="#{user.password}"/>
-        <h:outputText value="#{user.birthday}"/>
-        <h:outputText value="#{user.car}"/>
-        <h:outputText value="#{user.abouttext}"/>
-        <h:outputText value="#{user.street}"/>
-        <h:outputText value="#{user.plz}"/>
-        <h:outputText value="#{user.phone}"/>
-        
-        <h:form>  
-	        <h:commandButton action="#{user.changeData}" value="Ändern">
-	     		<f:param name="email" value="#{user.email}" />
-	     	</h:commandButton>
+		<h:form>  
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Name: "/>
+		      	<h:outputText value="#{user.firstName}"/>
+		      	<h:outputLabel value="Nachname: "/>
+		      	<h:outputText value="#{user.lastName}"/>
+		        <h:outputLabel value="Geburtstag: "/>
+		        <h:outputText value="#{user.birthday}">
+		        	<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
+		        </h:outputText>
+		        <h:outputLabel value="Auto: "/>
+		        <h:outputText value="#{user.car}"/>
+		        <h:outputLabel value="Telefon: "/>
+		        <h:outputText value="#{user.phone}"/>
+
+				<h:outputLabel value="E-Mail: "/>
+		      	<h:outputText value="#{user.email}"/>     	
+		      	<h:outputLabel value="Passwort: "/>
+		        <h:outputText value="#{user.password}"/>
+  		        
+		        <h:outputLabel value="Straße: "/>
+		        <h:outputText value="#{user.street}"/>
+		        <h:outputLabel value="PLZ: "/>
+		        <h:outputText value="#{user.plz}"/>
+      
+		        <h:outputLabel value="Über dich: "/>
+		        <h:outputText value="#{user.abouttext}"/>
+   
+        	</h:panelGrid>
+      
+	        <h:commandButton action="profilchange" value="Ändern"/>
         </h:form>  
 	</ui:define>
   

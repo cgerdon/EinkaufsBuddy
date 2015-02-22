@@ -10,7 +10,7 @@
 		
 		
 		<h:form>
-			<h:panelGroup styleClass="chat-window" layout="block">
+			<h:panelGroup id="messagedetails" styleClass="chat-window" layout="block">
 				<ui:repeat var="messagedetails" value="#{message.messagedetails}">
 						<h:panelGroup styleClass="rightmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
 							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
@@ -34,6 +34,9 @@
 			
 			<h:commandButton value="senden" action="#{message.writeMessage(messagetext.value)}">
 				 <f:param name="empfaenger" value="#{message.ms_senderId}" />
+	
+	<!--  AJAX automatisches Update und rote Zahl -->
+				  <f:ajax execute="@form" render="messagedetails" />
 			</h:commandButton>
 			</h:panelGroup>	
 		</h:form>
