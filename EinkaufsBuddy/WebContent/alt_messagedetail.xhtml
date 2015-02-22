@@ -1,0 +1,45 @@
+<ui:composition template="template/master.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+	<ui:define name="content">
+		<h1>Das ist der Nachrichtenverlauf mit <h:outputText value="#{message.ms_senderName}"/> </h1>
+		
+		
+		<h:form>
+		
+		
+		<h:panelGrid columns="3">
+			<h:panelGroup>
+				<ui:repeat var="messagedetails" value="#{message.messagedetails}" step="3">
+						<h:outputText value="#{messagedetails}"/>	
+						<br/>
+				</ui:repeat>
+			</h:panelGroup>
+			
+			<h:panelGroup>
+				<ui:repeat var="messagedetails" value="#{message.messagedetails}" step="3" offset="1">
+						<h:outputText value="#{messagedetails}"/>		
+					<br/>
+				</ui:repeat>
+			</h:panelGroup>	
+			
+			<h:panelGroup>
+				<ui:repeat var="messagedetails" value="#{message.messagedetails}" step="3" offset="2">
+						<h:outputText value="#{messagedetails}"/>		
+						<br/>
+				</ui:repeat>
+			</h:panelGroup>					
+			
+		</h:panelGrid>
+			
+			
+			<h:commandButton value="senden" action="#{message.writeMessage}"/>
+		</h:form>
+
+	</ui:define>
+  
+</ui:composition>
