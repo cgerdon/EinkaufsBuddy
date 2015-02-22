@@ -1,3 +1,12 @@
+.leftmessage{
+	color: green;
+}
+
+.rightmessage{
+	color: red;
+}
+
+
 /*** master ***/
 h1{
 	color:red;

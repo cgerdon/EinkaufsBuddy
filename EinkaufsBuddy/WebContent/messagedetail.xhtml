@@ -6,36 +6,36 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das ist der Nachrichtenverlauf mit XXX! </h1>
-		
+		<h1>Das ist der Nachrichtenverlauf mit <h:outputText value="#{message.ms_senderId}"/> </h1>
 		
 		
 		<h:form>
 		
 		
-		<h:panelGrid columns="1">
-		
-			<ui:repeat var="messagedetails" value="#{message.messagedetails}">
-			
-					<h:panelGroup>
-						<h:outputText value="#{message.ms_id}"/>
-					<br/>	
-						<h:outputText value="#{message.ms_senderId}"/>
+		<h:panelGrid >
+			<h:panelGroup>
+				<ui:repeat var="messagedetails" value="#{message.messagedetails}">
+						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_receiverFirstName} " rendered="#{messagedetails.ms_senderId == user.id}"/>
+						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_receiverFirstName} " rendered="#{messagedetails.ms_senderId != user.id}"/>
+						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_receiverLastName} " rendered="#{messagedetails.ms_senderId == user.id}"/>
+						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_receiverLastName} " rendered="#{messagedetails.ms_senderId != user.id}"/>
+						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_time} " rendered="#{messagedetails.ms_senderId == user.id}"/>
+						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_time} " rendered="#{messagedetails.ms_senderId != user.id}"/>
+						
 					<br/>
-						<h:outputText value="#{message.ms_text}"/>
-					</h:panelGroup>
-		
-			</ui:repeat>
-				
-				
-				
-				
-				<h:panelGroup>
-					<h:inputTextarea/>
-					<h:commandButton value="senden" action="#{message.writeMessage}"/>				
-				</h:panelGroup>
+						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_senderId == user.id}"/>
+						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_senderId != user.id}"/>
+					<br/>
+					<br/>	
+				</ui:repeat>
+			</h:panelGroup>			
+		</h:panelGrid>
 			
-			</h:panelGrid>
+			<h:inputTextarea binding="#{messagetext}"/>
+			
+			<h:commandButton value="senden" action="#{message.writeMessage(messagetext.value)}">
+				 <f:param name="empfaenger" value="#{message.ms_senderId}" />
+			</h:commandButton>
 		</h:form>
 
 	</ui:define>

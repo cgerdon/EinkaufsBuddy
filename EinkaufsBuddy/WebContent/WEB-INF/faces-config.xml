@@ -51,5 +51,27 @@
         </navigation-case>  
     </navigation-rule>  
 
+     <navigation-rule>  
+        <description>message</description>  
+        <from-view-id>/messagebegin.xhtml</from-view-id>  
+        <navigation-case>  
+            <from-action>#{message.showAllMessage}</from-action>  
+            <from-outcome>messageoverview</from-outcome>  
+            <to-view-id>/message.xhtml</to-view-id>  
+        	<redirect/>
+        </navigation-case>  
+    </navigation-rule>  
     
+     <navigation-rule>  
+        <description>messagedetail</description>  
+        <from-view-id>/message.xhtml</from-view-id>  
+        <navigation-case>       
+           	<from-action>#{message.showMessage}</from-action>   
+            <from-outcome>messagedetail</from-outcome>  
+            <to-view-id>/messagedetail.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule>  
+    
+ 
 </faces-config>  
