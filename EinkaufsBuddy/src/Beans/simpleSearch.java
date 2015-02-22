@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,7 +25,8 @@ import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
 @ManagedBean(name = "simpleSearch")
-@RequestScoped
+//geändert von Mathias: @RequestScoped ersetzt durch @SessionScoped
+@SessionScoped
 public class simpleSearch {
 
 	private Integer plzInput;
@@ -100,14 +102,17 @@ public class simpleSearch {
 
 	public String searchSimple() throws IOException, JSONException,
 			URISyntaxException {
-
+		
 		PreparedStatement ps = null;
 		List<String> Adressen = new ArrayList<String>();
 
 		StringBuffer buffer = new StringBuffer();
 		Connection con = null;
 		ResultSet rs = null;
-
+		
+//Mathias hinzugefügt: wegen Session 
+AdvertList.clear();
+		
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
@@ -116,6 +121,7 @@ public class simpleSearch {
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
+					
 					while (rs.next()) {
 						SimpleSearchResults TempObj = new SimpleSearchResults(
 								rs.getString("text"), rs.getInt("plz"),

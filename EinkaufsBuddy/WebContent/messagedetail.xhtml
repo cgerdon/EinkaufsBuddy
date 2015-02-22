@@ -10,32 +10,32 @@
 		
 		
 		<h:form>
-		
-		
-		<h:panelGrid >
-			<h:panelGroup>
+			<h:panelGroup styleClass="chat-window" layout="block">
 				<ui:repeat var="messagedetails" value="#{message.messagedetails}">
-						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_receiverFirstName} " rendered="#{messagedetails.ms_senderId == user.id}"/>
-						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_receiverFirstName} " rendered="#{messagedetails.ms_senderId != user.id}"/>
-						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_receiverLastName} " rendered="#{messagedetails.ms_senderId == user.id}"/>
-						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_receiverLastName} " rendered="#{messagedetails.ms_senderId != user.id}"/>
-						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_time} " rendered="#{messagedetails.ms_senderId == user.id}"/>
-						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_time} " rendered="#{messagedetails.ms_senderId != user.id}"/>
+						<h:panelGroup styleClass="rightmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
+							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
+							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
+							<h:outputText value="#{messagedetails.ms_time} "/>
+						<br/>				
+							<h:outputText value="#{messagedetails.ms_text}"/>
+						</h:panelGroup>
 						
-					<br/>
-						<h:outputText styleClass="rightmessage" value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_senderId == user.id}"/>
-						<h:outputText styleClass="leftmessage" value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_senderId != user.id}"/>
-					<br/>
+						<h:panelGroup styleClass="leftmessage" layout="block" rendered="#{messagedetails.ms_senderId != user.id}">
+							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
+							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
+							<h:outputText value="#{messagedetails.ms_time} "/>
+						<br/>				
+							<h:outputText value="#{messagedetails.ms_text}"/>
+						</h:panelGroup>
 					<br/>	
 				</ui:repeat>
-			</h:panelGroup>			
-		</h:panelGrid>
 			
 			<h:inputTextarea binding="#{messagetext}"/>
 			
 			<h:commandButton value="senden" action="#{message.writeMessage(messagetext.value)}">
 				 <f:param name="empfaenger" value="#{message.ms_senderId}" />
 			</h:commandButton>
+			</h:panelGroup>	
 		</h:form>
 
 	</ui:define>

@@ -79,68 +79,49 @@ public class message {
 		return date;
 	}
 
-
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
 
 	public String getMs_time() {
 		return ms_time;
 	}
 
-
-
 	public void setMs_time(String ms_time) {
 		this.ms_time = ms_time;
 	}
-
-
-
-
-
 
 	public int getMs_id() {
 		return ms_id;
 	}
 
-
 	public void setMs_id(int ms_id) {
 		this.ms_id = ms_id;
 	}
-
 
 	public String getMs_text() {
 		return ms_text;
 	}
 
-
 	public void setMs_text(String ms_text) {
 		this.ms_text = ms_text;
 	}
-
 
 	public int getMs_senderId() {
 		return ms_senderId;
 	}
 	
-
-
 	public String getMs_senderName() {
 		return ms_senderName;
 	}
-
 
 	public void setMs_senderName(String ms_senderName) {
 		this.ms_senderName = ms_senderName;
 	}
 
-	
 	public int getMs_receiverId() {
 		return ms_receiverId;
 	}
-
 
 	public void setMs_receiverId(int ms_receiverId) {
 		this.ms_receiverId = ms_receiverId;
@@ -270,22 +251,23 @@ public class message {
 		PreparedStatement ps = null;  
         Connection con = null;  
         ResultSet rs = null;  
-
+        System.out.println(ms_receiverId);
+        
         if (ds != null) {  
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                    String sql = "SELECT message.sender_id, member.name, member.last_name FROM message JOIN member ON message.sender_id=member.id WHERE message.receiver_id= " + ms_receiverId + " GROUP BY member.name, member.last_name;" ;  
+                    String sql = "SELECT message.receiver_id, member.name, member.last_name FROM message JOIN member ON message.receiver_id=member.id WHERE message.receiver_id= " + ms_receiverId + " OR message.sender_id= " + ms_receiverId + " GROUP BY member.name, member.last_name;" ;  
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();
                     messageoverview.clear();
                     while (rs.next()) {  
                     		
                     	
-                    	message TempObj = new message(0, null, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), null);
+                    	message TempObj = new message(0, null, rs.getInt("message.receiver_id"), rs.getString("member.name"), rs.getString("member.last_name"), null);
                     	
                     	messageoverview.add(TempObj);
-                    	
+                    
                     	//messageoverview.add(rs.getString("member.name")+" "+ rs.getString("member.last_name"));
                    
                     	//ms_senderName = rs.getString("member.name")+" "+ rs.getString("member.last_name");
@@ -312,6 +294,12 @@ public class message {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		this.ms_senderId = getempfaenger(fc);
 		
+		System.out.println(ms_senderId);
+		System.out.println(messagetext);
+		System.out.println(ms_receiverId);
+		/*ms_receiverId=3;
+		System.out.println(ms_receiverId);*/
+		
 		Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
 		String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
 		System.out.println (datumConverter);
@@ -324,14 +312,14 @@ public class message {
                 if (ds != null) {  
                     con = ds.getConnection();  
                     if (con != null) { 
-                    	//INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(3, '2014-11-05', 3, 10, 1, 'Hallo, ich mag bitte eine Flasche Schnaps haben!', 1, 0, 'Aldi', NULL),
-                        String sql = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `ad_id`, `text`) VALUES(?,?,?,?,?)";  
+                        String sql = "INSERT INTO message (sender_id, receiver_id, time_sent, ad_id, text) VALUES(?,?,?,?,?)";  
                         ps = con.prepareStatement(sql);  
-                        ps.setInt(1, ms_receiverId);
-                        ps.setInt(2, ms_senderId);  
-                        ps.setString(3, datumConverter);
-                        ps.setInt(4, 3);  
-                        ps.setString(5, messagetext); 
+                        	ps.setInt(1, ms_receiverId);
+	                       
+	                        ps.setInt(2, ms_senderId);  
+	                        ps.setString(3, datumConverter);
+	                        ps.setInt(4, 3);  
+	                        ps.setString(5, messagetext); 
                         ps.executeUpdate();              
                     }  
                 }  
@@ -345,9 +333,8 @@ public class message {
                     e.printStackTrace();  
                 }  
             }  
-         
-        
-        	showMessage(ms_senderId);
+            
+            showMessage(ms_senderId);
     
     }   
     
@@ -385,5 +372,50 @@ public class message {
             return "messagedetail";
         }  
 	
+	
+	public int getstartmessage(FacesContext fc){
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		String startmessage = params.get("startmessage");
+		int value = Integer.valueOf(startmessage);
+		return value;
+ 	}
+	
+	
+	public String startMessage() {  
+		
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		this.ms_senderId = getstartmessage(fc);
+
+		
+        PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;  
+
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {  
+                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ") ORDER BY message.time_sent ASC" ;  
+                       ps = con.prepareStatement(sql);  
+                       rs = ps.executeQuery();
+                       
+                       messagedetails.clear();
+                       while (rs.next()) {  
+                       	
+                          	ms_time = DateConString(rs.getString("message.time_sent"));
+                         	
+    						message TempObj = new message(rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+    					messagedetails.add(TempObj);         
+		            }
+                }  
+            } catch (SQLException sqle) {  
+                sqle.printStackTrace();  
+            }  
+        } 
+        
+        return "messagedetailvonsuche";
+          
+    }   
 
 }

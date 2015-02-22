@@ -73,5 +73,27 @@
         </navigation-case>  
     </navigation-rule>  
     
- 
+      <navigation-rule>  
+        <description>startmessagedetail</description>  
+        <from-view-id>/simpleSearchResult.xhtml</from-view-id>  
+        <navigation-case>       
+           	<from-action>#{message.startMessage}</from-action>   
+            <from-outcome>messagedetailvonsuche</from-outcome>  
+            <to-view-id>/messagedetail.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule>  
+    
+    
+     <navigation-rule>  
+        <description>searchresult</description>  
+        <from-view-id>/home.xhtml</from-view-id>  
+        <navigation-case>       
+           	<from-action>#{simpleSearch.searchSimple}</from-action>   
+            <from-outcome>simpleSearchResult</from-outcome>  
+            <to-view-id>/simpleSearchResult.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule>  
+    
 </faces-config>  
