@@ -1,5 +1,5 @@
 package Beans;  
-  
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.primefaces.context.RequestContext;
@@ -24,7 +25,7 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean(name = "user") 
 //@RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
 @SessionScoped  
-public class User {  
+public class User{  
 	
 	private int id;
     private String firstName;  
@@ -296,11 +297,18 @@ public class User {
  
 	}
     
-    public String login() {  
+	
+    public String login(){  
         dbData(email);  
         if (email.equals(dbName) && password.equals(dbPassword)) { 
         	System.out.println(id + " " + firstName + " " + lastName + " " + email + " " + password + " " + birthday + " " + car + " " + abouttext + " " + street + " " + plz + " " + phone);
-            return "profil";  
+ 
+        	//Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
+        	HttpSession session = Util.getSession();
+            session.setAttribute("username", email);
+            
+            return "home";  
+
         } else  
             return "invalid";  
     }  
