@@ -23,12 +23,12 @@
 		<h:form>			
 		<h:panelGrid >
 			
-			 	<ui:repeat var="messageoverview" value="#{message.messageoverview}"> 
-						<h:panelGroup>					
+			 	<ui:repeat var="messageoverview" value="#{message.messageoverview}" > 
+						<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">					
 						<h:outputText value="#{messageoverview.ms_receiverFirstName}"/>
 						<h:outputText value="#{messageoverview.ms_receiverLastName}"/>
 						</h:panelGroup>	
-						<h:panelGroup>
+						<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">
 						<h:commandButton value="Nachrichtenverlauf ansehen" action="#{message.showMessage}">
 							  <f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
 						</h:commandButton>
