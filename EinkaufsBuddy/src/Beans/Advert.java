@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
@@ -24,6 +25,8 @@ import org.primefaces.event.SelectEvent;
 public class Advert {  
 	
 	private int ad_id;
+	
+	@ManagedProperty(value="#{user.id}")
     private int advertiser_id; 
     private Date date;
     private int fk_time_id;
@@ -36,6 +39,7 @@ public class Advert {
     private int buyer_id;
     DataSource ds;  
   
+    
     public Advert() {  
         try {  
             Context ctx = new InitialContext();  
@@ -245,13 +249,6 @@ public class Advert {
 
 	public String add() {  
         int i = 0;
-        //hier soll die userid über die user bean abgeholt und in advertiser_id geschrieben werden --> tut es aber noch nicht
-       /*User user_id = new User ();
-        user_id.dbData(uName);
-        advertiser_id = user_id.getId();
-        */
-        
-        //advertiser_id ist die user id --> muss irgendwie da rein kommen
         System.out.println(advertiser_id);
         System.out.println(date);
         System.out.println(fk_time_id);
@@ -272,7 +269,7 @@ public class Advert {
                     	//INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(3, '2014-11-05', 3, 10, 1, 'Hallo, ich mag bitte eine Flasche Schnaps haben!', 1, 0, 'Aldi', NULL),
                         String sql = "INSERT INTO `ad` (`advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES(?,?,?,?,?,?,?,?,?,?)";  
                         ps = con.prepareStatement(sql);    
-                        ps.setInt(1, 1); //advertiser_id fehlt noch...
+                        ps.setInt(1, advertiser_id);
                         ps.setString(2, new SimpleDateFormat("yyyy-MM-dd").format(date));
                         ps.setInt(3, fk_time_id);  
                         ps.setDouble(4, limit);  
@@ -333,10 +330,10 @@ public class Advert {
                 } catch (SQLException sqle) {  
                     sqle.printStackTrace();  
                 }    
-        }  
+        }    
     }  
     
-/*	public String getIDParam(FacesContext fc){
+	public String getIDParam(FacesContext fc){
 		 
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		return params.get("ad_id");
@@ -350,13 +347,40 @@ public class Advert {
     	dbData(ad_id);
     	return "changedata";
     }
-	
- public String showown(){
-    	
-    	
+	// ka, ob das sauber is neben der dbData
+    public String showown(){
+    	PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;
+        
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {  
+                    String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where id = '"  
+                            + ad_id + "'";  
+                    ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();  
+                    rs.next();  
+                    ad_id = rs.getInt("id");
+                    advertiser_id = rs.getInt("advertiser_id");
+                    date = rs.getDate(new SimpleDateFormat("yyyy-MM-dd").format(date));  
+                    fk_time_id = rs.getInt("fk_time_id");
+                    limit = rs.getDouble("limit");
+                    income = rs.getDouble("income");
+                    text = rs.getString("text");
+                    fk_category = rs.getInt("fk_category");
+                    status = rs.getBoolean("status");
+                    fav_market = rs.getString("fav_market");
+                    buyer_id = rs.getInt("buyer_id");
+                }  
+            } catch (SQLException sqle) {  
+                sqle.printStackTrace();  
+            }    
+        }
+        return "viewadverts";
     }
-    
-    public String showothers(){
+    /*public String showothers(){
     	
     }*/
 	

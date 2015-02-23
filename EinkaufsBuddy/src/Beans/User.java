@@ -278,7 +278,7 @@ public class User {
                     sqle.printStackTrace();  
                 }  
             }  
-        }  
+        }
     }  
     
 	public String getMailParam(FacesContext fc){

@@ -1,0 +1,44 @@
+<ui:composition template="template/master.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+	<ui:define name="content">
+		<h:form>
+		<h:panelGrid >
+			<h:panelGroup>
+				<tr>
+    			<th class="order-table-header">Markt</th>
+    			<th class="order-table-header">Einkaufsliste</th>
+    			<th class="order-table-header">Budget [EUR]</th>
+    			<th class="order-table-header">Vergütung</th>
+    			<th class="order-table-header">Datum</th>
+    			<th class="order-table-header">&nbsp</th>
+    			
+    		</tr>
+			</h:panelGroup>
+		
+			<h:panelGroup>
+				<ui:repeat var="ownadverts" value="#{advert.ownadverts}">
+						<tr>
+			    			<td class="order-table-even-row">#{advert.fav_market}</td>
+			    			<td class="order-table-even-row">#{advert.text}</td>
+			    			<td class="order-table-even-row">#{advert.limit}</td>
+			    			<td class="order-table-even-row">#{advert.income}</td>
+			    			<td class="order-table-even-row">#{advert.Date}</td>
+			    			<td class="order-table-even-row">
+			    				<h:commandButton value="ändern" action="#{advert.changeData}">
+				 					<f:param name="ad_id" value="#{advert.ad_id}" />
+								</h:commandButton>
+			    			</td>
+		    		  </tr>
+				</ui:repeat>
+			</h:panelGroup>			
+		</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+  
+</ui:composition>
