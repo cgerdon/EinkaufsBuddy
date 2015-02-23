@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14228925495130" configfile="/EinkaufsBuddy/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" comment="login user" x="122" y="178" id="pf14231465251220" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14231465251231 pf14246471916863" path="/login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="success.xhtml" x="338" y="946" id="pf14231465251233" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf142314661620113" inlinks="pf14231465251234" path="/success.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="error.xhtml" x="338" y="178" id="pf14231465251235" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14231465251231" path="/error.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="register.xhtml" comment="register new user" x="122" y="1138" id="pf14231465251236" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14231465251234 pf14231465251237" path="/register.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="unsuccess.xhtml" x="338" y="1330" id="pf14231465251238" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14231465251237" path="/unsuccess.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="changeuserdata.xhtml" x="554" y="946" id="pf142314661620114" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf142314661620113" path="/changeuserdata.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="messagebegin.xhtml" x="122" y="1756" id="pf14245178684743" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14245178684754" path="/messagebegin.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="message.xhtml" x="338" y="1756" id="pf14245178684756" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf14245184312658" inlinks="pf14245178684754" path="/message.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="messagedetail.xhtml" x="554" y="1948" id="pf14245184312659" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf14245184312658 pf14246298010830" path="/messagedetail.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="simpleSearchResult.xhtml" comment="startmessagedetail" x="338" y="2140" id="pf14246298010831" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" outlinks="pf14246298010830" inlinks="pf14246301460783" path="/simpleSearchResult.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="home.xhtml" comment="searchresult" x="122" y="2140" id="pf14246301460784" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf14246301460783" path="/home.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="profilchange.xhtml" comment="profilchange" x="122" y="562" id="pf14246440007050" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf14246440007061" path="/profilchange.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="profil.xhtml" x="338" y="562" id="pf14246440007062" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf14246440007061 pf14246471916863" path="/profil.xhtml"/>
-  <links id="pf14231465251231" target="pf14231465251235" source="pf14231465251220" outcome="invalid" fromaction="#{user.login}"/>
-  <links id="pf14231465251234" target="pf14231465251233" source="pf14231465251236" outcome="success" fromaction="#{user.add}"/>
-  <links id="pf14231465251237" target="pf14231465251238" source="pf14231465251236" outcome="unsuccess" fromaction="#{user.add}"/>
-  <links id="pf142314661620113" target="pf142314661620114" source="pf14231465251233" outcome="changedata" fromaction="#{user.changeData}"/>
-  <links id="pf14245178684754" target="pf14245178684756" source="pf14245178684743" outcome="messageoverview" redirect="true" fromaction="#{message.showAllMessage}"/>
-  <links id="pf14245184312658" target="pf14245184312659" source="pf14245178684756" outcome="messagedetail" redirect="true" fromaction="#{message.showMessage}"/>
-  <links id="pf14246298010830" target="pf14245184312659" source="pf14246298010831" outcome="messagedetailvonsuche" redirect="true" fromaction="#{message.startMessage}"/>
-  <links id="pf14246301460783" target="pf14246298010831" source="pf14246301460784" outcome="simpleSearchResult" redirect="true" fromaction="#{simpleSearch.searchSimple}"/>
-  <links id="pf14246440007061" target="pf14246440007062" source="pf14246440007050" outcome="profil" redirect="true" fromaction="#{user.profilchange(firstName.value, lastName.value, birthday.value, car.value, phone.value, email.value, password.value, street.value, plz.value, abouttext.value)}"/>
-  <links id="pf14246471916863" target="pf14246440007062" source="pf14231465251220" outcome="profil" fromaction="#{user.login}"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="122" y="178" id="pf14231465251220" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14247041072390" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="error.xhtml" x="122" y="562" id="pf14231465251235" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" path="/error.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="home.xhtml" comment="searchresult" x="338" y="178" id="pf14246301460784" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf142470556336621" inlinks="pf14247041072390" path="/home.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="register.xhtml" comment="register new user" id="pf142470556336622" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf142470556336623 pf142470556336624" path="/register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="success.xhtml" id="pf142470556336625" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf142470556336626" inlinks="pf142470556336623" path="/success.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="unsuccess.xhtml" id="pf142470556336627" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf142470556336624" path="/unsuccess.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="changeuserdata.xhtml" id="pf142470556336628" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf142470556336626" path="/changeuserdata.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" comment="impressum" id="pf142470556336629" outlinks="pf142470556336630" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="Impressum.xhtml" id="pf142470556336631" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf142470556336630" path="/Impressum.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="messagebegin.xhtml" comment="message" id="pf142470556336632" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf142470556336633" path="/messagebegin.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="message.xhtml" id="pf142470556336634" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf142470556336635" inlinks="pf142470556336633" path="/message.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="messagedetail.xhtml" id="pf142470556336636" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf142470556336635 pf142470556336637" path="/messagedetail.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="simpleSearchResult.xhtml" comment="startmessagedetail" id="pf142470556336638" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf142470556336637" inlinks="pf142470556336621" path="/simpleSearchResult.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="profilchange.xhtml" comment="profilchange" id="pf142470556336639" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf142470556336640" path="/profilchange.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="profil.xhtml" id="pf142470556336641" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf142470556336640" path="/profil.xhtml"/>
+  <links id="pf14247041072390" target="pf14246301460784" source="pf14231465251220" outcome="home" redirect="true"/>
+  <links id="pf142470556336623" target="pf142470556336625" source="pf142470556336622" outcome="success" fromaction="#{user.add}"/>
+  <links id="pf142470556336624" target="pf142470556336627" source="pf142470556336622" outcome="unsuccess" fromaction="#{user.add}"/>
+  <links id="pf142470556336626" target="pf142470556336628" source="pf142470556336625" outcome="changedata" fromaction="#{user.changeData}"/>
+  <links id="pf142470556336630" target="pf142470556336631" source="pf142470556336629" outcome="impressum"/>
+  <links id="pf142470556336633" target="pf142470556336634" source="pf142470556336632" outcome="messageoverview" redirect="true" fromaction="#{message.showAllMessage}"/>
+  <links id="pf142470556336635" target="pf142470556336636" source="pf142470556336634" outcome="messagedetail" redirect="true" fromaction="#{message.showMessage}"/>
+  <links id="pf142470556336637" target="pf142470556336636" source="pf142470556336638" outcome="messagedetailvonsuche" redirect="true" fromaction="#{message.startMessage}"/>
+  <links id="pf142470556336621" target="pf142470556336638" source="pf14246301460784" outcome="simpleSearchResult" redirect="true" fromaction="#{simpleSearch.searchSimple}"/>
+  <links id="pf142470556336640" target="pf142470556336641" source="pf142470556336639" outcome="profil" redirect="true" fromaction="#{user.profilchange(firstName.value, lastName.value, birthday.value, car.value, phone.value, email.value, password.value, street.value, plz.value, abouttext.value)}"/>
 </pageflow:Pageflow>

@@ -1,8 +1,6 @@
 package Beans;
 
 import java.io.IOException;
-
-import javax.faces.bean.ManagedProperty;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -16,12 +14,7 @@ import javax.servlet.http.HttpSession;
 
 	@WebFilter(filterName = "AuthFilter", urlPatterns = {"*.xhtml"})
 	public class AuthFilter implements Filter {
-	     
-		@ManagedProperty(value="#{user.id}")
-	    private int filter_id; 
-	
-		
-		
+	     		
 	    public AuthFilter() {
 	    }
 	 
@@ -41,24 +34,24 @@ import javax.servlet.http.HttpSession;
 	            //  allow user to proccede if url is login.xhtml or user logged in or user is accessing any page in //public folder
 	            String reqURI = req.getRequestURI();
 	            if ( reqURI.indexOf("/login.xhtml") >= 0 || (ses != null && ses.getAttribute("username") != null)
-	                                       || reqURI.indexOf("/public/") >= 0 || reqURI.contains("javax.faces.resource") )
-	                   chain.doFilter(request, response);
+	            							|| reqURI.contains("javax.faces.resource")
+	            							|| reqURI.indexOf("/home") >= 0 || reqURI.indexOf("/simpleSearchResult") >= 0
+	            							|| reqURI.indexOf("/Impressum") >= 0 || reqURI.indexOf("/Kontakt") >= 0 
+	            							|| reqURI.indexOf("/register") >= 0
+	            		) 
+	            {
+	                   chain.doFilter(request, response);}
 	            else   // user didn't log in but asking for a page that is not allowed so take user to login page
 	                   res.sendRedirect(req.getContextPath() + "/login.xhtml");  // Anonymous user. Redirect to login page
 	      }
 	     catch(Throwable t) {
 	         System.out.println( t.getMessage());
 	     }
-	    } //doFilter
-	    	
-	    		 
-
+	    } 
 
 	    @Override
 	    public void destroy() {
 	         
 	    }
-	    
 
-	
 }

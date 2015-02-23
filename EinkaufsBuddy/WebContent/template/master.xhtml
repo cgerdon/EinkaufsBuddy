@@ -14,15 +14,20 @@
 </h:head>
 
 <h:body>
-	<h:outputStylesheet library="css" name="style.css"/>
   	
   	<h:panelGroup id="page" layout="block">
-	
-	    <h:panelGroup id="header" layout="block">
+
+	    <h:panelGroup id="header" layout="block" >
 	    	<ui:insert name="header">
 	    		<ui:include src="header.xhtml" />
 			</ui:insert>
+	
+	    	<ui:insert name="logoutheader">
+	    		<ui:include src="logoutheader.xhtml" />
+			</ui:insert>
 		</h:panelGroup>
+
+
 		
 		<h:panelGroup id="container" layout="block">	
 				<ui:insert name="content"/>
