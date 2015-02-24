@@ -62,6 +62,15 @@
     </navigation-rule>  
 
      <navigation-rule>  
+        <description>impressum</description>  
+        <navigation-case>  
+            <from-outcome>impressum</from-outcome>  
+            <to-view-id>/Impressum.xhtml</to-view-id>  
+        	
+        </navigation-case>  
+    </navigation-rule>  
+    
+     <navigation-rule>  
         <description>message</description>  
         <from-view-id>/messagebegin.xhtml</from-view-id>  
         <navigation-case>  

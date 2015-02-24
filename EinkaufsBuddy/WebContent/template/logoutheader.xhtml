@@ -5,31 +5,30 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">					
 
-	
-	<h:outputLink id="logo-link" value="home.xhtml">						
-		<h:graphicImage id="logo" value="resources/images/logo.png" alt="EinkaufsBuddy"/>
-	</h:outputLink>	
-	
- 	<h:form styleClass="login-logout-form">  
-			<p:commandButton value="Logout" action="#{user.logout}"/>  
- 	</h:form>
 		
-	 	<h:form id="menu">
-			<p:menubar id="horizontalMenu">
-				<p:menuitem value="Home" outcome="home"/>	
-				
-				<p:menuitem value="Profil" outcome="profil"/>	
-				
-				<p:menuitem value="Nachrichten" outcome="messagebegin" />	
-				
-				<p:menuitem value="Inserate" outcome="advert"/>	
-	 			
-	 			<p:submenu label="About US">
-						<p:menuitem value="Kontakt" outcome="Kontakt"/>
-						<p:menuitem value="Impressum" outcome="Impressum"/>
-				</p:submenu>
+	 	<h:form styleClass="login-logout-form" rendered="#{user.id != 0}">  
+				<p:commandButton value="Logout" action="#{user.logout}" />  
+	 	</h:form>
+			
+		 	<h:form rendered="#{user.id != 0}">
+				<p:menubar id="horizontalMenu">
+					<p:menuitem value="Home" outcome="home"/>	
+					
+					<p:menuitem value="Profil" outcome="profil"/>	
+					
+					<p:menuitem value="Nachrichten" outcome="messagebegin" />	
+					
+					<p:menuitem value="Inserate" outcome="advert"/>	
+					
+		 			<p:submenu label="About US">
+							<p:menuitem value="Kontakt" outcome="/Kontakt"/>
+							<p:menuitem value="Impressum" outcome="/Impressum"/>
+					</p:submenu>	 			
+	
+				</p:menubar>
+			</h:form>
+		
 
-			</p:menubar>
-		</h:form>
-		
 </ui:composition>
+
+
