@@ -15,13 +15,13 @@
     			<th class="order-table-header">Budget [EUR]</th>
     			<th class="order-table-header">Vergütung</th>
     			<th class="order-table-header">Datum</th>
-    			<th class="order-table-header">&nbsp</th>
+    			<th class="order-table-header">Ändernfeld</th>
     			
     		</tr>
 			</h:panelGroup>
 		
 			<h:panelGroup>
-				<ui:repeat var="ownadverts" value="#{advert.ownadverts}">
+				<ui:repeat var="ownadverts" value="#{advert.showown}">
 						<tr>
 			    			<td class="order-table-even-row">#{advert.fav_market}</td>
 			    			<td class="order-table-even-row">#{advert.text}</td>

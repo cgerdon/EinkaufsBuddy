@@ -357,8 +357,8 @@ public class Advert {
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                    String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where id = '"  
-                            + ad_id + "'";  
+                	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
+                    String sql = "select select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where advertiser_id = '" + advertiser_id + "'";  
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
                     rs.next();  
@@ -378,7 +378,7 @@ public class Advert {
                 sqle.printStackTrace();  
             }    
         }
-        return "viewadverts";
+        return "viewownadverts";
     }
     /*public String showothers(){
     	
