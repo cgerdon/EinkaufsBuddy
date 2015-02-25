@@ -256,6 +256,16 @@ public class simpleSearch {
 	
 		}
 		
+		if (sliderLimit > 0){
+			for (int i = 0; i < AdvertList.size(); i++)
+			{
+			SimpleSearchResults TempObj = AdvertList.get(i);
+			if  (TempObj.getLimit() < sliderLimit){
+				AdvertList.remove(i);}
+			}
+	
+		}
+		
 			return "simpleSearchResult";
 	}
 
