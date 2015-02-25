@@ -128,7 +128,7 @@ AdvertList.clear();
 								rs.getString("street"), rs.getString("name"),
 								rs.getString("last_name"), rs.getInt("id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
-								0);
+								0, rs.getString("time"), rs.getDate("date"));
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;

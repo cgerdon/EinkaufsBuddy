@@ -1,5 +1,7 @@
 package Beans;
 
+import java.sql.Date;
+
 public class SimpleSearchResults {
 
 	private String text;
@@ -11,6 +13,10 @@ public class SimpleSearchResults {
 	private double limit;
 	private double income;
 	private int distance;
+	private String zeitpunkt;
+	private Date datum;
+
+	
 	
 
 	@Override
@@ -18,12 +24,29 @@ public class SimpleSearchResults {
 		return "SimpleSearchResults [text=" + text + ", plz=" + plz
 				+ ", street=" + street + ", name=" + name + ", last_name="
 				+ last_name + ", id=" + id + ", limit=" + limit + ", income="
-				+ income + ", distance=" + distance + "]";
+				+ income + ", distance=" + distance + ", zeitpunkt="
+				+ zeitpunkt + ", datum=" + datum + "]";
+	}
+
+	public String getZeitpunkt() {
+		return zeitpunkt;
+	}
+
+	public void setZeitpunkt(String zeitpunkt) {
+		this.zeitpunkt = zeitpunkt;
+	}
+
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
 
 	public SimpleSearchResults(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
-			int distance) {
+			int distance, String zeitpunkt, Date datum) {
 		super();
 		this.text = text;
 		this.plz = plz;
@@ -34,6 +57,8 @@ public class SimpleSearchResults {
 		this.limit = limit;
 		this.income = income;
 		this.distance = distance;
+		this.zeitpunkt = zeitpunkt;
+		this.datum = datum;
 	}
 
 	public String getText() {
