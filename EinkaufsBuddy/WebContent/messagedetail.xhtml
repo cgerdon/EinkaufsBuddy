@@ -11,7 +11,7 @@
 		
 		<h:form>
 			<h:panelGroup id="messagedetails" styleClass="chat-window" layout="block">
-				<ui:repeat var="messagedetails" value="#{message.messagedetails}">
+				<ui:repeat id="messagerepeat" var="messagedetails" value="#{message.messagedetails}">
 						<h:panelGroup styleClass="rightmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
 							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
 							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
@@ -30,17 +30,34 @@
 					<br/>	
 				</ui:repeat>
 			
-			<h:inputTextarea binding="#{messagetext}"/>
+
 			
-			<h:commandButton value="senden" action="#{message.writeMessage(messagetext.value)}">
+				<p:inputTextarea value="#{message.messagetext}"/>
+				<p:commandButton value="senden"  update="messagedetails" action="#{message.writeMessage()}">
+				
 				 <f:param name="empfaenger" value="#{message.ms_senderId}" />
-	
-	<!--  AJAX automatisches Update und rote Zahl -->
-				  <f:ajax execute="@form" render="messagedetails" />
-			</h:commandButton>
+			</p:commandButton> 
+			
 			</h:panelGroup>	
+			
+
+			
+
+		
 		</h:form>
 
 	</ui:define>
   
 </ui:composition>
+
+<!--		
+	 	<p:poll interval="3" listener="#{message.reloadMessage(message.ms_senderId)}" update="messagerepeat" />
+
+
+<p:commandButton value="senden" update="messagerepeat">
+	<h:inputTextarea binding="#{messagetext}"/>
+			
+	 	<h:commandButton value="senden" action="#{message.writeMessage(messagetext.value)}">
+				 <f:param name="empfaenger" value="#{message.ms_senderId}" />
+			</h:commandButton>	
+			-->
