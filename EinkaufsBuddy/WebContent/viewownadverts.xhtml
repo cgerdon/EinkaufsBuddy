@@ -20,14 +20,14 @@
     		</tr>
 			</h:panelGroup>
 		
-			<h:panelGroup>
-				<ui:repeat var="ownadverts" value="#{advert.showown}">
+			<h:panelGroup id="ownadverts">
+				<ui:repeat var="ownadverts" value="#{advert.ownadverts}">
 						<tr>
-			    			<td class="order-table-even-row">#{advert.fav_market}</td>
-			    			<td class="order-table-even-row">#{advert.text}</td>
-			    			<td class="order-table-even-row">#{advert.limit}</td>
-			    			<td class="order-table-even-row">#{advert.income}</td>
-			    			<td class="order-table-even-row">#{advert.Date}</td>
+			    			<td class="order-table-even-row">#{ownadverts.fav_market}</td>
+			    			<td class="order-table-even-row">#{ownadverts.text}</td>
+			    			<td class="order-table-even-row">#{ownadverts.limit}</td>
+			    			<td class="order-table-even-row">#{ownadverts.income}</td>
+			    			<td class="order-table-even-row">#{ownadverts.Date}</td>
 			    			<td class="order-table-even-row">
 			    				<h:commandButton value="ändern" action="#{advert.changeData}">
 				 					<f:param name="ad_id" value="#{advert.ad_id}" />

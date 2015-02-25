@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -205,11 +206,48 @@ public class Advert {
 
 
 
-
 	public void setDs(DataSource ds) {
 		this.ds = ds;  
 	}
 
+	ArrayList<Advert> ownadverts = new ArrayList<Advert>();
+	//ArrayList<message> messageoverview = new ArrayList<message>();
+	
+
+	public ArrayList<Advert> getOwnadverts() {
+		return ownadverts;
+	}
+
+
+	public void setOwnadverts(ArrayList<Advert> ownadverts) {
+		this.ownadverts = ownadverts;
+	}
+
+	
+	/*public ArrayList<message> getMessageoverview() {
+		return messageoverview;
+	}
+
+
+	public void setMessageoverview(ArrayList<message> messageoverview) {
+		this.messageoverview = messageoverview;
+	}*/
+	
+	
+	public Advert(int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id ) {
+		super();
+		this.advertiser_id = advertiser_id;
+		this.date = date;
+		this.fk_time_id =fk_time_id;
+		this.limit=limit;
+		this.income = income;
+		this.text = text;
+		this.fk_category = fk_category;
+		this.status = status;
+		this.fav_market = fav_market;
+		this.buyer_id = buyer_id;
+	}
+	
 
 	//Inserat muss man ändern können
 	public String updateInfos() {
@@ -358,21 +396,22 @@ public class Advert {
                 con = ds.getConnection();  
                 if (con != null) {  
                 	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
-                    String sql = "select select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where advertiser_id = '" + advertiser_id + "'";  
+                    String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where advertiser_id = '" + advertiser_id + "'";  
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
-                    rs.next();  
-                    ad_id = rs.getInt("id");
-                    advertiser_id = rs.getInt("advertiser_id");
-                    date = rs.getDate(new SimpleDateFormat("yyyy-MM-dd").format(date));  
-                    fk_time_id = rs.getInt("fk_time_id");
-                    limit = rs.getDouble("limit");
-                    income = rs.getDouble("income");
-                    text = rs.getString("text");
-                    fk_category = rs.getInt("fk_category");
-                    status = rs.getBoolean("status");
-                    fav_market = rs.getString("fav_market");
-                    buyer_id = rs.getInt("buyer_id");
+                    rs.next();
+                    ownadverts.clear();
+                    while (rs.next()) {  
+                    		
+                    	Advert TempObj = new Advert(rs.getInt("advert.advertiser_id"), rs.getDate("date"), rs.getInt("advert.fk_time_id"), rs.getDouble("advert.limit"), rs.getDouble("advert.income"), rs.getString("advert.text"), rs.getInt("advert.fk_category"), rs.getBoolean("advert.status"), rs.getString("advert.fav_market"), rs.getInt("advert.buyer_id"));
+                    	
+                    	ownadverts.add(TempObj);
+                    
+                    	//messageoverview.add(rs.getString("member.name")+" "+ rs.getString("member.last_name"));
+                   
+                    	//ms_senderName = rs.getString("member.name")+" "+ rs.getString("member.last_name");
+                    	
+                    }
                 }  
             } catch (SQLException sqle) {  
                 sqle.printStackTrace();  
