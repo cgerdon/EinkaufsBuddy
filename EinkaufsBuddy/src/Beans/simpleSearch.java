@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -183,9 +184,16 @@ AdvertList.clear();
 		return "simpleSearchResult";
 	}
 	
-	public void sortByDistance(){
-		
-		
+	public String sortByDistance(){
+		 Collections.sort(AdvertList);
+		 System.out.println("Sortieren fertisch!");
+		return "simpleSearchResult";
+	}
+	
+	public String sortByDate(){
+		 Collections.sort(AdvertList);
+		 System.out.println("Sortieren fertisch!");
+		return "simpleSearchResult";
 	}
 
 	public int getSummeAds() {

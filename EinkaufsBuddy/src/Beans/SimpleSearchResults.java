@@ -2,7 +2,7 @@ package Beans;
 
 import java.sql.Date;
 
-public class SimpleSearchResults {
+public class SimpleSearchResults implements Comparable<SimpleSearchResults>{
 	private String text;
 	private int plz;
 	private String street;
@@ -129,5 +129,9 @@ public class SimpleSearchResults {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
+	
+	 @Override
+	    public int compareTo(SimpleSearchResults o) {
+	      return ((Integer)distance).compareTo((Integer)o.distance);}
 
 }
