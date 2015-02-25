@@ -11,6 +11,7 @@ public class SimpleSearchResults {
 	private double limit;
 	private double income;
 	private int distance;
+	
 
 	@Override
 	public String toString() {

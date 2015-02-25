@@ -117,7 +117,7 @@ AdvertList.clear();
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "SELECT member.name, member.last_name, ad.text, member.plz, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id;";
+					String sql = "SELECT member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
