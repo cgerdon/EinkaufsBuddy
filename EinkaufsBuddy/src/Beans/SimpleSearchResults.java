@@ -15,17 +15,16 @@ public class SimpleSearchResults {
 	private int distance;
 	private String zeitpunkt;
 	private Date datum;
+	private String category;
 
 	
-	
 
-	@Override
-	public String toString() {
-		return "SimpleSearchResults [text=" + text + ", plz=" + plz
-				+ ", street=" + street + ", name=" + name + ", last_name="
-				+ last_name + ", id=" + id + ", limit=" + limit + ", income="
-				+ income + ", distance=" + distance + ", zeitpunkt="
-				+ zeitpunkt + ", datum=" + datum + "]";
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getZeitpunkt() {
@@ -46,7 +45,7 @@ public class SimpleSearchResults {
 
 	public SimpleSearchResults(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
-			int distance, String zeitpunkt, Date datum) {
+			int distance, String zeitpunkt, Date datum, String category) {
 		super();
 		this.text = text;
 		this.plz = plz;
@@ -59,6 +58,7 @@ public class SimpleSearchResults {
 		this.distance = distance;
 		this.zeitpunkt = zeitpunkt;
 		this.datum = datum;
+		this.category = category;
 	}
 
 	public String getText() {

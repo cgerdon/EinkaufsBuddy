@@ -117,7 +117,7 @@ AdvertList.clear();
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "SELECT member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id;";
+					String sql = "SELECT member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
@@ -128,7 +128,7 @@ AdvertList.clear();
 								rs.getString("street"), rs.getString("name"),
 								rs.getString("last_name"), rs.getInt("id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
-								0, rs.getString("time"), rs.getDate("date"));
+								0, rs.getString("time"), rs.getDate("date"), rs.getString("category"));
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;
