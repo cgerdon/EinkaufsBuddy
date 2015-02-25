@@ -246,14 +246,14 @@ public class simpleSearch {
 					AdvertList.remove(i);}
 				}	
 			}
-		if (sliderDistance > 0){}
-		else{
+		if (sliderDistance > 0){
 			for (int i = 0; i < AdvertList.size(); i++)
 			{
 			SimpleSearchResults TempObj = AdvertList.get(i);
 			if  ((TempObj.getDistance() / 1000) < sliderDistance){
 				AdvertList.remove(i);}
-		}
+			}
+	
 		}
 		
 			return "simpleSearchResult";
