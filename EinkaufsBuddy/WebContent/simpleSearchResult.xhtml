@@ -28,8 +28,8 @@
 							<h:outputText value="Inserat von #{ads.name} #{ads.last_name}" />
 							<h:commandLink action="#{message.startMessage}">
 								<h:graphicImage class="message" value="resources/images/message.png" alt="message"/>
-		<!-- Muss noch geändert werden: value steht für die ID des Inseratenerstellers -->
-								<f:param name="startmessage" value="4" />
+
+								<f:param name="startmessage" value="#{ads.memberid}" />
 							</h:commandLink>
 						<br/>	
 							<h:outputLabel value="Merken:" />

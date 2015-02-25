@@ -16,6 +16,21 @@ public class SimpleSearchResults {
 	private String zeitpunkt;
 	private Date datum;
 	private String category;
+	private int memberid;
+	
+	
+
+	public int getMemberid() {
+		return memberid;
+	}
+
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
+	}
+
+	public void setDistance(Integer distance) {
+		this.distance = distance;
+	}
 
 	public String getCategory() {
 		return category;
@@ -43,7 +58,7 @@ public class SimpleSearchResults {
 
 	public SimpleSearchResults(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
-			int distance, String zeitpunkt, Date datum, String category) {
+			int distance, String zeitpunkt, Date datum, String category, int memberid) {
 		super();
 		this.text = text;
 		this.plz = plz;
@@ -57,6 +72,7 @@ public class SimpleSearchResults {
 		this.zeitpunkt = zeitpunkt;
 		this.datum = datum;
 		this.category = category;
+		this.memberid = memberid;
 	}
 
 	public String getText() {
