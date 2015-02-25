@@ -1,7 +1,8 @@
 package Beans;
 
-public class SimpleSearchResults {
+import java.sql.Date;
 
+public class SimpleSearchResults implements Comparable<SimpleSearchResults>{
 	private String text;
 	private int plz;
 	private String street;
@@ -11,18 +12,37 @@ public class SimpleSearchResults {
 	private double limit;
 	private double income;
 	private int distance;
+	private String zeitpunkt;
+	private Date datum;
+	private String category;
 
-	@Override
-	public String toString() {
-		return "SimpleSearchResults [text=" + text + ", plz=" + plz
-				+ ", street=" + street + ", name=" + name + ", last_name="
-				+ last_name + ", id=" + id + ", limit=" + limit + ", income="
-				+ income + ", distance=" + distance + "]";
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getZeitpunkt() {
+		return zeitpunkt;
+	}
+
+	public void setZeitpunkt(String zeitpunkt) {
+		this.zeitpunkt = zeitpunkt;
+	}
+
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
 	}
 
 	public SimpleSearchResults(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
-			int distance) {
+			int distance, String zeitpunkt, Date datum, String category) {
 		super();
 		this.text = text;
 		this.plz = plz;
@@ -33,6 +53,9 @@ public class SimpleSearchResults {
 		this.limit = limit;
 		this.income = income;
 		this.distance = distance;
+		this.zeitpunkt = zeitpunkt;
+		this.datum = datum;
+		this.category = category;
 	}
 
 	public String getText() {
@@ -106,5 +129,9 @@ public class SimpleSearchResults {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
+	
+	 @Override
+	    public int compareTo(SimpleSearchResults o) {
+	      return ((Integer)distance).compareTo((Integer)o.distance);}
 
 }

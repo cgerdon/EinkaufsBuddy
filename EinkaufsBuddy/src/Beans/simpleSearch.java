@@ -10,10 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -117,7 +117,7 @@ AdvertList.clear();
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "SELECT member.name, member.last_name, ad.text, member.plz, member.street, ad.id, ad.limit, ad.income from ad LEFT JOIN member ON ad.advertiser_id=member.id;";
+					String sql = "SELECT member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
@@ -128,7 +128,7 @@ AdvertList.clear();
 								rs.getString("street"), rs.getString("name"),
 								rs.getString("last_name"), rs.getInt("id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
-								0);
+								0, rs.getString("time"), rs.getDate("date"), rs.getString("category"));
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;
@@ -181,6 +181,18 @@ AdvertList.clear();
 			}
 		}
 		summe();
+		return "simpleSearchResult";
+	}
+	
+	public String sortByDistance(){
+		 Collections.sort(AdvertList);
+		 System.out.println("Sortieren fertisch!");
+		return "simpleSearchResult";
+	}
+	
+	public String sortByDate(){
+		 Collections.sort(AdvertList);
+		 System.out.println("Sortieren fertisch!");
 		return "simpleSearchResult";
 	}
 
