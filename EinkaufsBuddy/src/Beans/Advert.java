@@ -385,7 +385,7 @@ public class Advert {
     	dbData(ad_id);
     	return "changedata";
     }
-	// ka, ob das sauber is neben der dbData
+
     public String showown(){
     	PreparedStatement ps = null;  
         Connection con = null;  
@@ -394,16 +394,25 @@ public class Advert {
         if (ds != null) {  
             try {  
                 con = ds.getConnection();  
-                if (con != null) {  
+                if (con != null) {
+                	System.out.println(advertiser_id); 
                 	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
                     String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where advertiser_id = '" + advertiser_id + "'";  
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
-                    rs.next();
                     ownadverts.clear();
                     while (rs.next()) {  
                     		
-                    	Advert TempObj = new Advert(rs.getInt("advert.advertiser_id"), rs.getDate("date"), rs.getInt("advert.fk_time_id"), rs.getDouble("advert.limit"), rs.getDouble("advert.income"), rs.getString("advert.text"), rs.getInt("advert.fk_category"), rs.getBoolean("advert.status"), rs.getString("advert.fav_market"), rs.getInt("advert.buyer_id"));
+                    	Advert TempObj = new Advert(rs.getInt("advert.advertiser_id"), 
+                    								rs.getDate("date"), 
+                    								rs.getInt("advert.fk_time_id"), 
+                    								rs.getDouble("advert.limit"), 
+                    								rs.getDouble("advert.income"), 
+                    								rs.getString("advert.text"), 
+                    								rs.getInt("advert.fk_category"), 
+                    								rs.getBoolean("advert.status"), 
+                    								rs.getString("advert.fav_market"), 
+                    								rs.getInt("advert.buyer_id"));
                     	
                     	ownadverts.add(TempObj);
                     
@@ -417,7 +426,7 @@ public class Advert {
                 sqle.printStackTrace();  
             }    
         }
-        return "viewownadverts";
+        return "ownadverts";
     }
     /*public String showothers(){
     	
