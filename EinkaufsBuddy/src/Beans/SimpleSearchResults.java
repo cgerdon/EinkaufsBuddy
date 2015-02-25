@@ -3,7 +3,6 @@ package Beans;
 import java.sql.Date;
 
 public class SimpleSearchResults {
-
 	private String text;
 	private int plz;
 	private String street;
@@ -16,8 +15,6 @@ public class SimpleSearchResults {
 	private String zeitpunkt;
 	private Date datum;
 	private String category;
-
-	
 
 	public String getCategory() {
 		return category;

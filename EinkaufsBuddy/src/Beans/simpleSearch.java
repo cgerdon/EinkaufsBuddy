@@ -182,6 +182,11 @@ AdvertList.clear();
 		summe();
 		return "simpleSearchResult";
 	}
+	
+	public void sortByDistance(){
+		
+		
+	}
 
 	public int getSummeAds() {
 		return summeAds;
