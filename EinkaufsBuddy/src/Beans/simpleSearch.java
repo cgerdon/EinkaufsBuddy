@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -185,14 +186,15 @@ AdvertList.clear();
 	}
 	
 	public String sortByDistance(){
-		 Collections.sort(AdvertList);
-		 System.out.println("Sortieren fertisch!");
+		
+		 Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DISTANCE);
+		
 		return "simpleSearchResult";
 	}
 	
 	public String sortByDate(){
-		 Collections.sort(AdvertList);
-		 System.out.println("Sortieren fertisch!");
+		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DATE);
+
 		return "simpleSearchResult";
 	}
 
