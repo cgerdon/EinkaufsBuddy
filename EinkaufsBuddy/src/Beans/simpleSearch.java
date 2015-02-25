@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -26,12 +26,15 @@ import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 
 @ManagedBean(name = "simpleSearch")
-//geändert von Mathias: @RequestScoped ersetzt durch @SessionScoped
+// geändert von Mathias: @RequestScoped ersetzt durch @SessionScoped
 @SessionScoped
 public class simpleSearch {
 
 	private Integer plzInput;
-
+	private Date fromDate;
+	private Date toDate;
+	private int sliderDistance;
+	private int sliderLimit;
 	private String text;
 	private int summeAds;
 	private int plzDB;
@@ -48,6 +51,32 @@ public class simpleSearch {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+
 
 	public ArrayList<SimpleSearchResults> getAdvertList() {
 		return AdvertList;
@@ -103,17 +132,17 @@ public class simpleSearch {
 
 	public String searchSimple() throws IOException, JSONException,
 			URISyntaxException {
-		
+
 		PreparedStatement ps = null;
 		List<String> Adressen = new ArrayList<String>();
 
 		StringBuffer buffer = new StringBuffer();
 		Connection con = null;
 		ResultSet rs = null;
-		
-//Mathias hinzugefügt: wegen Session 
-AdvertList.clear();
-		
+
+		// Mathias hinzugefügt: wegen Session
+		AdvertList.clear();
+
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
@@ -122,14 +151,15 @@ AdvertList.clear();
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
-					
+
 					while (rs.next()) {
 						SimpleSearchResults TempObj = new SimpleSearchResults(
 								rs.getString("text"), rs.getInt("plz"),
 								rs.getString("street"), rs.getString("name"),
 								rs.getString("last_name"), rs.getInt("id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
-								0, rs.getString("time"), rs.getDate("date"), rs.getString("category"));
+								0, rs.getString("time"), rs.getDate("date"),
+								rs.getString("category"));
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;
@@ -184,23 +214,58 @@ AdvertList.clear();
 		summe();
 		return "simpleSearchResult";
 	}
-	
-	public String sortByDistance(){
-		
-		 Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DISTANCE);
-		
+
+	public String sortByDistance() {
+
+		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DISTANCE);
+		return "simpleSearchResult";
+	}
+
+	public String sortByDate() {
+		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DATE);
+
 		return "simpleSearchResult";
 	}
 	
-	public String sortByDate(){
-		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DATE);
+	public String filterAds(){
 
+		System.out.println(fromDate);
+		System.out.println(toDate);
+		System.out.println(sliderDistance);
+		System.out.println(sliderLimit);
+		
 		return "simpleSearchResult";
 	}
 
 	public int getSummeAds() {
 		return summeAds;
 	}
+	
+	
+
+	public int getSliderDistance() {
+		return sliderDistance;
+	}
+
+
+
+	public void setSliderDistance(int sliderDistance) {
+		this.sliderDistance = sliderDistance;
+	}
+
+
+
+	public int getSliderLimit() {
+		return sliderLimit;
+	}
+
+
+
+	public void setSliderLimit(int sliderLimit) {
+		this.sliderLimit = sliderLimit;
+	}
+
+
 
 	public void setSummeAds(int summeAds) {
 		this.summeAds = summeAds;
