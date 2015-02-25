@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -228,13 +228,35 @@ public class simpleSearch {
 	}
 	
 	public String filterAds(){
+		//TODO: Christoph: Oh man, das muss besser...
 
 		System.out.println(fromDate);
 		System.out.println(toDate);
 		System.out.println(sliderDistance);
 		System.out.println(sliderLimit);
+		if (fromDate == null || toDate == null){}
+		else
+			{
+			for (int i = 0; i < AdvertList.size(); i++)
+				{
+				SimpleSearchResults TempObj = AdvertList.get(i);
+				if  (TempObj.getDatum().before(toDate) && TempObj.getDatum().after(fromDate)){
+					System.out.println("liegt drin");}
+				else{
+					AdvertList.remove(i);}
+				}	
+			}
+		if (sliderDistance > 0){}
+		else{
+			for (int i = 0; i < AdvertList.size(); i++)
+			{
+			SimpleSearchResults TempObj = AdvertList.get(i);
+			if  ((TempObj.getDistance() / 1000) < sliderDistance){
+				AdvertList.remove(i);}
+		}
+		}
 		
-		return "simpleSearchResult";
+			return "simpleSearchResult";
 	}
 
 	public int getSummeAds() {
