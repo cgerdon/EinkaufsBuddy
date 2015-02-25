@@ -51,32 +51,22 @@ public class simpleSearch {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	public Date getFromDate() {
 		return fromDate;
 	}
 
-
-
 	public void setFromDate(Date fromDate) {
 		this.fromDate = fromDate;
 	}
-
-
 
 	public Date getToDate() {
 		return toDate;
 	}
 
-
-
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
-
-
 
 	public ArrayList<SimpleSearchResults> getAdvertList() {
 		return AdvertList;
@@ -226,78 +216,66 @@ public class simpleSearch {
 
 		return "simpleSearchResult";
 	}
-	
-	public String filterAds(){
-		//TODO: Christoph: Oh man, das muss besser...
 
-		System.out.println(fromDate);
-		System.out.println(toDate);
-		System.out.println(sliderDistance);
-		System.out.println(sliderLimit);
-		if (fromDate == null || toDate == null){}
-		else
-			{
-			for (int i = 0; i < AdvertList.size(); i++)
-				{
+	public String filterAds() {
+		// TODO: Christoph: Kleiner Bug, was weg is is weg. Lösung (schlecht),
+		// einfach nochmal Google Api anfetzen.Bessere Lösung, ne TempListe
+		// einführen
+
+		if (fromDate == null || toDate == null) {
+		} else {
+			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
-				if  (TempObj.getDatum().before(toDate) && TempObj.getDatum().after(fromDate)){
-					System.out.println("liegt drin");}
-				else{
-					AdvertList.remove(i);}
-				}	
+				if (TempObj.getDatum().before(toDate)
+						&& TempObj.getDatum().after(fromDate)) {
+					System.out.println("liegt drin");
+				} else {
+					AdvertList.remove(i);
+				}
 			}
-		if (sliderDistance > 0){
-			for (int i = 0; i < AdvertList.size(); i++)
-			{
-			SimpleSearchResults TempObj = AdvertList.get(i);
-			if  ((TempObj.getDistance() / 1000) < sliderDistance){
-				AdvertList.remove(i);}
-			}
-	
 		}
-		
-		if (sliderLimit > 0){
-			for (int i = 0; i < AdvertList.size(); i++)
-			{
-			SimpleSearchResults TempObj = AdvertList.get(i);
-			if  (TempObj.getLimit() < sliderLimit){
-				AdvertList.remove(i);}
+		if (sliderDistance > 0) {
+			for (int i = 0; i < AdvertList.size(); i++) {
+				SimpleSearchResults TempObj = AdvertList.get(i);
+				if ((TempObj.getDistance() / 1000) < sliderDistance) {
+					AdvertList.remove(i);
+				}
 			}
-	
+
 		}
-		
-			return "simpleSearchResult";
+
+		if (sliderLimit > 0) {
+			for (int i = 0; i < AdvertList.size(); i++) {
+				SimpleSearchResults TempObj = AdvertList.get(i);
+				if (TempObj.getLimit() < sliderLimit) {
+					AdvertList.remove(i);
+				}
+			}
+
+		}
+
+		return "simpleSearchResult";
 	}
 
 	public int getSummeAds() {
 		return summeAds;
 	}
-	
-	
 
 	public int getSliderDistance() {
 		return sliderDistance;
 	}
 
-
-
 	public void setSliderDistance(int sliderDistance) {
 		this.sliderDistance = sliderDistance;
 	}
-
-
 
 	public int getSliderLimit() {
 		return sliderLimit;
 	}
 
-
-
 	public void setSliderLimit(int sliderLimit) {
 		this.sliderLimit = sliderLimit;
 	}
-
-
 
 	public void setSummeAds(int summeAds) {
 		this.summeAds = summeAds;
