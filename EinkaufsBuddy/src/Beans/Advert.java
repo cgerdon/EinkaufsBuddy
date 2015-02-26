@@ -234,7 +234,7 @@ public class Advert {
 	}*/
 	
 	
-	public Advert(int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id ) {
+	public Advert(int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id) { //int buyer_id
 		super();
 		this.advertiser_id = advertiser_id;
 		this.date = date;
@@ -397,25 +397,25 @@ public class Advert {
                 if (con != null) {
                 	System.out.println(advertiser_id); 
                 	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
-                    String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where advertiser_id = '" + advertiser_id + "'";  
+                    String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.advertiser_id = '" + advertiser_id + "'";  //buyer_id
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
                     ownadverts.clear();
                     while (rs.next()) {  
                     		
-                    	Advert TempObj = new Advert(rs.getInt("advert.advertiser_id"), 
-                    								rs.getDate("date"), 
-                    								rs.getInt("advert.fk_time_id"), 
-                    								rs.getDouble("advert.limit"), 
-                    								rs.getDouble("advert.income"), 
-                    								rs.getString("advert.text"), 
-                    								rs.getInt("advert.fk_category"), 
-                    								rs.getBoolean("advert.status"), 
-                    								rs.getString("advert.fav_market"), 
-                    								rs.getInt("advert.buyer_id"));
+                    	Advert TempObj = new Advert(rs.getInt("ad.advertiser_id"), 
+                    								rs.getDate("ad.date"), 
+                    								rs.getInt("ad.fk_time_id"), 
+                    								rs.getDouble("ad.limit"), 
+                    								rs.getDouble("ad.income"), 
+                    								rs.getString("ad.text"), 
+                    								rs.getInt("ad.fk_category"), 
+                    								rs.getBoolean("ad.status"), 
+                    								rs.getString("ad.fav_market"), 
+                    								rs.getInt("ad.buyer_id"));
                     	
                     	ownadverts.add(TempObj);
-                    
+                    	System.out.println(ownadverts);
                     	//messageoverview.add(rs.getString("member.name")+" "+ rs.getString("member.last_name"));
                    
                     	//ms_senderName = rs.getString("member.name")+" "+ rs.getString("member.last_name");
@@ -426,7 +426,7 @@ public class Advert {
                 sqle.printStackTrace();  
             }    
         }
-        return "ownadverts";
+        return "viewownadverts";//"ownadverts";
     }
     /*public String showothers(){
     	
