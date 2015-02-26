@@ -87,22 +87,20 @@ CREATE TABLE `ad` (
   CONSTRAINT `const_ad_time_id` FOREIGN KEY (`fk_time_id`) REFERENCES `times_available` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `message` (
+CREATE TABLE IF NOT EXISTS `message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sender_id` int(11) NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `time_sent` datetime NOT NULL,
-  `ad_id` int(11) DEFAULT NULL,
+  `read` tinyint(1) NOT NULL DEFAULT '0',
   `text` longtext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `const_message_sender_idx` (`sender_id`),
   KEY `const_message_receiver_idx` (`receiver_id`),
-  KEY `const_message_ad_idx` (`ad_id`),
-  CONSTRAINT `const_message_ad` FOREIGN KEY (`ad_id`) REFERENCES `ad` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `const_message_receiver` FOREIGN KEY (`receiver_id`) REFERENCES `member` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `const_message_sender` FOREIGN KEY (`sender_id`) REFERENCES `member` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `rating` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -186,7 +184,8 @@ INSERT INTO `ad` (`id`, `advertiser_id`, `date`, `fk_time_id`, `limit`, `income`
 INSERT INTO `ad` (`id`, `advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES (3, 5, '2014-12-07', 1, 100, 10, 'Hallo,\r\nich hätte gerne einen kompletten Wocheneinkauf. Also auch Wasser, Bier, Wurst, Brot, Käse, Marmelade und ein KG feinstes, reines, russisches Heroin.\r\nDanke', 1, 0, 'Mir latte', NULL);
 INSERT INTO `ad` (`id`, `advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES (4, 3, '2015-02-04', 1, 1, 0, 'Ich bin Einsam. Will eigentlich gar nix eingekauft bekommen', 4, 1, 'egal', NULL);
 
-INSERT INTO `message` (`id`, `sender_id`, `receiver_id`, `time_sent`, `ad_id`, `text`) VALUES (1, 2, 3, '2015-01-05 14:52:23', 4, 'Such dir halt Freunde!');
-INSERT INTO `message` (`id`, `sender_id`, `receiver_id`, `time_sent`, `ad_id`, `text`) VALUES (2, 3, 2, '2015-02-05 16:52:54', 4, 'Verpiss dich halt!');
+INSERT INTO `message` (`id`, `sender_id`, `receiver_id`, `time_sent`, `read`, `text`) VALUES
+	(1, 1, 2, '2015-02-25 21:08:33', 0, 'asdf'),
+	(2, 2, 1, '2015-02-25 21:08:47', 0, 'qwer');
 
 INSERT INTO `rating` (`id`, `buyer_id`, `advertiser_id`, `rating`, `text`, `ad_id`) VALUES (1, 2, 3, 5, 'Sie war Einsam. Und es gab einen Jägermeister für mich!', 4);

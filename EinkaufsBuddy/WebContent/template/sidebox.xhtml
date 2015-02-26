@@ -4,24 +4,28 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">			
+	
+	<h:form>
 
 	<h:outputText value="Datum:" />
-	<p:outputLabel for="von" value="Von:" />
-	<p:calendar id="von" navigator="true" pattern="yyyy-MMM-dd" />
+	<p:outputLabel for="von" value="Von:"/>
+	<p:calendar id="von" navigator="true" pattern="yyyy-MMM-dd" value="#{simpleSearch.fromDate}" />
 	<p:outputLabel for="bis" value="Bis:" />
-	<p:calendar id="bis" navigator="true" pattern="yyyy-MMM-dd" />
+	<p:calendar id="bis" navigator="true" pattern="yyyy-MMM-dd" value="#{simpleSearch.toDate}"/>
 
 
 	
 		<h:outputLabel value="Entfernung:" />
-        <p:inputText id="entfernung" value="#{sliderView.number1}" />
+        <p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" />
         <p:slider for="entfernung" />
         
  		<h:outputLabel value="Einkaufslimit:" />
-        <p:inputText id="einkaufslimit" value="#{sliderView.number1}" />
+        <p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" />
         <p:slider for="einkaufslimit" />
 
     
-    <h:commandButton value="Aktualisieren" />
+    <h:commandButton value="Aktualisieren" action="#{simpleSearch.filterAds}"/>
+	
+	</h:form>
 	
 </ui:composition>

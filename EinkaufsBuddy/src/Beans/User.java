@@ -174,7 +174,6 @@ public class User{
 	}
 	
 	public String updateInfos() {
-		//TODO:Christoph	sieht mistig aus, schön machen.
 		  int i = 0;  
 	      PreparedStatement ps = null;  
 	      Connection con = null;  

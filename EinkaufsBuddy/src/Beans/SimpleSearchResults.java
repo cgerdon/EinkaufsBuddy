@@ -1,8 +1,9 @@
 package Beans;
 
 import java.sql.Date;
+import java.util.Comparator;
 
-public class SimpleSearchResults implements Comparable<SimpleSearchResults>{
+public class SimpleSearchResults {
 	private String text;
 	private int plz;
 	private String street;
@@ -11,10 +12,25 @@ public class SimpleSearchResults implements Comparable<SimpleSearchResults>{
 	private int id;
 	private double limit;
 	private double income;
-	private int distance;
+	private Integer distance;
 	private String zeitpunkt;
 	private Date datum;
 	private String category;
+	private int memberid;
+	
+	
+
+	public int getMemberid() {
+		return memberid;
+	}
+
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
+	}
+
+	public void setDistance(Integer distance) {
+		this.distance = distance;
+	}
 
 	public String getCategory() {
 		return category;
@@ -42,7 +58,7 @@ public class SimpleSearchResults implements Comparable<SimpleSearchResults>{
 
 	public SimpleSearchResults(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
-			int distance, String zeitpunkt, Date datum, String category) {
+			int distance, String zeitpunkt, Date datum, String category, int memberid) {
 		super();
 		this.text = text;
 		this.plz = plz;
@@ -56,6 +72,7 @@ public class SimpleSearchResults implements Comparable<SimpleSearchResults>{
 		this.zeitpunkt = zeitpunkt;
 		this.datum = datum;
 		this.category = category;
+		this.memberid = memberid;
 	}
 
 	public String getText() {
@@ -130,8 +147,17 @@ public class SimpleSearchResults implements Comparable<SimpleSearchResults>{
 		this.distance = distance;
 	}
 	
-	 @Override
-	    public int compareTo(SimpleSearchResults o) {
-	      return ((Integer)distance).compareTo((Integer)o.distance);}
+	public static Comparator<SimpleSearchResults> COMPARE_BY_DISTANCE = new Comparator<SimpleSearchResults>() {
+        public int compare(SimpleSearchResults one, SimpleSearchResults other) {
+            return one.distance.compareTo(other.distance);
+        }
+    };
+
+    public static Comparator<SimpleSearchResults> COMPARE_BY_DATE = new Comparator<SimpleSearchResults>() {
+        public int compare(SimpleSearchResults one, SimpleSearchResults other) {
+            return one.datum.compareTo(other.datum);
+        }
+    };
+
 
 }

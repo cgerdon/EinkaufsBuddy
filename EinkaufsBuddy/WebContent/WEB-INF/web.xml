@@ -31,10 +31,15 @@
         <param-value>client</param-value>  
     </context-param>  
         
+        <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Development</param-value>
+</context-param>
     
  <context-param>  
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>  
         <param-value>resources.application</param-value>  
+        
     </context-param>  
     
     <listener>  

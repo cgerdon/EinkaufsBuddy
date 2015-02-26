@@ -10,7 +10,7 @@
 			<h:outputText value="#{simpleSearch.summeAds} Inserate gefunden" />
 			<h:outputText value=" Sortieren nach" />
 			<h:commandButton value="Entfernung" action="#{simpleSearch.sortByDistance}" />
-			<h:commandButton value="Datum" />
+			<h:commandButton value="Datum" action="#{simpleSearch.sortByDate}"/>
 		</h:form>
 		
 		
@@ -28,13 +28,14 @@
 							<h:outputText value="Inserat von #{ads.name} #{ads.last_name}" />
 							<h:commandLink action="#{message.startMessage}">
 								<h:graphicImage class="message" value="resources/images/message.png" alt="message"/>
-		<!-- Muss noch geändert werden: value steht für die ID des Inseratenerstellers -->
-								<f:param name="startmessage" value="4" />
+
+								<f:param name="startmessage" value="#{ads.memberid}" />
 							</h:commandLink>
 						<br/>	
 							<h:outputLabel value="Merken:" />
 							<p:inputSwitch />
 							<h:outputText value=" Verdienst: #{ads.income} €" />
+							<h:outputText value=" Limit: #{ads.limit} €" />
 						</h:panelGroup>
 						
 						
@@ -49,7 +50,7 @@
 					</h:panelGrid>
 				</h:form>	
 			</ui:repeat>
-		
+
 	</ui:define>
   
 </ui:composition>

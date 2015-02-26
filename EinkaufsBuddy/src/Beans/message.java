@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -14,11 +15,13 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 
@@ -45,7 +48,7 @@ public class message {
 	    private int ms_senderId;	
 	//      private String ms_senderFirstName;  
     private String ms_senderName;
-    
+    String messagetext;
     
     /*   private byte[] ms_senderPicture;    
 */
@@ -71,6 +74,16 @@ public class message {
     }  
     
  
+
+	public String getMessagetext() {
+		return messagetext;
+	}
+
+	public void setMessagetext(String messagetext) {
+		this.messagetext = messagetext;
+	}
+
+
 
 	public Date getDate() {
 		return date;
@@ -171,16 +184,39 @@ public class message {
 	public void setMessageoverview(ArrayList<message> messageoverview) {
 		this.messageoverview = messageoverview;
 	}
+	
 
+	public String showAllMessage() {
+		PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;  
+        
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {  
+                    String sql = "SELECT message.receiver_id, member.name, member.last_name FROM message JOIN member ON message.receiver_id=member.id WHERE message.receiver_id= " + this.ms_receiverId + " OR message.sender_id= " + this.ms_receiverId + " GROUP BY member.name, member.last_name;" ;  
+                    ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();
+                    messageoverview.clear();
+                    while (rs.next()) {  
 
-	public int getnamevonmessage(FacesContext fc){
-		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-		String namevonmessage = params.get("namevonmessage");
-		int value = Integer.valueOf(namevonmessage);
-		return value;
- 	}
+                    	message TempObj = new message(0, null, rs.getInt("message.receiver_id"), rs.getString("member.name"), rs.getString("member.last_name"), null);
+                    	messageoverview.add(TempObj);
+                    	
+                    }
+                }  
+            } catch (SQLException sqle) {  
+                sqle.printStackTrace(); 
+            	System.out.println ("finally");
+            }
 
-    
+        } 
+
+        	return "messageoverview";   
+    }      
+	
+	
    public String DateConString(String dateString){
 	   String jahr;
 	   String monat;
@@ -194,90 +230,55 @@ public class message {
 	   
 	   return tag + "." + monat + "." + jahr + " - " + uhrzeit ;
    }
-    
-	public String showMessage() {  
-			
-			FacesContext fc = FacesContext.getCurrentInstance();
-			this.ms_senderId = getnamevonmessage(fc);
-			 
-			
-            PreparedStatement ps = null;  
-            Connection con = null;  
-            ResultSet rs = null;  
-  
-            if (ds != null) {  
-                try {  
-                    con = ds.getConnection();  
-                    if (con != null) {  
-                        String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ") ORDER BY message.time_sent ASC" ;  
-                        ps = con.prepareStatement(sql);  
-                        rs = ps.executeQuery();
-                        
-                        messagedetails.clear();
-                        while (rs.next()) {  
-                        	
-                        	ms_time = DateConString(rs.getString("message.time_sent"));
-                 	
-    						message TempObj = new message(rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
-    						messagedetails.add(TempObj);                 	
-                        	
-    						
-                        	/*
-                        	messagedetails.add(rs.getString("message.id"));
-                        	messagedetails.add(rs.getString("member.name")+" "+ rs.getString("member.last_name"));
-                        	messagedetails.add(rs.getString("message.text"));
-                        	
-                        	ms_senderName = rs.getString("member.name")+" "+ rs.getString("member.last_name");
-                        	*/
-    						
-                        }
-                    }  
-                } catch (SQLException sqle) {  
-                    sqle.printStackTrace();  
-                }  
-            } 
-            
-            return "messagedetail";
-        }  
-	
-	
-	
 
-	public String showAllMessage() {  
+	public ArrayList <message> giveMessagedetailfromSQL(int ms_senderId){
+		this.ms_senderId = ms_senderId;
 		
-		PreparedStatement ps = null;  
+        PreparedStatement ps = null;  
         Connection con = null;  
         ResultSet rs = null;  
-        System.out.println(ms_receiverId);
-        
+
         if (ds != null) {  
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                    String sql = "SELECT message.receiver_id, member.name, member.last_name FROM message JOIN member ON message.receiver_id=member.id WHERE message.receiver_id= " + ms_receiverId + " OR message.sender_id= " + ms_receiverId + " GROUP BY member.name, member.last_name;" ;  
-                    ps = con.prepareStatement(sql);  
-                    rs = ps.executeQuery();
-                    messageoverview.clear();
-                    while (rs.next()) {  
-                    		
-                    	
-                    	message TempObj = new message(0, null, rs.getInt("message.receiver_id"), rs.getString("member.name"), rs.getString("member.last_name"), null);
-                    	
-                    	messageoverview.add(TempObj);
-                    
-                    	//messageoverview.add(rs.getString("member.name")+" "+ rs.getString("member.last_name"));
-                   
-                    	//ms_senderName = rs.getString("member.name")+" "+ rs.getString("member.last_name");
-                    	
+                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent ASC" ;  
+                       ps = con.prepareStatement(sql);  
+                       rs = ps.executeQuery();
+                       
+                       messagedetails.clear();
+                       while (rs.next()) {  
+                       	
+                    	   ms_time = DateConString(rs.getString("message.time_sent"));
+                        	
+                    	   message TempObj = new message(rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+                    	   messagedetails.add(TempObj);         
+						
                     }
                 }  
             } catch (SQLException sqle) {  
                 sqle.printStackTrace();  
-            }  
+            	System.out.println ("finally");
+            }
         } 
+		return messagedetails; 
+	}
 
-	           return "messageoverview";   
-    }       
+	public int getnamevonmessage(FacesContext fc){
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		String namevonmessage = params.get("namevonmessage");
+		int value = Integer.valueOf(namevonmessage);
+		return value;
+ 	}
+	
+	public String showMessage() { 
+			FacesContext fc = FacesContext.getCurrentInstance();
+			this.ms_senderId = getnamevonmessage(fc);
+			 
+			messagedetails = giveMessagedetailfromSQL(ms_senderId);
+            
+            return "messagedetail";
+        }
 	
 	public int getempfaenger(FacesContext fc){
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
@@ -285,23 +286,16 @@ public class message {
 		int value = Integer.valueOf(empfaenger);
 		return value;
  	}
-	
-	
-	public void writeMessage(String messagetext) {  
+
+	//public void writeMessage(String messagetext) { 
+		public void writeMessage() { 	
+			
 		FacesContext fc = FacesContext.getCurrentInstance();
 		this.ms_senderId = getempfaenger(fc);
 		
-		System.out.println(ms_senderId);
-		System.out.println(messagetext);
-		System.out.println(ms_receiverId);
-		/*ms_receiverId=3;
-		System.out.println(ms_receiverId);*/
-		
 		Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
 		String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
-		System.out.println (datumConverter);
-		
-		
+
             PreparedStatement ps = null;  
             Connection con = null;  
             
@@ -312,7 +306,6 @@ public class message {
                         String sql = "INSERT INTO message (sender_id, receiver_id, time_sent, ad_id, text) VALUES(?,?,?,?,?)";  
                         ps = con.prepareStatement(sql);  
                         	ps.setInt(1, ms_receiverId);
-	                       
 	                        ps.setInt(2, ms_senderId);  
 	                        ps.setString(3, datumConverter);
 	                        ps.setInt(4, 3);  
@@ -331,43 +324,16 @@ public class message {
                 }  
             }  
             
-            showMessage(ms_senderId);
-    
+       //  showMessage(ms_senderId);
     }   
-    
-    
-	public String showMessage(int value) {  
-		ms_senderId= value;
+
+	public String showMessage(int ms_senderId) {  
+		this.ms_senderId = ms_senderId;
 		
-            PreparedStatement ps = null;  
-            Connection con = null;  
-            ResultSet rs = null;  
-  
-            if (ds != null) {  
-                try {  
-                    con = ds.getConnection();  
-                    if (con != null) {  
-                    	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ") ORDER BY message.time_sent ASC" ;  
-                           ps = con.prepareStatement(sql);  
-                           rs = ps.executeQuery();
-                           
-                           messagedetails.clear();
-                           while (rs.next()) {  
-                           	
-                              	ms_time = DateConString(rs.getString("message.time_sent"));
-                             	
-        						message TempObj = new message(rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
-      						messagedetails.add(TempObj);         
-    						
-                        }
-                    }  
-                } catch (SQLException sqle) {  
-                    sqle.printStackTrace();  
-                }  
-            } 
-            
-            return "messagedetail";
-        }  
+		messagedetails = giveMessagedetailfromSQL(ms_senderId);
+		
+		return "messagedetail";
+	}  
 	
 	
 	public int getstartmessage(FacesContext fc){
@@ -376,43 +342,22 @@ public class message {
 		int value = Integer.valueOf(startmessage);
 		return value;
  	}
-	
-	
+
 	public String startMessage() {  
-		
-		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		this.ms_senderId = getstartmessage(fc);
-
 		
-        PreparedStatement ps = null;  
-        Connection con = null;  
-        ResultSet rs = null;  
-
-        if (ds != null) {  
-            try {  
-                con = ds.getConnection();  
-                if (con != null) {  
-                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ") ORDER BY message.time_sent ASC" ;  
-                       ps = con.prepareStatement(sql);  
-                       rs = ps.executeQuery();
-                       
-                       messagedetails.clear();
-                       while (rs.next()) {  
-                       	
-                          	ms_time = DateConString(rs.getString("message.time_sent"));
-                         	
-    						message TempObj = new message(rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
-    					messagedetails.add(TempObj);         
-		            }
-                }  
-            } catch (SQLException sqle) {  
-                sqle.printStackTrace();  
-            }  
-        } 
-        
-        return "messagedetailvonsuche";
-          
+		messagedetails = giveMessagedetailfromSQL(ms_senderId);
+		
+        return "messagedetailvonsuche";    
     }   
+
+	
+	public void reloadMessage(int ms_senderId) {  
+		this.ms_senderId= ms_senderId;
+		
+		messagedetails = giveMessagedetailfromSQL(ms_senderId);
+            
+        }  
 
 }
