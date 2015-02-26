@@ -10,8 +10,9 @@
 		
 		
 		<h:form>
-			<h:panelGroup id="messagedetails" styleClass="chat-window" layout="block">
-				<ui:repeat id="messagerepeat" var="messagedetails" value="#{message.messagedetails}">
+	
+			
+				<p:dataScroller  id="messagerepeat" var="messagedetails" value="#{message.messagedetails}" chunkSize="10" mode="inline" scrollHeight="500">
 						<h:panelGroup styleClass="rightmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
 							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
 							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
@@ -28,32 +29,39 @@
 							<h:outputText value="#{messagedetails.ms_text}"/>
 						</h:panelGroup>
 					<br/>	
-				</ui:repeat>
-			
-
-			
-				<p:inputTextarea value="#{message.messagetext}"/>
-				<p:commandButton value="senden"  update="messagedetails" action="#{message.writeMessage()}">
-				
-				 <f:param name="empfaenger" value="#{message.ms_senderId}" />
-			</p:commandButton> 
-			
-			</h:panelGroup>	
-			
-
-			
-
+				</p:dataScroller>
 		
+
+			<p:inputTextarea value="#{message.ms_text}"/>
+			<p:commandButton value="senden" actionListener="#{message.writeMessage}" update="messagerepeat" >
+			
+			</p:commandButton>
+
 		</h:form>
 
 	</ui:define>
   
 </ui:composition>
 
-<!--		
+<!--	
+<h:panelGroup id="messagerepeat" >
+
+
+ui:repeat
+
+styleClass="chat-window" layout="block"
+
+
+		<p:commandButton value="senden" actionListener="#{message.writeMessage}" process="@this,messagerepeat" update="messagerepeat" >
+			
+			</p:commandButton>
+
+	
 	 	<p:poll interval="3" listener="#{message.reloadMessage(message.ms_senderId)}" update="messagerepeat" />
+	 	
+id="messagedetails"
 
-
+ <f:param name="empfaenger" value="#{message.ms_senderId}" />
 <p:commandButton value="senden" update="messagerepeat">
 	<h:inputTextarea binding="#{messagetext}"/>
 			

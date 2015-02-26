@@ -1,5 +1,6 @@
 package Beans;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 //import java.text.SimpleDateFormat;
@@ -15,20 +16,20 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 
 @ManagedBean(name = "message") 
 @SessionScoped  
 
-public class message {
+public class message implements Serializable {
+	
+	private static final long serialVersionUID = 2788720637477494048L;
 	
 	private Date date;
 	private int ms_id;
@@ -45,9 +46,11 @@ public class message {
 	
 //    private byte[] ms_receiverPicture;
    
-	    private int ms_senderId;	
-	//      private String ms_senderFirstName;  
-    private String ms_senderName;
+	private int ms_senderId;	
+	private String ms_senderFirstName;  
+    private String ms_senderLastName;
+    
+    
     String messagetext;
     
     /*   private byte[] ms_senderPicture;    
@@ -120,13 +123,21 @@ public class message {
 	public int getMs_senderId() {
 		return ms_senderId;
 	}
-	
-	public String getMs_senderName() {
-		return ms_senderName;
+
+	public String getMs_senderFirstName() {
+		return ms_senderFirstName;
 	}
 
-	public void setMs_senderName(String ms_senderName) {
-		this.ms_senderName = ms_senderName;
+	public void setMs_senderFirstName(String ms_senderFirstName) {
+		this.ms_senderFirstName = ms_senderFirstName;
+	}
+
+	public String getMs_senderLastName() {
+		return ms_senderLastName;
+	}
+
+	public void setMs_senderLastName(String ms_senderLastName) {
+		this.ms_senderLastName = ms_senderLastName;
 	}
 
 	public int getMs_receiverId() {
@@ -137,16 +148,13 @@ public class message {
 		this.ms_receiverId = ms_receiverId;
 	}
 
-
 	public String getMs_receiverFirstName() {
 		return ms_receiverFirstName;
 	}
 
-
 	public void setMs_receiverFirstName(String ms_receiverFirstName) {
 		this.ms_receiverFirstName = ms_receiverFirstName;
 	}
-
 
 	public String getMs_receiverLastName() {
 		return ms_receiverLastName;
@@ -208,11 +216,16 @@ public class message {
                 }  
             } catch (SQLException sqle) {  
                 sqle.printStackTrace(); 
-            	System.out.println ("finally");
-            }
-
-        } 
-
+            } finally {  
+	            try {  
+	                con.close();  
+	                ps.close();  
+	            } catch (Exception e) {  
+	                e.printStackTrace();  
+	            }  
+            } 
+        }     
+        
         	return "messageoverview";   
     }      
 	
@@ -231,8 +244,42 @@ public class message {
 	   return tag + "." + monat + "." + jahr + " - " + uhrzeit ;
    }
 
+   public void giveSenderName(){
+	   
+	   PreparedStatement ps = null;  
+       Connection con = null;  
+       ResultSet rs = null;  
+
+       if (ds != null) {  
+           try {  
+               con = ds.getConnection();  
+               if (con != null) {  
+               	   String sql = "SELECT member.name, member.last_name FROM member WHERE member.id=" + this.ms_senderId + ";" ;  
+                      ps = con.prepareStatement(sql);  
+                      rs = ps.executeQuery();
+                      
+                      ms_senderFirstName = rs.getString("member.name"); 
+                      ms_senderLastName = rs.getString("member.last_name"); 
+                   }
+               }  
+            catch (SQLException sqle) {  
+               sqle.printStackTrace();
+           } finally {  
+	            try {  
+	                con.close();  
+	                ps.close();  
+	            } catch (Exception e) {  
+	                e.printStackTrace();  
+	            }  
+           } 
+       }     
+	   
+   }
+   
 	public ArrayList <message> giveMessagedetailfromSQL(int ms_senderId){
 		this.ms_senderId = ms_senderId;
+		
+		//giveSenderName();
 		
         PreparedStatement ps = null;  
         Connection con = null;  
@@ -257,11 +304,18 @@ public class message {
                     }
                 }  
             } catch (SQLException sqle) {  
-                sqle.printStackTrace();  
-            	System.out.println ("finally");
-            }
-        } 
-		return messagedetails; 
+                sqle.printStackTrace();
+            } finally {  
+	            try {  
+	                con.close();  
+	                ps.close();  
+	            } catch (Exception e) {  
+	                e.printStackTrace();  
+	            }  
+            } 
+        }     
+		
+        return messagedetails;
 	}
 
 	public int getnamevonmessage(FacesContext fc){
@@ -287,11 +341,11 @@ public class message {
 		return value;
  	}
 
-	//public void writeMessage(String messagetext) { 
-		public void writeMessage() { 	
+	//public void writeMessage(String ms_text) { 
+			public void writeMessage() { 	
 			
-		FacesContext fc = FacesContext.getCurrentInstance();
-		this.ms_senderId = getempfaenger(fc);
+	//	FacesContext fc = FacesContext.getCurrentInstance();
+	//	this.ms_senderId = getempfaenger(fc);
 		
 		Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
 		String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
@@ -309,8 +363,26 @@ public class message {
 	                        ps.setInt(2, ms_senderId);  
 	                        ps.setString(3, datumConverter);
 	                        ps.setInt(4, 3);  
-	                        ps.setString(5, messagetext); 
-                        ps.executeUpdate();              
+	                        ps.setString(5, ms_text); 
+                        ps.executeUpdate();    
+                        
+                       PreparedStatement ps2 = null;  
+                       ResultSet rs = null;  
+                 	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent ASC" ;  
+                       ps2 = con.prepareStatement(sql2);  
+                       rs = ps2.executeQuery();
+                       
+                       messagedetails.clear();
+                       while (rs.next()) {  
+                       	
+                    	   ms_time = DateConString(rs.getString("message.time_sent"));
+                        	
+                    	   message TempObj = new message(rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+                    	   messagedetails.add(TempObj);  
+                        
+                       }
+                        
+                        
                     }  
                 }  
             } catch (Exception e) {  
