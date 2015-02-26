@@ -30,13 +30,11 @@
 						</h:panelGroup>
 					<br/>	
 				</p:dataScroller>
-		
 
 			<p:inputTextarea value="#{message.ms_text}"/>
-			<p:commandButton value="senden" actionListener="#{message.writeMessage}" update="messagerepeat" >
-			
-			</p:commandButton>
+			<p:commandButton value="senden" actionListener="#{message.writeMessage}" update="messagerepeat"/>
 
+			<p:poll interval="3" listener="#{message.reloadMessage}" update="messagerepeat" />
 		</h:form>
 
 	</ui:define>

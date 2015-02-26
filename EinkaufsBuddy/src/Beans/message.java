@@ -289,7 +289,7 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent ASC" ;  
+                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent DESC" ;  
                        ps = con.prepareStatement(sql);  
                        rs = ps.executeQuery();
                        
@@ -334,13 +334,13 @@ public class message implements Serializable {
             return "messagedetail";
         }
 	
-	public int getempfaenger(FacesContext fc){
+/*	public int getempfaenger(FacesContext fc){
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		String empfaenger = params.get("empfaenger");
 		int value = Integer.valueOf(empfaenger);
 		return value;
  	}
-
+*/
 	//public void writeMessage(String ms_text) { 
 			public void writeMessage() { 	
 			
@@ -368,7 +368,7 @@ public class message implements Serializable {
                         
                        PreparedStatement ps2 = null;  
                        ResultSet rs = null;  
-                 	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent ASC" ;  
+                 	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent DESC" ;  
                        ps2 = con.prepareStatement(sql2);  
                        rs = ps2.executeQuery();
                        
@@ -425,10 +425,9 @@ public class message implements Serializable {
     }   
 
 	
-	public void reloadMessage(int ms_senderId) {  
-		this.ms_senderId= ms_senderId;
-		
-		messagedetails = giveMessagedetailfromSQL(ms_senderId);
+		public void reloadMessage() {  
+				
+		giveMessagedetailfromSQL(ms_senderId);
             
         }  
 
