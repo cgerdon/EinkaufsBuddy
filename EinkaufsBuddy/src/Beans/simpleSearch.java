@@ -253,7 +253,7 @@ public class simpleSearch {
 			}
 
 		}
-
+		summe();
 		return "simpleSearchResult";
 	}
 
