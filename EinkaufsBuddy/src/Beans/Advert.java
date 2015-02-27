@@ -233,6 +233,17 @@ public class Advert {
 		this.messageoverview = messageoverview;
 	}*/
 	
+	ArrayList<Advert> otheradverts = new ArrayList<Advert>();
+	
+	public ArrayList<Advert> getOtheradverts() {
+		return otheradverts;
+	}
+
+
+	public void setOtheradverts(ArrayList<Advert> otheradverts) {
+		this.otheradverts = otheradverts;
+	}
+	
 	
 	public Advert(int ad_id, int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id) { //int buyer_id
 		super();
@@ -426,10 +437,49 @@ public class Advert {
                 sqle.printStackTrace();  
             }    
         }
-        return "viewownadverts";//"ownadverts";
+        return "viewownadverts";
     }
-    /*public String showothers(){
+    public String showothers(){
+	      	PreparedStatement ps = null;  
+	        Connection con = null;  
+	        ResultSet rs = null;
+        
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {
+                	//System.out.println(advertiser_id); 
+                	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
+                    String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.advertiser_id = '" + buyer_id + "'";  //buyer_id
+                    ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();  
+                    otheradverts.clear();
+                    while (rs.next()) {  
+                    		
+                    	Advert TempObj = new Advert(rs.getInt("ad.id"), 
+                    								rs.getInt("ad.advertiser_id"), 
+                    								rs.getDate("ad.date"), 
+                    								rs.getInt("ad.fk_time_id"), 
+                    								rs.getDouble("ad.limit"), 
+                    								rs.getDouble("ad.income"), 
+                    								rs.getString("ad.text"), 
+                    								rs.getInt("ad.fk_category"), 
+                    								rs.getBoolean("ad.status"), 
+                    								rs.getString("ad.fav_market"), 
+                    								rs.getInt("ad.buyer_id"));
+                    	
+                    	otheradverts.add(TempObj);
+                    	System.out.println(otheradverts);
+                 
+                    	
+                    }
+                }  
+            } catch (SQLException sqle) {  
+                sqle.printStackTrace();  
+            }    
+        }
+        return "viewotheradverts";
+    }
     	
-    }*/
 	
 }  

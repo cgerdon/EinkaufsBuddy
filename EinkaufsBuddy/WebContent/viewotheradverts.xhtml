@@ -23,18 +23,18 @@
 			</h:panelGroup>
 		
 			<h:panelGroup>
-				<ui:repeat var="ownadverts" value="#{advert.ownadverts}">
+				<ui:repeat var="otheradverts" value="#{advert.otheradverts}">
 						<tr>
-			    			<td><h:outputText value="#{ownadverts.fav_market}"/></td>
-			    			<td><h:outputText value="#{ownadverts.text}"/></td>
-			    			<td><h:outputText value="#{ownadverts.limit}"/></td>
-			    			<td><h:outputText value="#{ownadverts.income}"/></td>
-			    			<td><h:outputText value="#{ownadverts.date}"/></td>
-			    			<td>
+			    			<td><h:outputText value="#{otheradverts.fav_market}"/></td>
+			    			<td><h:outputText value="#{otheradverts.text}"/></td>
+			    			<td><h:outputText value="#{otheradverts.limit}"/></td>
+			    			<td><h:outputText value="#{otheradverts.income}"/></td>
+			    			<td><h:outputText value="#{otheradverts.date}"/></td>
+			    			<!-- <td>
 			    				<h:commandButton value="ändern" action="#{advert.changeData}">
-				 					<f:param name="ad_id" value="#{viewownadverts.id}" /> <!-- <f:param name="ad_id" value="#{advert.ad_id}" />-->
+				 					<f:param name="ad_id" value="#{viewownadverts.id}" /> 
 								</h:commandButton>
-			    			</td>
+			    			</td>-->
 		    		  </tr>
 				</ui:repeat>
 			</h:panelGroup>			
