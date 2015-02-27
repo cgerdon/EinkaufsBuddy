@@ -4,3 +4,10 @@
         username="root" password="secret" driverClassName="com.mysql.jdbc.Driver"  
         url="jdbc:mysql://localhost:3306/einkaufsbuddy" />  
 </Context>  
+<!-- 
+<Context>  
+    <Resource name="jdbc/database" auth="Container" type="javax.sql.DataSource"  
+        username="root" password="secret" driverClassName="com.mysql.jdbc.Driver"  
+        url="jdbc:mysql://87.106.10.236:3306/einkaufsbuddy" />  
+</Context>
+ -->  
