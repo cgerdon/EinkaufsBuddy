@@ -234,8 +234,9 @@ public class Advert {
 	}*/
 	
 	
-	public Advert(int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id) { //int buyer_id
+	public Advert(int ad_id, int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id) { //int buyer_id
 		super();
+		this.ad_id = ad_id;
 		this.advertiser_id = advertiser_id;
 		this.date = date;
 		this.fk_time_id =fk_time_id;
@@ -403,7 +404,8 @@ public class Advert {
                     ownadverts.clear();
                     while (rs.next()) {  
                     		
-                    	Advert TempObj = new Advert(rs.getInt("ad.advertiser_id"), 
+                    	Advert TempObj = new Advert(rs.getInt("ad.id"), 
+                    								rs.getInt("ad.advertiser_id"), 
                     								rs.getDate("ad.date"), 
                     								rs.getInt("ad.fk_time_id"), 
                     								rs.getDouble("ad.limit"), 
@@ -416,9 +418,7 @@ public class Advert {
                     	
                     	ownadverts.add(TempObj);
                     	System.out.println(ownadverts);
-                    	//messageoverview.add(rs.getString("member.name")+" "+ rs.getString("member.last_name"));
-                   
-                    	//ms_senderName = rs.getString("member.name")+" "+ rs.getString("member.last_name");
+                 
                     	
                     }
                 }  
