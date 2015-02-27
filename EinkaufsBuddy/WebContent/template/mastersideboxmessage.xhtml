@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>EinkaufsBuddy</title>
+  <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body>
+
+  	<h:panelGroup id="page" layout="block">
+	
+	    <h:panelGroup id="header" layout="block" >
+	    	<ui:insert name="header">
+	    		<ui:include src="header.xhtml" />
+			</ui:insert>
+	
+	    	<ui:insert name="logoutheader">
+	    		<ui:include src="logoutheader.xhtml" />
+			</ui:insert>
+		</h:panelGroup>
+		
+		<h:panelGroup id="container2" layout="block">
+	        <h:panelGroup id="sidebox" layout="block">
+		    	<ui:insert name="sideboxmessage">
+		    		<ui:include src="sideboxmessage.xhtml" />
+				</ui:insert>
+			</h:panelGroup>		
+	        <h:panelGroup id="content" layout="block">
+				<ui:insert name="content"/>
+			</h:panelGroup>
+		</h:panelGroup>
+
+		<h:panelGroup id="footer" layout="block">
+			<ui:insert name="footer">
+	    		<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</h:panelGroup>
+
+	</h:panelGroup>
+</h:body>
+
+</h:html>

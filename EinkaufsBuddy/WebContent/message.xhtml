@@ -6,41 +6,48 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das sind deine Nachrichten! </h1>
+		<h1>Das sind deine Nachrichten,
+			<h:outputText value="#{message.ms_receiverFirstName} "/>
+			<h:outputText value="#{message.ms_receiverLastName} (ID: "/>
+			<h:outputText value="#{message.ms_receiverId})"/>
 		
 		
+		! </h1>
 		
-		
-			
-				<h:panelGroup>
-					<h:outputText value="Nachrichten von: "/>
-										
-					<h:outputText value="#{message.ms_receiverFirstName} "/>
-					<h:outputText value="#{message.ms_receiverLastName} (ID: "/>
-					<h:outputText value="#{message.ms_receiverId})"/>
-				</h:panelGroup>
 				
-		<h:form>			
-		<h:panelGrid >
-			
-			 	<ui:repeat var="messageoverview" value="#{message.messageoverview}" > 
-						<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">					
-						<h:outputText value="#{messageoverview.ms_receiverFirstName}"/>
-						<h:outputText value="#{messageoverview.ms_receiverLastName}"/>
-						</h:panelGroup>	
-						<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">
-						<h:commandButton value="Nachrichtenverlauf ansehen" action="#{message.showMessage}">
-							  <f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
-						</h:commandButton>
-						</h:panelGroup>	
-						<br/>
-				</ui:repeat> 
-			
+		<h:form>	
 	
-			
-			</h:panelGrid>
+					<h:dataTable var="messageoverview" value="#{message.messageoverview}">
+									
+							<p:column headerText="Name">
+								<h:outputText value="#{messageoverview.ms_receiverFirstName} " rendered="#{messageoverview.ms_senderId != user.id}"/>
+								<h:outputText value="#{messageoverview.ms_receiverLastName}" rendered="#{messageoverview.ms_senderId != user.id}"/>
+							</p:column>
+							<p:column headerText="Öffnen">
+								<h:commandButton value="ansehen" action="#{message.showMessage}" rendered="#{messageoverview.ms_senderId != user.id}">
+									<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
+								</h:commandButton>	
+							</p:column>
+							<p:column headerText="Löschen">
+								<h:commandButton value="löschen" action="#{message.showMessage}" rendered="#{messageoverview.ms_senderId != user.id}"> 
+									<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
+								</h:commandButton>
+							</p:column>	
+					
+					</h:dataTable> 
+	
 		</h:form>
 
 	</ui:define>
   
 </ui:composition>
+
+
+
+<!-- 			
+		
+	</h:panelGroup>	
+						
+	<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">
+						
+ -->

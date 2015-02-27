@@ -1,4 +1,4 @@
-<ui:composition template="template/master.xhtml"
+<ui:composition template="template/mastersideboxmessage.xhtml"
  	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -6,64 +6,59 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das ist der Nachrichtenverlauf mit <h:outputText value="#{message.ms_senderId}"/> </h1>
+		<h1>Nachrichtenverlauf mit
 		
+			<h:outputText value="#{message.ms_senderName} "/>
+			<h:outputText value="#{message.ms_senderId}"/>
+		
+		 </h1>
 		
 		<h:form>
-	
+		<h:panelGroup id="messagerepeat2">
+			<p:focus for="textarea"/>
+			<h:inputText id="textarea" styleClass="textareastyle" value="#{message.ms_text}" size="80" maxlength="60" autocomplete="off"/>
+			<p:commandButton value="senden" actionListener="#{message.writeMessage}" update="messagerepeat2"/>
 			
-				<p:dataScroller  id="messagerepeat" var="messagedetails" value="#{message.messagedetails}" chunkSize="10" mode="inline" scrollHeight="500">
-						<h:panelGroup styleClass="rightmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
+			<br/>
+			<br/>
+				<p:dataScroller id="messagerepeat" var="messagedetails" value="#{message.messagedetails}" mode="inline">
+
+						<h:panelGroup styleClass="leftmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
 							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
 							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
 							<h:outputText value="#{messagedetails.ms_time} "/>
 						<br/>				
 							<h:outputText value="#{messagedetails.ms_text}"/>
 						</h:panelGroup>
-						
-						<h:panelGroup styleClass="leftmessage" layout="block" rendered="#{messagedetails.ms_senderId != user.id}">
+				
+					
+						<h:panelGroup styleClass="rightmessage" layout="block" rendered="#{messagedetails.ms_senderId != user.id}">
 							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
 							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
 							<h:outputText value="#{messagedetails.ms_time} "/>
 						<br/>				
 							<h:outputText value="#{messagedetails.ms_text}"/>
 						</h:panelGroup>
-					<br/>	
+		
+					
 				</p:dataScroller>
-
-			<p:inputTextarea value="#{message.ms_text}"/>
-			<p:commandButton value="senden" actionListener="#{message.writeMessage}" update="messagerepeat"/>
-
-			<p:poll interval="3" listener="#{message.reloadMessage}" update="messagerepeat" />
+			</h:panelGroup>
+			
+			<p:poll listener="#{message.reloadMessage}" update="messagerepeat"/>
+			
 		</h:form>
 
 	</ui:define>
   
 </ui:composition>
 
-<!--	
-<h:panelGroup id="messagerepeat" >
+
+<!-- 		
+		
+		<h:panelGroup>
+			<p:poll listener="#{message.reloadMessage}" update="messagerepeat"/>
+		</h:panelGroup>
+								
 
 
-ui:repeat
-
-styleClass="chat-window" layout="block"
-
-
-		<p:commandButton value="senden" actionListener="#{message.writeMessage}" process="@this,messagerepeat" update="messagerepeat" >
-			
-			</p:commandButton>
-
-	
-	 	<p:poll interval="3" listener="#{message.reloadMessage(message.ms_senderId)}" update="messagerepeat" />
-	 	
-id="messagedetails"
-
- <f:param name="empfaenger" value="#{message.ms_senderId}" />
-<p:commandButton value="senden" update="messagerepeat">
-	<h:inputTextarea binding="#{messagetext}"/>
-			
-	 	<h:commandButton value="senden" action="#{message.writeMessage(messagetext.value)}">
-				 <f:param name="empfaenger" value="#{message.ms_senderId}" />
-			</h:commandButton>	
-			-->
+ -->

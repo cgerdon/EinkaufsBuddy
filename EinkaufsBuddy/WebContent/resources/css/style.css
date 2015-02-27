@@ -1,3 +1,13 @@
+
+.textareastyle{
+	
+	padding: 2px; 
+	border-radius: 2px;
+	margin-right: 5px; 
+	
+}
+
+
 .chat-window{
 	padding: 5px;
 	margin: 0 auto; 
@@ -38,6 +48,7 @@ h1{
 	margin-bottom: 5px;
 	background-color: #D5FF95;
 	border-radius: 5px;
+	min-height: 500px; 
 }
 
 /*** mastersidebox ***/
@@ -67,6 +78,7 @@ h1{
 	margin-left: auto;
 	background-color: #D5FF95;
 	border-radius: 5px;
+	min-height: 500px; 
 }
 
 /*** header ***/
