@@ -266,7 +266,7 @@ public class User{
                         firstName = rs.getString("name");
                         lastName = rs.getString("last_name");  
                         email = rs.getString("mail");
-                        password = rs.getString("password_hash");
+                       // password = rs.getString("password_hash");
                         birthday = rs.getDate("birthdate");
                         car = rs.getInt("car");
                         abouttext = rs.getString("abouttext");
@@ -309,7 +309,8 @@ public class User{
             return "home";  
 
         } else  
-            return "invalid";  
+        	logout();
+            return "error";  
     }  
   
     public void logout() {  
