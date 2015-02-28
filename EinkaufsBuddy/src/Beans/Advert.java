@@ -383,19 +383,23 @@ public class Advert {
         }    
     }  
     
-	public String getIDParam(FacesContext fc){
+	public String getad_id(FacesContext fc){
 		 
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		String ad_id = params.get("ad_id");
 		return params.get("ad_id");
  
 	}
     
     public String changeData(){
     	FacesContext fc = FacesContext.getCurrentInstance();
-		this.ad_id = Integer.parseInt(getIDParam(fc));
+		this.ad_id = Integer.parseInt(getad_id(fc));
+		
+		//messagedetails = giveMessagedetailfromSQL(ms_senderId);
+		//ms_senderName = giveSenderName(ms_senderId);
  
-    	dbData(ad_id);
-    	return "changedata";
+    	//dbData(ad_id);
+    	return "changeadvert";
     }
 
     public String showown(){
