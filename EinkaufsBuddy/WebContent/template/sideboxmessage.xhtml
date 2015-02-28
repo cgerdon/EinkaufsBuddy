@@ -5,34 +5,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">			
 	
-	<h:form>			
-		<h1>Nachrichten: </h1>
-		
-		
 			
-			 	<ui:repeat var="messageoverview" value="#{message.messageoverview}" > 
-					<h:panelGrid columns="1" >
-						<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">					
-							<h:outputText value="#{messageoverview.ms_receiverFirstName} "/>
-							<h:outputText value="#{messageoverview.ms_receiverLastName}"/>
-						</h:panelGroup>	
-						
-						<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">
-							<h:commandButton value="ansehen" action="#{message.showMessage}">
-								<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
-							</h:commandButton>	
-							<h:commandButton value="löschen" action="#{message.showMessage}"> 
-								<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
-							</h:commandButton>	
-						</h:panelGroup>	
-					</h:panelGrid>
-
-				</ui:repeat> 
-
+		<h1>Nachrichten: </h1>
+			
+		<h:form>
+			
+					<h:dataTable styleClass="messagesideboxtable" id="messageoverviewrepeat2" var="messageoverview" value="#{message.messageoverview}">
+							<h:column>
+									<h:commandButton styleClass="messagesideboxbutton" value="#{messageoverview.ms_receiverFirstName} #{messageoverview.ms_senderNamekurz}" action="#{message.showMessage}" rendered="#{messageoverview.ms_senderId != user.id}" >
+										<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
+									</h:commandButton>
+							</h:column>
+					</h:dataTable> 	
+					
+					<p:poll interval="2" listener="#{message.showAllMessageReload}" update="messageoverviewrepeat2"/>
 		</h:form>
 	
 </ui:composition>
-
-<!-- 
-  <f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
- -->

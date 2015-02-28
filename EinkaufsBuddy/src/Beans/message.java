@@ -50,17 +50,20 @@ public class message implements Serializable {
 	private String ms_senderFirstName;  
     private String ms_senderLastName;
     private String ms_senderName;
+    private String ms_senderNamekurz;
+
     private int ms_anzahl;
     String messagetext;
     
     /*   private byte[] ms_senderPicture;    
 */
-	public message(int ms_anzahl, int ms_id, String ms_time, int ms_senderId, String ms_receiverFirstName, String ms_receiverLastName, String ms_text) {
+	public message(int ms_anzahl, int ms_id, String ms_time, int ms_senderId, String ms_senderNamekurz, String ms_receiverFirstName, String ms_receiverLastName, String ms_text) {
 		super();
 		this.ms_anzahl=ms_anzahl;
 		this.ms_id = ms_id;
 		this.ms_time=ms_time;
 		this.ms_senderId = ms_senderId;
+		this.ms_senderNamekurz = ms_senderNamekurz;
 		this.ms_receiverFirstName =ms_receiverFirstName;
 		this.ms_receiverLastName=ms_receiverLastName;
 		this.ms_text = ms_text;
@@ -79,6 +82,20 @@ public class message implements Serializable {
     
  
     
+
+	public String getMs_senderNamekurz() {
+		return ms_senderNamekurz;
+	}
+
+
+
+
+	public void setMs_senderNamekurz(String ms_senderNamekurz) {
+		this.ms_senderNamekurz = ms_senderNamekurz;
+	}
+
+
+
 
 	public String getMs_senderName() {
 		return ms_senderName;
@@ -227,15 +244,18 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                    String sql = "SELECT message.receiver_id, member.name, member.last_name FROM message JOIN member ON message.receiver_id=member.id WHERE message.receiver_id= " + this.ms_receiverId + " OR message.sender_id= " + this.ms_receiverId + " GROUP BY member.name, member.last_name;" ;  
+                    String sql = "SELECT message.receiver_id, MAX(message.time_sent) AS maxt, member.name, member.last_name FROM message JOIN member ON message.receiver_id=member.id WHERE message.receiver_id= " + this.ms_receiverId + " OR message.sender_id= " + this.ms_receiverId + " GROUP BY message.receiver_id ORDER BY maxt DESC" ;  
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();
                     messageoverview.clear();
                     int i = 0; 
                     
-                    while (rs.next()) {  
+                    while (rs.next()) {
                     	i++;
-                    	message TempObj = new message(i, 0, null, rs.getInt("message.receiver_id"), rs.getString("member.name"), rs.getString("member.last_name"), null);
+                    	ms_senderNamekurz= rs.getString("member.last_name");
+                    	ms_senderNamekurz= ms_senderNamekurz.substring(0, ms_senderNamekurz.length()-(ms_senderNamekurz.length()-1)) + ".";
+                    
+                    	message TempObj = new message(i, 0, null, rs.getInt("message.receiver_id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null);
                     	messageoverview.add(TempObj);
                     	
                     }
@@ -255,6 +275,48 @@ public class message implements Serializable {
         	return "messageoverview";   
     }      
 	
+	public void showAllMessageReload() {
+		PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;  
+        
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {  
+                    String sql = "SELECT message.receiver_id, MAX(message.time_sent) AS maxt, member.name, member.last_name FROM message JOIN member ON message.receiver_id=member.id WHERE message.receiver_id= " + this.ms_receiverId + " OR message.sender_id= " + this.ms_receiverId + " GROUP BY message.receiver_id ORDER BY maxt DESC" ;  
+                    ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();
+                    messageoverview.clear();
+                    int i = 0; 
+                    
+                    while (rs.next()) {  
+                    	i++;
+                     	ms_senderNamekurz= rs.getString("member.last_name");
+                    	ms_senderNamekurz= ms_senderNamekurz.substring(0, ms_senderNamekurz.length()-(ms_senderNamekurz.length()-1)) + ".";
+                    
+                    	message TempObj = new message(i, 0, null, rs.getInt("message.receiver_id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null);
+                    	messageoverview.add(TempObj);
+                    	
+                    }
+                }  
+            } catch (SQLException sqle) {  
+                sqle.printStackTrace(); 
+            } finally {  
+	            try {  
+	                con.close();  
+	                ps.close();  
+	            } catch (Exception e) {  
+	                e.printStackTrace();  
+	            }  
+            } 
+        }     
+        
+        
+    }  
+	
+	
+	
 	
    public String DateConString(String dateString){
 	   String jahr;
@@ -272,8 +334,6 @@ public class message implements Serializable {
 
    public String giveSenderName(int ms_senderIdhelp){
 	   int  ms_senderIdhelp2; 
-	   String ms_senderFirstNamehelp = null;
-	   String ms_senderLastNamehelp = null;
 	   
 	   ms_senderIdhelp2 = ms_senderIdhelp;
 	   
@@ -290,8 +350,8 @@ public class message implements Serializable {
                      rshelp = pshelp.executeQuery();
                      
                      while (rshelp.next()) {
-                      ms_senderFirstNamehelp = rshelp.getString("member.name"); 
-                      ms_senderLastNamehelp = rshelp.getString("member.last_name"); 
+                      ms_senderFirstName = rshelp.getString("member.name"); 
+                      ms_senderLastName= rshelp.getString("member.last_name"); 
                      }
                  }
                }  
@@ -307,8 +367,7 @@ public class message implements Serializable {
            } 
        }     
        
-       
-	   return ms_senderFirstNamehelp + " " + ms_senderLastNamehelp ;
+	   return ms_senderFirstName + " " + ms_senderLastName;
    }
    
 	public ArrayList <message> giveMessagedetailfromSQL(int ms_senderId){
@@ -335,7 +394,7 @@ public class message implements Serializable {
                     	   
                     	   ms_time = DateConString(rs.getString("message.time_sent"));
                     	   
-                    	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+                    	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
                     	   messagedetails.add(TempObj);
 
                     }
@@ -382,6 +441,7 @@ public class message implements Serializable {
 	//public void writeMessage(String ms_text) { 
 			public void writeMessage() { 	
 			
+				byte b = 1;
 	//	FacesContext fc = FacesContext.getCurrentInstance();
 	//	this.ms_senderId = getempfaenger(fc);
 		
@@ -395,14 +455,16 @@ public class message implements Serializable {
                 if (ds != null) {  
                     con = ds.getConnection();  
                     if (con != null) { 
-                        String sql = "INSERT INTO message (sender_id, receiver_id, time_sent,  text) VALUES(?,?,?,?)";  
+                        String sql = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`) VALUES (?, ?, ?, ?, ?);";  
                         ps = con.prepareStatement(sql);  
-                        	ps.setInt(1, ms_receiverId);
-	                        ps.setInt(2, ms_senderId);  
-	                        ps.setString(3, datumConverter);
-	                       // ps.setInt(4, 1);  read, ?,
-	                        ps.setString(4, ms_text); 
-                        ps.executeUpdate();    
+                        ps.setInt(1, ms_receiverId);  
+                        ps.setInt(2,  ms_senderId);  
+                        ps.setString(3, datumConverter); 
+                        ps.setByte(4, b);  
+                        ps.setString(5, ms_text); 
+                        
+   
+                       ps.executeUpdate();   
                         
                        ms_text = null; 
                        
@@ -418,7 +480,7 @@ public class message implements Serializable {
                        		i++;
                     	   ms_time = DateConString(rs.getString("message.time_sent"));
                         	
-                    	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+                    	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
                     	   messagedetails.add(TempObj);  
                         
                        }
@@ -444,6 +506,7 @@ public class message implements Serializable {
 		this.ms_senderId = ms_senderId;
 		
 		messagedetails = giveMessagedetailfromSQL(ms_senderId);
+		ms_senderName = giveSenderName(ms_senderId);
 		
 		return "messagedetail";
 	}  
@@ -461,6 +524,7 @@ public class message implements Serializable {
 		this.ms_senderId = getstartmessage(fc);
 		
 		messagedetails = giveMessagedetailfromSQL(ms_senderId);
+		ms_senderName = giveSenderName(ms_senderId);
 		
         return "messagedetailvonsuche";    
     }   
