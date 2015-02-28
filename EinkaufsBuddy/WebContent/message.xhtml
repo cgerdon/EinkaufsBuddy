@@ -17,7 +17,7 @@
 				
 		<h:form>	
 	
-					<h:dataTable var="messageoverview" value="#{message.messageoverview}">
+					<h:dataTable id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
 									
 							<p:column headerText="Name">
 								<h:outputText value="#{messageoverview.ms_receiverFirstName} " rendered="#{messageoverview.ms_senderId != user.id}"/>
@@ -35,19 +35,11 @@
 							</p:column>	
 					
 					</h:dataTable> 
+					
+					<p:poll listener="#{message.showAllMessageReload}" update="messageoverviewrepeat"/>
 	
 		</h:form>
 
 	</ui:define>
   
 </ui:composition>
-
-
-
-<!-- 			
-		
-	</h:panelGroup>	
-						
-	<h:panelGroup rendered="#{messageoverview.ms_senderId != user.id}">
-						
- -->

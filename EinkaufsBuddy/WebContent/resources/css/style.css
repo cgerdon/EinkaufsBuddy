@@ -1,3 +1,16 @@
+.messagesideboxtable{
+	margin: 0 auto; 
+}
+
+.messagesideboxbutton{
+	border-radius: 2px;
+	width: 100%; 
+	background-color: green;
+}
+
+.messagesideboxbutton:hover{
+	background-color: #D5FF95
+}
 
 .textareastyle{
 	
