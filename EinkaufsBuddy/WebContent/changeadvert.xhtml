@@ -10,55 +10,52 @@
 			<h:panelGrid columns="3">
 					
 					<h:outputText value="Bevorzugter Markt:" />
-					<h:inputText id="fav_market" value="#{advert.fav_market}" disabled="true"/>
-					<h:inputHidden id="fav_market" value="#{advert.fav_market}" />
-			
+					<h:inputText value="#{advert.fav_market}" binding="#{fav_market}"/>
+										
+					<h:outputText value="Art des Marktes:" />
+					<h:selectOneListbox value="#{advert.fk_category}" size="3" binding="#{fk_category}">
+						<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
+						<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
+						<f:selectItem itemValue="3" itemLabel="Apotheke"/>
+						<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
+						<f:selectItem itemValue="5" itemLabel="Bäcker"/>
+						<f:selectItem itemValue="6" itemLabel="Anderer"/>
+					</h:selectOneListbox>				
+				
 
 					<h:outputText value="Datum:" />
-					<h:inputText id="date" value="#{advert.date}" required="true" requiredMessage="Bitte Datum angeben" >
+					<h:inputText value="#{advert.date}" binding="#{date}" >
 						<f:convertDateTime pattern="yyyy-mm-dd" />
 					</h:inputText>
-					<h:message for="date" style="color:red" />
-
 			
 					<h:outputText value="Zeit der Anlieferung:" />
-					<h:selectOneRadio value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben">
+					<h:selectOneRadio value="#{advert.fk_time_id}" binding="#{fk_time_id}">
 						<f:selectItem itemValue="1" itemLabel="Vormittag"/>
 						<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
 						<f:selectItem itemValue="3" itemLabel="Abend"/>
-					</h:selectOneRadio>
-					<h:message for="fk_time_id" style="color:red" />
-			
+					</h:selectOneRadio>			
 			
 			 
 					<h:outputText value="Budget in Euro:" />  
-					<h:inputText id="limit" value="#{advert.limit}"  
-						required="true" requiredMessage="Bitte Budget angeben" />
-					<h:message for="limit" style="color:red" /> 
-          
+					<h:inputText value="#{advert.limit}" binding="#{limit}"/>          
             
 			
 					<h:outputText value="Vergütung in Euro:" />  
-					<h:inputText id="income" value="#{advert.income}"  
-						required="true" requiredMessage="Bitte Vergütung angeben" /> 
-					<h:message for="income" style="color:red" />  
-  			
+					<h:inputText value="#{advert.income}" binding="#{income}"/> 
   			
 			  
 					<h:outputText value="Einkaufsliste:" /> 
-					<h:inputTextarea id="text" value="#{advert.text}"  
-						required="true" requiredMessage="Bitte Einkaufsliste angeben" /> 
-					<h:message for="text" style="color:red" />
+					<h:inputTextarea value="#{advert.text}" binding="#{text}"/> 
 			  
         			<h:outputText value="Aktivschaltung:" />
-					<h:selectBooleanCheckbox id="active" value="#{advert.status}" /> 
+					<h:selectBooleanCheckbox value="#{advert.status}" binding="#{status}" /> 
 					
 					
 			</h:panelGrid>		
 		
 				
 					<h:commandButton value="Speichern" action="#{user.updateInfos}"/>
-
+					 <h:commandButton action="#{advert.changeadvert(fav_market.value, fk_category.value, date.value, fk_time_id.value, limit.value, income.value, text.value, street.value, status.value)}" value="Ändern"/>
 		</h:form>
 </ui:define>
   

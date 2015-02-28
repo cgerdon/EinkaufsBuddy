@@ -38,6 +38,7 @@ public class Advert {
     private boolean status;
     private String fav_market;
     private int buyer_id;
+    private int ad_count;
     DataSource ds;  
   
     
@@ -234,6 +235,7 @@ public class Advert {
 	}*/
 	
 	ArrayList<Advert> otheradverts = new ArrayList<Advert>();
+
 	
 	public ArrayList<Advert> getOtheradverts() {
 		return otheradverts;
@@ -245,8 +247,9 @@ public class Advert {
 	}
 	
 	
-	public Advert(int ad_id, int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id) { //int buyer_id
+	public Advert(int ad_count, int ad_id, int advertiser_id, Date date, int fk_time_id, double limit, double income, String text, int fk_category, boolean status, String fav_market, int buyer_id) { //int buyer_id
 		super();
+		this.ad_count=ad_count;
 		this.ad_id = ad_id;
 		this.advertiser_id = advertiser_id;
 		this.date = date;
@@ -263,7 +266,6 @@ public class Advert {
 
 	//Inserat muss man ändern können
 	public String updateInfos() {
-		//TODO:Christoph	sieht mistig aus, schön machen.
 		  int i = 0;  
 	      PreparedStatement ps = null;  
 	      Connection con = null;  
@@ -351,7 +353,9 @@ public class Advert {
             return "unsuccess";  
     }   
 	
-	public void dbData(int ad_id) {  
+	public ArrayList <Advert> getAd_idfromSQL(int ad_id){
+			this.ad_id = ad_id; 
+			
             PreparedStatement ps = null;  
             Connection con = null;  
             ResultSet rs = null;  
@@ -363,26 +367,48 @@ public class Advert {
                         String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where id = '"  
                                 + ad_id + "'";  
                         ps = con.prepareStatement(sql);  
-                        rs = ps.executeQuery();  
-                        rs.next();  
-                        ad_id = rs.getInt("id");
-                        advertiser_id = rs.getInt("advertiser_id");
-                        date = rs.getDate(new SimpleDateFormat("yyyy-MM-dd").format(date));  
-                        fk_time_id = rs.getInt("fk_time_id");
-                        limit = rs.getDouble("limit");
-                        income = rs.getDouble("income");
-                        text = rs.getString("text");
-                        fk_category = rs.getInt("fk_category");
-                        status = rs.getBoolean("status");
-                        fav_market = rs.getString("fav_market");
-                        buyer_id = rs.getInt("buyer_id");
-                    }  
+                        rs = ps.executeQuery();
+                        
+                        int i=0;
+                        ownadverts.clear();
+                        	while (rs.next()) {  
+                        		i++;
+            
+                     	   
+                        		Advert TempObj = new Advert(i, 
+	   								rs.getInt("ad.id"), 
+	   								rs.getInt("ad.advertiser_id"), 
+	   								rs.getDate("ad.date"), 
+	   								rs.getInt("ad.fk_time_id"), 
+	   								rs.getDouble("ad.limit"), 
+	   								rs.getDouble("ad.income"), 
+	   								rs.getString("ad.text"), 
+	   								rs.getInt("ad.fk_category"), 
+	   								rs.getBoolean("ad.status"), 
+	   								rs.getString("ad.fav_market"), 
+	   								rs.getInt("ad.buyer_id"));
+  	
+                        		ownadverts.add(TempObj);
+
+                        	}
+                       
+                    	}  
                 } catch (SQLException sqle) {  
                     sqle.printStackTrace();  
                 }    
-        }    
+        }
+			return ownadverts;    
     }  
     
+	public String changeData(int ad_id) {  
+		this.ad_id = ad_id;
+		
+		ownadverts = getAd_idfromSQL(ad_id);
+		System.out.println("test ad id " + ad_id); 
+		return "changeadvert";
+	} 
+		
+	
 	public String getad_id(FacesContext fc){
 		 
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -391,16 +417,7 @@ public class Advert {
  
 	}
     
-    public String changeData(){
-    	FacesContext fc = FacesContext.getCurrentInstance();
-		this.ad_id = Integer.parseInt(getad_id(fc));
-		
-		//messagedetails = giveMessagedetailfromSQL(ms_senderId);
-		//ms_senderName = giveSenderName(ms_senderId);
- 
-    	//dbData(ad_id);
-    	return "changeadvert";
-    }
+    
 
     public String showown(){
     	PreparedStatement ps = null;  
@@ -417,9 +434,11 @@ public class Advert {
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
                     ownadverts.clear();
+                    int i =0;
                     while (rs.next()) {  
-                    		
-                    	Advert TempObj = new Advert(rs.getInt("ad.id"), 
+                    	i++;	
+                    	Advert TempObj = new Advert(i,
+                    								rs.getInt("ad.id"), 
                     								rs.getInt("ad.advertiser_id"), 
                     								rs.getDate("ad.date"), 
                     								rs.getInt("ad.fk_time_id"), 
@@ -432,7 +451,7 @@ public class Advert {
                     								rs.getInt("ad.buyer_id"));
                     	
                     	ownadverts.add(TempObj);
-                    	System.out.println(ownadverts);
+                    	//System.out.println(ownadverts);
                  
                     	
                     }
@@ -458,9 +477,11 @@ public class Advert {
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
                     otheradverts.clear();
+                    int i=0;
                     while (rs.next()) {  
-                    		
-                    	Advert TempObj = new Advert(rs.getInt("ad.id"), 
+                    	i++;	
+                    	Advert TempObj = new Advert(i,
+                    								rs.getInt("ad.id"), 
                     								rs.getInt("ad.advertiser_id"), 
                     								rs.getDate("ad.date"), 
                     								rs.getInt("ad.fk_time_id"), 
@@ -473,7 +494,7 @@ public class Advert {
                     								rs.getInt("ad.buyer_id"));
                     	
                     	otheradverts.add(TempObj);
-                    	System.out.println(otheradverts);
+                    	//System.out.println(otheradverts);
                  
                     	
                     }
