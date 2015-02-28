@@ -15,6 +15,10 @@
   <nodes xsi:type="pageflow:PFPage" name="simpleSearchResult.xhtml" comment="startmessagedetail" id="pf142470556336638" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf142470556336637" inlinks="pf142470556336621" path="/simpleSearchResult.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="profilchange.xhtml" comment="profilchange" id="pf142470556336639" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf142470556336640" path="/profilchange.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="profil.xhtml" id="pf142470556336641" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf142470556336640" path="/profil.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="advert.xhtml" comment="Advert-Einstieg" id="pf14251406353840" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf14251406353841" path="/advert.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="viewadverts.xhtml" id="pf14251406353842" referenceLink="//@navigationRule.11/@fromViewId|" outlinks="pf14251407825763 pf14251408749965" inlinks="pf14251406353841" path="/viewadverts.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="viewownadverts.xhtml" id="pf14251407825764" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf14251407825763" path="/viewownadverts.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="viewotheradverts.xhtml" id="pf14251408749976" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" inlinks="pf14251408749965" path="/viewotheradverts.xhtml"/>
   <links id="pf14247041072390" target="pf14246301460784" source="pf14231465251220" outcome="home" redirect="true"/>
   <links id="pf142470556336623" target="pf142470556336625" source="pf142470556336622" outcome="success" fromaction="#{user.add}"/>
   <links id="pf142470556336624" target="pf142470556336627" source="pf142470556336622" outcome="unsuccess" fromaction="#{user.add}"/>
@@ -25,4 +29,7 @@
   <links id="pf142470556336637" target="pf142470556336636" source="pf142470556336638" outcome="messagedetailvonsuche" redirect="true" fromaction="#{message.startMessage}"/>
   <links id="pf142470556336621" target="pf142470556336638" source="pf14246301460784" outcome="simpleSearchResult" redirect="true" fromaction="#{simpleSearch.searchSimple}"/>
   <links id="pf142470556336640" target="pf142470556336641" source="pf142470556336639" outcome="profil" redirect="true" fromaction="#{user.profilchange(firstName.value, lastName.value, birthday.value, car.value, phone.value, email.value, password.value, street.value, plz.value, abouttext.value)}"/>
+  <links id="pf14251406353841" target="pf14251406353842" source="pf14251406353840" outcome="viewadverts" redirect="true"/>
+  <links id="pf14251407825763" target="pf14251407825764" source="pf14251406353842" outcome="viewownadverts" redirect="true" fromaction="#{advert.showown}"/>
+  <links id="pf14251408749965" target="pf14251408749976" source="pf14251406353842" outcome="viewotheradverts" redirect="true" fromaction="#{advert.showothers}"/>
 </pageflow:Pageflow>

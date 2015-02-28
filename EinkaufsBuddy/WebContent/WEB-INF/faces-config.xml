@@ -126,4 +126,46 @@
         </navigation-case>  
     </navigation-rule>  
     
+     <navigation-rule>  
+        <description>Advert-Einstieg</description>  
+        <from-view-id>/advert.xhtml</from-view-id>  
+        <navigation-case>       
+            <from-outcome>viewadverts</from-outcome>  
+            <to-view-id>/viewadverts.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule> 
+    
+     <navigation-rule>  
+        <description>Advert-Eigene</description>  
+        <from-view-id>/viewadverts.xhtml</from-view-id>  
+        <navigation-case>
+        <from-action>#{advert.showown}</from-action>      
+            <from-outcome>viewownadverts</from-outcome>  
+            <to-view-id>/viewownadverts.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule> 
+    
+     <navigation-rule>  
+        <description>Advert-Fremde</description>  
+        <from-view-id>/viewadverts.xhtml</from-view-id>  
+        <navigation-case>
+        <from-action>#{advert.showothers}</from-action>      
+            <from-outcome>viewotheradverts</from-outcome>  
+            <to-view-id>/viewotheradverts.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule> 
+    
+     <navigation-rule>  
+        <description>Advert-Eigene zu Ändernpage</description>  
+        <from-view-id>/viewownadverts.xhtml</from-view-id>  
+        <navigation-case>
+        <from-action>#{advert.changeData}</from-action>      
+            <from-outcome>changeadvert</from-outcome>  
+            <to-view-id>/changeadvert.xhtml</to-view-id> 
+            <redirect/>
+        </navigation-case>  
+    </navigation-rule> 
 </faces-config>  

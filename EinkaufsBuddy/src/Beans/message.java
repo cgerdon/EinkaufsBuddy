@@ -462,8 +462,7 @@ public class message implements Serializable {
                         ps.setString(3, datumConverter); 
                         ps.setByte(4, b);  
                         ps.setString(5, ms_text); 
-                        
-   
+
                        ps.executeUpdate();   
                         
                        ms_text = null; 

@@ -12,7 +12,8 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -22,7 +23,10 @@ import javax.sql.DataSource;
 import org.primefaces.event.SelectEvent;
   
 @ManagedBean(name = "advert")  
-@RequestScoped  
+
+// @RequestScoped  
+@SessionScoped
+
 public class Advert {  
 	
 	private int ad_id;
@@ -364,8 +368,7 @@ public class Advert {
                 try {  
                     con = ds.getConnection();  
                     if (con != null) {  
-                        String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id from ad where id = '"  
-                                + ad_id + "'";  
+                        String sql = "SELECT * FROM ad WHERE ad.id = " + ad_id + ";";  
                         ps = con.prepareStatement(sql);  
                         rs = ps.executeQuery();
                         
