@@ -400,8 +400,9 @@ public class Advert {
 			return ownadverts;    
     }  
     
-	public String changeData(int ad_id) {  
-		this.ad_id = ad_id;
+	public String changeData() {  
+		FacesContext fc = FacesContext.getCurrentInstance();
+		this.ad_id = getad_id(fc);
 		
 		ownadverts = getAd_idfromSQL(ad_id);
 		System.out.println("test ad id " + ad_id); 
@@ -409,15 +410,14 @@ public class Advert {
 	} 
 		
 	
-	public String getad_id(FacesContext fc){
-		 
+	public int getad_id(FacesContext fc){
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		String ad_id = params.get("ad_id");
-		return params.get("ad_id");
+		int value = Integer.valueOf(ad_id);
+		return value;
  
 	}
-    
-    
+	    
 
     public String showown(){
     	PreparedStatement ps = null;  
