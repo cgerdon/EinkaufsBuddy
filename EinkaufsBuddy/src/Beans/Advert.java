@@ -392,7 +392,18 @@ public class Advert {
 	   								rs.getInt("ad.buyer_id"));
   	
                         		ownadverts.add(TempObj);
-
+                        		System.out.println("test 1 ad_id " + ad_id);
+                        		System.out.println("advertiser_id " + advertiser_id);
+                        		System.out.println("fav_market " + fav_market);
+                        		System.out.println("category " + fk_category);
+                        		System.out.println("date " + date);
+                        		System.out.println("fk_time " + fk_time_id);
+                                System.out.println("limit " + limit);
+                                System.out.println("income " + income);
+                                System.out.println("text " + text);
+                                System.out.println("status " + status);
+                                System.out.println("Ausgabe ownadverts Objekt " + ownadverts);
+                                System.out.println("*************************************************");
                         	}
                        
                     	}  
