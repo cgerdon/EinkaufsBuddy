@@ -379,8 +379,21 @@ public class Advert {
                         			rs.next();//) {  
                         		//i++;
             
-                     	   
-                        		Advert TempObj = new Advert(i, 
+                        	
+     //Mathias ergänzt	
+	   								
+                        		date =	rs.getDate("ad.date"); 
+                        		fk_time_id=	rs.getInt("ad.fk_time_id"); 
+                        		limit=	rs.getDouble("ad.limit"); 
+                        		income=	rs.getDouble("ad.income"); 
+                        		text=	rs.getString("ad.text"); 
+                        		fk_category=	rs.getInt("ad.fk_category"); 
+                        		status=	rs.getBoolean("ad.status"); 
+                        		fav_market=	rs.getString("ad.fav_market"); 
+                        		buyer_id=	rs.getInt("ad.buyer_id");
+                        		
+                        		
+                        	/*	Advert TempObj = new Advert(i, 
 	   								rs.getInt("ad.id"), 
 	   								rs.getInt("ad.advertiser_id"), 
 	   								rs.getDate("ad.date"), 
@@ -394,7 +407,7 @@ public class Advert {
 	   								rs.getInt("ad.buyer_id"));
   	
                         		ownadverts.add(TempObj);
-                        		System.out.println("test 1 ad_id " + ad_id);
+                        	*/	System.out.println("test 1 ad_id " + ad_id);
                         		System.out.println("advertiser_id " + advertiser_id);
                         		System.out.println("fav_market " + fav_market);
                         		System.out.println("category " + fk_category);
@@ -420,7 +433,11 @@ public class Advert {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		this.ad_id = getad_id(fc);
 		
-		ownadverts = getAd_idfromSQL(ad_id);
+		
+		//Mathias abgeändert
+		// ownadverts = getAd_idfromSQL(ad_id);
+		getAd_idfromSQL(ad_id);
+		
 		System.out.println("test ad id " + ad_id); 
 		System.out.println("advertiser_id " + advertiser_id);
 		System.out.println("fav_market " + fav_market);
