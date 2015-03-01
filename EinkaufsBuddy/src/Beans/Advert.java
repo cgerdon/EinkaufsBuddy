@@ -409,6 +409,18 @@ public class Advert {
 		
 		ownadverts = getAd_idfromSQL(ad_id);
 		System.out.println("test ad id " + ad_id); 
+		System.out.println("advertiser_id " + advertiser_id);
+		System.out.println("fav_market " + fav_market);
+		System.out.println("category " + fk_category);
+		System.out.println("date " + date);
+		System.out.println("fk_time " + fk_time_id);
+        System.out.println("limit " + limit);
+        System.out.println("income " + income);
+        System.out.println("text " + text);
+        System.out.println("status " + status);
+        System.out.println("Ausgabe ownadverts Objekt " + ownadverts);
+        
+
 		return "changeadvert";
 	} 
 		

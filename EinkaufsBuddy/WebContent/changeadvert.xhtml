@@ -6,14 +6,14 @@
 	xmlns:p="http://primefaces.org/ui">
     
 <ui:define name="content">
-		<h:form id="changeadvertForm">
-			<h:panelGrid columns="3">
+		<h:form id="changeadvertForm"> 
+			<h:panelGrid columns="1">
 					
 					<h:outputText value="Bevorzugter Markt:" />
-					<h:inputText value="#{advert.fav_market}" binding="#{fav_market}"/>
+					<h:inputText value="#{advert.fav_market}" />
 										
 					<h:outputText value="Art des Marktes:" />
-					<h:selectOneListbox value="#{advert.fk_category}" size="3" binding="#{fk_category}">
+					<h:selectOneListbox value="#{advert.fk_category}" size="3" >
 						<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
 						<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
 						<f:selectItem itemValue="3" itemLabel="Apotheke"/>
@@ -24,12 +24,12 @@
 				
 
 					<h:outputText value="Datum:" />
-					<h:inputText value="#{advert.date}" binding="#{date}" >
+					<h:inputText value="#{advert.date}" >
 						<f:convertDateTime pattern="yyyy-mm-dd" />
 					</h:inputText>
 			
 					<h:outputText value="Zeit der Anlieferung:" />
-					<h:selectOneRadio value="#{advert.fk_time_id}" binding="#{fk_time_id}">
+					<h:selectOneRadio value="#{advert.fk_time_id}">
 						<f:selectItem itemValue="1" itemLabel="Vormittag"/>
 						<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
 						<f:selectItem itemValue="3" itemLabel="Abend"/>
@@ -37,24 +37,24 @@
 			
 			 
 					<h:outputText value="Budget in Euro:" />  
-					<h:inputText value="#{advert.limit}" binding="#{limit}"/>          
+					<h:inputText value="#{advert.limit}" />          
             
 			
 					<h:outputText value="Vergütung in Euro:" />  
-					<h:inputText value="#{advert.income}" binding="#{income}"/> 
+					<h:inputText value="#{advert.income}" /> 
   			
 			  
 					<h:outputText value="Einkaufsliste:" /> 
-					<h:inputTextarea value="#{advert.text}" binding="#{text}"/> 
+					<h:inputTextarea value="#{advert.text}"/> 
 			  
         			<h:outputText value="Aktivschaltung:" />
-					<h:selectBooleanCheckbox value="#{advert.status}" binding="#{status}" /> 
+					<h:selectBooleanCheckbox value="#{advert.status}" /> 
 					
 					
 			</h:panelGrid>		
 		
 				
-					<h:commandButton value="Speichern" action="#{user.updateInfos}"/>
+					<h:commandButton value="Speichern" action="#{advert.updateInfos}"/>
 					 <h:commandButton action="#{advert.changeadvert(fav_market.value, fk_category.value, date.value, fk_time_id.value, limit.value, income.value, text.value, street.value, status.value)}" value="Ändern"/>
 		</h:form>
 </ui:define>
