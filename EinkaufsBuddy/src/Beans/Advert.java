@@ -374,7 +374,8 @@ public class Advert {
                         
                         int i=0;
                         ownadverts.clear();
-                        	while (rs.next()) {  
+                        	while (
+                        			rs.next()) {  
                         		i++;
             
                      	   
