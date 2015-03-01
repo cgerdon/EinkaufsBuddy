@@ -368,15 +368,16 @@ public class Advert {
                 try {  
                     con = ds.getConnection();  
                     if (con != null) {  
-                        String sql = "SELECT * FROM ad WHERE ad.id = " + ad_id + ";";  
+                    	ownadverts.clear();
+                        String sql = "SELECT * FROM ad WHERE ad.id = '" + ad_id + "'";  
                         ps = con.prepareStatement(sql);  
                         rs = ps.executeQuery();
                         
                         int i=0;
-                        ownadverts.clear();
-                        	while (
-                        			rs.next()) {  
-                        		i++;
+                        
+                        	//while (
+                        			rs.next();//) {  
+                        		//i++;
             
                      	   
                         		Advert TempObj = new Advert(i, 
@@ -407,7 +408,7 @@ public class Advert {
                                 System.out.println("*************************************************");
                         	}
                        
-                    	}  
+                    	//}  
                 } catch (SQLException sqle) {  
                     sqle.printStackTrace();  
                 }    
