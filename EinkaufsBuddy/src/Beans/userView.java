@@ -182,10 +182,10 @@ public class userView{
                     System.out.println(sql);
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
-                    int[][] TempObj = new int[6][7];
+                    int[][] TempObj = new int[6][6];
                     //hier die magie
                     while(rs.next()){
-                    	TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = '1';
+                    	TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = 1;
                     	System.out.println(rs.getInt("fk_day_id") + " - " + rs.getInt("fk_time_id"));
                     	
                     }
@@ -199,7 +199,7 @@ public class userView{
                       System.out.println();
                     }
                     //System.out.println(TempObj);
-                    
+                    daytimeavailable = TempObj;
                    //ende magie 
                 }  
             } catch (SQLException sqle) {  
