@@ -28,7 +28,7 @@ public class userView{
 	private String street;
 	private int plz;
 	private String phone;
-	private int[][] daytimeavailable;
+	private boolean[][] daytimeavailable;
 	
 	
 	
@@ -122,12 +122,12 @@ public class userView{
 	}
 
 
-	public int[][] getDaytimeavailable() {
+	public boolean[][] getDaytimeavailable() {
 		return daytimeavailable;
 	}
 
 
-	public void setDaytimeavailable(int[][] daytimeavailable) {
+	public void setDaytimeavailable(boolean[][] daytimeavailable) {
 		this.daytimeavailable = daytimeavailable;
 	}
 
@@ -160,7 +160,14 @@ public class userView{
                  }  
              } catch (SQLException sqle) {  
                  sqle.printStackTrace();  
-             }  
+             }  finally {  
+	                try {  
+	                    con.close();  
+	                    ps.close();  
+	                } catch (Exception e) {  
+	                    e.printStackTrace();  
+	                }  
+	            } 
          }  
         showTimes(id);
         System.out.println(daytimeavailable);
@@ -182,10 +189,10 @@ public class userView{
                     System.out.println(sql);
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
-                    int[][] TempObj = new int[6][6];
+                    boolean[][] TempObj = new boolean[6][6];
                     //hier die magie
                     while(rs.next()){
-                    	TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = 1;
+                    	TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = true;
                     	System.out.println(rs.getInt("fk_day_id") + " - " + rs.getInt("fk_time_id"));
                     	
                     }
@@ -204,7 +211,14 @@ public class userView{
                 }  
             } catch (SQLException sqle) {  
                 sqle.printStackTrace();  
-            }  
+            }  finally {  
+                try {  
+                    con.close();  
+                    ps.close();  
+                } catch (Exception e) {  
+                    e.printStackTrace();  
+                }  
+            } 
         }  
 		
 	}
