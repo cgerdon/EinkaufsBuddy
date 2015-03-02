@@ -182,20 +182,24 @@ public class userView{
                     System.out.println(sql);
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
-                    
+                    int[][] TempObj = new int[6][7];
                     //hier die magie
-                    int i = 1;
                     while(rs.next()){
-                    	System.out.println(rs.getInt("fk_day_id") + "   " +rs.getInt("fk_time_id"));
-                    	for (int j=1;j<=5;j++){
-                       	if ((rs.getInt("fk_day_id") == i) && (rs.getInt("fk_time_id") == j)){
-                       		System.out.println("Tag liegt drin");
-                       		//daytimeavailable[i][j] = 1;
-                    	}}
-                       	i++;
+                    	TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = '1';
+                    	System.out.println(rs.getInt("fk_day_id") + " - " + rs.getInt("fk_time_id"));
+                    	
                     }
-                   
-
+                    int rows = TempObj.length;
+                    int cols = TempObj[0].length;
+                    for (int row=0; row<rows; row++) {
+                      for (int col=0; col<cols; col++) {
+                        if (col > 0) System.out.print(", ");
+                        System.out.print(TempObj[row][col]);
+                      }
+                      System.out.println();
+                    }
+                    //System.out.println(TempObj);
+                    
                    //ende magie 
                 }  
             } catch (SQLException sqle) {  
