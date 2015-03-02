@@ -162,13 +162,51 @@ public class userView{
                  sqle.printStackTrace();  
              }  
          }  
-     
+        showTimes(id);
+        System.out.println(daytimeavailable);
 		return "fremdprofil";
     	
     }
     
     
-    public userView() {  
+    private void showTimes(int id) {
+   	 PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;  
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {  
+                    String sql = "select fk_day_id, fk_time_id from member_day_time_available where fk_member_id = "  
+                            + id + ";";  
+                    System.out.println(sql);
+                    ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();  
+                    
+                    //hier die magie
+                    int i = 1;
+                    while(rs.next()){
+                    	System.out.println(rs.getInt("fk_day_id") + "   " +rs.getInt("fk_time_id"));
+                    	for (int j=1;j<=5;j++){
+                       	if ((rs.getInt("fk_day_id") == i) && (rs.getInt("fk_time_id") == j)){
+                       		System.out.println("Tag liegt drin");
+                       		//daytimeavailable[i][j] = 1;
+                    	}}
+                       	i++;
+                    }
+                   
+
+                   //ende magie 
+                }  
+            } catch (SQLException sqle) {  
+                sqle.printStackTrace();  
+            }  
+        }  
+		
+	}
+
+
+	public userView() {  
         try {  
             Context ctx = new InitialContext();  
             ds = (DataSource) ctx.lookup("java:comp/env/jdbc/database");  
