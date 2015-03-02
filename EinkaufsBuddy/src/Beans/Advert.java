@@ -277,8 +277,10 @@ public class Advert {
 	                if (ds != null) {  
 	                    con = ds.getConnection();  
 	                    if (con != null) {  
-	                    	
-	                    	String sql = "UPDATE ad SET ad.date='" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', ad.fk_time_id ='" + fk_time_id + "', ad.limit='" + limit + "' , ad.income='" + income + "' , ad.text='" + text + "' , ad.fk_category='" + fk_category + "' , ad.status='" + status + "' , ad.fav_market='" + fav_market + "' WHERE ad.id ='" + ad_id + "'";
+	                    	int statustest = 0;
+	                    	if (status=true) statustest=1;
+	                    	if (!(status=true)) statustest=0;
+	                    	String sql = "UPDATE ad SET ad.date='" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', ad.fk_time_id ='" + fk_time_id + "', ad.limit='" + limit + "' , ad.income='" + income + "' , ad.text='" + text + "' , ad.fk_category='" + fk_category + "' , ad.status='" + statustest + "' , ad.fav_market='" + fav_market + "' WHERE ad.id ='" + ad_id + "'";
 
 	                    	System.out.println(sql);
 	                    	ps = con.prepareStatement(sql);  
