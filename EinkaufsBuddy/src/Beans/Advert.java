@@ -278,7 +278,7 @@ public class Advert {
 	                    con = ds.getConnection();  
 	                    if (con != null) {  
 	                    	
-	                    	String sql = "UPDATE ad set date='" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', fk_timt_id ='" + fk_time_id + "', limit'" + limit + "' , text='" + text + "' , fk_category='" + fk_category + "' , status='" + status + "' , fav_market='" + fav_market + "' where id ='" + ad_id + "';";
+	                    	String sql = "UPDATE ad SET ad.date='" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', ad.fk_time_id ='" + fk_time_id + "', ad.limit='" + limit + "' , ad.income='" + income + "' , ad.text='" + text + "' , ad.fk_category='" + fk_category + "' , ad.status='" + status + "' , ad.fav_market='" + fav_market + "' WHERE ad.id ='" + ad_id + "'";
 
 	                    	System.out.println(sql);
 	                    	ps = con.prepareStatement(sql);  
@@ -373,7 +373,7 @@ public class Advert {
                         ps = con.prepareStatement(sql);  
                         rs = ps.executeQuery();
                         
-                        int i=0;
+                        //int i=0;
                         
                         	//while (
                         			rs.next();//) {  
@@ -407,18 +407,7 @@ public class Advert {
 	   								rs.getInt("ad.buyer_id"));
   	
                         		ownadverts.add(TempObj);
-                        	*/	System.out.println("test 1 ad_id " + ad_id);
-                        		System.out.println("advertiser_id " + advertiser_id);
-                        		System.out.println("fav_market " + fav_market);
-                        		System.out.println("category " + fk_category);
-                        		System.out.println("date " + date);
-                        		System.out.println("fk_time " + fk_time_id);
-                                System.out.println("limit " + limit);
-                                System.out.println("income " + income);
-                                System.out.println("text " + text);
-                                System.out.println("status " + status);
-                                System.out.println("Ausgabe ownadverts Objekt " + ownadverts);
-                                System.out.println("*************************************************");
+                        	*/	
                         	}
                        
                     	//}  
@@ -437,19 +426,6 @@ public class Advert {
 		//Mathias abgeändert
 		// ownadverts = getAd_idfromSQL(ad_id);
 		getAd_idfromSQL(ad_id);
-		
-		System.out.println("test ad id " + ad_id); 
-		System.out.println("advertiser_id " + advertiser_id);
-		System.out.println("fav_market " + fav_market);
-		System.out.println("category " + fk_category);
-		System.out.println("date " + date);
-		System.out.println("fk_time " + fk_time_id);
-        System.out.println("limit " + limit);
-        System.out.println("income " + income);
-        System.out.println("text " + text);
-        System.out.println("status " + status);
-        System.out.println("Ausgabe ownadverts Objekt " + ownadverts);
-        
 
 		return "changeadvert";
 	} 

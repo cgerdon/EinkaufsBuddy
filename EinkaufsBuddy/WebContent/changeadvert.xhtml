@@ -9,6 +9,9 @@
 		<h:form id="changeadvertForm"> 
 			<h:panelGrid columns="1">
 					
+					<h:outputText value="ID:" />
+					<h:inputText id="advertiser_id" value="#{advert.advertiser_id}" disabled="true"/>
+					
 					<h:outputText value="Bevorzugter Markt:" />
 					<h:inputText value="#{advert.fav_market}" />
 										
@@ -55,7 +58,6 @@
 		
 				
 					<h:commandButton value="Speichern" action="#{advert.updateInfos}"/>
-					 <h:commandButton action="#{advert.changeadvert(fav_market.value, fk_category.value, date.value, fk_time_id.value, limit.value, income.value, text.value, street.value, status.value)}" value="Ändern"/>
 		</h:form>
 </ui:define>
   
