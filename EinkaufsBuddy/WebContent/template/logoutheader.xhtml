@@ -8,16 +8,16 @@
 		
 	 	<h:form styleClass="login-logout-form" rendered="#{user.id != 0}">  
 				<p:commandButton value="Logout" action="#{user.logout}" />  
-	 	</h:form>
-			
-		 	<h:form rendered="#{user.id != 0}">
+		</h:form>
+		
+		 	<h:form id="messagecyclemenurepeat" rendered="#{user.id != 0}">
 				<p:menubar id="horizontalMenu">
 					<p:menuitem value="Home" outcome="home"/>	
 					
 					<p:menuitem value="Profil" outcome="profil"/>	
 					
-					<p:menuitem value="Nachrichten" outcome="messagebegin" />	
-					
+					<p:menuitem value="Nachrichten(#{message.ms_gesamtanzahl})" outcome="messagebegin" />
+										
 					<p:menuitem value="Inserate" outcome="advert"/>	
 					
 		 			<p:submenu label="About US">
@@ -26,9 +26,9 @@
 					</p:submenu>	 			
 	
 				</p:menubar>
+				
+				<p:poll listener="#{message.showGesamtMessage}" update="messagecyclemenurepeat" rendered="#{user.id != 0}"/>
 			</h:form>
 		
 
 </ui:composition>
-
-

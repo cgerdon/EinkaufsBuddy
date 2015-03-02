@@ -17,22 +17,27 @@
 				
 		<h:form>	
 	
-					<h:dataTable id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
+					<h:dataTable  id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
 									
-							<p:column headerText="Name">
-								<h:outputText value="#{messageoverview.ms_receiverFirstName} " rendered="#{messageoverview.ms_senderId != user.id}"/>
-								<h:outputText value="#{messageoverview.ms_receiverLastName}" rendered="#{messageoverview.ms_senderId != user.id}"/>
-							</p:column>
-							<p:column headerText="Öffnen">
-								<h:commandButton value="ansehen" action="#{message.showMessage}" rendered="#{messageoverview.ms_senderId != user.id}">
+							<h:column >
+							<h:panelGroup styleClass="messageoverviewName">
+								<h:outputText value="#{messageoverview.ms_receiverFirstName} "/>
+								<h:outputText  value="#{messageoverview.ms_receiverLastName}" />
+							</h:panelGroup>
+							<h:panelGroup styleClass="messagecycle" rendered="#{messageoverview.ms_anzahl > 0}">
+								<h:outputText  value="#{messageoverview.ms_anzahl}" />
+							</h:panelGroup>
+							</h:column>	
+							<h:column >
+								<h:commandButton value="ansehen" action="#{message.showMessage}" >
 									<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
 								</h:commandButton>	
-							</p:column>
-							<p:column headerText="Löschen">
-								<h:commandButton value="löschen" action="#{message.showMessage}" rendered="#{messageoverview.ms_senderId != user.id}"> 
+							</h:column>
+							<h:column >
+								<h:commandButton value="löschen" action="#{message.showMessage}" > 
 									<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
 								</h:commandButton>
-							</p:column>	
+							</h:column>	
 					
 					</h:dataTable> 
 					
