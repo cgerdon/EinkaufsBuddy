@@ -6,12 +6,28 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Profilseite von </h1>	
+		<h1>Profilseite von #{userView.id}</h1>	
 		<h:form>  
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Name: "/>
-		      	<h:outputText value="#{userView.id}"/>
-		      
+		      	<h:outputText value="#{userView.name}"/>
+		      	<h:outputLabel value="Nachname: "/>
+		      	<h:outputText value="#{userView.last_name}"/>
+		        <h:outputLabel value="Geburtstag: "/>
+		        <h:outputText value="#{userView.birthdate}">
+		        	<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
+		        </h:outputText>
+		        <h:outputLabel value="Auto: "/>
+		        <h:outputText value="#{userView.car}"/>
+		        <h:outputLabel value="Telefon: "/>
+		        <h:outputText value="#{userView.phone}"/>  		        
+		        <h:outputLabel value="Straße: "/>
+		        <h:outputText value="#{userView.street}"/>
+		        <h:outputLabel value="PLZ: "/>
+		        <h:outputText value="#{userView.plz}"/>
+      
+		        <h:outputLabel value="Über: "/>
+		        <h:outputText value="#{userView.abouttext}"/>
    
         	</h:panelGrid>
         </h:form>  
