@@ -28,6 +28,12 @@
       
 		        <h:outputLabel value="Über: "/>
 		        <h:outputText value="#{userView.abouttext}"/>
+		        <h:outputLabel value="Montag: "/>
+		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][1])}" readonly="true" /> Morgens
+		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][2]}" /> Vormittags
+		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][3]}" /> Mittags
+		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][4]}" /> Nachmittags
+		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][5]}" /> Abends
    
         	</h:panelGrid>
         </h:form>  
