@@ -441,7 +441,50 @@ public class Advert {
  
 	}
 	    
-
+	public String showall(){
+      	PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;
+    
+    if (ds != null) {  
+        try {  
+            con = ds.getConnection();  
+            if (con != null) {
+            	//System.out.println(advertiser_id); 
+            	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
+                String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.status = '1' AND ad.buyer_id = 'null'";  //buyer_id
+                ps = con.prepareStatement(sql);  
+                rs = ps.executeQuery();  
+                otheradverts.clear();
+                int i=0;
+                while (rs.next()) {  
+                	i++;	
+                	Advert TempObj = new Advert(i,
+                								rs.getInt("ad.id"), 
+                								rs.getInt("ad.advertiser_id"), 
+                								rs.getDate("ad.date"), 
+                								rs.getInt("ad.fk_time_id"), 
+                								rs.getDouble("ad.limit"), 
+                								rs.getDouble("ad.income"), 
+                								rs.getString("ad.text"), 
+                								rs.getInt("ad.fk_category"), 
+                								rs.getBoolean("ad.status"), 
+                								rs.getString("ad.fav_market"), 
+                								rs.getInt("ad.buyer_id"));
+                	
+                	otheradverts.add(TempObj);
+                	//System.out.println(otheradverts);
+             
+                	
+                }
+            }  
+        } catch (SQLException sqle) {  
+            sqle.printStackTrace();  
+        }    
+     }
+     return "advert";
+	}
+	
     public String showown(){
     	PreparedStatement ps = null;  
         Connection con = null;  
