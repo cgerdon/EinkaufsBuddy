@@ -34,9 +34,9 @@
 								</h:commandButton>	
 							</h:column>
 							<h:column >
-								<h:commandButton value="löschen" action="#{message.showMessage}" > 
-									<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
-								</h:commandButton>
+								<h:commandButton value="löschen" action="#{message.deleteAllMessage}"> 
+									<f:param name="namevonmessagedelete" value="#{messageoverview.ms_senderId}" />
+								</h:commandButton>	
 							</h:column>	
 					
 					</h:dataTable> 
@@ -48,3 +48,9 @@
 	</ui:define>
   
 </ui:composition>
+
+<!-- 
+
+
+
+ -->
