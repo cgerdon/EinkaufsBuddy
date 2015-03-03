@@ -440,7 +440,31 @@ public class Advert {
 		return value;
  
 	}
-	    
+	
+	
+	public String deleteAd(){
+      	PreparedStatement ps = null;  
+        Connection con = null;  
+    
+    if (ds != null) {  
+        try {  
+            con = ds.getConnection();  
+            if (con != null) {
+            	System.out.println(ad_id); 
+            	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
+                String sql = "DELETE FROM ad WHERE ad.id= '" + ad_id + "'";  //buyer_id
+                ps = con.prepareStatement(sql);  
+                int rs = ps.executeUpdate();  
+                otheradverts.clear();
+                System.out.println("Daten gelöscht");
+            }  
+        } catch (SQLException sqle) {  
+            sqle.printStackTrace();  
+        }    
+     }
+     return "viewadverts";
+	}
+	
 	public String showall(){
       	PreparedStatement ps = null;  
         Connection con = null;  
