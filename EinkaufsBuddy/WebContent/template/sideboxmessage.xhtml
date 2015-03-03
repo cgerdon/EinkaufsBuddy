@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">			
 	
 			
-		<h1>Nachrichten: </h1>
+		<h3>Nachrichten: </h3>
 			
 		<h:form>
 			
@@ -16,14 +16,14 @@
 									<h:commandButton styleClass="messagesideboxbutton" value="#{messageoverview.ms_receiverFirstName} #{messageoverview.ms_senderNamekurz}" action="#{message.showMessage}" rendered="#{messageoverview.ms_senderId != user.id}" >
 										<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
 									</h:commandButton>	
-									<h:panelGroup styleClass="messagecycle" rendered="#{messageoverview.ms_anzahl > 0}">
+									<h:panelGroup styleClass="messagecycle" rendered="#{messageoverview.ms_anzahl > 0 and messageoverview.ms_senderId != message.ms_senderId }">
 										<h:outputText  value="#{messageoverview.ms_anzahl}" />
 									</h:panelGroup>
 							
 							</h:column>
 					</h:dataTable> 	
 					
-					<p:poll interval="2" listener="#{message.showAllMessageReload}" update="messageoverviewrepeat2"/>
+					<p:poll interval="5" listener="#{message.showAllMessageReload}" update="messageoverviewrepeat2"/>
 		</h:form>
 	
 </ui:composition>

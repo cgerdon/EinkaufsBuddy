@@ -55,7 +55,7 @@ public class message implements Serializable {
     private int ms_anzahl;
     private int ms_gesamtanzahl;
     String messagetext;
-    
+        
     /*   private byte[] ms_senderPicture;    
 */
 	public message(int ms_anzahl, int ms_id, String ms_time, int ms_senderId, String ms_senderNamekurz, String ms_receiverFirstName, String ms_receiverLastName, String ms_text) {
@@ -82,7 +82,9 @@ public class message implements Serializable {
     }  
     
     
-    public int getMs_gesamtanzahl() {
+
+
+	public int getMs_gesamtanzahl() {
 		return ms_gesamtanzahl;
 	}
 
@@ -263,7 +265,8 @@ public class message implements Serializable {
 	                e.printStackTrace();  
 	            }  
             } 
-        }     
+        }  
+        
         return "messageoverview";   
     }      
 	
@@ -335,6 +338,37 @@ public class message implements Serializable {
             } 
         }     
     }  
+	
+	public void showGesamtMessageOhne() {
+		Connection con = null;
+		PreparedStatement ps = null;  
+        ResultSet rs = null;
+    	
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) { 
+                	String sql = "SELECT SUM(message.`read`) FROM message WHERE message.receiver_id=" + ms_receiverId + " AND NOT message.sender_id=" + ms_senderId + " AND message.`read`=1 ;" ;  
+
+                	ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                    	ms_gesamtanzahl = rs.getInt("SUM(message.`read`)");	 
+                     }	
+                }
+            } catch (SQLException sqle) {  
+                sqle.printStackTrace(); 
+            } finally {  
+	            try {  
+	                con.close();  
+	                ps.close();  
+	            } catch (Exception e) {  
+	                e.printStackTrace();  
+	            }  
+            } 
+        }     
+    } 
 	
 	
    public String DateConString(String dateString){

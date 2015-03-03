@@ -15,7 +15,7 @@
 		      	<h:outputText value="#{userView.last_name}"/>
 		        <h:outputLabel value="Geburtstag: "/>
 		        <h:outputText value="#{userView.birthdate}">
-		        	<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
+		        <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
 		        </h:outputText>
 		        <h:outputLabel value="Auto: "/>
 		        <h:outputText value="#{userView.car}"/>
@@ -29,12 +29,45 @@
 		        <h:outputLabel value="Über: "/>
 		        <h:outputText value="#{userView.abouttext}"/>
 		        <h:outputLabel value="Montag: "/>
-		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][1])}" readonly="true" /> Morgens
-		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][2]}" /> Vormittags
-		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][3]}" /> Mittags
-		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][4]}" /> Nachmittags
-		        <h:selectBooleanCheckbox value="#{userView.daytimeavailable[1][5]}" /> Abends
-   
+		        <h:outputLabel value=" "></h:outputLabel>
+		        <h:selectBooleanCheckbox id="MoMo" value="#{userView.daytimeavailable[1][1]}" disabled="true"/><h:outputLabel value="Morgens" for="MoMo" />
+		        <h:selectBooleanCheckbox id="MoVoMo" value="#{userView.daytimeavailable[1][2]}" disabled="true"/><h:outputLabel value="Vormittags" for="MoVoMo" />
+		        <h:selectBooleanCheckbox id="MoMi" value="#{userView.daytimeavailable[1][3]}" disabled="true"/><h:outputLabel value="Mittags" for="MoMi" />
+		        <h:selectBooleanCheckbox id="MoNaMi" value="#{userView.daytimeavailable[1][4]}" disabled="true"/><h:outputLabel value="Nachmittags" for="MoNaMi" />
+		        <h:selectBooleanCheckbox id="MoAb" value="#{userView.daytimeavailable[1][5]}" disabled="true"/><h:outputLabel value="Abends" for="MoAb" />
+		        
+		        <h:outputLabel value="Dienstag: "/>
+		        <h:outputLabel value=" "></h:outputLabel>
+		        <h:selectBooleanCheckbox id="DiMo" value="#{userView.daytimeavailable[2][1]}" disabled="true"/><h:outputLabel value="Morgens" for="DiMo" />
+		        <h:selectBooleanCheckbox id="DiVoMo" value="#{userView.daytimeavailable[2][2]}" disabled="true"/><h:outputLabel value="Vormittags" for="DiVoMo" />
+		        <h:selectBooleanCheckbox id="DiMi" value="#{userView.daytimeavailable[2][3]}" disabled="true"/><h:outputLabel value="Mittags" for="DiMi" />
+		        <h:selectBooleanCheckbox id="DiNaMi" value="#{userView.daytimeavailable[2][4]}" disabled="true"/><h:outputLabel value="Nachmittags" for="DiNaMi" />
+		        <h:selectBooleanCheckbox id="DiAb" value="#{userView.daytimeavailable[2][5]}" disabled="true"/><h:outputLabel value="Abends" for="DiAb" />
+		        
+		        <h:outputLabel value="Mittwoch: "/>
+		        <h:outputLabel value=" "></h:outputLabel>
+		        <h:selectBooleanCheckbox id="MiMo" value="#{userView.daytimeavailable[3][1]}" disabled="true"/><h:outputLabel value="Morgens" for="MiMo" />
+		        <h:selectBooleanCheckbox id="MiVoMo" value="#{userView.daytimeavailable[3][2]}" disabled="true"/><h:outputLabel value="Vormittags" for="MiVoMo" />
+		        <h:selectBooleanCheckbox id="MiMi" value="#{userView.daytimeavailable[3][3]}" disabled="true"/><h:outputLabel value="Mittags" for="MiMi" />
+		        <h:selectBooleanCheckbox id="MiNaMi" value="#{userView.daytimeavailable[3][4]}" disabled="true"/><h:outputLabel value="Nachmittags" for="MiNaMi" />
+		        <h:selectBooleanCheckbox id="MiAb" value="#{userView.daytimeavailable[3][5]}" disabled="true"/><h:outputLabel value="Abends" for="MiAb" />
+		        
+		        <h:outputLabel value="Donnerstag: "/>
+		        <h:outputLabel value=" "></h:outputLabel>
+		        <h:selectBooleanCheckbox id="DoMo" value="#{userView.daytimeavailable[4][1]}" disabled="true"/><h:outputLabel value="Morgens" for="DoMo" />
+		        <h:selectBooleanCheckbox id="DoVoMo" value="#{userView.daytimeavailable[4][2]}" disabled="true"/><h:outputLabel value="Vormittags" for="DoVoMo" />
+		        <h:selectBooleanCheckbox id="DoMi" value="#{userView.daytimeavailable[4][3]}" disabled="true"/><h:outputLabel value="Mittags" for="DoMi" />
+		        <h:selectBooleanCheckbox id="DoNaMi" value="#{userView.daytimeavailable[4][4]}" disabled="true"/><h:outputLabel value="Nachmittags" for="DoNaMi" />
+		        <h:selectBooleanCheckbox id="DoAb" value="#{userView.daytimeavailable[4][5]}" disabled="true"/><h:outputLabel value="Abends" for="DoAb" />
+		        
+		        <h:outputLabel value="Freitag: "/>
+		        <h:outputLabel value=" "></h:outputLabel>
+		        <h:selectBooleanCheckbox id="FrMo" value="#{userView.daytimeavailable[5][1]}" disabled="true"/><h:outputLabel value="Morgens" for="FrMo" />
+		        <h:selectBooleanCheckbox id="FrVoMo" value="#{userView.daytimeavailable[5][2]}" disabled="true"/><h:outputLabel value="Vormittags" for="FrVoMo" />
+		        <h:selectBooleanCheckbox id="FrMi" value="#{userView.daytimeavailable[5][3]}" disabled="true"/><h:outputLabel value="Mittags" for="FrMi" />
+		        <h:selectBooleanCheckbox id="FrNaMi" value="#{userView.daytimeavailable[5][4]}" disabled="true"/><h:outputLabel value="Nachmittags" for="FrNaMi" />
+		        <h:selectBooleanCheckbox id="FrAb" value="#{userView.daytimeavailable[5][5]}" disabled="true"/><h:outputLabel value="Abends" for="FrAb" />
+
         	</h:panelGrid>
         </h:form>  
 	</ui:define>

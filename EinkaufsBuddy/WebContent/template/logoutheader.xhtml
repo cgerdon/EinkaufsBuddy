@@ -27,7 +27,9 @@
 	
 				</p:menubar>
 				
-				<p:poll listener="#{message.showGesamtMessage}" update="messagecyclemenurepeat" rendered="#{user.id != 0}"/>
+				<p:poll interval="5" listener="#{message.showGesamtMessage}" update="messagecyclemenurepeat" rendered="#{user.id != 0 and message.ms_senderId == 0}"/>
+				<p:poll interval="5" listener="#{message.showGesamtMessageOhne}" update="messagecyclemenurepeat" rendered="#{user.id != 0 and message.ms_senderId != 0}"/>
+				
 			</h:form>
 		
 

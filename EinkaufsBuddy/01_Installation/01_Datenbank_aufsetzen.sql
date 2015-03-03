@@ -94,13 +94,15 @@ CREATE TABLE IF NOT EXISTS `message` (
   `time_sent` datetime NOT NULL,
   `read` tinyint(1) NOT NULL DEFAULT '0',
   `text` longtext NOT NULL,
+  `del_sender` tinyint(1) DEFAULT NULL,
+  `del_receiver` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `const_message_sender_idx` (`sender_id`),
   KEY `const_message_receiver_idx` (`receiver_id`),
   CONSTRAINT `const_message_receiver` FOREIGN KEY (`receiver_id`) REFERENCES `member` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `const_message_sender` FOREIGN KEY (`sender_id`) REFERENCES `member` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `rating` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -184,8 +186,22 @@ INSERT INTO `ad` (`id`, `advertiser_id`, `date`, `fk_time_id`, `limit`, `income`
 INSERT INTO `ad` (`id`, `advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES (3, 5, '2014-12-07', 1, 100, 10, 'Hallo,\r\nich hätte gerne einen kompletten Wocheneinkauf. Also auch Wasser, Bier, Wurst, Brot, Käse, Marmelade und ein KG feinstes, reines, russisches Heroin.\r\nDanke', 1, 0, 'Mir latte', NULL);
 INSERT INTO `ad` (`id`, `advertiser_id`, `date`, `fk_time_id`, `limit`, `income`, `text`, `fk_category`, `status`, `fav_market`, `buyer_id`) VALUES (4, 3, '2015-02-04', 1, 1, 0, 'Ich bin Einsam. Will eigentlich gar nix eingekauft bekommen', 4, 1, 'egal', NULL);
 
-INSERT INTO `message` (`id`, `sender_id`, `receiver_id`, `time_sent`, `read`, `text`) VALUES
-	(1, 1, 2, '2015-02-25 21:08:33', 0, 'asdf'),
-	(2, 2, 1, '2015-02-25 21:08:47', 0, 'qwer');
-
+INSERT INTO `message` (`id`, `sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES
+	(1, 1, 2, '2015-02-25 21:08:33', 2, 'asdf', NULL, NULL),
+	(2, 2, 1, '2015-02-25 21:08:47', 2, 'qwer', NULL, NULL),
+	(4, 1, 2, '2015-02-25 21:08:33', 2, 'asdf', NULL, NULL),
+	(5, 2, 3, '2015-02-25 21:08:33', 1, 'asdasdasd', NULL, NULL),
+	(6, 1, 2, '2015-03-02 15:13:16', 2, 'aaa', NULL, NULL),
+	(7, 2, 1, '2015-03-02 15:13:46', 2, 'asd', NULL, NULL),
+	(8, 1, 2, '2015-03-02 15:13:51', 2, 'asdasd', NULL, NULL),
+	(9, 2, 1, '2015-03-02 15:14:15', 2, 'asdasd', NULL, NULL),
+	(10, 2, 1, '2015-03-02 15:14:16', 2, 'a', NULL, NULL),
+	(11, 2, 1, '2015-03-02 15:14:17', 2, 'a', NULL, NULL),
+	(12, 2, 1, '2015-03-02 15:14:17', 2, 'a', NULL, NULL),
+	(13, 2, 1, '2015-03-02 15:14:18', 2, 'a', NULL, NULL),
+	(14, 2, 1, '2015-03-02 15:14:29', 2, 'asdasd', NULL, NULL),
+	(15, 2, 1, '2015-03-02 15:14:29', 2, 'asd', NULL, NULL),
+	(16, 2, 1, '2015-03-02 15:14:30', 2, 'asdasd', NULL, NULL),
+	(17, 1, 3, '2015-03-02 15:37:33', 1, '', NULL, NULL),
+	(18, 1, 3, '2015-03-02 15:37:35', 1, 'ghjghj', NULL, NULL);
 INSERT INTO `rating` (`id`, `buyer_id`, `advertiser_id`, `rating`, `text`, `ad_id`) VALUES (1, 2, 3, 5, 'Sie war Einsam. Und es gab einen Jägermeister für mich!', 4);
