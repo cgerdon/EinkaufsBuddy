@@ -1,0 +1,63 @@
+<ui:composition template="template/master.xhtml"
+ 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+<ui:define name="content">
+		<h:form id="changeadvertForm"> 
+			<h:panelGrid columns="1">
+					
+					<h:outputText value="ID:" />
+					<h:inputText id="advertiser_id" value="#{advert.advertiser_id}" disabled="true"/>
+					
+					<h:outputText value="Bevorzugter Markt:" />
+					<h:inputText value="#{advert.fav_market}" />
+										
+					<h:outputText value="Art des Marktes:" />
+					<h:selectOneListbox value="#{advert.fk_category}" size="3" disabled="true" >
+						<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
+						<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
+						<f:selectItem itemValue="3" itemLabel="Apotheke"/>
+						<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
+						<f:selectItem itemValue="5" itemLabel="Bäcker"/>
+						<f:selectItem itemValue="6" itemLabel="Anderer"/>
+					</h:selectOneListbox>				
+				
+
+					<h:outputText value="Datum:" />
+					<h:inputText value="#{advert.date}" disabled="true">
+						<f:convertDateTime pattern="yyyy-mm-dd" />
+					</h:inputText>
+			
+					<h:outputText value="Zeit der Anlieferung:" />
+					<h:selectOneRadio value="#{advert.fk_time_id}" disabled="true">
+						<f:selectItem itemValue="1" itemLabel="Vormittag"/>
+						<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
+						<f:selectItem itemValue="3" itemLabel="Abend"/>
+					</h:selectOneRadio>			
+			
+			 
+					<h:outputText value="Budget in Euro:" />  
+					<h:inputText value="#{advert.limit}" disabled="true"/>          
+            
+			
+					<h:outputText value="Vergütung in Euro:" />  
+					<h:inputText value="#{advert.income}" disabled="true"/> 
+  			
+			  
+					<h:outputText value="Einkaufsliste:" /> 
+					<h:inputTextarea value="#{advert.text}" disabled="true"/> 
+			  
+					
+					
+			</h:panelGrid>		
+		
+				
+					<h:commandButton value="Einkauf erledigen" "/>
+
+		</h:form>
+</ui:define>
+  
+</ui:composition> 

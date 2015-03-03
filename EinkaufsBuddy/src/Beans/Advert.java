@@ -359,6 +359,39 @@ public class Advert {
             return "unsuccess";  
     }   
 	
+	public String executeJob() {
+		  int i = 0;  
+	      PreparedStatement ps = null;  
+	      Connection con = null;  
+	      try {  
+	                if (ds != null) {  
+	                    con = ds.getConnection();  
+	                    if (con != null) {  
+	                    	String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
+
+	                    	System.out.println(sql);
+	                    	ps = con.prepareStatement(sql);  
+	                        i = ps.executeUpdate();  
+	                        System.out.println("Daten erfolgreich geändert");  
+	                    }  
+	                }  
+	            } catch (Exception e) {  
+	                System.out.println(e);  
+	            } finally {  
+	                try {  
+	                    con.close();  
+	                    ps.close();  
+	                } catch (Exception e) {  
+	                    e.printStackTrace();  
+	                }  
+	            }  
+
+	        if (i > 0) {  
+	           return "successad";  
+	        } else  
+	            return "unsuccess";  
+	}
+	
 	public ArrayList <Advert> getAd_idfromSQL(int ad_id){
 			this.ad_id = ad_id; 
 			
