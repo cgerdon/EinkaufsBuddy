@@ -372,7 +372,7 @@ public class Advert {
 	                    	System.out.println(sql);
 	                    	ps = con.prepareStatement(sql);  
 	                        i = ps.executeUpdate();  
-	                        System.out.println("Daten erfolgreich geändert");  
+	                        System.out.println("Inserat angenommen");  
 	                    }  
 	                }  
 	            } catch (Exception e) {  
