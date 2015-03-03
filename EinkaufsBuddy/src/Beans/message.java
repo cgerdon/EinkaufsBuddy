@@ -267,7 +267,7 @@ public class message implements Serializable {
             } 
         }  
         
-        return "messageoverview";   
+        return "message";   
     }      
 	
 	
@@ -312,18 +312,19 @@ public class message implements Serializable {
 		Connection con = null;
 		PreparedStatement ps = null;  
         ResultSet rs = null;
-    	
+    	        
         if (ds != null) {  
             try {  
                 con = ds.getConnection();  
                 if (con != null) { 
-                	String sql = "SELECT SUM(message.`read`) FROM message WHERE message.receiver_id=" + ms_receiverId + " AND message.`read`=1 ;" ;  
+                	
+                	String sql = "SELECT COUNT(message.`read`) FROM message WHERE message.receiver_id=" + ms_receiverId + " AND message.`read`= 1;" ;  
 
                 	ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();
 
                     while (rs.next()) {
-                    	ms_gesamtanzahl = rs.getInt("SUM(message.`read`)");	 
+                    	ms_gesamtanzahl = rs.getInt("COUNT(message.`read`)");	 
                      }	
                 }
             } catch (SQLException sqle) {  
@@ -348,13 +349,13 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) { 
-                	String sql = "SELECT SUM(message.`read`) FROM message WHERE message.receiver_id=" + ms_receiverId + " AND NOT message.sender_id=" + ms_senderId + " AND message.`read`=1 ;" ;  
+                	String sql = "SELECT COUNT(message.`read`) FROM message WHERE message.receiver_id=" + ms_receiverId + " AND NOT message.sender_id=" + ms_senderId + " AND message.`read`=1 ;" ;  
 
                 	ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();
 
                     while (rs.next()) {
-                    	ms_gesamtanzahl = rs.getInt("SUM(message.`read`)");	 
+                    	ms_gesamtanzahl = rs.getInt("COUNT(message.`read`)");	 
                      }	
                 }
             } catch (SQLException sqle) {  
@@ -434,7 +435,7 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent DESC" ;  
+                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
                        ps = con.prepareStatement(sql);  
                        rs = ps.executeQuery();
                       
@@ -498,8 +499,6 @@ public class message implements Serializable {
 		
 	}
 	
-	
-	
 
 	public int getnamevonmessage(FacesContext fc){
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
@@ -515,79 +514,10 @@ public class message implements Serializable {
 			messagedetails = giveMessagedetailfromSQL(ms_senderId);
 			ms_senderName = giveSenderName(ms_senderId);
 			updatemessagegelesen();
-			
+			showGesamtMessage();
             return "messagedetail";
         }
 	
-/*	public int getempfaenger(FacesContext fc){
-		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-		String empfaenger = params.get("empfaenger");
-		int value = Integer.valueOf(empfaenger);
-		return value;
- 	}
-*/
-	//public void writeMessage(String ms_text) { 
-			public void writeMessage() { 	
-			
-			byte b = 1;
-	//	FacesContext fc = FacesContext.getCurrentInstance();
-	//	this.ms_senderId = getempfaenger(fc);
-		
-		Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
-		String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
- 
-            PreparedStatement ps = null;  
-            Connection con = null;  
-            
-            try {  
-                if (ds != null) {  
-                    con = ds.getConnection();  
-                    if (con != null) { 
-                        String sql = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`) VALUES (?, ?, ?, ?, ?);";  
-                        ps = con.prepareStatement(sql);  
-                        ps.setInt(1, ms_receiverId);  
-                        ps.setInt(2,  ms_senderId);  
-                        ps.setString(3, datumConverter); 
-                        ps.setByte(4, b);  
-                        ps.setString(5, ms_text); 
-
-                       ps.executeUpdate();   
-                        
-                       ms_text = null; 
-                       
-                       PreparedStatement ps2 = null;  
-                       ResultSet rs = null;  
-                 	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE (message.receiver_id=" + this.ms_senderId + " AND message.sender_id=" + this.ms_receiverId + ") OR (message.receiver_id=" + this.ms_receiverId + " AND message.sender_id=" + this.ms_senderId + ") ORDER BY message.time_sent DESC;" ;  
-                       ps2 = con.prepareStatement(sql2);  
-                       rs = ps2.executeQuery();
-              
-                       messagedetails.clear();
-                       int i = 0; 
-                       while (rs.next()) {  
-                       		i++;
-                    	   ms_time = DateConString(rs.getString("message.time_sent"));
-                        	
-                    	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
-                    	   messagedetails.add(TempObj);  
-                        
-                       }
-                        
-                        
-                    }  
-                }  
-            } catch (Exception e) {  
-                System.out.println(e);  
-            } finally {  
-                try {  
-                    con.close();  
-                    ps.close();  
-                } catch (Exception e) {  
-                    e.printStackTrace();  
-                }  
-            }  
-            
-       //  showMessage(ms_senderId);
-    }   
 
 	public String showMessage(int ms_senderId) {  
 		this.ms_senderId = ms_senderId;
@@ -622,5 +552,115 @@ public class message implements Serializable {
 		giveMessagedetailfromSQL(ms_senderId);
 		updatemessagegelesen();    
         }  
+		
+		
+		public void writeMessage() { 	
+			
+		byte b = 1;
+		
+		Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
+		String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
+ 
+            PreparedStatement ps = null;  
+            Connection con = null;  
+            
+            try {  
+                if (ds != null) {  
+                    con = ds.getConnection();  
+                    if (con != null) { 
+                        String sql = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
+                        ps = con.prepareStatement(sql);  
+                        ps.setInt(1, ms_receiverId);  
+                        ps.setInt(2, ms_senderId);  
+                        ps.setString(3, datumConverter); 
+                        ps.setByte(4, b);  
+                        ps.setString(5, ms_text); 
+                        ps.setByte(6, b);  
+                        ps.setByte(7, b);  
 
+                       ps.executeUpdate();   
+                        
+                       ms_text = null; 
+                       
+                       PreparedStatement ps2 = null;  
+                       ResultSet rs = null;  
+                 	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+                       ps2 = con.prepareStatement(sql2);  
+                       rs = ps2.executeQuery();
+              
+                       messagedetails.clear();
+                       int i = 0; 
+                       while (rs.next()) {  
+                       		i++;
+                    	   ms_time = DateConString(rs.getString("message.time_sent"));
+                        	
+                    	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+                    	   messagedetails.add(TempObj);  
+                        
+                       }
+                        
+                        
+                    }  
+                }  
+            } catch (Exception e) {  
+                System.out.println(e);  
+            } finally {  
+                try {  
+                    con.close();  
+                    ps.close();  
+                } catch (Exception e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+    }   
+	
+		
+		public int getnamevonmessagedelete(FacesContext fc){
+			Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+			String namevonmessagedelete = params.get("namevonmessagedelete");
+			int value = Integer.valueOf(namevonmessagedelete);
+			return value;
+	 	}
+		
+		
+		
+		public void deleteAllMessage() { 	
+			FacesContext fc = FacesContext.getCurrentInstance();
+			this.ms_senderId = getnamevonmessagedelete(fc);
+			
+            PreparedStatement ps = null; 
+            PreparedStatement ps2 = null;  
+            Connection con = null;  
+            
+            try {  
+                if (ds != null) {  
+                    con = ds.getConnection();  
+                    if (con != null) { 
+                        String sql = "UPDATE message SET message.del_sender=2 WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND (message.sender_id=" + ms_receiverId + " AND message.del_sender=1);";  
+                        ps = con.prepareStatement(sql);  
+                        ps.executeUpdate();   
+
+                 	   String sql2 = "UPDATE message SET message.del_receiver=2, message.`read`=2  WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND (message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1);" ;  
+                       ps2 = con.prepareStatement(sql2);  
+                       ps2.executeUpdate();
+ 
+                    }  
+                }  
+            } catch (Exception e) {  
+                System.out.println(e);  
+            } finally {  
+                try {  
+                    con.close();  
+                    ps.close();  
+                } catch (Exception e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+            
+            showGesamtMessage();
+            showAllMessage();
+    }   		
+		
+		
+		
 }
