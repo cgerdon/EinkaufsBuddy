@@ -21,6 +21,7 @@ public class userView {
 	private int id;
 	private String name;
 	private String last_name;
+	private double mittel;
 	private Date birthdate;
 	private int car;
 	private String abouttext;
@@ -36,6 +37,20 @@ public class userView {
 	public ArrayList<RatingResults> getRatingList() {
 		return RatingList;
 	}
+
+	
+	
+	public double getMittel() {
+		return mittel;
+	}
+
+
+
+	public void setMittel(double mittel) {
+		this.mittel = mittel;
+	}
+
+
 
 	public void setRatingList(ArrayList<RatingResults> ratingList) {
 		RatingList = ratingList;
@@ -168,10 +183,24 @@ public class userView {
 
 			e.printStackTrace();
 		}
-		System.out.println(daytimeavailable);
+		//System.out.println(daytimeavailable);
+		mittel();
 		return "fremdprofil";
 
 	}
+
+	private void mittel() {
+		mittel = 0;
+		for(RatingResults object: RatingList){
+			mittel += object.getRating();
+			}
+		System.out.println(RatingList.size());
+		mittel = mittel / RatingList.size();
+		if (RatingList.size() == 0) {mittel = 0;}
+		
+	}
+
+
 
 	public void getRatings(int id) throws SQLException {
 		PreparedStatement ps = null;
