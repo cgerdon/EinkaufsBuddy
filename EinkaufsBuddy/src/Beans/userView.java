@@ -31,6 +31,7 @@ public class userView {
 	private int plz;
 	private String phone;
 	private boolean[][] daytimeavailable;
+	private int anzahl;
 	private  ArrayList<RatingResults> RatingList;
 	
 	//private Rating rating;
@@ -43,6 +44,18 @@ public class userView {
 
 	
 	
+	public int getAnzahl() {
+		return anzahl;
+	}
+
+
+
+	public void setAnzahl(int anzahl) {
+		this.anzahl = anzahl;
+	}
+
+
+
 	public double getMittelstar() {
 		return mittelstar;
 	}
@@ -212,9 +225,10 @@ public class userView {
 		System.out.println(RatingList.size());
 		mittel = mittel / RatingList.size();
 		
-		if (RatingList.size() == 0) {mittel = 0; mittelstar = 0;}
+		if (RatingList.size() == 0) {mittel = 0; mittelstar = 0; anzahl = 0;}
 		else {double f = 0.5;
-		mittelstar = f * Math.round(mittel/f);}
+		mittelstar = f * Math.round(mittel/f);
+		anzahl = RatingList.size();}
 		
 	}
 
