@@ -6,31 +6,21 @@
 	xmlns:p="http://primefaces.org/ui">					
 
 		
-	 	<h:form styleClass="login-logout-form" rendered="#{user.id != 0}">  
+	 	<h:form id="messagecyclemenurepeat" styleClass="login-logout-form" rendered="#{user.id != 0}">  
+	 	
+	 			<p:commandButton value="Profil" action="profil" />
+	 			<p:commandButton value="Inserate" action="advert" />	
+	 			<p:commandButton value="Nachrichten" action="#{message.showAllMessage}" />  
+	 			<h:panelGroup styleClass="messagecyclehaeder" rendered="#{message.ms_gesamtanzahl > 0}">
+					<h:outputText  value="#{message.ms_gesamtanzahl}" />
+				</h:panelGroup>
+				
 				<p:commandButton value="Logout" action="#{user.logout}" />  
-		</h:form>
-		
-		 	<h:form id="messagecyclemenurepeat" rendered="#{user.id != 0}">
-				<p:menubar id="horizontalMenu">
-					<p:menuitem value="Home" outcome="home"/>	
-					
-					<p:menuitem value="Profil" outcome="profil"/>	
-					
-					<p:menuitem value="Nachrichten(#{message.ms_gesamtanzahl})" action="#{message.showAllMessage}" />
-										
-					<p:menuitem value="Inserate" outcome="advert"/>	
-					
-		 			<p:submenu label="About US">
-							<p:menuitem value="Kontakt" outcome="/Kontakt"/>
-							<p:menuitem value="Impressum" outcome="/Impressum"/>
-					</p:submenu>	 			
-	
-				</p:menubar>
 				
 				<p:poll interval="5" listener="#{message.showGesamtMessage}" update="messagecyclemenurepeat" rendered="#{user.id != 0 and message.ms_senderId == 0}"/>
 				<p:poll interval="5" listener="#{message.showGesamtMessageOhne}" update="messagecyclemenurepeat" rendered="#{user.id != 0 and message.ms_senderId != 0}"/>
 				
-			</h:form>
+		</h:form>
 		
 
 </ui:composition>
