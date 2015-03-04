@@ -301,6 +301,7 @@ public class User {
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
 					}
+					showTimes(id);
 				} catch (SQLException sqle) {
 					sqle.printStackTrace();
 				}
@@ -354,6 +355,32 @@ public class User {
 	}
 
 	// Mathias hinzugefügt: profilchange
+	
+	public void UpdateTimes(int id){
+		//TODO: Oh  man, das wird was...
+		PreparedStatement ps = null;
+		Connection con = null;
+
+		if (ds != null) {
+			try {
+				con = ds.getConnection();
+				if (con != null) {
+					String sql = "select fk_day_id, fk_time_id from member_day_time_available where fk_member_id = "
+							+ id + ";";
+					ps = con.prepareStatement(sql);
+					ps.executeQuery();
+				}
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			} finally {
+				try {
+					con.close();
+					ps.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}}
+	}
 	
 	public void showTimes(int id) {
 		PreparedStatement ps = null;
@@ -453,6 +480,7 @@ public class User {
 				e.printStackTrace();
 			}
 		}
+		showTimes(id);
 
 		if (i > 0) {
 			return "profil";
