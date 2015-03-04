@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -356,7 +357,7 @@ public class User {
 
 	// Mathias hinzugefügt: profilchange
 	
-	public void UpdateTimes(int id){
+	public void DeleteTimes(int id){
 		//TODO: Oh  man, das wird was...
 		PreparedStatement ps = null;
 		Connection con = null;
@@ -365,7 +366,41 @@ public class User {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "select fk_day_id, fk_time_id from member_day_time_available where fk_member_id = "
+					String sql = "DELETE * from member_day_time_available where fk_member_id = "
+							+ id + ";";
+					ps = con.prepareStatement(sql);
+					ps.executeQuery();
+				}
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			} finally {
+				try {
+					con.close();
+					ps.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}}
+	}
+	
+	public void UpdateTimes(int id){
+		//TODO: Oh  man, das wird was...
+		PreparedStatement ps = null;
+		Connection con = null;
+		ArrayList<String> Querys = new ArrayList();
+		int rows = daytimeavailable.length;
+		int cols = daytimeavailable[0].length;
+		for (int row = 1; row < rows; row++) {
+			for (int col = 1; col < cols; col++) {
+				Querys.add("asd");
+				System.out.print(daytimeavailable[row][col]);
+			}
+		}
+		if (ds != null) {
+			try {
+				con = ds.getConnection();
+				if (con != null) {
+					String sql = "DELETE * from member_day_time_available where fk_member_id = "
 							+ id + ";";
 					ps = con.prepareStatement(sql);
 					ps.executeQuery();
