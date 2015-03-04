@@ -366,10 +366,10 @@ public class User {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "DELETE * from member_day_time_available where fk_member_id = "
+					String sql = "DELETE from member_day_time_available where fk_member_id = "
 							+ id + ";";
 					ps = con.prepareStatement(sql);
-					ps.executeQuery();
+					ps.executeUpdate();
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
@@ -385,28 +385,33 @@ public class User {
 	
 	public void UpdateTimes(int id){
 		//TODO: Oh  man, das wird was...
-		PreparedStatement ps = null;
-		Connection con = null;
-		ArrayList<String> Querys = new ArrayList();
+		ArrayList<String> Querys = new ArrayList<String>();
 		int rows = daytimeavailable.length;
+		System.out.println(rows);
 		int cols = daytimeavailable[0].length;
-		for (int row = 1; row < rows; row++) {
-			for (int col = 1; col < cols; col++) {
+		System.out.println(cols);
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
 				//INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (1, 3, 3);
+				System.out.println(row + " " + col);
 				if (daytimeavailable[row][col] == true){
 				Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");
 				//System.out.print(daytimeavailable[row][col]);
+				
 				System.out.println("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");}
 			}
 		}
+		System.out.println("Fertisch");
+		for(String insertq: Querys){
+			PreparedStatement ps = null;
+			Connection con = null;
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-//					String sql = "DELETE * from member_day_time_available where fk_member_id = "
-//							+ id + ";";
-//					ps = con.prepareStatement(sql);
-//					ps.executeQuery();
+					String sql = insertq;
+					ps = con.prepareStatement(sql);
+					ps.executeUpdate();
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
@@ -417,7 +422,7 @@ public class User {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}}
+			}}}
 	}
 	
 	public void showTimes(int id) {
@@ -470,8 +475,8 @@ public class User {
 	public String profilchange(String firstName, String lastName,
 			Date birthday, int car, String phone, String email,
 			String password, String street, int plz, String abouttext) {
-		boolean TempObject[][] = new boolean[6][6];
-		daytimeavailable = TempObject;
+		//boolean TempObject[][] = new boolean[6][6];
+		//daytimeavailable = TempObject;
 		int i = 0;
 		PreparedStatement ps = null;
 		Connection con = null;
@@ -518,7 +523,7 @@ public class User {
 				e.printStackTrace();
 			}
 		}
-		showTimes(id);
+		DeleteTimes(id);
 		UpdateTimes(id);
 
 		if (i > 0) {
