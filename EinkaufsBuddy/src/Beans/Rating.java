@@ -25,11 +25,7 @@ public class Rating{
     private int ad;
     private String text;
     private int rating;
-    private  ArrayList<RatingResults> RatingList;
     
-    public void addRatingToList(RatingResults RS){
-    	this.RatingList.add(RS);
-    }
   
     public Rating() {  
         try {  
@@ -98,19 +94,6 @@ public class Rating{
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-
-
-
-	public ArrayList<RatingResults> getRatingList() {
-		return RatingList;
-	}
-
-
-
-	public void setRatingList(ArrayList<RatingResults> ratingList) {
-		RatingList = ratingList;
-	}
-
 
 
 	public void addRating() {  
