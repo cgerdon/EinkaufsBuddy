@@ -4,23 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
   
 @ManagedBean(name = "rating") 
 
@@ -28,13 +19,13 @@ import org.primefaces.event.SelectEvent;
 public class Rating{  
 	
 
-    DataSource ds;  
+     DataSource ds;  
     private int buyer;
     private int advertiser;
     private int ad;
     private String text;
     private int rating;
-    private ArrayList<RatingResults> RatingList;
+    private  ArrayList<RatingResults> RatingList;
   
     public Rating() {  
         try {  
@@ -150,76 +141,7 @@ public class Rating{
             }  
     }  
   
-    public void getRatings(int id) {  
-            PreparedStatement ps = null;  
-            Connection con = null;  
-            ResultSet rs = null;  
-  
-            if (ds != null) {  
-                try {  
-                    con = ds.getConnection();  
-                    if (con != null) {  
-                        String sql = "select id, buyer_id, advertiser_id, rating, text, ad_id from rating where buyer_id = '"  
-                                + id + "' or advertiser_id = '" + id + ";";  
-                        ps = con.prepareStatement(sql);  
-                        rs = ps.executeQuery();  
-                        while (rs.next()) {
-                        	RatingResults TempObj = new RatingResults();
-                            TempObj.setId(rs.getInt("id"));
-                            TempObj.setBuyerid(rs.getInt(buyer));
-                            TempObj.setAdvertiserid(rs.getInt("advertiser_id"));
-                            TempObj.setRating(rs.getInt(rating));
-                            TempObj.setAdid(rs.getInt(ad));
-                            TempObj.setText(rs.getString("text"));
-                        }
-                    }  
-                } catch (SQLException sqle) {  
-                    sqle.printStackTrace();  
-                }  
-            }  
-            
-        }
 	
    
-    
-//public String profilchange(String firstName, String lastName, Date birthday, int car, String phone, String email, String password, String street, int plz, String abouttext) {
-//
-//	int i = 0;  
-//      PreparedStatement ps = null;  
-//      Connection con = null;  
-//      try {  
-//                if (ds != null) {  
-//                    con = ds.getConnection();  
-//                    if (con != null) {  
-//                    	if (birthday == null){
-//                    	}
-//                    	String sql = "UPDATE member set password_hash='" + password + "', name ='" + firstName + "', last_name='" + lastName + "' , car='" + car + "' , abouttext='" + abouttext + "' , street='" + street + "' , plz='" + plz + "' , phone='" + phone + "', birthdate='" + new SimpleDateFormat("yyyy-MM-dd").format(birthday) + "' where mail ='" + email + "';";
-//
-//                    	System.out.println(sql);
-//                    	ps = con.prepareStatement(sql);  
-//                        i = ps.executeUpdate();  
-//                        System.out.println("Daten erfolgreich geändert");  
-//                    }  
-//                }  
-//            } catch (Exception e) {  
-//                System.out.println(e);  
-//            } finally {  
-//                try {  
-//                    con.close();  
-//                    ps.close();  
-//                } catch (Exception e) {  
-//                    e.printStackTrace();  
-//                }  
-//            }  
-//
-//        if (i > 0) {  
-//           return "profil";  
-//        } else  
-//            return "unsuccess";  
-//			}   
-    
-    
-    
-    
-    
+   
 }  
