@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,7 +29,17 @@ public class userView {
 	private int plz;
 	private String phone;
 	private boolean[][] daytimeavailable;
-	private Rating rating;
+	private  ArrayList<RatingResults> RatingList;
+	
+	//private Rating rating;
+
+	public ArrayList<RatingResults> getRatingList() {
+		return RatingList;
+	}
+
+	public void setRatingList(ArrayList<RatingResults> ratingList) {
+		RatingList = ratingList;
+	}
 
 	public String getName() {
 		return name;
@@ -151,9 +162,10 @@ public class userView {
 		}
 		showTimes(id);
 		try {
-			rating = getRatings(this.id);
+			getRatings(id);
+			System.out.println("ratings laden geht");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		System.out.println(daytimeavailable);
@@ -161,8 +173,7 @@ public class userView {
 
 	}
 
-	public Rating getRatings(int id) throws SQLException {
-		Rating TempRating = new Rating();
+	public void getRatings(int id) throws SQLException {
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
@@ -176,7 +187,10 @@ public class userView {
 					System.out.println(sql);
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
+					System.out.println("QUery geht");
+					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					while (rs.next()) {
+						System.out.println("was gefunden");
 						RatingResults TempObj = new RatingResults();
 						TempObj.setId(rs.getInt("id"));
 						TempObj.setBuyerid(rs.getInt("buyer_id"));
@@ -184,8 +198,19 @@ public class userView {
 						TempObj.setRating(rs.getInt("rating"));
 						TempObj.setAdid(rs.getInt("ad_id"));
 						TempObj.setText(rs.getString("text"));
-						TempRating.getRatingList().add(TempObj);
+						System.out.println("wird liste hinzugefuegt");
+						System.out.println(rs.getInt("id"));
+						System.out.println(rs.getInt("buyer_id"));
+						System.out.println(rs.getInt("advertiser_id"));
+						System.out.println(rs.getInt("rating"));
+						System.out.println(rs.getInt("ad_id"));
+						System.out.println(rs.getString("text"));
+						System.out.println(TempObj);
+						TempList.add(TempObj);
+						
+						System.out.println("wurde liste hinzugefuegt");
 					}
+					RatingList = TempList;
 				}}finally {  
 	                try {  
 	                    con.close();  
@@ -196,7 +221,9 @@ public class userView {
 		}
 		
 	}
-		return TempRating;}
+		System.out.println("jetzt return");
+		//return TempRating;
+		}
 
 	private void showTimes(int id) {
 		PreparedStatement ps = null;
@@ -262,14 +289,6 @@ public class userView {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Rating getRating() {
-		return rating;
-	}
-
-	public void setRating(Rating rating) {
-		this.rating = rating;
 	}
 
 }

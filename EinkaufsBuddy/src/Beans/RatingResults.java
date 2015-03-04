@@ -15,6 +15,12 @@ public class RatingResults {
 	public void setId(int id) {
 		this.id = id;
 	}
+	@Override
+	public String toString() {
+		return "RatingResults [id=" + id + ", buyerid=" + buyerid
+				+ ", advertiserid=" + advertiserid + ", rating=" + rating
+				+ ", text=" + text + ", adid=" + adid + "]";
+	}
 	public int getBuyerid() {
 		return buyerid;
 	}

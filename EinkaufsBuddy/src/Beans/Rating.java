@@ -26,6 +26,10 @@ public class Rating{
     private String text;
     private int rating;
     private  ArrayList<RatingResults> RatingList;
+    
+    public void addRatingToList(RatingResults RS){
+    	this.RatingList.add(RS);
+    }
   
     public Rating() {  
         try {  
