@@ -67,8 +67,13 @@
 		        <h:selectBooleanCheckbox id="FrMi" value="#{userView.daytimeavailable[5][3]}" disabled="true"/><h:outputLabel value="Mittags" for="FrMi" />
 		        <h:selectBooleanCheckbox id="FrNaMi" value="#{userView.daytimeavailable[5][4]}" disabled="true"/><h:outputLabel value="Nachmittags" for="FrNaMi" />
 		        <h:selectBooleanCheckbox id="FrAb" value="#{userView.daytimeavailable[5][5]}" disabled="true"/><h:outputLabel value="Abends" for="FrAb" />
-				 <h:outputLabel value="Bewertungen: "/>
+				<h:outputLabel value="Bewertungen: "/>
 		        <h:outputLabel value=" "></h:outputLabel>
+		        <ui:repeat var="ratings" value="#{userView.ratingList}">
+				<h:outputLabel value="#{ratings.rating}" />
+				<h:outputLabel value="#{ratings.text}" />
+			<br/>
+			</ui:repeat>
         	</h:panelGrid>
         </h:form>  
 	</ui:define>
