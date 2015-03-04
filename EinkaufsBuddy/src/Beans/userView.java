@@ -22,6 +22,7 @@ public class userView {
 	private String name;
 	private String last_name;
 	private double mittel;
+	private double mittelstar;
 	private Date birthdate;
 	private int car;
 	private String abouttext;
@@ -33,6 +34,8 @@ public class userView {
 	private  ArrayList<RatingResults> RatingList;
 	
 	//private Rating rating;
+	
+	
 
 	public ArrayList<RatingResults> getRatingList() {
 		return RatingList;
@@ -40,6 +43,18 @@ public class userView {
 
 	
 	
+	public double getMittelstar() {
+		return mittelstar;
+	}
+
+
+
+	public void setMittelstar(double mittelstar) {
+		this.mittelstar = mittelstar;
+	}
+
+
+
 	public double getMittel() {
 		return mittel;
 	}
@@ -196,7 +211,10 @@ public class userView {
 			}
 		System.out.println(RatingList.size());
 		mittel = mittel / RatingList.size();
-		if (RatingList.size() == 0) {mittel = 0;}
+		
+		if (RatingList.size() == 0) {mittel = 0; mittelstar = 0;}
+		else {double f = 0.5;
+		mittelstar = f * Math.round(mittel/f);}
 		
 	}
 
