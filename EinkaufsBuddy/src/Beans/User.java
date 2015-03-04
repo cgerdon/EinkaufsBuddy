@@ -392,18 +392,21 @@ public class User {
 		int cols = daytimeavailable[0].length;
 		for (int row = 1; row < rows; row++) {
 			for (int col = 1; col < cols; col++) {
-				Querys.add("asd");
-				System.out.print(daytimeavailable[row][col]);
+				//INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (1, 3, 3);
+				if (daytimeavailable[row][col] == true){
+				Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");
+				//System.out.print(daytimeavailable[row][col]);
+				System.out.println("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");}
 			}
 		}
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "DELETE * from member_day_time_available where fk_member_id = "
-							+ id + ";";
-					ps = con.prepareStatement(sql);
-					ps.executeQuery();
+//					String sql = "DELETE * from member_day_time_available where fk_member_id = "
+//							+ id + ";";
+//					ps = con.prepareStatement(sql);
+//					ps.executeQuery();
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
@@ -516,6 +519,7 @@ public class User {
 			}
 		}
 		showTimes(id);
+		UpdateTimes(id);
 
 		if (i > 0) {
 			return "profil";
