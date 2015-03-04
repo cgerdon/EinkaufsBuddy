@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 //import javax.faces.bean.RequestScoped;
@@ -213,10 +212,10 @@ public class User {
 									.format(birthday) + "' where mail ='"
 							+ email + "';";
 
-					System.out.println(sql);
+
 					ps = con.prepareStatement(sql);
 					i = ps.executeUpdate();
-					System.out.println("Daten erfolgreich geändert");
+
 				}
 			}
 		} catch (Exception e) {
@@ -387,18 +386,15 @@ public class User {
 		//TODO: Oh  man, das wird was...
 		ArrayList<String> Querys = new ArrayList<String>();
 		int rows = daytimeavailable.length;
-		System.out.println(rows);
+
 		int cols = daytimeavailable[0].length;
-		System.out.println(cols);
+
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
 				//INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (1, 3, 3);
-				System.out.println(row + " " + col);
+
 				if (daytimeavailable[row][col] == true){
-				Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");
-				//System.out.print(daytimeavailable[row][col]);
-				
-				System.out.println("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");}
+				Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");}
 			}
 		}
 		System.out.println("Fertisch");
@@ -442,21 +438,7 @@ public class User {
 					// hier die magie
 					while (rs.next()) {
 						TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = true;
-						System.out.println(rs.getInt("fk_day_id") + " - "
-								+ rs.getInt("fk_time_id"));
-
 					}
-					int rows = TempObj.length;
-					int cols = TempObj[0].length;
-					for (int row = 0; row < rows; row++) {
-						for (int col = 0; col < cols; col++) {
-							if (col > 0)
-								System.out.print(", ");
-							System.out.print(TempObj[row][col]);
-						}
-						System.out.println();
-					}
-					// System.out.println(TempObj);
 					daytimeavailable = TempObj;
 					// ende magie
 				}
