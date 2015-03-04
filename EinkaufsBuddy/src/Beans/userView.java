@@ -244,7 +244,7 @@ public class userView {
 				con = ds.getConnection();
 				if (con != null) {
 					String sql = "select id, buyer_id, advertiser_id, rating, text, ad_id from rating where buyer_id = "
-							+ id + " or advertiser_id = " + id + ";";
+							+ id +";";
 					System.out.println(sql);
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();

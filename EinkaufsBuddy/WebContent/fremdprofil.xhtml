@@ -124,7 +124,7 @@
 				<h:outputText
 					value="Im Durchschnitt: #{userView.mittel} aus #{userView.anzahl} Bewertungen" />
 				<ui:repeat var="ratings" value="#{userView.ratingList}">
-					<h:outputLabel value="#{ratings.rating}" />
+					<h:outputLabel value="#{ratings.rating}/5 - "/>
 					<h:outputLabel value="#{ratings.text}" />
 					<br />
 				</ui:repeat>
