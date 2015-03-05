@@ -1,9 +1,14 @@
 package Beans;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Comparator;
 
-public class SimpleSearchResults {
+public class SimpleSearchResults implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5911721057620266881L;
 	private String text;
 	private int plz;
 	private String street;
