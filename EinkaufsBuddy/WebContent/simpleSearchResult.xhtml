@@ -30,7 +30,7 @@
 			<h:form>
 				<h:panelGrid columns="2" border="1">
 					<h:panelGroup>
-						<h:outputText value=" #{ads.distance} km Entfernung - #{ads.limit}  €" />
+						<h:outputText style="font-weight:bold" value=" #{ads.distance} km Entfernung - #{ads.limit}  €" />
 						<br />	
 						Inserat von <h:commandLink
 							action="#{userView.showProfil(ads.memberid)}">
