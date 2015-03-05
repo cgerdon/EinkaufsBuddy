@@ -417,10 +417,10 @@ public class Advert implements Serializable{
 	                    	if (!(status=true)) statustest=0;
 	                    	String sql = "UPDATE ad SET ad.date='" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', ad.fk_time_id ='" + fk_time_id + "', ad.limit='" + limit + "' , ad.income='" + income + "' , ad.text='" + text + "' , ad.fk_category='" + fk_category + "' , ad.status='" + statustest + "' , ad.fav_market='" + fav_market + "' WHERE ad.id ='" + ad_id + "'";
 
-	                    	System.out.println(sql);
+
 	                    	ps = con.prepareStatement(sql);  
 	                        i = ps.executeUpdate();  
-	                        System.out.println("Daten erfolgreich geändert");  
+	                       
 	                    }  
 	                }  
 	            } catch (Exception e) {  
@@ -442,16 +442,7 @@ public class Advert implements Serializable{
 
 	public String add() {  
         int i = 0;
-        System.out.println(advertiser_id);
-        System.out.println(date);
-        System.out.println(fk_time_id);
-        System.out.println(limit);
-        System.out.println(income);
-        System.out.println(text);
-        System.out.println(fk_category);
-        System.out.println(status);
-        System.out.println(fav_market);
-        System.out.println(buyer_id);
+     
         
             PreparedStatement ps = null;  
             Connection con = null;
@@ -472,9 +463,9 @@ public class Advert implements Serializable{
                         ps.setBoolean(8, status); 
                         ps.setString(9, fav_market);
                         ps.setString(10, null);
-                        System.out.println(ps.toString());
+
                         i = ps.executeUpdate();
-                        System.out.println("Inserat erfolgreich angelegt");  
+
                     }  
                 }  
             } catch (Exception e) {  
@@ -509,10 +500,10 @@ public class Advert implements Serializable{
 	                    if (con != null) {  
 	      		          	String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
 
-	                    	System.out.println(sql);
+
 	                    	ps = con.prepareStatement(sql);  
 	                        i = ps.executeUpdate();  
-	                        System.out.println("Inserat angenommen");  
+	          
 	                        
 	                        
 	     
@@ -521,8 +512,7 @@ public class Advert implements Serializable{
 	  /* ***Mathias braucht den Platz für die Nachrichtenübermittlung **** */ 
 	              
 	                        
-	              System.out.println("Inseratenersteller: " + ad_id);
-	              System.out.println("Ich: " +advertiser_id);
+
 
 	      			Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
 	      			String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
@@ -722,13 +712,11 @@ public class Advert implements Serializable{
         try {  
             con = ds.getConnection();  
             if (con != null) {
-            	System.out.println(ad_id); 
             	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
                 String sql = "DELETE FROM ad WHERE ad.id= '" + ad_id + "'";  //buyer_id
                 ps = con.prepareStatement(sql);  
                 int rs = ps.executeUpdate();  
                 
-                System.out.println("Daten gelöscht");
             }  
         } catch (SQLException sqle) {  
             sqle.printStackTrace();  
@@ -746,7 +734,6 @@ public class Advert implements Serializable{
         try {  
             con = ds.getConnection();  
             if (con != null) {
-            	//System.out.println(advertiser_id); 
             	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
                 String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.status = '1' AND ad.buyer_id = 'null'";  //buyer_id
                 ps = con.prepareStatement(sql);  
@@ -769,7 +756,6 @@ public class Advert implements Serializable{
                 								rs.getInt("ad.buyer_id"));
                 	
                 	otheradverts.add(TempObj);
-                	//System.out.println(otheradverts);
              
                 	
                 }
@@ -817,12 +803,10 @@ public class Advert implements Serializable{
             try {  
                 con = ds.getConnection();  
                 if (con != null) {
-                	System.out.println(advertiser_id); 
                 	// String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.advertiser_id = '" + advertiser_id + "'";
                     String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM member LEFT JOIN ad ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id"; 
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
-                    System.out.println("test2"); 
                     int i =0;
                     while (rs.next()) {  
                     	i++;
@@ -848,10 +832,9 @@ public class Advert implements Serializable{
                     								rs.getInt("ad.buyer_id"));*/
                     	
                     	ownadverts.add(TempObj);
-                    	//System.out.println(ownadverts);
                     	 
                     	
-                    }System.out.println("test3");
+                    }
                 }  
             } catch (SQLException sqle) {  
                 sqle.printStackTrace();  
@@ -868,7 +851,7 @@ public class Advert implements Serializable{
             try {  
                 con = ds.getConnection();  
                 if (con != null) {
-                	//System.out.println(advertiser_id); 
+
                 	// String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.advertiser_id = '" + buyer_id + "'";
                 	String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM member LEFT JOIN ad ON member.id=ad.buyer_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id";
                     ps = con.prepareStatement(sql);  
@@ -900,7 +883,6 @@ public class Advert implements Serializable{
                     								rs.getInt("ad.buyer_id"));*/
                     	
                     	otheradverts.add(TempObj);
-                    	//System.out.println(otheradverts);
                  
                     	
                     }

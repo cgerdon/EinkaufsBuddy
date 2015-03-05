@@ -168,7 +168,7 @@ public class userView {
 
 	public String showProfil(int id) {
 		// Oh gott, bitte muss ich die NIE wieder anschauen.
-		System.out.println("Profil von " + id + " wird angezeigt");
+	
 		this.id = id;
 		PreparedStatement ps = null;
 		Connection con = null;
@@ -179,7 +179,7 @@ public class userView {
 				if (con != null) {
 					String sql = "select id, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone from member where id = '"
 							+ id + "'";
-					System.out.println(sql);
+					
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					rs.next();
@@ -206,12 +206,12 @@ public class userView {
 		showTimes(id);
 		try {
 			getRatings(id);
-			System.out.println("ratings laden geht");
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		//System.out.println(daytimeavailable);
+
 		mittel();
 		return "fremdprofil";
 
@@ -222,7 +222,7 @@ public class userView {
 		for(RatingResults object: RatingList){
 			mittel += object.getRating();
 			}
-		System.out.println(RatingList.size());
+	
 		mittel = mittel / RatingList.size();
 		
 		if (RatingList.size() == 0) {mittel = 0; mittelstar = 0; anzahl = 0;}
@@ -245,13 +245,13 @@ public class userView {
 				if (con != null) {
 					String sql = "select id, buyer_id, advertiser_id, rating, text, ad_id from rating where buyer_id = "
 							+ id +";";
-					System.out.println(sql);
+				
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-					System.out.println("QUery geht");
+				
 					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					while (rs.next()) {
-						System.out.println("was gefunden");
+						
 						RatingResults TempObj = new RatingResults();
 						TempObj.setId(rs.getInt("id"));
 						TempObj.setBuyerid(rs.getInt("buyer_id"));
@@ -259,17 +259,10 @@ public class userView {
 						TempObj.setRating(rs.getInt("rating"));
 						TempObj.setAdid(rs.getInt("ad_id"));
 						TempObj.setText(rs.getString("text"));
-						System.out.println("wird liste hinzugefuegt");
-						System.out.println(rs.getInt("id"));
-						System.out.println(rs.getInt("buyer_id"));
-						System.out.println(rs.getInt("advertiser_id"));
-						System.out.println(rs.getInt("rating"));
-						System.out.println(rs.getInt("ad_id"));
-						System.out.println(rs.getString("text"));
-						System.out.println(TempObj);
+					
 						TempList.add(TempObj);
 						
-						System.out.println("wurde liste hinzugefuegt");
+					
 					}
 					RatingList = TempList;
 				}}finally {  
@@ -282,8 +275,8 @@ public class userView {
 		}
 		
 	}
-		System.out.println("jetzt return");
-		//return TempRating;
+		
+		
 		}
 
 	private void showTimes(int id) {
@@ -296,28 +289,17 @@ public class userView {
 				if (con != null) {
 					String sql = "select fk_day_id, fk_time_id from member_day_time_available where fk_member_id = "
 							+ id + ";";
-					System.out.println(sql);
+					
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					boolean[][] TempObj = new boolean[6][6];
 					// hier die magie
 					while (rs.next()) {
 						TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = true;
-						System.out.println(rs.getInt("fk_day_id") + " - "
-								+ rs.getInt("fk_time_id"));
+						
 
 					}
-					int rows = TempObj.length;
-					int cols = TempObj[0].length;
-					for (int row = 0; row < rows; row++) {
-						for (int col = 0; col < cols; col++) {
-							if (col > 0)
-								System.out.print(", ");
-							System.out.print(TempObj[row][col]);
-						}
-						System.out.println();
-					}
-					// System.out.println(TempObj);
+			
 					daytimeavailable = TempObj;
 					// ende magie
 				}

@@ -113,7 +113,6 @@ public class Rating{
                         ps.setString(4, text);  
                         ps.setInt(5, ad);
                         i = ps.executeUpdate();  
-                        System.out.println("Bewertung erfolgreich hinzugefügt");  
                     }  
                 }
             } catch (Exception e) {  

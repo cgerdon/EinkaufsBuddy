@@ -257,7 +257,6 @@ public class User implements Serializable{
 						ps.setString(4, email);
 						ps.setString(5, "0000-00-00");
 						i = ps.executeUpdate();
-						System.out.println("Benutzer erfolgreich hinzugefügt");
 					}
 				}
 			} catch (Exception e) {
@@ -333,11 +332,7 @@ public class User implements Serializable{
 	public String login() {
 		dbData(email);
 		if (email.equals(dbName) && password.equals(dbPassword)) {
-			System.out.println(id + " " + firstName + " " + lastName + " "
-					+ email + " " + password + " " + birthday + " " + car + " "
-					+ abouttext + " " + street + " " + plz + " " + phone);
-
-			// Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
+					// Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", email);
 			showTimes(id);
@@ -402,7 +397,7 @@ public class User implements Serializable{
 				Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");}
 			}
 		}
-		System.out.println("Fertisch");
+
 		for(String insertq: Querys){
 			PreparedStatement ps = null;
 			Connection con = null;
@@ -436,7 +431,7 @@ public class User implements Serializable{
 				if (con != null) {
 					String sql = "select fk_day_id, fk_time_id from member_day_time_available where fk_member_id = "
 							+ id + ";";
-					System.out.println(sql);
+	
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					boolean[][] TempObj = new boolean[6][6];
@@ -494,10 +489,10 @@ public class User implements Serializable{
 									.format(birthday) + "' where mail ='"
 							+ email + "';";
 
-					System.out.println(sql);
+			
 					ps = con.prepareStatement(sql);
 					i = ps.executeUpdate();
-					System.out.println("Daten erfolgreich geändert");
+				
 				}
 			}
 		} catch (Exception e) {
