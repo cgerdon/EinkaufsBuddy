@@ -29,7 +29,7 @@ import org.primefaces.json.JSONObject;
 @ManagedBean(name = "simpleSearch")
 // geändert von Mathias: @RequestScoped ersetzt durch @SessionScoped
 @SessionScoped
-public class simpleSearch implements Serializable{
+public class simpleSearch implements Serializable {
 
 	/**
 	 * 
@@ -125,63 +125,65 @@ public class simpleSearch implements Serializable{
 	public void summe() {
 		setSummeAds(AdvertList.size());
 	}
-	
-	public void checkplz(int plz) throws SQLException{
-		
-			PreparedStatement ps = null;
-			Connection con = null;
-			ResultSet rs = null;
-			if (ds != null) {
+
+	public void checkplz(int plz) throws SQLException {
+
+		PreparedStatement ps = null;
+		Connection con = null;
+		ResultSet rs = null;
+		if (ds != null) {
+			try {
+				con = ds.getConnection();
+				if (con != null) {
+					String sql = "select distinct plz from plz where plz = "
+							+ plzInput + ";";
+					ps = con.prepareStatement(sql);
+					rs = ps.executeQuery();
+
+					if (!rs.isBeforeFirst()) {
+						validplz = false;
+
+					} else {
+						validplz = true;
+
+					}
+				}
+			} finally {
 				try {
-					con = ds.getConnection();
-					if (con != null) {
-						String sql = "select distinct plz from plz where plz = " + plzInput + ";";
-						ps = con.prepareStatement(sql);
-						rs = ps.executeQuery();
-						System.out.println("ging durch");
-						if (!rs.isBeforeFirst() ) {    
-							validplz = false;
-							 System.out.println("Keine gültuige PLZ wurde eingetragen"); 
-							} 
-						else {
-							validplz = true;
-							System.out.println("Eine gültige PLZ wurde eingetragen");
-						}
-					} }finally {
-						try {
-							con.close();
-							ps.close();
+					con.close();
+					ps.close();
 
 				} catch (SQLException sqle) {
 					sqle.printStackTrace();
-				}}}
+				}
 			}
+		}
+	}
 
 	public String searchSimple() throws IOException, JSONException,
 			URISyntaxException, SQLException {
 		checkplz(plzInput);
-		System.out.println(validplz);
-		 System.out.println("1"); 
+
 		PreparedStatement ps = null;
 		List<String> Adressen = new ArrayList<String>();
 
 		StringBuffer buffer = new StringBuffer();
 		Connection con = null;
 		ResultSet rs = null;
-		 System.out.println("2"); 
+
 		// Mathias hinzugefügt: wegen Session
 		AdvertList.clear();
-		 System.out.println("3"); 
+
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					 System.out.println("4"); 
+
 					String sql = "SELECT member.id, member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
-					 System.out.println("5"); 
+
 					while (rs.next()) {
 						SimpleSearchResults TempObj = new SimpleSearchResults(
 								rs.getString("text"), rs.getInt("plz"),
@@ -189,7 +191,8 @@ public class simpleSearch implements Serializable{
 								rs.getString("last_name"), rs.getInt("ad.id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
 								0, rs.getString("time"), rs.getDate("date"),
-								rs.getString("category"), rs.getInt("member.id"));
+								rs.getString("category"),
+								rs.getInt("member.id"));
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;
@@ -198,66 +201,68 @@ public class simpleSearch implements Serializable{
 								+ "+"
 								+ rs.getString("plz").replaceAll("\\s", "+"));
 					}
-					 System.out.println("6"); 
+
 					BufferedReader reader = null;
-					if (validplz == true){
-						 System.out.println("7"); 
-					try {
-						String tempurl = "/maps/api/distancematrix/json?origins="
-								+ plzInput + "+DE&destinations=";
-						for (String adr : Adressen) {
-							tempurl += adr + "+DE|";
+					if (validplz == true) {
+
+						try {
+							String tempurl = "/maps/api/distancematrix/json?origins="
+									+ plzInput + "+DE&destinations=";
+							for (String adr : Adressen) {
+								tempurl += adr + "+DE|";
+							}
+							tempurl += "&mode=car&language=de-DE&sensor=false";
+							URL url = new URL("https", "maps.googleapis.com",
+									tempurl);
+
+							reader = new BufferedReader(new InputStreamReader(
+									url.openStream()));
+
+							int read;
+							char[] chars = new char[1024];
+							while ((read = reader.read(chars)) != -1)
+								buffer.append(chars, 0, read);
+
+						} finally {
+							if (reader != null)
+								reader.close();
 						}
-						tempurl += "&mode=car&language=de-DE&sensor=false";
-						URL url = new URL("https", "maps.googleapis.com",
-								tempurl);
-
-						reader = new BufferedReader(new InputStreamReader(
-								url.openStream()));
-
-						int read;
-						char[] chars = new char[1024];
-						while ((read = reader.read(chars)) != -1)
-							buffer.append(chars, 0, read);
-					
-					} finally {
-						if (reader != null)
-							reader.close();
 					}
-				}
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
-		if (validplz == true){
-		JSONObject jsonGoogleMaps = new JSONObject(buffer.toString());
-		JSONArray rows = jsonGoogleMaps.getJSONArray("rows");
+		if (validplz == true) {
+			JSONObject jsonGoogleMaps = new JSONObject(buffer.toString());
+			JSONArray rows = jsonGoogleMaps.getJSONArray("rows");
 
-		for (int i = 0; i < rows.length(); i++) {
-			JSONObject obj = rows.getJSONObject(i);
-			JSONArray elements = obj.getJSONArray("elements");
-			for (int j = 0; j < elements.length(); j++) {
-				JSONObject elem = elements.getJSONObject(j);
-				JSONObject distance = elem.getJSONObject("distance");
-				SimpleSearchResults asdf = AdvertList.get(j);
-				asdf.setDistance(Integer.parseInt(distance.getString("value")));
-				AdvertList.set(j, asdf);}
+			for (int i = 0; i < rows.length(); i++) {
+				JSONObject obj = rows.getJSONObject(i);
+				JSONArray elements = obj.getJSONArray("elements");
+				for (int j = 0; j < elements.length(); j++) {
+					JSONObject elem = elements.getJSONObject(j);
+					JSONObject distance = elem.getJSONObject("distance");
+					SimpleSearchResults asdf = AdvertList.get(j);
+					asdf.setDistance(Integer.parseInt(distance
+							.getString("value"))/1000);
+					AdvertList.set(j, asdf);
+				}
 			}
 		}
 
-				try {
-					con.close();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		try {
+			con.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		summe();
 		return "simpleSearchResult";
 	}
@@ -291,7 +296,7 @@ public class simpleSearch implements Serializable{
 		if (sliderDistance > 0) {
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
-				if ((TempObj.getDistance() / 1000) < sliderDistance) {
+				if ((TempObj.getDistance()) > sliderDistance) {
 					AdvertList.remove(i);
 				}
 			}
@@ -301,7 +306,7 @@ public class simpleSearch implements Serializable{
 		if (sliderLimit > 0) {
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
-				if (TempObj.getLimit() < sliderLimit) {
+				if (TempObj.getLimit() > sliderLimit) {
 					AdvertList.remove(i);
 				}
 			}
