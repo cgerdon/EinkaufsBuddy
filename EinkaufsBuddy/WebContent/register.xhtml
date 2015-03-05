@@ -4,25 +4,30 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-    
-<ui:define name="content"> 
-        <h:form id="registerForm">  
-            <table>  
+	
+		<ui:define name="content">
+	
+	<h1> Registrierung</h1>
+	
+	<h:form  id="register">
+		<h:panelGrid columns="1" styleClass="simplesearchformmittig">
+		<h:panelGroup layout="block">
+ 		 <table>  
                 <tr>  
-                    <td><h:outputText value="Vorname" /></td>  
-                    <td><h:inputText id="fname" value="#{user.firstName}"  
+                    <td><h:outputText value="Vorname:" /></td>  
+                    <td><p:inputText id="fname" value="#{user.firstName}"  
                             required="true" requiredMessage="Bitte Vornamen angeben" /></td>  
                     <td><h:message for="fname" style="color:red" /></td>  
                 </tr>  
                 <tr>  
                     <td><h:outputText value="Nachname:" /></td>  
-                    <td><h:inputText id="lname" value="#{user.lastName}"  
+                    <td><p:inputText id="lname" value="#{user.lastName}"  
                             required="true" requiredMessage="Bitte Nachname angeben" /></td>  
                     <td><h:message for="lname" style="color:red" /></td>  
                 </tr>  
                 <tr>  
                     <td><h:outputText value="Mail:" /></td>  
-                    <td><h:inputText id="email" value="#{user.email}"  
+                    <td><p:inputText id="email" value="#{user.email}"  
                             required="true" requiredMessage="Bitte Mailadresse angeben" /></td>  
                     <td><h:message for="email" style="color:red" /></td>  
                 </tr>  
@@ -34,13 +39,14 @@
                 </tr>  
                 <tr>  
                     <td />  
-                    <td><h:commandButton value="Registrieren" action="#{user.add}" /></td>  
-                </tr>  
-                <tr>  
-                    <td><h:outputLink value="home.xhtml">Home</h:outputLink></td>  
+                    <td><p:commandButton value="Registrieren" icon="ui-icon-key" action="#{user.add}" style="width:130px" /></td>  
                 </tr>  
             </table>  
-        </h:form>  
+       </h:panelGroup>
+       
+	</h:panelGrid>
+	</h:form>
+
 	</ui:define>
-  
+    
 </ui:composition>
