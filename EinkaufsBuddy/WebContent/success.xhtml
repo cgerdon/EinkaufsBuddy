@@ -4,28 +4,28 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-    
-<ui:define name="content">
-      	
-      	<h:outputText value="Du bist nun eingeloggt!" />
-      	<h:outputText value="#{user.firstName}" />
-      	<h:outputText value="#{user.lastName}" />
-      	<h:outputText value="#{user.email}" />
-        <h:outputText value="#{user.password}" />
-        <h:outputText value="#{user.birthday}" />
-        <h:outputText value="#{user.car}" />
-        <h:outputText value="#{user.abouttext}" />
-        <h:outputText value="#{user.street}" />
-        <h:outputText value="#{user.plz}" />
-        <h:outputText value="#{user.phone}" />
-
-        
-        <h:form>  
+	
+		<ui:define name="content">
+	
+	<h1>Vielen Dank für deine Registrierung, #{user.firstName} #{user.lastName}!</h1>
+	
+	<h:form  id="register">
+		<h:panelGrid columns="1" styleClass="simplesearchformmittig">
+		<h:panelGroup layout="block">
+ 		 <table>  
+                <tr>  
+                    <td>Fang am Besten gleich damit an, deine Daten zu vervollständigen
 	        <h:commandLink action="#{user.changeData}" value="Ändern">
 	     		<f:param name="email" value="#{user.email}" />
-	     	</h:commandLink>
-	        <h:commandLink value="logout" action="#{user.logout}"/>  
-        </h:form>  
-        
-</ui:define>
+	     	</h:commandLink></td>  
+                    
+                </tr>  
+            </table>  
+       </h:panelGroup>
+       
+	</h:panelGrid>
+	</h:form>
+
+	</ui:define>
+    
 </ui:composition>
