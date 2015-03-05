@@ -8,12 +8,12 @@
 	<h:form id="filtersimplesearch">
 	<p:outputLabel for="von" value="Von:"/>	<p:calendar id="von" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.fromDate}" />
 	<p:outputLabel for="bis" value="Bis:" /><p:calendar id="bis" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.toDate}"/>
-	<h:outputLabel for="entfernung" value="Entfernung:"/><p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" /><p:slider for="entfernung" />
+	<h:outputLabel for="entfernung" value="Entfernung:"/><p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" /><p:slider for="entfernung" minValue="0" maxValue="50"/>
     
-    <h:outputLabel for="einkaufslimit" value="Einkaufslimit:"/><p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" /><p:slider for="einkaufslimit" />
+    <h:outputLabel for="einkaufslimit" value="Einkaufslimit:"/><p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" /><p:slider for="einkaufslimit" minValue="0" maxValue="100" />
 
-    <p:commandButton value="Anzeigen" id="filterads" action="#{simpleSearch.filterAds}"  icon="ui-icon-gear" />
-    <p:commandButton value="Reset" id="resetads" action="#{simpleSearch.reset}"  icon="ui-icon-trash" />
+    <p:commandButton value="Filtern" action="#{simpleSearch.filterAds()}" icon="ui-icon-refresh" />
+    <p:commandButton value="Reset" action="#{simpleSearch.reset()}"  icon="ui-icon-trash"/>
 	
 	</h:form>
 	
