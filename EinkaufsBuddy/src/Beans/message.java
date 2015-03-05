@@ -64,11 +64,12 @@ public class message implements Serializable {
 
     private int ms_anzahl;
     private int ms_gesamtanzahl;
-    String messagetext;
+    private int ms_advertId;
+    private String messagetext;
         
     /*   private byte[] ms_senderPicture;    
 */
-	public message(int ms_anzahl, int ms_id, String ms_time, int ms_senderId, String ms_senderNamekurz, String ms_receiverFirstName, String ms_receiverLastName, String ms_text) {
+	public message(int ms_anzahl, int ms_id, String ms_time, int ms_senderId, String ms_senderNamekurz, String ms_receiverFirstName, String ms_receiverLastName, String ms_text, int ms_advertId) {
 		super();
 		this.ms_anzahl=ms_anzahl;
 		this.ms_id = ms_id;
@@ -78,6 +79,7 @@ public class message implements Serializable {
 		this.ms_receiverFirstName =ms_receiverFirstName;
 		this.ms_receiverLastName=ms_receiverLastName;
 		this.ms_text = ms_text;
+		this.ms_advertId = ms_advertId;
 	}
 
     DataSource ds;
@@ -93,6 +95,14 @@ public class message implements Serializable {
     
     
 
+
+	public int getMs_advertId() {
+		return ms_advertId;
+	}
+
+	public void setMs_advertId(int ms_advertId) {
+		this.ms_advertId = ms_advertId;
+	}
 
 	public int getMs_gesamtanzahl() {
 		return ms_gesamtanzahl;
@@ -261,7 +271,7 @@ public class message implements Serializable {
                     	ms_senderNamekurz= rs.getString("member.last_name");
                     	ms_senderNamekurz= ms_senderNamekurz.substring(0, ms_senderNamekurz.length()-(ms_senderNamekurz.length()-1)) + ".";
 		                    	 
-                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, null, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null);
+                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, null, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0);
                     	messageoverview.add(TempObj);     	
                     }	
                 }
@@ -301,7 +311,7 @@ public class message implements Serializable {
                     	ms_senderNamekurz= rs.getString("member.last_name");
                     	ms_senderNamekurz= ms_senderNamekurz.substring(0, ms_senderNamekurz.length()-(ms_senderNamekurz.length()-1)) + ".";
 		                    	 
-                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, null, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null);
+                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, null, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null,0);
                     	messageoverview.add(TempObj);     	
                     }	
                 }
@@ -445,7 +455,7 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
                        ps = con.prepareStatement(sql);  
                        rs = ps.executeQuery();
                       
@@ -458,7 +468,7 @@ public class message implements Serializable {
                     	   
                     	   ms_time = DateConString(rs.getString("message.time_sent"));
                     	   
-                    	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+                    	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
                     	   messagedetails.add(TempObj);
 
                     }
@@ -597,7 +607,7 @@ public class message implements Serializable {
                        
                        PreparedStatement ps2 = null;  
                        ResultSet rs = null;  
-                 	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+                	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
                        ps2 = con.prepareStatement(sql2);  
                        rs = ps2.executeQuery();
               
@@ -607,7 +617,7 @@ public class message implements Serializable {
                        		i++;
                     	   ms_time = DateConString(rs.getString("message.time_sent"));
                         	
-                    	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+                     	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
                     	   messagedetails.add(TempObj);  
                        }
                        
@@ -649,7 +659,7 @@ public class message implements Serializable {
 		                           }
 		                           
 
-		                     	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+		                    	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
 		                           ps2 = con.prepareStatement(sql2);  
 		                           rs = ps2.executeQuery();
 		                  
@@ -659,7 +669,7 @@ public class message implements Serializable {
 		                           		i++;
 		                        	   ms_time = DateConString(rs.getString("message.time_sent"));
 		                            	
-		                        	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+		                         	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
 		                        	   messagedetails.add(TempObj);  
 		                           }
 		                           

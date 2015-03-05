@@ -25,7 +25,9 @@
 							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
 							<h:outputText value="#{messagedetails.ms_time} "/>
 						<br/>				
-							<h:outputText value="#{messagedetails.ms_text}"/>
+							<h:outputText value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
+							<h:commandLink value="Inserat: #{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}">
+							</h:commandLink>
 						</h:panelGroup>
 				
 					
@@ -34,7 +36,9 @@
 							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
 							<h:outputText value="#{messagedetails.ms_time} "/>
 						<br/>				
-							<h:outputText value="#{messagedetails.ms_text}"/>
+							<h:outputText value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
+							<h:commandLink value="Inserat: #{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}">
+							</h:commandLink>
 						</h:panelGroup>
 		
 					
@@ -48,3 +52,9 @@
 	</ui:define>
   
 </ui:composition>
+
+<!-- 
+
+action="#{advert.doJob}"
+action="#{advert.doJob}"
+ -->
