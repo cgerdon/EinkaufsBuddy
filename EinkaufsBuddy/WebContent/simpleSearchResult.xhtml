@@ -30,11 +30,9 @@
 			<h:form>
 				<h:panelGrid columns="2" border="1">
 					<h:panelGroup>
-
-						<h:outputText value=" #{ads.distance} km Entfernung" />
-						<h:outputText value=" #{ads.limit}  €" />
+						<h:outputText value=" #{ads.distance} km Entfernung - #{ads.limit}  €" />
 						<br />	
-							Inserat von <h:commandLink
+						Inserat von <h:commandLink
 							action="#{userView.showProfil(ads.memberid)}">
 							<h:outputText value="#{ads.name} #{ads.last_name}" />
 						</h:commandLink>
@@ -45,10 +43,7 @@
 							<f:param name="startmessage" value="#{ads.memberid}" />
 						</h:commandLink>
 						<br />
-						<h:outputLabel value="Merken:" />
-						<p:inputSwitch />
 						<h:outputText value=" Verdienst: #{ads.income} €" />
-						<h:outputText value=" Limit: #{ads.limit} €" />
 					</h:panelGroup>
 
 
