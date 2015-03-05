@@ -5,27 +5,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">			
 	
-	<h:form>
-
-	<h:outputText value="Datum:" />
-	<p:outputLabel for="von" value="Von:"/>
-	<p:calendar id="von" navigator="true" pattern="yyyy-MMM-dd" value="#{simpleSearch.fromDate}" />
-	<p:outputLabel for="bis" value="Bis:" />
-	<p:calendar id="bis" navigator="true" pattern="yyyy-MMM-dd" value="#{simpleSearch.toDate}"/>
-
-
-	
-		<h:outputLabel value="Entfernung:" />
-        <p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" />
-        <p:slider for="entfernung" />
-        
- 		<h:outputLabel value="Einkaufslimit:" />
-        <p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" />
-        <p:slider for="einkaufslimit" />
-
+	<h:form id="filtersimplesearch">
+	<p:outputLabel for="von" value="Von:"/>	<p:calendar id="von" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.fromDate}" />
+	<p:outputLabel for="bis" value="Bis:" /><p:calendar id="bis" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.toDate}"/>
+	<h:outputLabel for="entfernung" value="Entfernung:"/><p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" /><p:slider for="entfernung" />
     
-    <h:commandButton value="Aktualisieren" action="#{simpleSearch.filterAds}"/>
-    <h:commandButton value="Zurücksetzen" action="#{simpleSearch.reset}"/>
+    <h:outputLabel for="einkaufslimit" value="Einkaufslimit:"/><p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" /><p:slider for="einkaufslimit" />
+
+    <p:commandButton value="Anzeigen" id="filterads" action="#{simpleSearch.filterAds}"  icon="ui-icon-gear" />
+    <p:commandButton value="Reset" id="resetads" action="#{simpleSearch.reset}"  icon="ui-icon-trash" />
 	
 	</h:form>
 	
