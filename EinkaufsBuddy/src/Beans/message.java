@@ -629,7 +629,7 @@ public class message implements Serializable {
 		                           
 		                           if (hvar==1){
 		                        	   
-		                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10);		
+		                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-1000);		
 		                        	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
 		                        	   byte c=2; 
 		                        	   
