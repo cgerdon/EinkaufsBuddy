@@ -1,10 +1,6 @@
 package Beans;  
   
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +8,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
@@ -27,16 +22,18 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.primefaces.event.SelectEvent;
-import org.primefaces.json.JSONArray;
-import org.primefaces.json.JSONException;
-import org.primefaces.json.JSONObject;
-  
+ 
 @ManagedBean(name = "advert")  
 
 // @RequestScoped  
 @SessionScoped
 
-public class Advert {  
+public class Advert implements Serializable{  
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7029800421689345132L;
 	
 	private int ad_id;
 	
