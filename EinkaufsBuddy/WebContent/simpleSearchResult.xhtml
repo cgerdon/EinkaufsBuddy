@@ -24,16 +24,13 @@
   
     <p:layoutUnit position="center" >
     <ui:repeat var="ads" value="#{simpleSearch.advertList}">
-    <p:fieldset legend="Basic" style="margin-bottom:20px">
+    <p:fieldset legend="#{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px">
         <h:panelGrid columns="2" cellpadding="5">
-            <p:graphicImage name="img/logo.png" />
+            <p:graphicImage name="img/HIERUSERBILD.png" />
 			<h:form>
 				<h:panelGrid columns="2" border="1">
 					<h:panelGroup>
 
-						<h:outputText value="#{ads.datum}" />
-						<h:outputText value=" - #{ads.zeitpunkt}" />
-						<br />
 						<h:outputText value=" #{ads.distance} km Entfernung" />
 						<h:outputText value=" #{ads.limit}  €" />
 						<br />	
