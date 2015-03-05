@@ -3,6 +3,7 @@ package Beans;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
@@ -28,8 +29,12 @@ import org.primefaces.json.JSONObject;
 @ManagedBean(name = "simpleSearch")
 // geändert von Mathias: @RequestScoped ersetzt durch @SessionScoped
 @SessionScoped
-public class simpleSearch {
+public class simpleSearch implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7367996151453435801L;
 	private Integer plzInput;
 	private Date fromDate;
 	private Date toDate;

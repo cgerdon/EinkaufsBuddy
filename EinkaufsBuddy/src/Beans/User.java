@@ -1,5 +1,6 @@
 package Beans;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +27,12 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean(name = "user")
 // @RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
 @SessionScoped
-public class User {
+public class User implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3257203081351623458L;
 	private int id;
 	private String firstName;
 	private String lastName;

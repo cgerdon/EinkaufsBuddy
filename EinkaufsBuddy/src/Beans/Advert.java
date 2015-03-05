@@ -1,5 +1,6 @@
 package Beans;  
   
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,8 +28,13 @@ import org.primefaces.event.SelectEvent;
 // @RequestScoped  
 @SessionScoped
 
-public class Advert {  
+public class Advert implements Serializable{  
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7029800421689345132L;
+
 	private int ad_id;
 	
 	@ManagedProperty(value="#{user.id}")
