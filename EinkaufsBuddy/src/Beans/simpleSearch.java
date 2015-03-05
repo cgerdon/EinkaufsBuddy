@@ -29,7 +29,7 @@ import org.primefaces.json.JSONObject;
 @ManagedBean(name = "simpleSearch")
 // geändert von Mathias: @RequestScoped ersetzt durch @SessionScoped
 @SessionScoped
-public class simpleSearch implements Serializable{
+public class simpleSearch implements Serializable {
 
 	/**
 	 * 
@@ -44,6 +44,7 @@ public class simpleSearch implements Serializable{
 	private int summeAds;
 	private int plzDB;
 	private String streetDB;
+	private boolean validplz;
 	ArrayList<SimpleSearchResults> AdvertList = new ArrayList<SimpleSearchResults>();
 
 	DataSource ds;
@@ -125,8 +126,43 @@ public class simpleSearch implements Serializable{
 		setSummeAds(AdvertList.size());
 	}
 
+	public void checkplz(int plz) throws SQLException {
+
+		PreparedStatement ps = null;
+		Connection con = null;
+		ResultSet rs = null;
+		if (ds != null) {
+			try {
+				con = ds.getConnection();
+				if (con != null) {
+					String sql = "select distinct plz from plz where plz = "
+							+ plzInput + ";";
+					ps = con.prepareStatement(sql);
+					rs = ps.executeQuery();
+
+					if (!rs.isBeforeFirst()) {
+						validplz = false;
+
+					} else {
+						validplz = true;
+
+					}
+				}
+			} finally {
+				try {
+					con.close();
+					ps.close();
+
+				} catch (SQLException sqle) {
+					sqle.printStackTrace();
+				}
+			}
+		}
+	}
+
 	public String searchSimple() throws IOException, JSONException,
-			URISyntaxException {
+			URISyntaxException, SQLException {
+		checkplz(plzInput);
 
 		PreparedStatement ps = null;
 		List<String> Adressen = new ArrayList<String>();
@@ -142,6 +178,7 @@ public class simpleSearch implements Serializable{
 			try {
 				con = ds.getConnection();
 				if (con != null) {
+
 					String sql = "SELECT member.id, member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
@@ -154,7 +191,8 @@ public class simpleSearch implements Serializable{
 								rs.getString("last_name"), rs.getInt("ad.id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
 								0, rs.getString("time"), rs.getDate("date"),
-								rs.getString("category"), rs.getInt("member.id"));
+								rs.getString("category"),
+								rs.getInt("member.id"));
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;
@@ -163,48 +201,67 @@ public class simpleSearch implements Serializable{
 								+ "+"
 								+ rs.getString("plz").replaceAll("\\s", "+"));
 					}
+
 					BufferedReader reader = null;
-					try {
-						String tempurl = "/maps/api/distancematrix/json?origins="
-								+ plzInput + "+DE&destinations=";
-						for (String adr : Adressen) {
-							tempurl += adr + "+DE|";
+					if (validplz == true) {
+
+						try {
+							String tempurl = "/maps/api/distancematrix/json?origins="
+									+ plzInput + "+DE&destinations=";
+							for (String adr : Adressen) {
+								tempurl += adr + "+DE|";
+							}
+							tempurl += "&mode=car&language=de-DE&sensor=false";
+							URL url = new URL("https", "maps.googleapis.com",
+									tempurl);
+
+							reader = new BufferedReader(new InputStreamReader(
+									url.openStream()));
+
+							int read;
+							char[] chars = new char[1024];
+							while ((read = reader.read(chars)) != -1)
+								buffer.append(chars, 0, read);
+
+						} finally {
+							if (reader != null)
+								reader.close();
 						}
-						tempurl += "&mode=car&language=de-DE&sensor=false";
-						URL url = new URL("https", "maps.googleapis.com",
-								tempurl);
-
-						reader = new BufferedReader(new InputStreamReader(
-								url.openStream()));
-
-						int read;
-						char[] chars = new char[1024];
-						while ((read = reader.read(chars)) != -1)
-							buffer.append(chars, 0, read);
-
-					} finally {
-						if (reader != null)
-							reader.close();
 					}
-
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
 			}
 		}
-		JSONObject jsonGoogleMaps = new JSONObject(buffer.toString());
-		JSONArray rows = jsonGoogleMaps.getJSONArray("rows");
+		if (validplz == true) {
+			JSONObject jsonGoogleMaps = new JSONObject(buffer.toString());
+			JSONArray rows = jsonGoogleMaps.getJSONArray("rows");
 
-		for (int i = 0; i < rows.length(); i++) {
-			JSONObject obj = rows.getJSONObject(i);
-			JSONArray elements = obj.getJSONArray("elements");
-			for (int j = 0; j < elements.length(); j++) {
-				JSONObject elem = elements.getJSONObject(j);
-				JSONObject distance = elem.getJSONObject("distance");
-				SimpleSearchResults asdf = AdvertList.get(j);
-				asdf.setDistance(Integer.parseInt(distance.getString("value")));
-				AdvertList.set(j, asdf);
+			for (int i = 0; i < rows.length(); i++) {
+				JSONObject obj = rows.getJSONObject(i);
+				JSONArray elements = obj.getJSONArray("elements");
+				for (int j = 0; j < elements.length(); j++) {
+					JSONObject elem = elements.getJSONObject(j);
+					JSONObject distance = elem.getJSONObject("distance");
+					SimpleSearchResults asdf = AdvertList.get(j);
+					asdf.setDistance(Integer.parseInt(distance
+							.getString("value"))/1000);
+					AdvertList.set(j, asdf);
+				}
 			}
+		}
+
+		try {
+			con.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		summe();
 		return "simpleSearchResult";
@@ -215,6 +272,18 @@ public class simpleSearch implements Serializable{
 		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DISTANCE);
 		return "simpleSearchResult";
 	}
+	
+	public void reset() throws IOException, JSONException, URISyntaxException, SQLException{
+		
+		fromDate = null;
+		toDate = null;
+		sliderDistance = 0;
+		sliderLimit = 0;
+		searchSimple();
+		
+		
+	}
+
 
 	public String sortByDate() {
 		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DATE);
@@ -223,41 +292,45 @@ public class simpleSearch implements Serializable{
 	}
 
 	public String filterAds() {
-		// TODO: Christoph: Kleiner Bug, was weg is is weg. Lösung (schlecht),
-		// einfach nochmal Google Api anfetzen.Bessere Lösung, ne TempListe
-		// einführen
-
+		for (int j= 0;j<=10;j++){
 		if (fromDate == null || toDate == null) {
 		} else {
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
 				if (TempObj.getDatum().before(toDate)
 						&& TempObj.getDatum().after(fromDate)) {
-					System.out.println("liegt drin");
+
 				} else {
 					AdvertList.remove(i);
 				}
 			}
-		}
+		}}
+		for (int j= 0;j<=10;j++){
 		if (sliderDistance > 0) {
+		
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
-				if ((TempObj.getDistance() / 1000) < sliderDistance) {
+				
+				if ((TempObj.getDistance()) > sliderDistance) {
 					AdvertList.remove(i);
+				
 				}
 			}
 
-		}
-
+		}}
+		for (int j= 0;j<=10;j++){
 		if (sliderLimit > 0) {
+			
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
-				if (TempObj.getLimit() < sliderLimit) {
+				
+				if ((int)TempObj.getLimit() > (int)sliderLimit) {
 					AdvertList.remove(i);
+				
 				}
 			}
 
-		}
+		}}
 		summe();
 		return "simpleSearchResult";
 	}
