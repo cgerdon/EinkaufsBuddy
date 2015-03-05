@@ -8,8 +8,8 @@
 		
 	 	<h:form id="messagecyclemenurepeat" styleClass="login-logout-form" rendered="#{user.id != 0}">  
 	 	
-	 			<p:commandButton value="Profil" action="profil" />
-	 			<p:commandButton value="Inserate" action="advert" />	
+	 			<p:commandButton value="Profil" action="#{message.NaviProfil}" />
+	 			<p:commandButton value="Inserate" action="#{message.NaviInserate}" />	
 	 			<p:commandButton value="Nachrichten" action="#{message.showAllMessage}" />  
 	 			<h:panelGroup styleClass="messagecyclehaeder" rendered="#{message.ms_gesamtanzahl > 0}">
 					<h:outputText  value="#{message.ms_gesamtanzahl}" />

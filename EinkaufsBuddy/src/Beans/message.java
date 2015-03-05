@@ -28,6 +28,16 @@ import javax.sql.DataSource;
 @SessionScoped  
 
 public class message implements Serializable {
+
+	public String NaviProfil(){
+		return "profil?faces-redirect=true";
+	}
+	
+	public String NaviInserate(){
+		return "advert?faces-redirect=true";
+	}		
+	
+	
 	
 	private static final long serialVersionUID = 2788720637477494048L;
 	
@@ -267,7 +277,7 @@ public class message implements Serializable {
             } 
         }  
         
-        return "message";   
+        return "message?faces-redirect=true";   
     }      
 	
 	
