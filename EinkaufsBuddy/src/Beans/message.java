@@ -250,7 +250,7 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) { 
-                	String sql = "SELECT member.id, member.name, member.last_name, table1.helpmaxt, table2.ungelesen FROM member, (SELECT tablezeit.sender_id AS helpsender, tablezeit.receiver_id AS helpreceiver, tablezeit.maxthelp AS helpmaxt FROM (SELECT sender_id, receiver_id, MAX(time_sent) AS maxthelp FROM message WHERE receiver_id=  " + ms_receiverId + "  OR sender_id=  " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit JOIN (SELECT sender_id, receiver_id, MAX(time_sent) AS maxthelp2 FROM message WHERE receiver_id=  " + ms_receiverId + "  OR sender_id=  " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit2 ON tablezeit2.sender_id = tablezeit.receiver_id AND tablezeit2.receiver_id = tablezeit.sender_id WHERE tablezeit.maxthelp > tablezeit2.maxthelp2 GROUP BY helpsender,helpreceiver) AS table1 LEFT JOIN (SELECT receiver_id, sender_id, SUM(message.`read`) AS ungelesen FROM message WHERE receiver_id=  " + ms_receiverId + "  AND message.`read`=1 GROUP BY sender_id,receiver_id) AS table2 ON table1.helpreceiver = table2.receiver_id AND table1.helpsender = table2.sender_id WHERE (member.id =  table1.helpreceiver OR member.id =  table1.helpsender) AND member.id <>  " + ms_receiverId + " ORDER BY table1.helpmaxt DESC; " ;
+                	String sql = "SELECT member.id, member.name, member.last_name, table1.helpmaxt, table2.ungelesen, table1.helpid FROM member, (SELECT tablezeit.maxtid AS helpid, tablezeit.sender_id AS helpsender, tablezeit.receiver_id AS helpreceiver, tablezeit.maxthelp AS helpmaxt FROM (SELECT MAX(message.id) AS maxtid, sender_id, receiver_id, MAX(time_sent) AS maxthelp FROM message WHERE receiver_id= " + ms_receiverId + " OR sender_id= " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit JOIN (SELECT sender_id, receiver_id, MAX(time_sent) AS maxthelp2 FROM message WHERE receiver_id= " + ms_receiverId + " OR sender_id= " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit2 ON tablezeit2.sender_id = tablezeit.receiver_id AND tablezeit2.receiver_id = tablezeit.sender_id LEFT JOIN message ON maxtid= message.id WHERE tablezeit.maxthelp > tablezeit2.maxthelp2 AND NOT ((tablezeit.sender_id= " + ms_receiverId + " AND del_sender= 2 ) OR (tablezeit.receiver_id= " + ms_receiverId + " AND del_receiver = 2 )) GROUP BY helpsender,helpreceiver) AS table1 LEFT JOIN (SELECT receiver_id, sender_id, SUM(message.`read`) AS ungelesen FROM message WHERE receiver_id= " + ms_receiverId + " AND message.`read`=1 GROUP BY sender_id,receiver_id) AS table2 ON table1.helpreceiver = table2.receiver_id AND table1.helpsender = table2.sender_id WHERE (member.id =  table1.helpreceiver OR member.id =  table1.helpsender) AND member.id <> " + ms_receiverId + " ORDER BY table1.helpmaxt DESC; " ;
                 	
                 	ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();
@@ -290,7 +290,7 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) { 
-                	String sql = "SELECT member.id, member.name, member.last_name, table1.helpmaxt, table2.ungelesen FROM member, (SELECT tablezeit.sender_id AS helpsender, tablezeit.receiver_id AS helpreceiver, tablezeit.maxthelp AS helpmaxt FROM (SELECT sender_id, receiver_id, MAX(time_sent) AS maxthelp FROM message WHERE receiver_id=  " + ms_receiverId + "  OR sender_id=  " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit JOIN (SELECT sender_id, receiver_id, MAX(time_sent) AS maxthelp2 FROM message WHERE receiver_id=  " + ms_receiverId + "  OR sender_id=  " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit2 ON tablezeit2.sender_id = tablezeit.receiver_id AND tablezeit2.receiver_id = tablezeit.sender_id WHERE tablezeit.maxthelp > tablezeit2.maxthelp2 GROUP BY helpsender,helpreceiver) AS table1 LEFT JOIN (SELECT receiver_id, sender_id, SUM(message.`read`) AS ungelesen FROM message WHERE receiver_id=  " + ms_receiverId + "  AND message.`read`=1 GROUP BY sender_id,receiver_id) AS table2 ON table1.helpreceiver = table2.receiver_id AND table1.helpsender = table2.sender_id WHERE (member.id =  table1.helpreceiver OR member.id =  table1.helpsender) AND member.id <>  " + ms_receiverId + " ORDER BY table1.helpmaxt DESC; " ;
+                	String sql = "SELECT member.id, member.name, member.last_name, table1.helpmaxt, table2.ungelesen, table1.helpid FROM member, (SELECT tablezeit.maxtid AS helpid, tablezeit.sender_id AS helpsender, tablezeit.receiver_id AS helpreceiver, tablezeit.maxthelp AS helpmaxt FROM (SELECT MAX(message.id) AS maxtid, sender_id, receiver_id, MAX(time_sent) AS maxthelp FROM message WHERE receiver_id= " + ms_receiverId + " OR sender_id= " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit JOIN (SELECT sender_id, receiver_id, MAX(time_sent) AS maxthelp2 FROM message WHERE receiver_id= " + ms_receiverId + " OR sender_id= " + ms_receiverId + " GROUP BY sender_id,receiver_id) AS tablezeit2 ON tablezeit2.sender_id = tablezeit.receiver_id AND tablezeit2.receiver_id = tablezeit.sender_id LEFT JOIN message ON maxtid= message.id WHERE tablezeit.maxthelp > tablezeit2.maxthelp2 AND NOT ((tablezeit.sender_id= " + ms_receiverId + " AND del_sender= 2 ) OR (tablezeit.receiver_id= " + ms_receiverId + " AND del_receiver = 2 )) GROUP BY helpsender,helpreceiver) AS table1 LEFT JOIN (SELECT receiver_id, sender_id, SUM(message.`read`) AS ungelesen FROM message WHERE receiver_id= " + ms_receiverId + " AND message.`read`=1 GROUP BY sender_id,receiver_id) AS table2 ON table1.helpreceiver = table2.receiver_id AND table1.helpsender = table2.sender_id WHERE (member.id =  table1.helpreceiver OR member.id =  table1.helpsender) AND member.id <> " + ms_receiverId + " ORDER BY table1.helpmaxt DESC; " ;
 
                 	ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();
@@ -551,6 +551,7 @@ public class message implements Serializable {
 		this.ms_senderId = getstartmessage(fc);
 		
 		messagedetails = giveMessagedetailfromSQL(ms_senderId);
+		
 		ms_senderName = giveSenderName(ms_senderId);
 		
         return "messagedetailvonsuche";    
@@ -592,6 +593,8 @@ public class message implements Serializable {
                         
                        ms_text = null; 
                        
+                       
+                       
                        PreparedStatement ps2 = null;  
                        ResultSet rs = null;  
                  	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
@@ -606,9 +609,65 @@ public class message implements Serializable {
                         	
                     	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
                     	   messagedetails.add(TempObj);  
-                        
                        }
-                        
+                       
+                       
+                       
+		                       if (messagedetails.size()==1){
+		                    	   
+		                    	   int hvar = 0; 
+		                           PreparedStatement ps3 = null;
+		                           ResultSet rs2 = null;  
+		                     	   String sql3 = "SELECT COUNT(message.id) FROM message WHERE (message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ");" ;
+		                           ps3 = con.prepareStatement(sql3);  
+		                           rs2 = ps3.executeQuery();
+		                           
+		                           
+		                           while (rs2.next()) {
+		                        	   hvar =  rs2.getInt("COUNT(message.id)");	 
+		                            }	
+		                           
+		                           if (hvar==1){
+		                        	   
+		                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10);		
+		                        	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
+		                        	   byte c=2; 
+		                        	   
+		                        	   PreparedStatement ps4 = null;  
+		                        	   String sql4 = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
+		                               ps4 = con.prepareStatement(sql4);  
+		                               ps4.setInt(1, ms_senderId);  
+		                               ps4.setInt(2, ms_receiverId);  
+		                               ps4.setString(3, datumConverter2); 
+		                               ps4.setByte(4, c);  
+		                               ps4.setString(5, "SystemFirstMessage"); 
+		                               ps4.setByte(6, c);  
+		                               ps4.setByte(7, c);  
+		
+		                              ps4.executeUpdate();   
+
+		                           }
+		                           
+
+		                     	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+		                           ps2 = con.prepareStatement(sql2);  
+		                           rs = ps2.executeQuery();
+		                  
+		                           messagedetails.clear();
+		                           i = 0; 
+		                           while (rs.next()) {  
+		                           		i++;
+		                        	   ms_time = DateConString(rs.getString("message.time_sent"));
+		                            	
+		                        	   message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"));
+		                        	   messagedetails.add(TempObj);  
+		                           }
+		                           
+		                        }
+                       
+                       
+                       
+                       
                         
                     }  
                 }  
