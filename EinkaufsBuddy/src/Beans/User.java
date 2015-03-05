@@ -357,7 +357,7 @@ public class User implements Serializable{
 	// Mathias hinzugefügt: profilchange
 	
 	public void DeleteTimes(int id){
-		//TODO: Oh  man, das wird was...
+		
 		PreparedStatement ps = null;
 		Connection con = null;
 
@@ -383,7 +383,7 @@ public class User implements Serializable{
 	}
 	
 	public void UpdateTimes(int id){
-		//TODO: Oh  man, das wird was...
+		
 		ArrayList<String> Querys = new ArrayList<String>();
 		int rows = daytimeavailable.length;
 

@@ -2,9 +2,7 @@ package Beans;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -97,7 +95,7 @@ public class Rating{
 
 
 	public void addRating() {  
-        int i = 0;  
+      
        //INSERT INTO `rating` (`buyer_id`, `advertiser_id`, `rating`, `text`, `ad_id`) VALUES (2, 3, 5, 'Sie war Einsam. Und es gab einen Jägermeister für mich!', 4);
             PreparedStatement ps = null;  
             Connection con = null;  
@@ -112,7 +110,7 @@ public class Rating{
                         ps.setInt(3, rating);  
                         ps.setString(4, text);  
                         ps.setInt(5, ad);
-                        i = ps.executeUpdate();  
+                        ps.executeUpdate();  
                     }  
                 }
             } catch (Exception e) {  

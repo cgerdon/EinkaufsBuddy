@@ -491,7 +491,7 @@ public class Advert implements Serializable{
 	
 	
 	public String executeJob() {
-	  int i = 0;  
+
 	      PreparedStatement ps = null;  
 	      Connection con = null;  
 	      try {  
@@ -502,7 +502,7 @@ public class Advert implements Serializable{
 
 
 	                    	ps = con.prepareStatement(sql);  
-	                        i = ps.executeUpdate();  
+	                       ps.executeUpdate();  
 	          
 	                        
 	                        
@@ -715,7 +715,7 @@ public class Advert implements Serializable{
             	// String sql = "select id, advertiser_id, date, fk_time_id, limit, income, text, fk_category, status, fav_market, buyer_id
                 String sql = "DELETE FROM ad WHERE ad.id= '" + ad_id + "'";  //buyer_id
                 ps = con.prepareStatement(sql);  
-                int rs = ps.executeUpdate();  
+                ps.executeUpdate();  
                 
             }  
         } catch (SQLException sqle) {  
@@ -807,9 +807,9 @@ public class Advert implements Serializable{
                     String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM member LEFT JOIN ad ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id"; 
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
-                    int i =0;
+               
                     while (rs.next()) {  
-                    	i++;
+                   
                     	Advert TempObj = new Advert(
 								rs.getString("text"), rs.getInt("plz"),
 								rs.getString("street"), rs.getString("name"),
@@ -857,9 +857,9 @@ public class Advert implements Serializable{
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
                     
-                    int i=0;
+                 
                     while (rs.next()) {  
-                    	i++;
+                  
                     	
                     	Advert TempObj = new Advert(
 								rs.getString("text"), rs.getInt("plz"),
