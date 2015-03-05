@@ -272,6 +272,18 @@ public class simpleSearch implements Serializable {
 		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DISTANCE);
 		return "simpleSearchResult";
 	}
+	
+	public void reset() throws IOException, JSONException, URISyntaxException, SQLException{
+		
+		fromDate = null;
+		toDate = null;
+		sliderDistance = 0;
+		sliderLimit = 0;
+		searchSimple();
+		
+		
+	}
+
 
 	public String sortByDate() {
 		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DATE);
@@ -280,38 +292,45 @@ public class simpleSearch implements Serializable {
 	}
 
 	public String filterAds() {
-
+		for (int j= 0;j<=10;j++){
 		if (fromDate == null || toDate == null) {
 		} else {
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
 				if (TempObj.getDatum().before(toDate)
 						&& TempObj.getDatum().after(fromDate)) {
-					System.out.println("liegt drin");
+
 				} else {
 					AdvertList.remove(i);
 				}
 			}
-		}
+		}}
+		for (int j= 0;j<=10;j++){
 		if (sliderDistance > 0) {
+		
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
+				
 				if ((TempObj.getDistance()) > sliderDistance) {
 					AdvertList.remove(i);
+				
 				}
 			}
 
-		}
-
+		}}
+		for (int j= 0;j<=10;j++){
 		if (sliderLimit > 0) {
+			
 			for (int i = 0; i < AdvertList.size(); i++) {
 				SimpleSearchResults TempObj = AdvertList.get(i);
-				if (TempObj.getLimit() > sliderLimit) {
+				
+				if ((int)TempObj.getLimit() > (int)sliderLimit) {
 					AdvertList.remove(i);
+				
 				}
 			}
 
-		}
+		}}
 		summe();
 		return "simpleSearchResult";
 	}
