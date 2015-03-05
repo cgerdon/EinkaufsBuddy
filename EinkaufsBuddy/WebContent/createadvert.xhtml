@@ -32,19 +32,18 @@
 			
 			<h:panelGroup>
 				<h:outputText value="Datum:" />
-				<h:inputText id="date" value="#{advert.date}"  
-					required="true" requiredMessage="Bitte Datum angeben" >
-					<f:convertDateTime pattern="yyyy-mm-dd" />
-				</h:inputText>
-				<h:message for="date" style="color:red" />
+				<p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="yyyy-MMM-dd" required="true" requiredMessage="Bitte Datum angeben" />
+				<h:message for="german" style="color:red" />
 			</h:panelGroup>	
 			
 			<h:panelGroup>
 				<h:outputText value="Zeit der Anlieferung:" />
 				<h:selectOneRadio id="fk_time_id" value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben">
-					<f:selectItem itemValue="1" itemLabel="Vormittag"/>
-					<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
-					<f:selectItem itemValue="3" itemLabel="Abend"/>
+					<f:selectItem itemValue="1" itemLabel="Morgens"/>
+					<f:selectItem itemValue="2" itemLabel="Vormittags"/>
+					<f:selectItem itemValue="3" itemLabel="Mittags"/>
+					<f:selectItem itemValue="4" itemLabel="Nachmittags"/>
+					<f:selectItem itemValue="5" itemLabel="Abends"/>
 				</h:selectOneRadio>
 				<h:message for="fk_time_id" style="color:red" />
 			</h:panelGroup>	

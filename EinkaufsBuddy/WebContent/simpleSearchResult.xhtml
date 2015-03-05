@@ -43,7 +43,10 @@
 						
 							<h:outputText value="#{ads.text}"/>
 						<br/>	
-							<h:commandButton value="Detailansicht" outcome="advertdetail"/>
+							<h:commandButton value="Detailansicht" action="#{advert.doJob}">
+								<f:param name="ad_id" value="#{ownadverts.ad_id}"/>
+							</h:commandButton>
+							
 						<br/>	
 							<h:outputText value="Kategorie: #{ads.category}"/>
 						</h:panelGroup>

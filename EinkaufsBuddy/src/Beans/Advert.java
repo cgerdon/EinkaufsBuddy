@@ -453,6 +453,20 @@ public class Advert {
 			return ownadverts;    
     }  
     
+	public String doJob() {  
+		FacesContext fc = FacesContext.getCurrentInstance();
+		this.ad_id = getad_id(fc);
+		
+		
+		//Mathias abgeändert
+		//ownadverts = getAd_idfromSQL(ad_id);
+		getAd_idfromSQL(ad_id);
+
+		return "advertdetail";
+	} 
+	
+
+	
 	public String changeData() {  
 		FacesContext fc = FacesContext.getCurrentInstance();
 		this.ad_id = getad_id(fc);

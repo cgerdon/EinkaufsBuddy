@@ -25,17 +25,17 @@
 						<f:selectItem itemValue="6" itemLabel="Anderer"/>
 					</h:selectOneListbox>				
 				
-
 					<h:outputText value="Datum:" />
-					<h:inputText value="#{advert.date}" >
-						<f:convertDateTime pattern="yyyy-mm-dd" />
-					</h:inputText>
+					<p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="yyyy-MMM-dd"/>
+
 			
 					<h:outputText value="Zeit der Anlieferung:" />
 					<h:selectOneRadio value="#{advert.fk_time_id}">
-						<f:selectItem itemValue="1" itemLabel="Vormittag"/>
-						<f:selectItem itemValue="2" itemLabel="Nachmittag"/>
-						<f:selectItem itemValue="3" itemLabel="Abend"/>
+						<f:selectItem itemValue="1" itemLabel="Morgens"/>
+						<f:selectItem itemValue="2" itemLabel="Vormittags"/>
+						<f:selectItem itemValue="3" itemLabel="Mittags"/>
+						<f:selectItem itemValue="4" itemLabel="Nachmittags"/>
+						<f:selectItem itemValue="5" itemLabel="Abends"/>
 					</h:selectOneRadio>			
 			
 			 
