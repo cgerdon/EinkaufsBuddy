@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +63,9 @@ public class Advert implements Serializable{
 	private String category;
 	private int memberid;
     
+	//Mathias 
+	private int ms_advertID;
+	
     DataSource ds;  
   
     
@@ -86,6 +90,14 @@ public class Advert implements Serializable{
 
 
 
+
+	public int getMs_advertID() {
+		return ms_advertID;
+	}
+
+	public void setMs_advertID(int ms_advertID) {
+		this.ms_advertID = ms_advertID;
+	}
 
 	public void setAd_id(int ad_id) {
 		this.ad_id = ad_id;
@@ -482,22 +494,98 @@ public class Advert implements Serializable{
             return "unsuccess";  
     }   
 	
+	
+
+	
+	
+	
 	public String executeJob() {
-		  int i = 0;  
+	  int i = 0;  
 	      PreparedStatement ps = null;  
 	      Connection con = null;  
 	      try {  
 	                if (ds != null) {  
 	                    con = ds.getConnection();  
 	                    if (con != null) {  
-	                    	String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
+	      		          	String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
 
 	                    	System.out.println(sql);
 	                    	ps = con.prepareStatement(sql);  
 	                        i = ps.executeUpdate();  
 	                        System.out.println("Inserat angenommen");  
-	                    }  
-	                }  
+	                        
+	                        
+	     
+	                        
+	                        
+	  /* ***Mathias braucht den Platz für die Nachrichtenübermittlung **** */ 
+	              
+	                        
+	              System.out.println("Inseratenersteller: " + ad_id);
+	              System.out.println("Ich: " +advertiser_id);
+
+	      			Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
+	      			String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
+	      			byte b = 1; 
+	      		
+	    		  String sqlmessage = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`, `advert`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";  
+	    		  PreparedStatement psmessage = null; 
+	    		  psmessage = con.prepareStatement(sqlmessage);   
+	    		  
+	    		  psmessage.setInt(1, advertiser_id);  
+	    		  psmessage.setInt(2, ad_id);  
+	    		  psmessage.setString(3, datumConverter); 
+	    		  psmessage.setByte(4, b);  
+	    		  psmessage.setInt(5, ms_advertID); 
+	    		  psmessage.setByte(6, b);  
+                  psmessage.setByte(7, b);  
+                  psmessage.setByte(8, (byte)2); 
+                  psmessage.executeUpdate();  
+	              
+				           	   int hvar = 0; 
+				               PreparedStatement ps3 = null;
+				               ResultSet rs2 = null;  
+				         	   String sql3 = "SELECT COUNT(message.id) FROM message WHERE (message.receiver_id=" + ad_id + " AND message.sender_id=" + advertiser_id + ") OR (message.receiver_id=" + advertiser_id + " AND message.sender_id=" + ad_id + ");" ;
+				               ps3 = con.prepareStatement(sql3);  
+				               rs2 = ps3.executeQuery();
+				               
+				               
+				               while (rs2.next()) {
+				            	   hvar =  rs2.getInt("COUNT(message.id)");	 
+				                }	
+				               
+				               if (hvar==1){
+				            	   
+				            	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-1000);		
+				            	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
+				            	   byte c=2; 
+				            	   
+				            	   PreparedStatement ps4 = null;  
+				            	   String sql4 = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
+				                   ps4 = con.prepareStatement(sql4);  
+				                   ps4.setInt(1, ad_id);  
+				                   ps4.setInt(2, advertiser_id);  
+				                   ps4.setString(3, datumConverter2); 
+				                   ps4.setByte(4, c);  
+				                   ps4.setString(5, "SystemFirstMessage"); 
+				                   ps4.setByte(6, c);  
+				                   ps4.setByte(7, c);  
+				
+				                  ps4.executeUpdate();   
+				
+				               }
+	              
+	                        
+	              
+	                        
+	                        
+	                        
+	                        
+	                        
+	                        
+	/* ***Mathias ENDE **** */                       
+	                      }  
+	              }  
 	            } catch (Exception e) {  
 	                System.out.println(e);  
 	            } finally {  
@@ -509,10 +597,7 @@ public class Advert implements Serializable{
 	                }  
 	            }  
 
-	        if (i > 0) {  
-	           return "successad";  
-	        } else  
-	            return "unsuccess";  
+ 		return "advertdetail?faces-redirect=true";    
 	}
 	
 	public ArrayList <Advert> getAd_idfromSQL(int ad_id){
@@ -535,8 +620,7 @@ public class Advert implements Serializable{
                         
                         //int i=0;
                         
-                        	//while (
-                        			rs.next();//) {  
+                        while (rs.next()) {  
                         		//i++;
             
                         	
@@ -570,7 +654,7 @@ public class Advert implements Serializable{
                         	*/	
                         	}
                        
-                    	//}  
+                    	}  
                 } catch (SQLException sqle) {  
                     sqle.printStackTrace();  
                 }    
@@ -578,16 +662,31 @@ public class Advert implements Serializable{
 			return ownadverts;    
     }  
     
+	
+	public int getresulttodetail(FacesContext fc){
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		String resulttodetail = params.get("resulttodetail");
+		int value = Integer.valueOf(resulttodetail);
+		return value;
+	}
+	
+	public int getadvertid(FacesContext fc){
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		String advertid = params.get("advertid");
+		int value = Integer.valueOf(advertid);
+		return value;
+	}
+	
+	
 	public String doJob() {  
 		FacesContext fc = FacesContext.getCurrentInstance();
-		this.ad_id = getad_id(fc);
-		
-		
-		//Mathias abgeändert
-		//ownadverts = getAd_idfromSQL(ad_id);
+		this.ad_id = getresulttodetail(fc); 
+		FacesContext fc2 = FacesContext.getCurrentInstance();
+        ms_advertID = getadvertid(fc2);
+
 		getAd_idfromSQL(ad_id);
 
-		return "advertdetail";
+		return "advertdetail?faces-redirect=true";
 	} 
 	
 

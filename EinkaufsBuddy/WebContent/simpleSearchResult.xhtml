@@ -32,8 +32,7 @@
 					<h:panelGroup>
 						<h:outputText style="font-weight:bold" value=" #{ads.distance} km Entfernung - #{ads.limit}  €" />
 						<br />	
-						Inserat von <h:commandLink
-							action="#{userView.showProfil(ads.memberid)}">
+						Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
 							<h:outputText value="#{ads.name} #{ads.last_name}" />
 						</h:commandLink>
 						<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
@@ -52,7 +51,8 @@
 						<h:outputText value="#{ads.text}" />
 						<br />
 						<h:commandButton value="Detailansicht" action="#{advert.doJob}">
-							<f:param name="ad_id" value="#{ownadverts.ad_id}" />
+							<f:param name="resulttodetail" value="#{ads.memberid}" />
+							<f:param name="advertid" value="#{ads.id}" />
 						</h:commandButton>
 
 						<br />
