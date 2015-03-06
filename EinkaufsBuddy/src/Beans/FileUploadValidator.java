@@ -29,13 +29,13 @@ public class FileUploadValidator implements Validator {
 		}
  
 		// 2. validate file type (only text files allowed)
-		if (!"text/plain".equals(part.getContentType())) {
+		if (!(part.getContentType().substring(0,5).equalsIgnoreCase("image"))) {
 			FacesMessage message = new FacesMessage("Error: File type is invalid !!");
 			throw new ValidatorException(message);
 		  }
  
 		// 3. validate file size (should not be greater than 512 bytes)
-		if (part.getSize() > 512) {
+		if (part.getSize() > 9999999) {
 			FacesMessage message = new FacesMessage("Error: File size is too big !!");
 			throw new ValidatorException(message);
 		}
