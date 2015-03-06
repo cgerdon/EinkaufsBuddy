@@ -122,8 +122,8 @@ public class User implements Serializable{
 		System.out.println("***** partHeader: " + partHeader);
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
-				return content.substring(content.indexOf('=') + 1).trim()
-						.replace("\"", "");
+				return "test";
+				//return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
 			}
 		}
 		return null;
