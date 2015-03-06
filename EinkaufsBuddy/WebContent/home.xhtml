@@ -8,9 +8,9 @@
 	<ui:define name="content">
 	
 	<h1> Willkommen auf EinkaufsBuddy!</h1>
-	<h:graphicImage value="resources/images/banner.png" width="60%" alt="image" />
-	<h:form  id="simplesearchform">
-		<h:panelGrid columns="1" styleClass="simplesearchformmittig">
+	
+	<h:form  id="simplesearchform" style="background-image: url(resources/images/banner.png);background-repeat: no-repeat;background-position: center;background-size: 711px 400px;">
+		<h:panelGrid  columns="1" styleClass="simplesearchformmittig" >
 		<h:panelGroup layout="block">
  		<p:inputText id="plz" value="#{simpleSearch.plzInput}" required="true" requiredMessage="Bitte PLZ eingeben" />
 			<h:message for="plz" style="color:red" /> 
