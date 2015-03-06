@@ -56,6 +56,7 @@ public class message implements Serializable {
     private int ms_anzahl;
     private int ms_gesamtanzahl;
     private int ms_advertId;
+    private int currentdelete;
     private String messagetext;
         
     /*   private byte[] ms_senderPicture;    
@@ -86,6 +87,14 @@ public class message implements Serializable {
     
     
 
+    
+	public int getCurrentdelete() {
+		return currentdelete;
+	}
+
+	public void setCurrentdelete(int currentdelete) {
+		this.currentdelete = currentdelete;
+	}
 
 	public int getMs_advertId() {
 		return ms_advertId;
@@ -694,9 +703,11 @@ public class message implements Serializable {
 		
 		
 		
-		public void deleteAllMessage() { 	
+		public String deleteAllMessage() { 	
 			FacesContext fc = FacesContext.getCurrentInstance();
 			this.ms_senderId = getnamevonmessagedelete(fc);
+			
+			currentdelete = this.ms_senderId;
 			
             PreparedStatement ps = null; 
             PreparedStatement ps2 = null;  
@@ -729,6 +740,7 @@ public class message implements Serializable {
             
             showGesamtMessage();
             showAllMessage();
+            return "message?faces-redirect=true";
     }   		
 		
 		
