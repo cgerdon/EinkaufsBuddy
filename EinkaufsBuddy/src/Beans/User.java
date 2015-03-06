@@ -1,6 +1,7 @@
 package Beans;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,6 +61,7 @@ public class User implements Serializable{
 	private String password;
 	private Date birthday;
 	private int car;
+	private Blob pictureblob;
 	private String abouttext;
 	private byte[] picture;
 	private String street;
@@ -112,39 +114,38 @@ public class User implements Serializable{
  
 	private void WriteImgtoDb() throws FileNotFoundException {
 		String basePath = "C:" + File.separator + "temp" + File.separator;
-		File outputFilePath = new File(basePath + getFileName(part));
-	    FileInputStream   fis = new FileInputStream(outputFilePath);
+		
 	   
-		PreparedStatement ps = null;
-		Connection con = null;
+	    Connection connection = null;
+		PreparedStatement statement = null;
+		FileInputStream inputStream = null;
+		File outputFilePath = new File(basePath + getFileName(part));
 		try {
-			if (ds != null) {
-				con = ds.getConnection();
-				if (con != null) {
-					if (birthday == null) {
-					}
-					String sql = "UPDATE member set picture='"
-							+ fis
-							+ "' where mail ='"
-							+ email + "';";
+			
 
+			inputStream = new FileInputStream(outputFilePath);
+			connection = ds.getConnection();
+			statement = connection.prepareStatement("insert into member(picture) where mail = " + email 
+							+ " values(?)");
+			statement.setBinaryStream(1, (InputStream) inputStream,
+					(int) (outputFilePath.length()));
 
-					ps = con.prepareStatement(sql);
-					ps.executeUpdate();
-
-				}
-			}
-		} catch (Exception e) {
-			System.out.println(e);
+			statement.executeUpdate();
+		} catch (FileNotFoundException e) {
+			System.out.println("FileNotFoundException: - " + e);
+		} catch (SQLException e) {
+			System.out.println("SQLException: - " + e);
 		} finally {
 			try {
-				con.close();
-				ps.close();
-			} catch (Exception e) {
-				e.printStackTrace();
+				connection.close();
+				statement.close();
+			} catch (SQLException e) {
+				System.out.println("SQLException Finally: - " + e);
 			}
 		}
-		
+
+
+		outputFilePath.delete();
 	}
 
 	public Part getPart() {
@@ -418,7 +419,7 @@ public class User implements Serializable{
 				try {
 					con = ds.getConnection();
 					if (con != null) {
-						String sql = "select id, mail, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone from member where mail = '"
+						String sql = "select id, mail, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone, picture from member where mail = '"
 								+ uName + "'";
 						ps = con.prepareStatement(sql);
 						rs = ps.executeQuery();
@@ -429,6 +430,7 @@ public class User implements Serializable{
 						firstName = rs.getString("name");
 						lastName = rs.getString("last_name");
 						email = rs.getString("mail");
+						pictureblob = rs.getBlob("picture");
 						// password = rs.getString("password_hash");
 						birthday = rs.getDate("birthdate");
 						car = rs.getInt("car");
@@ -644,6 +646,14 @@ public class User implements Serializable{
 			return "profil";
 		} else
 			return "unsuccess";
+	}
+
+	public Blob getPictureblob() {
+		return pictureblob;
+	}
+
+	public void setPictureblob(Blob pictureblob) {
+		this.pictureblob = pictureblob;
 	}
 
 }

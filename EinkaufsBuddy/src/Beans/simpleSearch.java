@@ -183,11 +183,21 @@ public class simpleSearch implements Serializable {
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
-
+					String NoStreet = "";
+					Integer NoPLZ = 0;
 					while (rs.next()) {
+						String RealStreet = "";
+						Integer RealPLZ = 0;
+						if (rs.getString("street") == null){
+							RealStreet = rs.getString("street");
+							RealPLZ = rs.getInt("plz");
+						}else{
+							RealStreet = NoStreet;
+							RealPLZ = NoPLZ;
+						}
 						SimpleSearchResults TempObj = new SimpleSearchResults(
-								rs.getString("text"), rs.getInt("plz"),
-								rs.getString("street"), rs.getString("name"),
+								rs.getString("text"), RealPLZ,
+								RealStreet, rs.getString("name"),
 								rs.getString("last_name"), rs.getInt("ad.id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
 								0, rs.getString("time"), rs.getDate("date"),
@@ -196,10 +206,10 @@ public class simpleSearch implements Serializable {
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;
-						Adressen.add(rs.getString("street").replaceAll("\\s",
+						Adressen.add(RealStreet.replaceAll("\\s",
 								"+")
 								+ "+"
-								+ rs.getString("plz").replaceAll("\\s", "+"));
+								+ RealPLZ.toString());
 					}
 
 					BufferedReader reader = null;
