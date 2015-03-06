@@ -12,13 +12,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
  
+
+import java.nio.file.Paths;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.Part;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -31,8 +36,11 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+
+import com.sun.faces.facelets.util.Path;
 
 @ManagedBean(name = "user")
 // @RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
@@ -122,8 +130,18 @@ public class User implements Serializable{
 		System.out.println("***** partHeader: " + partHeader);
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
-				return "test";
-				//return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+				System.out.println(content.substring(content.indexOf('=') + 1).trim().replace("\"", ""));
+				String extension = "";
+
+				int i = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").lastIndexOf('.');
+				if (i > 0) {
+				    extension = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").substring(i+1);
+				}
+				Random rand = new Random();
+
+			    Integer randomNum = rand.nextInt((9999999 - 1) + 1) + 1;
+				return randomNum.toString() + "." + extension;
+				
 			}
 		}
 		return null;
