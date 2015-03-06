@@ -21,22 +21,22 @@ public class FileUploadValidator implements Validator {
 		String fileName = getFileName(part);
 		System.out.println("----- validator fileName: " + fileName);
 		if(fileName.length() == 0 ) {
-			FacesMessage message = new FacesMessage("Error: File name is invalid !!");
+			FacesMessage message = new FacesMessage("Error: Dateiname ung¸ltig!");
 			throw new ValidatorException(message);
-		} else if (fileName.length() > 50) {
-			FacesMessage message = new FacesMessage("Error: File name is too long !!");
+		} else if (fileName.length() > 150) {
+			FacesMessage message = new FacesMessage("Error: Dateiname ist zu lang");
 			throw new ValidatorException(message);
 		}
  
 		// 2. validate file type (only text files allowed)
-		if (!"text/plain".equals(part.getContentType())) {
-			FacesMessage message = new FacesMessage("Error: File type is invalid !!");
+		if (!(part.getContentType().substring(0,5).equalsIgnoreCase("image"))) {
+			FacesMessage message = new FacesMessage("Error: Kein g¸ltiges Bild ausgew‰hlt");
 			throw new ValidatorException(message);
 		  }
  
 		// 3. validate file size (should not be greater than 512 bytes)
-		if (part.getSize() > 512) {
-			FacesMessage message = new FacesMessage("Error: File size is too big !!");
+		if (part.getSize() > 9999999) {
+			FacesMessage message = new FacesMessage("Error: Eine zu groﬂe Datei wurde ausgew‰hlt");
 			throw new ValidatorException(message);
 		}
 	}

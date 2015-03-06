@@ -6,19 +6,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
  
+
+import java.nio.file.Paths;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.Part;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -31,8 +38,11 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+
+import com.sun.faces.facelets.util.Path;
 
 @ManagedBean(name = "user")
 // @RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
@@ -65,7 +75,6 @@ public class User implements Serializable{
 	
 	public String uploadFile() throws IOException {
 		 
-		// Extract file name from content-disposition header of file part
 		String fileName = getFileName(part);
 		System.out.println("***** fileName: " + fileName);
  
@@ -97,9 +106,47 @@ public class User implements Serializable{
 				inputStream.close();
 			}
 		}
+		WriteImgtoDb();
 		return null;    // return to same page
 	}
  
+	private void WriteImgtoDb() throws FileNotFoundException {
+		String basePath = "C:" + File.separator + "temp" + File.separator;
+		File outputFilePath = new File(basePath + getFileName(part));
+	    FileInputStream   fis = new FileInputStream(outputFilePath);
+	   
+		PreparedStatement ps = null;
+		Connection con = null;
+		try {
+			if (ds != null) {
+				con = ds.getConnection();
+				if (con != null) {
+					if (birthday == null) {
+					}
+					String sql = "UPDATE member set picture='"
+							+ fis
+							+ "' where mail ='"
+							+ email + "';";
+
+
+					ps = con.prepareStatement(sql);
+					ps.executeUpdate();
+
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				con.close();
+				ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	public Part getPart() {
 		return part;
 	}
@@ -122,8 +169,14 @@ public class User implements Serializable{
 		System.out.println("***** partHeader: " + partHeader);
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
-				return "test";
-				//return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+				System.out.println(content.substring(content.indexOf('=') + 1).trim().replace("\"", ""));
+				String extension = "";
+				int i = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").lastIndexOf('.');
+				if (i > 0) {
+				    extension = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").substring(i+1);
+				}
+				return "uploaded" + "." + extension;
+				
 			}
 		}
 		return null;
