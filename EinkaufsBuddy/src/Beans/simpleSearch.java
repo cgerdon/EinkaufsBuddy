@@ -332,7 +332,7 @@ public class simpleSearch implements Serializable {
 
 		}}
 		summe();
-		return "simpleSearchResult";
+		return "simpleSearchResult?faces-redirect=true";
 	}
 
 	public int getSummeAds() {
