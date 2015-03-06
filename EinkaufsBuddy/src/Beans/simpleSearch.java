@@ -252,10 +252,22 @@ public class simpleSearch implements Serializable {
 				JSONArray elements = obj.getJSONArray("elements");
 				for (int j = 0; j < elements.length(); j++) {
 					JSONObject elem = elements.getJSONObject(j);
-					JSONObject distance = elem.getJSONObject("distance");
 					SimpleSearchResults asdf = AdvertList.get(j);
-					asdf.setDistance(Integer.parseInt(distance
-							.getString("value"))/1000);
+					JSONObject distance = new JSONObject();
+					System.out.println("a");
+					System.out.println("b");
+					if (true == true){
+						System.out.println("c");
+						asdf.setDistance(0);
+					}
+					else{
+						System.out.println("a");
+						distance = elem.getJSONObject("distance");
+						System.out.println("b");
+						asdf.setDistance(Integer.parseInt(distance
+								.getString("value"))/1000);
+					}
+					
 					AdvertList.set(j, asdf);
 				}
 			}
