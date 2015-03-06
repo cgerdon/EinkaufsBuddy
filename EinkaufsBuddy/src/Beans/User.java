@@ -271,7 +271,7 @@ public class User implements Serializable{
 			}
 		}
 		if (i > 0) {
-			return "success";
+			return "home?faces-redirect=true";
 		} else
 			return "unsuccess";
 	}

@@ -270,7 +270,7 @@ public class simpleSearch implements Serializable {
 	public String sortByDistance() {
 
 		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DISTANCE);
-		return "simpleSearchResult";
+		return "simpleSearchResult?faces-redirect=true";
 	}
 	
 	public void reset() throws IOException, JSONException, URISyntaxException, SQLException{
@@ -288,7 +288,7 @@ public class simpleSearch implements Serializable {
 	public String sortByDate() {
 		Collections.sort(AdvertList, SimpleSearchResults.COMPARE_BY_DATE);
 
-		return "simpleSearchResult";
+		return "simpleSearchResult?faces-redirect=true";
 	}
 
 	public String filterAds() {
