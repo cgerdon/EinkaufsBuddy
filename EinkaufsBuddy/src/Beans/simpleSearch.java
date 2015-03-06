@@ -45,6 +45,21 @@ public class simpleSearch implements Serializable {
 	private int plzDB;
 	private String streetDB;
 	private boolean validplz;
+	
+	//joel für advertdetail
+	private String fav_market;
+	private int plz;
+	private String street;
+	private String name;
+	private String last_name;
+	private int ad_id;
+	private double limit;
+	private double income;
+	private String zeitpunkt;
+	private Date datum;
+	private String category;
+	private int memberid;
+	
 	ArrayList<SimpleSearchResults> AdvertList = new ArrayList<SimpleSearchResults>();
 
 	DataSource ds;
@@ -126,6 +141,103 @@ public class simpleSearch implements Serializable {
 		setSummeAds(AdvertList.size());
 	}
 
+	//getter and setter
+	public String getFav_market() {
+		return fav_market;
+	}
+
+	public void setFav_market(String fav_market) {
+		this.fav_market = fav_market;
+	}
+
+	public int getPlz() {
+		return plz;
+	}
+
+	public void setPlz(int plz) {
+		this.plz = plz;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLast_name() {
+		return last_name;
+	}
+
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
+
+	public int getAd_id() {
+		return ad_id;
+	}
+
+	public void setAd_id(int ad_id) {
+		this.ad_id = ad_id;
+	}
+
+	public double getLimit() {
+		return limit;
+	}
+
+	public void setLimit(double limit) {
+		this.limit = limit;
+	}
+
+	public double getIncome() {
+		return income;
+	}
+
+	public void setIncome(double income) {
+		this.income = income;
+	}
+
+	public String getZeitpunkt() {
+		return zeitpunkt;
+	}
+
+	public void setZeitpunkt(String zeitpunkt) {
+		this.zeitpunkt = zeitpunkt;
+	}
+
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public int getMemberid() {
+		return memberid;
+	}
+
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
+	}
+	
 	public void checkplz(int plz) throws SQLException {
 
 		PreparedStatement ps = null;
@@ -159,6 +271,8 @@ public class simpleSearch implements Serializable {
 			}
 		}
 	}
+
+	
 
 	public String searchSimple() throws IOException, JSONException,
 			URISyntaxException, SQLException {
@@ -195,6 +309,7 @@ public class simpleSearch implements Serializable {
 							RealStreet = NoStreet;
 							RealPLZ = NoPLZ;
 						}
+						//rs.getString("fav_market"),
 						SimpleSearchResults TempObj = new SimpleSearchResults(
 								rs.getString("text"), RealPLZ,
 								RealStreet, rs.getString("name"),
@@ -203,6 +318,22 @@ public class simpleSearch implements Serializable {
 								0, rs.getString("time"), rs.getDate("date"),
 								rs.getString("category"),
 								rs.getInt("member.id"));
+						
+						//joel für advertdetail
+						text=rs.getString("text");
+						plz=RealPLZ;
+						street=RealStreet;
+						last_name=rs.getString("last_name");
+						ad_id=rs.getInt("ad.id");
+						limit=rs.getDouble("limit");
+						income=rs.getDouble("income");
+						zeitpunkt=rs.getString("time");
+						datum=rs.getDate("date");
+						category=rs.getString("category");
+						memberid=rs.getInt("member.id");
+						
+						
+						
 						// AdvertList.add(i, TempObj);
 						AdvertList.add(TempObj);
 						i = i + 1;

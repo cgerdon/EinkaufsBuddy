@@ -7,16 +7,13 @@
     
 <ui:define name="content">
 		<h:form id="changeadvertForm"> 
-			<h:panelGrid columns="1">
-					
-					<h:outputText value="ID:" />
-					<h:inputText id="advertiser_id" value="#{advert.advertiser_id}" disabled="true"/>
-					
-					<h:outputText value="Bevorzugter Markt:" />
-					<h:inputText value="#{advert.fav_market}" />
+			<h:panelGrid columns="1" var="ads" value="#{simpleSearch.advertList}">
+					<!--  
+					<h:outputText value="Bevorzugter Markt:"/>
+					<h:inputText value="#{ads.fav_market}" disabled="true"/> -->
 										
 					<h:outputText value="Art des Marktes:" />
-					<h:selectOneListbox value="#{advert.fk_category}" size="3" disabled="true" >
+					<h:selectOneListbox value="#{ads.category}" size="3" >
 						<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
 						<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
 						<f:selectItem itemValue="3" itemLabel="Apotheke"/>
@@ -27,10 +24,10 @@
 				
 
 					<h:outputText value="Datum:" />
-					<p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="yyyy-MMM-dd" disabled="true"/>
+					<p:calendar id="german" value="#{ads.datum}" navigator="true" pattern="yyyy-MMM-dd"/>
 			
 					<h:outputText value="Zeit der Anlieferung:" />
-					<h:selectOneRadio value="#{advert.fk_time_id}" disabled="true">
+					<h:selectOneRadio value="#{ads.time}" disabled="true">
 						<f:selectItem itemValue="1" itemLabel="Morgens"/>
 						<f:selectItem itemValue="2" itemLabel="Vormittags"/>
 						<f:selectItem itemValue="3" itemLabel="Mittags"/>
@@ -40,15 +37,15 @@
 			
 			 
 					<h:outputText value="Budget in Euro:" />  
-					<h:inputText value="#{advert.limit}" disabled="true"/>          
+					<h:inputText value="#{ads.limit}" disabled="true"/>          
             
 			
 					<h:outputText value="Vergütung in Euro:" />  
-					<h:inputText value="#{advert.income}" disabled="true"/> 
+					<h:inputText value="#{ads.income}" disabled="true"/> 
   			
 			  
 					<h:outputText value="Einkaufsliste:" /> 
-					<h:inputTextarea value="#{advert.text}" disabled="true"/> 
+					<h:inputTextarea value="#{ads.text}" disabled="true"/> 
 			  
 					
 					

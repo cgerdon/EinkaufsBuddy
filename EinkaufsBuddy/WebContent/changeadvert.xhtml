@@ -57,8 +57,10 @@
 			</h:panelGrid>		
 		
 				
-					<h:commandButton value="Speichern" action="#{advert.updateInfos}"/>
-					<h:commandButton value="Inserat Löschen" action="#{advert.deleteAd}"/>
+					<p:commandButton value="Speichern" action="#{advert.updateInfos}"/>
+					<p:commandButton value="Inserat löschen" action="#{message.advert.deleteAd}">
+								        <p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+					</p:commandButton>
 		</h:form>
 </ui:define>
   

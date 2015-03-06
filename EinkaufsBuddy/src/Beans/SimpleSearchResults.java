@@ -10,6 +10,7 @@ public class SimpleSearchResults implements Serializable{
 	 */
 	private static final long serialVersionUID = 5911721057620266881L;
 	private String text;
+	private String fav_market;
 	private int plz;
 	private String street;
 	private String name;
@@ -60,12 +61,21 @@ public class SimpleSearchResults implements Serializable{
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
+	
+	public String getFav_market() {
+		return fav_market;
+	}
 
+	public void setFav_market(String fav_market) {
+		this.fav_market = fav_market;
+	}
+	//String fav_market,
 	public SimpleSearchResults(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
 			int distance, String zeitpunkt, Date datum, String category, int memberid) {
 		super();
 		this.text = text;
+		//this.fav_market=fav_market;
 		this.plz = plz;
 		this.street = street;
 		this.name = name;

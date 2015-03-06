@@ -6,41 +6,48 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-
-		
-			<ui:repeat var="ads" value="#{advert.ownadverts}">
+		<p:layout fullPage="false">
+ 
+    <p:layoutUnit position="north"  header="Eigene Inserate" resizable="false" closable="false" collapsible="true"/>
+  
+    <p:layoutUnit position="center" >
+	    <ui:repeat var="ads" value="#{advert.ownadverts}">
+	    <p:fieldset legend="#{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px">
+	        <h:panelGrid columns="2" cellpadding="5">
+	            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
 				<h:form>
 					<h:panelGrid columns="2" border="1">
 						<h:panelGroup>
-							
-							<h:outputText value="#{ads.datum}" />
-							<h:outputText value=" - #{ads.zeitpunkt}" />
-						<br/>
-							<h:outputText value=" #{ads.limit}  €" />
-						<br/>	
-							<h:commandLink action="#{userView.showProfil(ads.memberid)}"><h:outputText value="Inserat von #{ads.name} #{ads.last_name}" /></h:commandLink>
-						<br/>	
+							Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+								<h:outputText value="#{ads.name} #{ads.last_name}" />
+							</h:commandLink>
+							<br />
 							<h:outputText value=" Verdienst: #{ads.income} €" />
 							<h:outputText value=" Limit: #{ads.limit} €" />
 						</h:panelGroup>
-						
-						
+	
+	
 						<h:panelGroup>
-						
-							<h:outputText value="#{ads.text}"/>
-						<br/>	
-						<h:commandButton value="ändern" action="#{advert.changeData}">
+	
+							<h:outputText value="#{ads.text}" />
+							<br />
+							<h:commandButton value="ändern" action="#{advert.changeData}">
 				 					<f:param name="ad_id" value="#{ads.id}" />
-						</h:commandButton>
-							
-						<br/>	
-							<h:outputText value="Kategorie: #{ads.category}"/>
+							</h:commandButton>
+	
+							<br />
+							<h:outputText value="Kategorie: #{ads.category}" />
 						</h:panelGroup>
 					</h:panelGrid>
-				</h:form>	
-			</ui:repeat>
-	
-	
+				</h:form>
+				        </h:panelGrid>
+				  </p:fieldset>
+			</ui:repeat> 
+
+    </p:layoutUnit>
+ 
+</p:layout>
+
 	
 	
 
@@ -50,45 +57,5 @@
 
 
 
-	<!--
-		
-		
-
-		
-		
-		
-		 <h:form>
-		<h:panelGrid >
-			<h:panelGroup>
-				<h:outputText value="ID:" />
-					<h:inputText id="advertiser_id" value="#{advert.advertiser_id}" disabled="true"/>
-				<tr>
-    			<th class="order-table-header">Markt</th>
-    			<th class="order-table-header">Einkaufsliste</th>
-    			<th class="order-table-header">Budget [EUR]</th>
-    			<th class="order-table-header">Vergütung</th>
-    			<th class="order-table-header">Datum</th>
-    			<th class="order-table-header">Ändernfeld</th>
-    			
-    		</tr>
-			</h:panelGroup>
-		
-			  <h:panelGroup>
-				<ui:repeat var="ownadverts" value="#{advert.ownadverts}">
-						<tr>
-			    			<td><h:outputText value="#{ownadverts.fav_market}"/></td>
-			    			<td><h:outputText value="#{ownadverts.text}"/></td>
-			    			<td><h:outputText value="#{ownadverts.limit}"/></td>
-			    			<td><h:outputText value="#{ownadverts.income}"/></td>
-			    			<td><h:outputText value="#{ownadverts.date}"/></td>
-			    			<td>
-			    				<h:commandButton value="ändern" action="#{advert.changeData}">
-				 					<f:param name="ad_id" value="#{ownadverts.ad_id}" />
-								</h:commandButton>
-			    			</td>
-		    		  </tr>
-				</ui:repeat>
-			</h:panelGroup>			
-		</h:panelGrid>
-		</h:form> -->
+	
 
