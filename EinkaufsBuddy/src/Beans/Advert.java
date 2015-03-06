@@ -840,7 +840,7 @@ public class Advert implements Serializable{
                 sqle.printStackTrace();  
             }    
         }
-        return "viewownadverts";
+        return "viewownadverts?faces-redirect=true";
     }
     public String showothers(){
 	      	PreparedStatement ps = null;  
@@ -891,7 +891,7 @@ public class Advert implements Serializable{
                 sqle.printStackTrace();  
             }    
         }
-        return "viewotheradverts";
+        return "viewotheradverts?faces-redirect=true";
     }
     	
 	

@@ -29,9 +29,9 @@
 						
 							<h:outputText value="#{ads.text}"/>
 						<br/>	
-							<h:commandButton value="ändern" action="#{advert.changeData}">
-				 					<f:param name="ad_id" value="#{ownadverts.ad_id}" />
-								</h:commandButton>
+						<h:commandButton value="ändern" action="#{advert.changeData}">
+				 					<f:param name="ad_id" value="#{ownadverts.id}" />
+						</h:commandButton>
 							
 						<br/>	
 							<h:outputText value="Kategorie: #{ads.category}"/>
@@ -42,7 +42,22 @@
 	
 	
 	
-		<!-- <h:form>
+	
+
+	</ui:define>
+  
+</ui:composition>
+
+
+
+	<!--
+		
+		
+
+		
+		
+		
+		 <h:form>
 		<h:panelGrid >
 			<h:panelGroup>
 				<h:outputText value="ID:" />
@@ -77,6 +92,3 @@
 		</h:panelGrid>
 		</h:form> -->
 
-	</ui:define>
-  
-</ui:composition>

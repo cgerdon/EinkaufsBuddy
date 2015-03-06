@@ -8,8 +8,11 @@
 			
 		<h3>Inserate: </h3>
 			
+		<h:form>
 							
-			<h:commandButton value="Inserate anlegen" outcome="createadvert"/>
-			<h:commandButton value="Inserate suchen" outcome="home"/>
-	
+			<h:commandButton value="Inserate anlegen" action="#{navigation.advertsadd}"/>
+			<h:commandButton value="Inserate suchen" action="#{navigation.advertssearch}"/>
+			
+		</h:form>
+		
 </ui:composition>
