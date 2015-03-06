@@ -18,8 +18,13 @@
 		<h:form>	
 	
 					<h:dataTable id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
+							
+
+							
+
 									
 							<h:column >
+
 							<h:panelGroup styleClass="messageoverviewName">
 								<h:outputText value="#{messageoverview.ms_receiverFirstName} "/>
 								<h:outputText  value="#{messageoverview.ms_receiverLastName}" />
@@ -27,19 +32,28 @@
 							<h:panelGroup styleClass="messagecycle" rendered="#{messageoverview.ms_anzahl > 0}">
 								<h:outputText  value="#{messageoverview.ms_anzahl}" />
 							</h:panelGroup>
-							</h:column>								
-				
-							<h:column >
-								<h:commandButton value="#{messageoverview.ms_senderId} ansehen" action="#{message.showMessage}" >
-									<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
-								</h:commandButton>	
 							</h:column>
+														
+							<h:column>
+							<h:panelGroup styleClass="tabellenabstand">
+								<h:outputText value="#{messageoverview.ms_time}" />
+							</h:panelGroup>
+								
+							</h:column>	
 							
 							<h:column>
-							    <p:commandButton value="löschen" action="#{message.deleteAllMessage}">
-							        <p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
-							        <f:param name="namevonmessagedelete" value="#{messageoverview.ms_senderId}" />
-							    </p:commandButton>
+			
+								<h:panelGroup styleClass="tabellenabstand">
+									<p:commandButton value="ansehen" action="#{message.showMessage}" >
+										<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
+									</p:commandButton>	
+									
+	
+								    <p:commandButton value="löschen" action="#{message.deleteAllMessage}">
+								        <p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+								        <f:param name="namevonmessagedelete" value="#{messageoverview.ms_senderId}" />
+								    </p:commandButton>
+							    </h:panelGroup>
 						</h:column>	
 					</h:dataTable>  
 							    
