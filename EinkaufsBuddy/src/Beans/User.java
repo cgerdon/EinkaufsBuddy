@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,7 +75,6 @@ public class User implements Serializable{
 	
 	public String uploadFile() throws IOException {
 		 
-		// Extract file name from content-disposition header of file part
 		String fileName = getFileName(part);
 		System.out.println("***** fileName: " + fileName);
  
@@ -105,9 +106,47 @@ public class User implements Serializable{
 				inputStream.close();
 			}
 		}
+		WriteImgtoDb();
 		return null;    // return to same page
 	}
  
+	private void WriteImgtoDb() throws FileNotFoundException {
+		String basePath = "C:" + File.separator + "temp" + File.separator;
+		File outputFilePath = new File(basePath + getFileName(part));
+	    FileInputStream   fis = new FileInputStream(outputFilePath);
+	   
+		PreparedStatement ps = null;
+		Connection con = null;
+		try {
+			if (ds != null) {
+				con = ds.getConnection();
+				if (con != null) {
+					if (birthday == null) {
+					}
+					String sql = "UPDATE member set picture='"
+							+ fis
+							+ "' where mail ='"
+							+ email + "';";
+
+
+					ps = con.prepareStatement(sql);
+					ps.executeUpdate();
+
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				con.close();
+				ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	public Part getPart() {
 		return part;
 	}
@@ -132,15 +171,11 @@ public class User implements Serializable{
 			if (content.trim().startsWith("filename")) {
 				System.out.println(content.substring(content.indexOf('=') + 1).trim().replace("\"", ""));
 				String extension = "";
-
 				int i = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").lastIndexOf('.');
 				if (i > 0) {
 				    extension = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").substring(i+1);
 				}
-				Random rand = new Random();
-
-			    Integer randomNum = rand.nextInt((9999999 - 1) + 1) + 1;
-				return randomNum.toString() + "." + extension;
+				return "uploaded" + "." + extension;
 				
 			}
 		}
