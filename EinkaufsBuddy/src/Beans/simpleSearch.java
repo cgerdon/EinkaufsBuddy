@@ -273,14 +273,14 @@ public class simpleSearch implements Serializable {
 		return "simpleSearchResult?faces-redirect=true";
 	}
 	
-	public void reset() throws IOException, JSONException, URISyntaxException, SQLException{
+	public String reset() throws IOException, JSONException, URISyntaxException, SQLException{
 		
 		fromDate = null;
 		toDate = null;
 		sliderDistance = 0;
 		sliderLimit = 0;
 		searchSimple();
-		
+		return "simpleSearchResult?faces-redirect=true";
 		
 	}
 
