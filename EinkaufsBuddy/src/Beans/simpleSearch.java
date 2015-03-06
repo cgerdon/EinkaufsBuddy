@@ -254,14 +254,12 @@ public class simpleSearch implements Serializable {
 					JSONObject elem = elements.getJSONObject(j);
 					SimpleSearchResults asdf = AdvertList.get(j);
 					JSONObject distance = new JSONObject();
-					System.out.println("a");
-					System.out.println("b");
-					if (true == true){
-						System.out.println("c");
+					if (elem.isNull("distance")){
+						System.out.println("Ist null");
 						asdf.setDistance(0);
 					}
 					else{
-						System.out.println("a");
+						System.out.println("ist nicht null");
 						distance = elem.getJSONObject("distance");
 						System.out.println("b");
 						asdf.setDistance(Integer.parseInt(distance
