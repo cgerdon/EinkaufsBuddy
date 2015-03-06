@@ -17,7 +17,7 @@
 				
 		<h:form>	
 	
-					<h:dataTable  id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
+					<h:dataTable id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
 									
 							<h:column >
 							<h:panelGroup styleClass="messageoverviewName">
@@ -27,19 +27,27 @@
 							<h:panelGroup styleClass="messagecycle" rendered="#{messageoverview.ms_anzahl > 0}">
 								<h:outputText  value="#{messageoverview.ms_anzahl}" />
 							</h:panelGroup>
-							</h:column>	
+							</h:column>								
+				
 							<h:column >
-								<h:commandButton value="ansehen" action="#{message.showMessage}" >
+								<h:commandButton value="#{messageoverview.ms_senderId} ansehen" action="#{message.showMessage}" >
 									<f:param name="namevonmessage" value="#{messageoverview.ms_senderId}" />
 								</h:commandButton>	
 							</h:column>
-							<h:column >
-								<h:commandButton value="löschen" action="#{message.deleteAllMessage}"> 
-									<f:param name="namevonmessagedelete" value="#{messageoverview.ms_senderId}" />
-								</h:commandButton>	
-							</h:column>	
-					
-					</h:dataTable> 
+							
+							<h:column>
+							    <p:commandButton value="löschen" action="#{message.deleteAllMessage}">
+							        <p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+							        <f:param name="namevonmessagedelete" value="#{messageoverview.ms_senderId}" />
+							    </p:commandButton>
+						</h:column>	
+					</h:dataTable>  
+							    
+							    
+							    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+							        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							    </p:confirmDialog>
 					
 					<p:poll interval="5" listener="#{message.showAllMessageReload}" update="messageoverviewrepeat"/>
 	
@@ -51,6 +59,16 @@
 
 <!-- 
 
+
+	</h:dataTable> 	
+
+					<h:dataTable styleClass="fliessendeTabelle2" var="messageoverview" value="#{message.messageoverview}" >		
+					
+					
+					
+<h:commandButton value="löschen" action="#{message.deleteAllMessage}"> 
+									<f:param name="namevonmessagedelete" value="#{messageoverview.ms_senderId}" />
+								</h:commandButton>
 
 
  -->
