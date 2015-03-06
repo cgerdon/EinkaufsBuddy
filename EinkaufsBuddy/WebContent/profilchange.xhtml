@@ -8,7 +8,7 @@
 	<ui:define name="content">
 		<h1>Profilseite ändern...</h1>
 		
-		<h:form>  
+		<h:form id="inputForm" enctype="multipart/form-data">  
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Vorname: "/>
 				<h:inputText value="#{user.firstName}" binding="#{firstName}"/>
@@ -36,8 +36,24 @@
 		        <h:inputText value="#{user.abouttext}" binding="#{abouttext}"/>
 		        
 		        <h:outputLabel value="Profilbild: "/>
-		        
-		        
+		        	<h:inputFile id="file" 
+		             label="file"
+			         value="#{user.part}" 
+			         required="true" 
+			         requiredMessage="File not selected !!">
+            <!-- FileUploadValidator for file validation -->
+		    <f:validator validatorId="FileUploadValidator" />
+		</h:inputFile>
+		<h:message style="color: red" for="file" /><br />
+ 
+		<h:commandButton id="submit" 
+		                 action="#{user.uploadFile}"
+			             value="upload file" /><br />
+ 
+        <!-- status message of file upload; rendered if message is set -->
+		<h:outputText value="#{user.statusMessage}"
+			          rendered="#{not empty user.statusMessage}" />
+        
 		        <h:outputLabel value="Montag: " />
 				<h:outputLabel value=" "></h:outputLabel>
 				<h:selectBooleanCheckbox id="MoMo"
