@@ -270,8 +270,10 @@ public class message implements Serializable {
 
                     	ms_senderNamekurz= rs.getString("member.last_name");
                     	ms_senderNamekurz= ms_senderNamekurz.substring(0, ms_senderNamekurz.length()-(ms_senderNamekurz.length()-1)) + ".";
-		                    	 
-                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, null, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0);
+		                
+                    	 ms_time = DateConString(rs.getString("table1.helpmaxt"));
+                    	
+                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, ms_time, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0);
                     	messageoverview.add(TempObj);     	
                     }	
                 }
@@ -310,9 +312,11 @@ public class message implements Serializable {
 
                     	ms_senderNamekurz= rs.getString("member.last_name");
                     	ms_senderNamekurz= ms_senderNamekurz.substring(0, ms_senderNamekurz.length()-(ms_senderNamekurz.length()-1)) + ".";
-		                    	 
-                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, null, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null,0);
-                    	messageoverview.add(TempObj);     	
+                    	
+                    	ms_time = DateConString(rs.getString("table1.helpmaxt"));
+                     	
+                     	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, ms_time, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0);
+                     	messageoverview.add(TempObj);     	
                     }	
                 }
             } catch (SQLException sqle) {  
@@ -576,121 +580,123 @@ public class message implements Serializable {
 		
 		
 		public void writeMessage() { 	
-			
-		byte b = 1;
 		
-		Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
-		String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
- 
-            PreparedStatement ps = null;  
-            Connection con = null;  
-            
-            try {  
-                if (ds != null) {  
-                    con = ds.getConnection();  
-                    if (con != null) { 
-                        String sql = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
-                        ps = con.prepareStatement(sql);  
-                        ps.setInt(1, ms_receiverId);  
-                        ps.setInt(2, ms_senderId);  
-                        ps.setString(3, datumConverter); 
-                        ps.setByte(4, b);  
-                        ps.setString(5, ms_text); 
-                        ps.setByte(6, b);  
-                        ps.setByte(7, b);  
-
-                       ps.executeUpdate();   
-                        
-                       ms_text = null; 
-                       
-                       
-                       
-                       PreparedStatement ps2 = null;  
-                       ResultSet rs = null;  
-                	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
-                       ps2 = con.prepareStatement(sql2);  
-                       rs = ps2.executeQuery();
-              
-                       messagedetails.clear();
-                       int i = 0; 
-                       while (rs.next()) {  
-                       		i++;
-                    	   ms_time = DateConString(rs.getString("message.time_sent"));
-                        	
-                     	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
-                    	   messagedetails.add(TempObj);  
-                       }
-                       
-                       
-                       
-		                       if (messagedetails.size()==1){
-		                    	   
-		                    	   int hvar = 0; 
-		                           PreparedStatement ps3 = null;
-		                           ResultSet rs2 = null;  
-		                     	   String sql3 = "SELECT COUNT(message.id) FROM message WHERE (message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ");" ;
-		                           ps3 = con.prepareStatement(sql3);  
-		                           rs2 = ps3.executeQuery();
-		                           
-		                           
-		                           while (rs2.next()) {
-		                        	   hvar =  rs2.getInt("COUNT(message.id)");	 
-		                            }	
-		                           
-		                           if (hvar==1){
-		                        	   
-		                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-1000);		
-		                        	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
-		                        	   byte c=2; 
-		                        	   
-		                        	   PreparedStatement ps4 = null;  
-		                        	   String sql4 = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
-		                               ps4 = con.prepareStatement(sql4);  
-		                               ps4.setInt(1, ms_senderId);  
-		                               ps4.setInt(2, ms_receiverId);  
-		                               ps4.setString(3, datumConverter2); 
-		                               ps4.setByte(4, c);  
-		                               ps4.setString(5, "SystemFirstMessage"); 
-		                               ps4.setByte(6, c);  
-		                               ps4.setByte(7, c);  
+		if (ms_text.length() != 0){
+				byte b = 1;
+				
+				Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
+				String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
+		 
+		            PreparedStatement ps = null;  
+		            Connection con = null;  
+		            
+		            try {  
+		                if (ds != null) {  
+		                    con = ds.getConnection();  
+		                    if (con != null) { 
+		                        String sql = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
+		                        ps = con.prepareStatement(sql);  
+		                        ps.setInt(1, ms_receiverId);  
+		                        ps.setInt(2, ms_senderId);  
+		                        ps.setString(3, datumConverter); 
+		                        ps.setByte(4, b);  
+		                        ps.setString(5, ms_text); 
+		                        ps.setByte(6, b);  
+		                        ps.setByte(7, b);  
 		
-		                              ps4.executeUpdate();   
-
-		                           }
-		                           
-
-		                    	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
-		                           ps2 = con.prepareStatement(sql2);  
-		                           rs = ps2.executeQuery();
-		                  
-		                           messagedetails.clear();
-		                           i = 0; 
-		                           while (rs.next()) {  
-		                           		i++;
-		                        	   ms_time = DateConString(rs.getString("message.time_sent"));
-		                            	
-		                         	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
-		                        	   messagedetails.add(TempObj);  
-		                           }
-		                           
-		                        }
-                       
-                       
-                       
-                       
-                        
-                    }  
-                }  
-            } catch (Exception e) {  
-                System.out.println(e);  
-            } finally {  
-                try {  
-                    con.close();  
-                    ps.close();  
-                } catch (Exception e) {  
-                    e.printStackTrace();  
-                }  
-            }  
+		                       ps.executeUpdate();   
+		                        
+		                       ms_text = null; 
+		                       
+		                       
+		                       
+		                       PreparedStatement ps2 = null;  
+		                       ResultSet rs = null;  
+		                	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+		                       ps2 = con.prepareStatement(sql2);  
+		                       rs = ps2.executeQuery();
+		              
+		                       messagedetails.clear();
+		                       int i = 0; 
+		                       while (rs.next()) {  
+		                       		i++;
+		                    	   ms_time = DateConString(rs.getString("message.time_sent"));
+		                        	
+		                     	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
+		                    	   messagedetails.add(TempObj);  
+		                       }
+		                       
+		                       
+		                       
+				                       if (messagedetails.size()==1){
+				                    	   
+				                    	   int hvar = 0; 
+				                           PreparedStatement ps3 = null;
+				                           ResultSet rs2 = null;  
+				                     	   String sql3 = "SELECT COUNT(message.id) FROM message WHERE (message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ");" ;
+				                           ps3 = con.prepareStatement(sql3);  
+				                           rs2 = ps3.executeQuery();
+				                           
+				                           
+				                           while (rs2.next()) {
+				                        	   hvar =  rs2.getInt("COUNT(message.id)");	 
+				                            }	
+				                           
+				                           if (hvar==1){
+				                        	   
+				                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-1000);		
+				                        	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
+				                        	   byte c=2; 
+				                        	   
+				                        	   PreparedStatement ps4 = null;  
+				                        	   String sql4 = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
+				                               ps4 = con.prepareStatement(sql4);  
+				                               ps4.setInt(1, ms_senderId);  
+				                               ps4.setInt(2, ms_receiverId);  
+				                               ps4.setString(3, datumConverter2); 
+				                               ps4.setByte(4, c);  
+				                               ps4.setString(5, "SystemFirstMessage"); 
+				                               ps4.setByte(6, c);  
+				                               ps4.setByte(7, c);  
+				
+				                              ps4.executeUpdate();   
+		
+				                           }
+				                           
+		
+				                    	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+				                           ps2 = con.prepareStatement(sql2);  
+				                           rs = ps2.executeQuery();
+				                  
+				                           messagedetails.clear();
+				                           i = 0; 
+				                           while (rs.next()) {  
+				                           		i++;
+				                        	   ms_time = DateConString(rs.getString("message.time_sent"));
+				                            	
+				                         	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
+				                        	   messagedetails.add(TempObj);  
+				                           }
+				                           
+				                        }
+		                       
+		                       
+		                       
+		                       
+		                        
+		                    }  
+		                }  
+		            } catch (Exception e) {  
+		                System.out.println(e);  
+		            } finally {  
+		                try {  
+		                    con.close();  
+		                    ps.close();  
+		                } catch (Exception e) {  
+		                    e.printStackTrace();  
+		                }  
+		            } 
+		}
     }   
 	
 		

@@ -20,24 +20,26 @@
 			<br/>
 				<p:dataScroller id="messagerepeat" var="messagedetails" value="#{message.messagedetails}" mode="inline">
 
-						<h:panelGroup styleClass="leftmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
-							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
-							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
-							<h:outputText value="#{messagedetails.ms_time} "/>
+						<h:panelGroup styleClass="talk-bubble tri-left round border left-top leftmessage" layout="block" rendered="#{messagedetails.ms_senderId == user.id}">
+							<h:outputText styleClass="linkswer" value="#{messagedetails.ms_receiverFirstName} "/>
+							<h:outputText styleClass="linkswer" value="#{messagedetails.ms_receiverLastName}: " />
+							<h:outputText styleClass="linkswer" value="#{messagedetails.ms_time} "/>
 						<br/>				
-							<h:outputText value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
-							<h:commandLink value="Inserat: #{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}">
+							<h:outputText styleClass="chattext" value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
+							<h:outputText  value="Inserat: " rendered="#{messagedetails.ms_advertId == 2}"/>
+							<h:commandLink value="#{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}">
 							</h:commandLink>
 						</h:panelGroup>
 				
 					
-						<h:panelGroup styleClass="rightmessage" layout="block" rendered="#{messagedetails.ms_senderId != user.id}">
-							<h:outputText value="#{messagedetails.ms_receiverFirstName} "/>
-							<h:outputText value="#{messagedetails.ms_receiverLastName} " />
-							<h:outputText value="#{messagedetails.ms_time} "/>
+						<h:panelGroup styleClass="talk-bubble tri-right round border right-top rightmessage" layout="block" rendered="#{messagedetails.ms_senderId != user.id}">
+							<h:outputText styleClass="rechtswer" value="#{messagedetails.ms_receiverFirstName} "/>
+							<h:outputText styleClass="rechtswer" value="#{messagedetails.ms_receiverLastName}: " />
+							<h:outputText styleClass="rechtswer" value="#{messagedetails.ms_time} "/>
 						<br/>				
-							<h:outputText value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
-							<h:commandLink value="Inserat: #{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}">
+							<h:outputText styleClass="chattext"  value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
+							<h:outputText  value="Inserat: " rendered="#{messagedetails.ms_advertId == 2}"/>
+							<h:commandLink value="#{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}">
 							</h:commandLink>
 						</h:panelGroup>
 		
@@ -52,9 +54,3 @@
 	</ui:define>
   
 </ui:composition>
-
-<!-- 
-
-action="#{advert.doJob}"
-action="#{advert.doJob}"
- -->
