@@ -303,11 +303,12 @@ public class simpleSearch implements Serializable {
 						String RealStreet = "";
 						Integer RealPLZ = 0;
 						if (rs.getString("street") == null){
-							RealStreet = rs.getString("street");
-							RealPLZ = rs.getInt("plz");
-						}else{
 							RealStreet = NoStreet;
 							RealPLZ = NoPLZ;
+						}else{
+							RealStreet = rs.getString("street");
+							RealPLZ = rs.getInt("plz");
+						
 						}
 						//rs.getString("fav_market"),
 						SimpleSearchResults TempObj = new SimpleSearchResults(
@@ -358,6 +359,8 @@ public class simpleSearch implements Serializable {
 
 							reader = new BufferedReader(new InputStreamReader(
 									url.openStream()));
+							
+							System.out.println(url);
 
 							int read;
 							char[] chars = new char[1024];
@@ -375,23 +378,28 @@ public class simpleSearch implements Serializable {
 			}
 		}
 		if (validplz == true) {
+			
 			JSONObject jsonGoogleMaps = new JSONObject(buffer.toString());
+			System.out.println(jsonGoogleMaps.toString());
 			JSONArray rows = jsonGoogleMaps.getJSONArray("rows");
 
 			for (int i = 0; i < rows.length(); i++) {
 				JSONObject obj = rows.getJSONObject(i);
 				JSONArray elements = obj.getJSONArray("elements");
+				
 				for (int j = 0; j < elements.length(); j++) {
 					JSONObject elem = elements.getJSONObject(j);
+					System.out.println(elem.toString());
 					SimpleSearchResults asdf = AdvertList.get(j);
-					JSONObject distance = new JSONObject();
-					if (elem.isNull("distance")){
+					//JSONObject distance = new JSONObject();
+					
+					if (checkStreet(elem) == null){
 						System.out.println("Ist null");
 						asdf.setDistance(0);
 					}
 					else{
 						System.out.println("ist nicht null");
-						distance = elem.getJSONObject("distance");
+						JSONObject distance = elem.getJSONObject("distance");
 						System.out.println("b");
 						asdf.setDistance(Integer.parseInt(distance
 								.getString("value"))/1000);
@@ -416,6 +424,18 @@ public class simpleSearch implements Serializable {
 		}
 		summe();
 		return "simpleSearchResult";
+	}
+	
+	private JSONObject checkStreet(JSONObject json) throws JSONException
+	{   
+	    try
+	    {
+	        return json.getJSONObject("distance");}
+	    catch (JSONException e)
+	    {
+	    	System.out.println("null wird return");
+	        return null;
+	    }    
 	}
 
 	public String sortByDistance() {
