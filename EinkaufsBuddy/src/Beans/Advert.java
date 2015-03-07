@@ -90,8 +90,10 @@ public class Advert implements Serializable{
 	}
 
 	public String showAd(int ad_id){
-//		FacesContext fc2 = FacesContext.getCurrentInstance();
-//		ms_advertID = getadvertid(fc2);
+		FacesContext fc2 = FacesContext.getCurrentInstance();
+		ms_advertID = getadvertid(fc2);
+		FacesContext fc = FacesContext.getCurrentInstance();
+		this.ad_id = getresulttodetail(fc); 
 		PreparedStatement ps = null;  
         Connection con = null;  
         ResultSet rs = null;
