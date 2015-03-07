@@ -59,6 +59,7 @@ public class User implements Serializable{
 	private String lastName;
 	private String email;
 	private String password;
+	private String password2;
 	private Date birthday;
 	private int car;
 	private Blob pictureblob;
@@ -76,6 +77,8 @@ public class User implements Serializable{
 	DataSource ds;
 	
 	public String uploadFile() throws IOException {
+		
+		
 		 
 		String fileName = getFileName(part);
 		System.out.println("***** fileName: " + fileName);
@@ -112,6 +115,14 @@ public class User implements Serializable{
 		return null;    // return to same page
 	}
  
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+
 	private void WriteImgtoDb() throws FileNotFoundException {
 		String basePath = "C:" + File.separator + "temp" + File.separator;
 		

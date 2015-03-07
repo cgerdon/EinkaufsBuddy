@@ -27,19 +27,21 @@
                 </tr>  
                 <tr>  
                     <td><h:outputText value="Mail:" /></td>  
-                    <td><p:inputText id="email" value="#{user.email}"  
+                    <td><p:inputText id="email" value="#{us	er.email}"  
                             required="true" requiredMessage="Bitte Mailadresse angeben" /></td>  
-                    <td><h:message for="email" style="color:red" /></td>  
+                    <td></td>  
                 </tr>  
                 <tr>  
                     <td><h:outputText value="Passwort:" /></td>  
-                    <td><h:inputSecret id="psw" value="#{user.password}"  
-                            required="true" requiredMessage="Bitte Passwort angeben" /></td>  
-                    <td><h:message for="psw" style="color:red" /></td>  
+                    <td> <p:password id="pwd1" value="#{user.password}" match="pwd2" label="Password 1" required="true" />
+        			<p:password id="pwd2" value="#{user.password2}" label="Password 2" required="true" />
+        			</td>  
+                    <td></td>  
                 </tr>  
                 <tr>  
                     <td />  
-                    <td><p:commandButton value="Registrieren" icon="ui-icon-key" action="#{user.add}" style="width:130px" /></td>  
+                    <td><p:commandButton value="Registrieren" icon="ui-icon-key" action="#{user.add}" style="width:130px" />
+                    <p:messages id="messages" showDetail="true" autoUpdate="true"/></td>  
                 </tr>  
             </table>  
        </h:panelGroup>
