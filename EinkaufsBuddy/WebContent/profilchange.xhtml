@@ -41,19 +41,18 @@
 
 				<h:outputLabel value="Über dich: " />
 				<h:inputText value="#{user.abouttext}" binding="#{abouttext}" />
-
 				<h:outputLabel value="Profilbild: " />
 				<h:inputFile id="file" label="file" value="#{user.part}">
-					<!-- FileUploadValidator for file validation -->
+
 					<f:validator validatorId="FileUploadValidator" />
 				</h:inputFile>
 				<h:commandButton id="submit" action="#{user.uploadFile}"
 					value="Bild hochladen" />
 				<br />
 
-				<!-- status message of file upload; rendered if message is set -->
 				<h:outputText value="#{user.statusMessage}"
 					rendered="#{not empty user.statusMessage}" />
+
 
 				<h:outputLabel value="Montag: " />
 				<h:outputLabel value=" "></h:outputLabel>
