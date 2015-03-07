@@ -10,11 +10,70 @@
 
 
        
-        <h:form>  
+        <h:form id="form">  
 	        <h:commandButton action="#{advert.showown}" value="Eigene Inserate anzeigen"/>
 	        	
 			<h:commandButton action="#{advert.showothers}" value="Fremde Inserate anzeigen"/>
+			
+		
+			
+			<p:tabView dynamic="true" cache="true">
+      		  
+		 <p:ajax event="tabChange" listener="#{advert.showAll}"/>
+			 
+		        <p:tab title="Eigene Inserate" >
+
+	
+	 	   <p:dataTable var="ads" value="#{advert.otheradverts}" id="tabs" >
+	    
+	    
+			
+
+					<h:panelGrid columns="2" border="1">
+						<h:panelGroup>
+		
+							<h:outputText value=" Limit: #{ads.limit} €" />
+						</h:panelGroup>
+	
+	
+						<h:panelGroup>
+	
+							<h:outputText value="#{ads.text}" />
+							<br />
+
+							<h:outputText value="Kategorie: #{ads.category}" />
+						</h:panelGroup>
+					</h:panelGrid>
+				
+		
+		</p:dataTable> 
+ 
+
+</p:tab>
+		       
+		        
+		        <p:tab title="Fremde Inserate" >
+		        
+	<h:outputText value="Hallo" />
+	
+		</p:tab>
+		        
+</p:tabView>
+			
+			
+			
+			
         </h:form>  
         
 </ui:define>
 </ui:composition>
+
+
+
+<!-- 
+
+	<p:remoteCommand name="onload" action="#{advert.showAll}" autoRun="true" />
+	
+
+
+ -->

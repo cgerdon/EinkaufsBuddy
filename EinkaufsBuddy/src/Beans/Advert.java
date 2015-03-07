@@ -23,6 +23,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TabChangeEvent;
  
 @ManagedBean(name = "advert")  
 
@@ -893,5 +894,58 @@ public class Advert implements Serializable{
         return "viewotheradverts?faces-redirect=true";
     }
     	
+    
+    public void showAll(TabChangeEvent event){
+    	
+        FacesMessage msg = new FacesMessage(event.getTab().getTitle());
+        
+     //   String jo = FacesContext.getCurrentInstance().addMessage(null, msg);
+      //  String jo = FacesContext.getCurrentInstance(msg);
+        
+          System.out.println(msg);
+    	   
+    /*	   FacesContext.getCurrentInstance().addMessage(null, msg);
+    	
+    	
+           FacesContext fc = FacesContext.getCurrentInstance();
+   		this.ms_senderId = getstartmessage(fc);
+    	
+      	PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;
+        otheradverts.clear();
+    if (ds != null) {  
+        try {  
+            con = ds.getConnection();  
+            if (con != null) {
+
+            	// String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.advertiser_id = '" + buyer_id + "'";
+            	String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "'";
+                ps = con.prepareStatement(sql);  
+                rs = ps.executeQuery();  
+                
+             
+                while (rs.next()) {  
+              
+                	
+                	Advert TempObj = new Advert(
+							rs.getString("text"), rs.getInt("plz"),
+							rs.getString("street"), rs.getString("name"),
+							rs.getString("last_name"), rs.getInt("ad.id"),
+							rs.getDouble("limit"), rs.getDouble("income"),
+							0, rs.getString("time"), rs.getDate("date"),
+							rs.getString("category"), rs.getInt("member.id"));
+                	
+                	
+                	otheradverts.add(TempObj);
+             
+                	
+                }
+            }  
+        } catch (SQLException sqle) {  
+            sqle.printStackTrace();  
+        }    
+    }*/
+}
 	
 }  
