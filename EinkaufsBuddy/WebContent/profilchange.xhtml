@@ -1,154 +1,157 @@
 <ui:composition template="template/master.xhtml"
- 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-    
+
 	<ui:define name="content">
 		<h1>Profil ändern</h1>
-		
-		<h:form id="inputForm" enctype="multipart/form-data">  
-			<h:panelGrid columns="2">
-				<h:outputLabel value="Vorname: "/>
-				<p:inputText value="#{user.firstName}" binding="#{firstName}" required="true"/>
-		      	<h:outputLabel value="Nachname: "/>
-		      	<p:inputText value="#{user.lastName}" binding="#{lastName}"/>
-		        <h:outputLabel value="Geburtstag: "/>
-		        
-		        <p:calendar id="german" value="#{user.birthday}" locale="de" navigator="true" pattern="dd.MM.yyyy" binding="#{birthday}"/>
-		        <h:outputLabel value="Auto: "/>
-		        <h:selectOneMenu value="#{user.car}">
-   	<f:selectItem itemValue="1" itemLabel="Ja" />
-   	<f:selectItem itemValue="0" itemLabel="Nein" />
-</h:selectOneMenu>
-		        <h:outputLabel value="Telefon: "/>
-		        <h:inputText value="#{user.phone}" binding="#{phone}"/>
 
-				<h:outputLabel value="E-Mail: "/>
-		      	<h:outputText value="#{user.email}" binding="#{email}"/>     	
-		      	<h:outputLabel value="Passwort: "/>
-		        <h:inputText value="#{user.password}" binding="#{password}"/>
-  		        
-		        <h:outputLabel value="Straße: "/>
-		        <h:inputText value="#{user.street}" binding="#{street}"/>
-		        <h:outputLabel value="PLZ: "/>
-		        <h:inputText value="#{user.plz}" binding="#{plz}"/>
-      
-		        <h:outputLabel value="Über dich: "/>
-		        <h:inputText value="#{user.abouttext}" binding="#{abouttext}"/>
-		        
-		        <h:outputLabel value="Profilbild: "/>
-		        	<h:inputFile id="file" 
-		             label="file"
-			         value="#{user.part}" >
-            <!-- FileUploadValidator for file validation -->
-		    <f:validator validatorId="FileUploadValidator" />
-		</h:inputFile>
-		<h:message style="color: red" for="file" /><br />
- 
-		<h:commandButton id="submit" 
-		                 action="#{user.uploadFile}"
-			             value="Bild hochladen" /><br />
- 
-        <!-- status message of file upload; rendered if message is set -->
-		<h:outputText value="#{user.statusMessage}"
-			          rendered="#{not empty user.statusMessage}" />
-        
-		        <h:outputLabel value="Montag: " />
+		<h:form id="inputForm" enctype="multipart/form-data">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="E-Mail: " />
+				<h:outputText value="#{user.email}" binding="#{email}" />
+				<h:outputLabel value="Vorname: " />
+				<p:inputText value="#{user.firstName}" binding="#{firstName}"
+					required="true" requiredMessage="Bitte Vornamen eingeben" />
+				<h:outputLabel value="Nachname: " />
+				<p:inputText value="#{user.lastName}" binding="#{lastName}"
+					required="true" requiredMessage="Bitte Nachnamen eingeben" />
+					<h:outputLabel value="Passwort:"></h:outputLabel>
+				<p:inputText value="#{user.password}" required="true" binding="#{password}"
+					requiredMessage="Bitte Passwort eingeben" />
+				<h:outputLabel value="Geburtstag: " />
+
+				<p:calendar id="german" value="#{user.birthday}" locale="de"
+					navigator="true" pattern="dd.MM.yyyy" binding="#{birthday}" />
+				<h:outputLabel value="Auto: " />
+				<h:selectOneMenu value="#{user.car}">
+					<f:selectItem itemValue="1" itemLabel="Ja" />
+					<f:selectItem itemValue="0" itemLabel="Nein" />
+				</h:selectOneMenu>
+				<h:outputLabel value="Telefon: " />
+				<h:inputText value="#{user.phone}" binding="#{phone}" />
+
+
+					<h:outputLabel value="Straße: " />
+				<h:inputText value="#{user.street}" binding="#{street}" />
+				<h:outputLabel value="PLZ: " />
+				<h:inputText value="#{user.plz}" binding="#{plz}" />
+
+				<h:outputLabel value="Über dich: " />
+				<h:inputText value="#{user.abouttext}" binding="#{abouttext}" />
+
+				<h:outputLabel value="Profilbild: " />
+				<h:inputFile id="file" label="file" value="#{user.part}">
+					<!-- FileUploadValidator for file validation -->
+					<f:validator validatorId="FileUploadValidator" />
+				</h:inputFile>
+				<h:commandButton id="submit" action="#{user.uploadFile}"
+					value="Bild hochladen" />
+				<br />
+
+				<!-- status message of file upload; rendered if message is set -->
+				<h:outputText value="#{user.statusMessage}"
+					rendered="#{not empty user.statusMessage}" />
+
+				<h:outputLabel value="Montag: " />
 				<h:outputLabel value=" "></h:outputLabel>
 				<h:selectBooleanCheckbox id="MoMo"
-					value="#{user.daytimeavailable[1][1]}"  />
+					value="#{user.daytimeavailable[1][1]}" />
 				<h:outputLabel value="Morgens" for="MoMo" />
 				<h:selectBooleanCheckbox id="MoVoMo"
-					value="#{user.daytimeavailable[1][2]}"  />
+					value="#{user.daytimeavailable[1][2]}" />
 				<h:outputLabel value="Vormittags" for="MoVoMo" />
 				<h:selectBooleanCheckbox id="MoMi"
-					value="#{user.daytimeavailable[1][3]}"  />
+					value="#{user.daytimeavailable[1][3]}" />
 				<h:outputLabel value="Mittags" for="MoMi" />
 				<h:selectBooleanCheckbox id="MoNaMi"
-					value="#{user.daytimeavailable[1][4]}"  />
+					value="#{user.daytimeavailable[1][4]}" />
 				<h:outputLabel value="Nachmittags" for="MoNaMi" />
 				<h:selectBooleanCheckbox id="MoAb"
-					value="#{user.daytimeavailable[1][5]}"  />
+					value="#{user.daytimeavailable[1][5]}" />
 				<h:outputLabel value="Abends" for="MoAb" />
 
 				<h:outputLabel value="Dienstag: " />
 				<h:outputLabel value=" "></h:outputLabel>
 				<h:selectBooleanCheckbox id="DiMo"
-					value="#{user.daytimeavailable[2][1]}"  />
+					value="#{user.daytimeavailable[2][1]}" />
 				<h:outputLabel value="Morgens" for="DiMo" />
 				<h:selectBooleanCheckbox id="DiVoMo"
-					value="#{user.daytimeavailable[2][2]}"  />
+					value="#{user.daytimeavailable[2][2]}" />
 				<h:outputLabel value="Vormittags" for="DiVoMo" />
 				<h:selectBooleanCheckbox id="DiMi"
-					value="#{user.daytimeavailable[2][3]}"  />
+					value="#{user.daytimeavailable[2][3]}" />
 				<h:outputLabel value="Mittags" for="DiMi" />
 				<h:selectBooleanCheckbox id="DiNaMi"
-					value="#{user.daytimeavailable[2][4]}"  />
+					value="#{user.daytimeavailable[2][4]}" />
 				<h:outputLabel value="Nachmittags" for="DiNaMi" />
 				<h:selectBooleanCheckbox id="DiAb"
-					value="#{user.daytimeavailable[2][5]}"  />
+					value="#{user.daytimeavailable[2][5]}" />
 				<h:outputLabel value="Abends" for="DiAb" />
 
 				<h:outputLabel value="Mittwoch: " />
 				<h:outputLabel value=" "></h:outputLabel>
 				<h:selectBooleanCheckbox id="MiMo"
-					value="#{user.daytimeavailable[3][1]}"  />
+					value="#{user.daytimeavailable[3][1]}" />
 				<h:outputLabel value="Morgens" for="MiMo" />
 				<h:selectBooleanCheckbox id="MiVoMo"
-					value="#{user.daytimeavailable[3][2]}"  />
+					value="#{user.daytimeavailable[3][2]}" />
 				<h:outputLabel value="Vormittags" for="MiVoMo" />
 				<h:selectBooleanCheckbox id="MiMi"
-					value="#{user.daytimeavailable[3][3]}"  />
+					value="#{user.daytimeavailable[3][3]}" />
 				<h:outputLabel value="Mittags" for="MiMi" />
 				<h:selectBooleanCheckbox id="MiNaMi"
-					value="#{user.daytimeavailable[3][4]}"  />
+					value="#{user.daytimeavailable[3][4]}" />
 				<h:outputLabel value="Nachmittags" for="MiNaMi" />
 				<h:selectBooleanCheckbox id="MiAb"
-					value="#{user.daytimeavailable[3][5]}"  />
+					value="#{user.daytimeavailable[3][5]}" />
 				<h:outputLabel value="Abends" for="MiAb" />
 
 				<h:outputLabel value="Donnerstag: " />
 				<h:outputLabel value=" "></h:outputLabel>
 				<h:selectBooleanCheckbox id="DoMo"
-					value="#{user.daytimeavailable[4][1]}"  />
+					value="#{user.daytimeavailable[4][1]}" />
 				<h:outputLabel value="Morgens" for="DoMo" />
 				<h:selectBooleanCheckbox id="DoVoMo"
-					value="#{user.daytimeavailable[4][2]}"  />
+					value="#{user.daytimeavailable[4][2]}" />
 				<h:outputLabel value="Vormittags" for="DoVoMo" />
 				<h:selectBooleanCheckbox id="DoMi"
-					value="#{user.daytimeavailable[4][3]}"  />
+					value="#{user.daytimeavailable[4][3]}" />
 				<h:outputLabel value="Mittags" for="DoMi" />
 				<h:selectBooleanCheckbox id="DoNaMi"
-					value="#{user.daytimeavailable[4][4]}"  />
+					value="#{user.daytimeavailable[4][4]}" />
 				<h:outputLabel value="Nachmittags" for="DoNaMi" />
 				<h:selectBooleanCheckbox id="DoAb"
-					value="#{user.daytimeavailable[4][5]}"  />
+					value="#{user.daytimeavailable[4][5]}" />
 				<h:outputLabel value="Abends" for="DoAb" />
 
 				<h:outputLabel value="Freitag: " />
 				<h:outputLabel value=" "></h:outputLabel>
 				<h:selectBooleanCheckbox id="FrMo"
-					value="#{user.daytimeavailable[5][1]}"  />
+					value="#{user.daytimeavailable[5][1]}" />
 				<h:outputLabel value="Morgens" for="FrMo" />
 				<h:selectBooleanCheckbox id="FrVoMo"
-					value="#{user.daytimeavailable[5][2]}"  />
+					value="#{user.daytimeavailable[5][2]}" />
 				<h:outputLabel value="Vormittags" for="FrVoMo" />
 				<h:selectBooleanCheckbox id="FrMi"
-					value="#{user.daytimeavailable[5][3]}"  />
+					value="#{user.daytimeavailable[5][3]}" />
 				<h:outputLabel value="Mittags" for="FrMi" />
 				<h:selectBooleanCheckbox id="FrNaMi"
-					value="#{user.daytimeavailable[5][4]}"  />
+					value="#{user.daytimeavailable[5][4]}" />
 				<h:outputLabel value="Nachmittags" for="FrNaMi" />
 				<h:selectBooleanCheckbox id="FrAb"
-					value="#{user.daytimeavailable[5][5]}"  />
+					value="#{user.daytimeavailable[5][5]}" />
 				<h:outputLabel value="Abends" for="FrAb" />
-   
-        	</h:panelGrid>
-      
-	        <h:commandButton action="#{user.profilchange(firstName.value, lastName.value, birthday.value, car.value, phone.value, email.value, password.value, street.value, plz.value, abouttext.value)}" value="Ändern"/>
-        </h:form>  
+
+			</h:panelGrid>
+
+			<h:commandButton
+				action="#{user.profilchange(firstName.value, lastName.value, birthday.value, car.value, phone.value, email.value, password.value, street.value, plz.value, abouttext.value)}"
+				value="Ändern" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+		</h:form>
 	</ui:define>
-  
+
 </ui:composition>
