@@ -51,14 +51,14 @@ public class Advert implements Serializable{
     private String fav_market;
     private int buyer_id;
     private int ad_count;
-    
+
     //für die Anzeige der Inserate
     private int plz;
 	private String street;
 	private String name;
 	private String last_name;
 	private int id;
-	private Integer distance;
+	
 	private String zeitpunkt;
 	private Date datum;
 	private String category;
@@ -89,8 +89,62 @@ public class Advert implements Serializable{
 		return ad_id;
 	}
 
+	public String showAd(int ad_id){
+//		FacesContext fc2 = FacesContext.getCurrentInstance();
+//		ms_advertID = getadvertid(fc2);
+		PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;
+        
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {
+                	
+                    String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_id + "'"; 
+                    System.out.println(sql);
+                    ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();  
+               
+                    while (rs.next()) {  
+                         
+                    	datum = rs.getDate("ad.date");
+                    	ad_id = rs.getInt("ad.id");
+                    	income = rs.getDouble("ad.income");
+                    	limit = rs.getDouble("ad.limit");
+                    	name = rs.getString("member.name");
+                    	last_name = rs.getString("member.last_name");
+                    	text = rs.getString("ad.text");
+                    	zeitpunkt = rs.getString("times_available.time");
+                    	category = rs.getString("category.category");
 
-
+                    	
+                    }
+                }  
+            } catch (Exception e) {  
+                System.out.println(e);  
+            } finally {  
+                try {  
+                    con.close();  
+                    ps.close();  
+                } catch (Exception e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+//		AdShow.setDatum(rs.getDate("ad.date"));
+//		AdShow.setId(rs.getInt("ad.id"));
+//		AdShow.setIncome(rs.getDouble("ad.income"));
+//		AdShow.setKategorie(rs.getString("category.category"));
+//		AdShow.setLimit(rs.getDouble("ad.limit"));
+//		AdShow.setName(rs.getString("member.last_name"));
+//		AdShow.setText(rs.getString("ad.text"));
+//		AdShow.setVorname(rs.getString("member.name"));
+//		AdShow.setZeitpunkt(rs.getString("times_available.time"));
+		
+        }
+		return "advertdetail?faces-redirect=true";
+	}
+	
 
 	public int getMs_advertID() {
 		return ms_advertID;
@@ -330,14 +384,6 @@ public class Advert implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getDistance() {
-		return distance;
-	}
-
-	public void setDistance(Integer distance) {
-		this.distance = distance;
-	}
-
 	public String getZeitpunkt() {
 		return zeitpunkt;
 	}
@@ -381,7 +427,6 @@ public class Advert implements Serializable{
 	this.id = id;
 	this.limit = limit;
 	this.income = income;
-	this.distance = distance;
 	this.zeitpunkt = zeitpunkt;
 	this.datum = datum;
 	this.category = category;
@@ -588,7 +633,8 @@ public class Advert implements Serializable{
  		return "advertdetail?faces-redirect=true";    
 	}
 	
-	public ArrayList <Advert> getAd_idfromSQL(int ad_id){
+	public ArrayList<Advert> getAd_idfromSQL(int ad_id){
+			
 			this.ad_id = ad_id; 
 			System.out.println(ad_id);
 			
@@ -603,19 +649,18 @@ public class Advert implements Serializable{
                     con = ds.getConnection();  
                     if (con != null) {  
                     	
-                        String sql = "SELECT * FROM ad WHERE ad.id = '" + ad_id + "'";  
+                        String sql = "SELECT member.name, member.last_name, ad.fk_category, ad.fk_time_id, ad.id, times_available.time, ad.accepted_id, ad.advertiser_id, ad.date, ad.`limit`, ad.income, ad.text, ad.`status`, ad.fav_market, category.category FROM ad  LEFT JOIN category ON ad.fk_category = category.id LEFT JOIN member on ad.advertiser_id = member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id WHERE ad.id = '" + ad_id + "'";  
                         ps = con.prepareStatement(sql);  
                         rs = ps.executeQuery();
-                        
-                        //int i=0;
-                        
+ 
                         while (rs.next()) {  
                         		//i++;
             
                         	
-     //Mathias ergänzt	
-	   								
-                        		date =	rs.getDate("ad.date"); 
+     //Mathias ergänzt			
+	   							System.out.println("ab hier");	
+	   							ad_id = rs.getInt("ad.id");
+	   							date =	rs.getDate("ad.date"); 
                         		fk_time_id=	rs.getInt("ad.fk_time_id"); 
                         		limit=	rs.getDouble("ad.limit"); 
                         		income=	rs.getDouble("ad.income"); 
@@ -623,7 +668,7 @@ public class Advert implements Serializable{
                         		fk_category=	rs.getInt("ad.fk_category"); 
                         		status=	rs.getBoolean("ad.status"); 
                         		fav_market=	rs.getString("ad.fav_market"); 
-                        		buyer_id=	rs.getInt("ad.buyer_id");
+                        		//buyer_id=	rs.getInt("ad.buyer_id");
                         		
                         		
                         	/*	Advert TempObj = new Advert(i, 
@@ -667,13 +712,13 @@ public class Advert implements Serializable{
 	}
 	
 	
-	public String doJob() {  
+	public String doJob() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		this.ad_id = getresulttodetail(fc); 
 		FacesContext fc2 = FacesContext.getCurrentInstance();
         ms_advertID = getadvertid(fc2);
 
-		getAd_idfromSQL(ad_id);
+		getAd_idfromSQL(ms_advertID);
 
 		return "advertdetail?faces-redirect=true";
 	} 
@@ -946,6 +991,6 @@ public class Advert implements Serializable{
             sqle.printStackTrace();  
         }    
     }*/
-}
+    }
 	
 }  

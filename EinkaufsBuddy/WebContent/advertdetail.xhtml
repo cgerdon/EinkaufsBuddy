@@ -7,51 +7,16 @@
     
 <ui:define name="content">
 		<h:form id="changeadvertForm"> 
-			<h:panelGrid columns="1" var="ads" value="#{simpleSearch.advertList}">
-					<!--  
-					<h:outputText value="Bevorzugter Markt:"/>
-					<h:inputText value="#{ads.fav_market}" disabled="true"/> -->
-										
-					<h:outputText value="Art des Marktes:" />
-					<h:selectOneListbox value="#{ads.category}" size="3" >
-						<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
-						<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
-						<f:selectItem itemValue="3" itemLabel="Apotheke"/>
-						<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
-						<f:selectItem itemValue="5" itemLabel="Bäcker"/>
-						<f:selectItem itemValue="6" itemLabel="Anderer"/>
-					</h:selectOneListbox>				
-				
-
-					<h:outputText value="Datum:" />
-					<p:calendar id="german" value="#{ads.datum}" navigator="true" pattern="yyyy-MMM-dd"/>
-			
-					<h:outputText value="Zeit der Anlieferung:" />
-					<h:selectOneRadio value="#{ads.time}" disabled="true">
-						<f:selectItem itemValue="1" itemLabel="Morgens"/>
-						<f:selectItem itemValue="2" itemLabel="Vormittags"/>
-						<f:selectItem itemValue="3" itemLabel="Mittags"/>
-						<f:selectItem itemValue="4" itemLabel="Nachmittags"/>
-						<f:selectItem itemValue="5" itemLabel="Abends"/>
-					</h:selectOneRadio>			
-			
-			 
-					<h:outputText value="Budget in Euro:" />  
-					<h:inputText value="#{ads.limit}" disabled="true"/>          
-            
-			
-					<h:outputText value="Vergütung in Euro:" />  
-					<h:inputText value="#{ads.income}" disabled="true"/> 
-  			
-			  
-					<h:outputText value="Einkaufsliste:" /> 
-					<h:inputTextarea value="#{ads.text}" disabled="true"/> 
-			  
-					
-					
-			</h:panelGrid>		
-		
-				
+					 #{advert.category}
+					#{advert.datum }
+                    	#{advert.ad_id }
+                    #{advert.income }
+                    #{advert.limit}
+                    #{advert.name }
+                    #{advert.last_name }
+                    #{advert.text }
+                    #{advert.zeitpunkt }
+                    #{advert.category }
 				<h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}"/>
 
 		</h:form>

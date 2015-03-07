@@ -47,7 +47,7 @@
 
 						<h:outputText value="#{ads.text}" />
 						<br />
-						<h:commandButton value="Detailansicht" action="#{advert.doJob}">
+						<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 							<f:param name="resulttodetail" value="#{ads.memberid}" />
 							<f:param name="advertid" value="#{ads.id}" />
 						</h:commandButton>
