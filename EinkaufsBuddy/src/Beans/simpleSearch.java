@@ -360,8 +360,6 @@ public class simpleSearch implements Serializable {
 							reader = new BufferedReader(new InputStreamReader(
 									url.openStream()));
 							
-							System.out.println(url);
-
 							int read;
 							char[] chars = new char[1024];
 							while ((read = reader.read(chars)) != -1)
@@ -380,7 +378,6 @@ public class simpleSearch implements Serializable {
 		if (validplz == true) {
 			
 			JSONObject jsonGoogleMaps = new JSONObject(buffer.toString());
-			System.out.println(jsonGoogleMaps.toString());
 			JSONArray rows = jsonGoogleMaps.getJSONArray("rows");
 
 			for (int i = 0; i < rows.length(); i++) {
@@ -389,18 +386,14 @@ public class simpleSearch implements Serializable {
 				
 				for (int j = 0; j < elements.length(); j++) {
 					JSONObject elem = elements.getJSONObject(j);
-					System.out.println(elem.toString());
 					SimpleSearchResults asdf = AdvertList.get(j);
-					//JSONObject distance = new JSONObject();
-					
+
 					if (checkStreet(elem) == null){
-						System.out.println("Ist null");
 						asdf.setDistance(0);
 					}
 					else{
-						System.out.println("ist nicht null");
 						JSONObject distance = elem.getJSONObject("distance");
-						System.out.println("b");
+					
 						asdf.setDistance(Integer.parseInt(distance
 								.getString("value"))/1000);
 					}
@@ -433,7 +426,6 @@ public class simpleSearch implements Serializable {
 	        return json.getJSONObject("distance");}
 	    catch (JSONException e)
 	    {
-	    	System.out.println("null wird return");
 	        return null;
 	    }    
 	}
