@@ -56,12 +56,14 @@ public class message implements Serializable {
     private int ms_anzahl;
     private int ms_gesamtanzahl;
     private int ms_advertId;
+    private int ms_advertanab;
     private int currentdelete;
     private String messagetext;
+    
         
     /*   private byte[] ms_senderPicture;    
 */
-	public message(int ms_anzahl, int ms_id, String ms_time, int ms_senderId, String ms_senderNamekurz, String ms_receiverFirstName, String ms_receiverLastName, String ms_text, int ms_advertId) {
+	public message(int ms_anzahl, int ms_id, String ms_time, int ms_senderId, String ms_senderNamekurz, String ms_receiverFirstName, String ms_receiverLastName, String ms_text, int ms_advertId, int ms_advertanab) {
 		super();
 		this.ms_anzahl=ms_anzahl;
 		this.ms_id = ms_id;
@@ -72,6 +74,7 @@ public class message implements Serializable {
 		this.ms_receiverLastName=ms_receiverLastName;
 		this.ms_text = ms_text;
 		this.ms_advertId = ms_advertId;
+		this.ms_advertanab = ms_advertanab; 
 	}
 
     DataSource ds;
@@ -88,6 +91,14 @@ public class message implements Serializable {
     
 
     
+	public int getMs_advertanab() {
+		return ms_advertanab;
+	}
+	
+	public void setMs_advertanab(int ms_advertanab) {
+		this.ms_advertanab = ms_advertanab;
+	}
+
 	public int getCurrentdelete() {
 		return currentdelete;
 	}
@@ -273,7 +284,7 @@ public class message implements Serializable {
 		                
                     	 ms_time = DateConString(rs.getString("table1.helpmaxt"));
                     	
-                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, ms_time, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0);
+                    	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, ms_time, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0,0);
                     	messageoverview.add(TempObj);     	
                     }	
                 }
@@ -315,7 +326,7 @@ public class message implements Serializable {
                     	
                     	ms_time = DateConString(rs.getString("table1.helpmaxt"));
                      	
-                     	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, ms_time, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0);
+                     	message TempObj = new message(rs.getInt("table2.ungelesen"), 0, ms_time, rs.getInt("member.id"), ms_senderNamekurz, rs.getString("member.name"), rs.getString("member.last_name"), null, 0,0);
                      	messageoverview.add(TempObj);     	
                     }	
                 }
@@ -459,7 +470,7 @@ public class message implements Serializable {
             try {  
                 con = ds.getConnection();  
                 if (con != null) {  
-                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+                	   String sql = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert, message.advertanab FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
                        ps = con.prepareStatement(sql);  
                        rs = ps.executeQuery();
                       
@@ -472,7 +483,7 @@ public class message implements Serializable {
                     	   
                     	   ms_time = DateConString(rs.getString("message.time_sent"));
                     	   
-                    	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
+                    	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert"), rs.getInt("message.advertanab") );
                     	   messagedetails.add(TempObj);
 
                     }
@@ -612,7 +623,7 @@ public class message implements Serializable {
 		                       
 		                       PreparedStatement ps2 = null;  
 		                       ResultSet rs = null;  
-		                	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+		                	   String sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert, message.advertanab FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
 		                       ps2 = con.prepareStatement(sql2);  
 		                       rs = ps2.executeQuery();
 		              
@@ -622,7 +633,7 @@ public class message implements Serializable {
 		                       		i++;
 		                    	   ms_time = DateConString(rs.getString("message.time_sent"));
 		                        	
-		                     	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
+		                     	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert"), rs.getInt("message.advertanab") );
 		                    	   messagedetails.add(TempObj);  
 		                       }
 		                       
@@ -644,7 +655,7 @@ public class message implements Serializable {
 				                           
 				                           if (hvar==1){
 				                        	   
-				                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-1000);		
+				                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10000);		
 				                        	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
 				                        	   byte c=2; 
 				                        	   
@@ -664,7 +675,7 @@ public class message implements Serializable {
 				                           }
 				                           
 		
-				                    	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
+					                	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert, message.advertanab FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
 				                           ps2 = con.prepareStatement(sql2);  
 				                           rs = ps2.executeQuery();
 				                  
@@ -674,7 +685,7 @@ public class message implements Serializable {
 				                           		i++;
 				                        	   ms_time = DateConString(rs.getString("message.time_sent"));
 				                            	
-				                         	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert") );
+				                         	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert"), rs.getInt("message.advertanab") );
 				                        	   messagedetails.add(TempObj);  
 				                           }
 				                           
@@ -748,6 +759,61 @@ public class message implements Serializable {
             showAllMessage();
             return "message?faces-redirect=true";
     }   		
+	
+	
+	
+	public String InseratAnAb(int anab, int id, int adid){
+		
+		
+		byte banab = (byte)anab; 
+		int advertiserID = adid; 
+		int messageID = id; 
+		
+        PreparedStatement ps = null; 
+        Connection con = null;  
+        
+        try {  
+            if (ds != null) {  
+                con = ds.getConnection();  
+                if (con != null) { 
+                    String sql = "UPDATE message SET message.advertanab= " + banab + " WHERE message.id= " + messageID + " ;";  
+                    ps = con.prepareStatement(sql);  
+                    ps.executeUpdate();   
+                    
+                    
+                    if (banab == 3){
+                        PreparedStatement ps2 = null; 	
+                        String sql2 = "UPDATE ad SET ad.buyer_id = null WHERE ad.id= " + advertiserID + " ;";  
+                        ps2 = con.prepareStatement(sql2);  
+                        ps2.executeUpdate();  
+                    	
+                    }
+                    
+                    if (banab == 2){
+                        PreparedStatement ps2 = null; 	
+                        String sql2 = "UPDATE ad SET ad.accepted_id = 1 WHERE ad.id= " + advertiserID + " ;";  
+                        ps2 = con.prepareStatement(sql2);  
+                        ps2.executeUpdate(); 
+                    	
+                    }
+                    
+                    
+                }  
+            }  
+        } catch (Exception e) {  
+            System.out.println(e);  
+        } finally {  
+            try {  
+                con.close();  
+                ps.close();  
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }  
+	
+        reloadMessage();
+        return "messagedetail?faces-redirect=true";
+	}
 		
 		
 		

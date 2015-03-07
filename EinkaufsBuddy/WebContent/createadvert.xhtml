@@ -32,7 +32,7 @@
 			
 			<h:panelGroup>
 				<h:outputText value="Datum:" />
-				<p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="yyyy-MMM-dd" required="true" requiredMessage="Bitte Datum angeben" />
+				<p:calendar id="german" value="#{advert.date}" navigator="true" pattern="dd.MM.yyyy" required="true" requiredMessage="Bitte Datum angeben" />
 				<h:message for="german" style="color:red" />
 			</h:panelGroup>	
 			

@@ -498,22 +498,19 @@ public class Advert implements Serializable{
 	                if (ds != null) {  
 	                    con = ds.getConnection();  
 	                    if (con != null) {  
-	      		          	String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
-
+	                    	//Mathias: musste die SQL ändern, da das nicht das macht, was es machen soll!
+	      		          	// String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
+	                    	// Funktioniert im Mom nicht, da die Detailseite immer noch nicht funktioniert
+	                    	String sql = "UPDATE ad SET ad.buyer_id='" + advertiser_id + "' WHERE ad.id ='" + ms_advertID + "'";
 
 	                    	ps = con.prepareStatement(sql);  
 	                       ps.executeUpdate();  
 	          
-	                        
-	                        
-	     
-	                        
-	                        
+	                                      
+	                      System.out.println(advertiser_id);  
+	                      System.out.println(ms_advertID); 
 	  /* ***Mathias braucht den Platz für die Nachrichtenübermittlung **** */ 
 	              
-	                        
-
-
 	      			Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
 	      			String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
 	      			byte b = 1; 
@@ -546,7 +543,7 @@ public class Advert implements Serializable{
 				               
 				               if (hvar==1){
 				            	   
-				            	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-1000);		
+				            	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10000);		
 				            	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
 				            	   byte c=2; 
 				            	   
