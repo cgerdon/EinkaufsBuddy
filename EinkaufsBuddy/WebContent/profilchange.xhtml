@@ -6,19 +6,22 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Profilseite ändern...</h1>
+		<h1>Profil ändern</h1>
 		
 		<h:form id="inputForm" enctype="multipart/form-data">  
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Vorname: "/>
-				<h:inputText value="#{user.firstName}" binding="#{firstName}"/>
+				<p:inputText value="#{user.firstName}" binding="#{firstName}" required="true"/>
 		      	<h:outputLabel value="Nachname: "/>
-		      	<h:inputText value="#{user.lastName}" binding="#{lastName}"/>
+		      	<p:inputText value="#{user.lastName}" binding="#{lastName}"/>
 		        <h:outputLabel value="Geburtstag: "/>
 		        
 		        <p:calendar id="german" value="#{user.birthday}" locale="de" navigator="true" pattern="dd.MM.yyyy" binding="#{birthday}"/>
 		        <h:outputLabel value="Auto: "/>
-		        <h:inputText value="#{user.car}" binding="#{car}"/>
+		        <h:selectOneMenu value="#{user.car}">
+   	<f:selectItem itemValue="1" itemLabel="Ja" />
+   	<f:selectItem itemValue="0" itemLabel="Nein" />
+</h:selectOneMenu>
 		        <h:outputLabel value="Telefon: "/>
 		        <h:inputText value="#{user.phone}" binding="#{phone}"/>
 
