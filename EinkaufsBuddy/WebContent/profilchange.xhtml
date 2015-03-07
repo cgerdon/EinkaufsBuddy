@@ -26,7 +26,7 @@
 				<p:calendar id="german" value="#{user.birthday}" locale="de"
 					navigator="true" pattern="dd.MM.yyyy" binding="#{birthday}" />
 				<h:outputLabel value="Auto: " />
-				<h:selectOneMenu value="#{user.car}">
+				<h:selectOneMenu value="#{user.car}" converter="javax.faces.Integer">
 					<f:selectItem itemValue="1" itemLabel="Ja" />
 					<f:selectItem itemValue="0" itemLabel="Nein" />
 				</h:selectOneMenu>
