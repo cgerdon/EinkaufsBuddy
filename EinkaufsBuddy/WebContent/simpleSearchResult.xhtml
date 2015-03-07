@@ -6,20 +6,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-	
-	<p:layout fullPage="false">
  
-    <p:layoutUnit position="north"  header="Es wurden insgesamt #{simpleSearch.summeAds} passende Inserate gefunden" resizable="false" closable="false" collapsible="true">
-
-							<h:form>
-					<h:outputText value=" Sortieren nach:" />
-					<p:commandButton value="Entfernung"
-						action="#{simpleSearch.sortByDistance}"
-						icon="ui-icon-transferthick-e-w" style="width:130px" />
-					<p:commandButton value="Datum" action="#{simpleSearch.sortByDate}"
-						icon="ui-icon-calendar" />
+    Es wurden insgesamt #{simpleSearch.summeAds} passende Inserate gefunden.<h:form>
+							<p:menuButton value="Sortieren nach...">
+        <p:menuitem value="Datum" action="#{simpleSearch.sortByDate}"  icon="ui-icon-calendar"/>
+        <p:menuitem value="Entfernung" action="#{simpleSearch.sortByDistance}" icon="ui-icon-transferthick-e-w"/>
+ 
+    </p:menuButton>
+					
 				</h:form>		
-    </p:layoutUnit>
+
  
   
     <p:layoutUnit position="center" >
@@ -66,7 +62,6 @@
 
     </p:layoutUnit>
  
-</p:layout>
 
 
 
