@@ -38,9 +38,7 @@
 		        <h:outputLabel value="Profilbild: "/>
 		        	<h:inputFile id="file" 
 		             label="file"
-			         value="#{user.part}" 
-			         required="true" 
-			         requiredMessage="File not selected !!">
+			         value="#{user.part}" >
             <!-- FileUploadValidator for file validation -->
 		    <f:validator validatorId="FileUploadValidator" />
 		</h:inputFile>
@@ -48,7 +46,7 @@
  
 		<h:commandButton id="submit" 
 		                 action="#{user.uploadFile}"
-			             value="upload file" /><br />
+			             value="Bild hochladen" /><br />
  
         <!-- status message of file upload; rendered if message is set -->
 		<h:outputText value="#{user.statusMessage}"
