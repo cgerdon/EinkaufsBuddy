@@ -6,19 +6,20 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
- 
-    Es wurden insgesamt #{simpleSearch.summeAds} passende Inserate gefunden.<h:form>
-							<p:menuButton value="Sortieren nach...">
+	<table>
+	<tr >
+	<td><h:outputText value="Es wurden insgesamt #{simpleSearch.summeAds} passende Inserate gefunden" /></td>
+	<td align="right"><h:form align="right"><p:menuButton value="Sortieren nach...">
         <p:menuitem value="Datum" action="#{simpleSearch.sortByDate}"  icon="ui-icon-calendar"/>
         <p:menuitem value="Entfernung" action="#{simpleSearch.sortByDistance}" icon="ui-icon-transferthick-e-w"/>
  
     </p:menuButton>
 					
-				</h:form>		
+				</h:form></td>
+	</tr>
+	</table>
+ 		
 
- 
-  
-    <p:layoutUnit position="center" >
     <ui:repeat var="ads" value="#{simpleSearch.advertList}">
     <p:fieldset legend="#{ads.datum} - #{ads.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="true" toggleSpeed="500">
         <h:panelGrid columns="2" cellpadding="5">
@@ -59,9 +60,6 @@
 			        </h:panelGrid>
 			  </p:fieldset>
 		</ui:repeat> 
-
-    </p:layoutUnit>
- 
 
 
 
