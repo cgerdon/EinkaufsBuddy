@@ -4,23 +4,40 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-    
-<ui:define name="content">
-	<h:form>
-		<h:panelGrid columns="3">
-		    <h:outputLabel value="Mailadresse: " />
-		 	<h:inputText id="inputEmail" value="#{user.email}"  
-				required="true" requiredMessage="Mail muss ausgefüllt sein" />  
-			<h:message for="inputEmail" style="color:red" />
-
-		    <h:outputLabel value="Passwort: " />
-			<h:inputSecret id="inputPassword" value="#{user.password}"  
-				 required="true" requiredMessage="Passwort muss ausgefüllt sein" />  
-			<h:message for="inputPassword" style="color:red" /> 
-			<h:commandButton class="login-submit" value="Login" action="#{user.login}" />               
-
-		</h:panelGrid>
+	
+		<ui:define name="content">
+	
+	<h1>Login</h1>
+	
+	<h:form  id="login">
+		<h:panelGrid columns="1" styleClass="simplesearchformmittig">
+		<h:panelGroup layout="block">
+ 		 <table>  
+                  <tr>  
+                    <td><h:outputText value="Mail:" /></td>  
+                    <td><p:inputText id="email" value="#{user.email}"  
+                            required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
+                             <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></p:inputText></td>  
+                    <td></td>  
+                </tr>  
+                <tr>  
+                    <td><h:outputText value="Passwort:" /></td>  
+                    <td> <p:password id="pwd1" value="#{user.password}" label="Passwort 1" required="true" requiredMessage="Bitte ein Passwort eingeben!" />
+        			</td>  
+                    <td></td>  
+                </tr>  
+                <tr>  
+                    <td />  
+                    <td><p:commandButton value="Login" icon="ui-icon-key" action="#{user.login}" style="width:130px" />
+                    <p:messages id="messages" showDetail="true" autoUpdate="true"/></td>  
+                </tr>  
+            </table>  
+       </h:panelGroup>
+       
+	</h:panelGrid>
 	</h:form>
-					
-</ui:define>
+
+	</ui:define>
+    
 </ui:composition>
