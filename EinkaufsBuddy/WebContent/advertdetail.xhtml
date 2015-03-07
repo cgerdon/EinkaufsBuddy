@@ -7,17 +7,43 @@
     
 <ui:define name="content">
 		<h:form id="changeadvertForm"> 
-					 #{advert.category}
-					#{advert.datum }
-                    	#{advert.ad_id }
-                    #{advert.income }
-                    #{advert.limit}
-                    #{advert.name }
-                    #{advert.last_name }
-                    #{advert.text }
-                    #{advert.zeitpunkt }
-                    #{advert.category }
-				<h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}" rendered="#{advert.advertiser_id != user.id}"/>
+		    <p:fieldset legend="#{advert.datum} -  #{advert.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="false">
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+			<h:form>
+				<h:panelGrid columns="2" border="1">
+					<h:panelGroup>
+						<h:outputText style="font-weight:bold" value="Limit: #{advert.limit}  €" />
+						<br />	
+						Inserat von <h:commandLink action="#{userView.showProfil(advert.advertiser_id)}">
+							<h:outputText value="#{advert.name} #{advert.last_name}" />
+						</h:commandLink>
+						<h:commandLink action="#{message.startMessage}" rendered="#{advert.advertiser_id != user.id}">
+							<h:graphicImage class="message"
+								value="resources/images/message.png" alt="message" />
+
+							<f:param name="startmessage" value="#{advert.advertiser_id}" />
+						</h:commandLink>
+						<br />
+						<h:outputText value=" Verdienst: #{advert.income} €" />
+					</h:panelGroup>
+
+
+					<h:panelGroup>
+
+						<h:outputText value="#{advert.text}" />
+						<br />
+						<h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}" rendered="#{advert.advertiser_id != user.id}"/>
+
+						<br />
+						<h:outputText value="Kategorie: #{advert.category}" />
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:form>
+			        </h:panelGrid>
+			  </p:fieldset>
+					
+				
 
 		</h:form>
 </ui:define>
