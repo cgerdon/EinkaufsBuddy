@@ -1,5 +1,6 @@
 package Beans;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,8 +17,12 @@ import javax.sql.DataSource;
 
 @ManagedBean(name = "userView")
 @SessionScoped
-public class userView {
+public class userView implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5820720967637889546L;
 	private int id;
 	private String name;
 	private String last_name;
