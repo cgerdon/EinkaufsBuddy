@@ -28,7 +28,9 @@
                 <tr>  
                     <td><h:outputText value="Mail:" /></td>  
                     <td><p:inputText id="email" value="#{user.email}"  
-                            required="true" requiredMessage="Bitte Mailadresse angeben" /></td>  
+                            required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
+                             <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></p:inputText></td>  
                     <td></td>  
                 </tr>  
                 <tr>  
