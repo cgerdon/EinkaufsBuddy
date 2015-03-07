@@ -119,7 +119,8 @@ public class Advert implements Serializable{
                     	text = rs.getString("ad.text");
                     	zeitpunkt = rs.getString("times_available.time");
                     	category = rs.getString("category.category");
-
+                    	advertiser_id = rs.getInt("advertiser_id");
+                    	buyer_id = rs.getInt("buyer_id");
                     	
                     }
                 }  

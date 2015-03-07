@@ -17,7 +17,7 @@
                     #{advert.text }
                     #{advert.zeitpunkt }
                     #{advert.category }
-				<h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}"/>
+				<h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}" rendered="#{advert.advertiser_id != user.id}"/>
 
 		</h:form>
 </ui:define>
