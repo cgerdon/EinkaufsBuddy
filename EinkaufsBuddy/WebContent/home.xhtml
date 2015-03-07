@@ -7,13 +7,13 @@
     
 	<ui:define name="content">
 	
-	<h:panelGroup layout="block" >
-			<h:graphicImage value="resources/images/banner.png" alt="EinkaufsBuddy" width="900px" height="250px"/>
+	<h:panelGroup layout="block">
+			<h:graphicImage value="resources/images/banner.png" alt="EinkaufsBuddy"/>
 	</h:panelGroup>
 	
 	<h1> Willkommen auf EinkaufsBuddy!</h1>
 	
-	<h:form  id="simplesearchform" style="background-image: url(resources/images/banner.png);background-repeat: no-repeat;background-position: center;background-size: 711px 400px;">
+	<h:form  id="simplesearchform">
 		<h:panelGrid  columns="1" styleClass="simplesearchformmittig" >
 		<h:panelGroup layout="block">
  		<p:inputText id="plz" value="#{simpleSearch.plzInput}" required="true" requiredMessage="Bitte PLZ eingeben" />
