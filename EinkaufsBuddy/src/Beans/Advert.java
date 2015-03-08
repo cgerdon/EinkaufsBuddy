@@ -339,6 +339,17 @@ public class Advert implements Serializable{
 		this.otheradverts = otheradverts;
 	}
 	
+	ArrayList<Advert> alladverts = new ArrayList<Advert>();
+
+	
+	public ArrayList<Advert> getAlladverts() {
+		return alladverts;
+	}
+
+	public void setAlladverts(ArrayList<Advert> alladverts) {
+		this.alladverts = alladverts;
+	}
+
 	public int getAd_count() {
 		return ad_count;
 	}
@@ -840,7 +851,7 @@ public class Advert implements Serializable{
 			
 */
 	
-	
+	/*
     public String showown(){
     	PreparedStatement ps = null;  
         Connection con = null;  
@@ -877,7 +888,7 @@ public class Advert implements Serializable{
                     								rs.getInt("ad.fk_category"), 
                     								rs.getBoolean("ad.status"), 
                     								rs.getString("ad.fav_market"), 
-                    								rs.getInt("ad.buyer_id"));*/
+                    								rs.getInt("ad.buyer_id"));
                     	
                     	ownadverts.add(TempObj);
                     	 
@@ -928,7 +939,7 @@ public class Advert implements Serializable{
                     								rs.getInt("ad.fk_category"), 
                     								rs.getBoolean("ad.status"), 
                     								rs.getString("ad.fav_market"), 
-                    								rs.getInt("ad.buyer_id"));*/
+                    								rs.getInt("ad.buyer_id"));
                     	
                     	otheradverts.add(TempObj);
                  
@@ -941,35 +952,92 @@ public class Advert implements Serializable{
         }
         return "viewotheradverts?faces-redirect=true";
     }
-    	
+    	*/
     
     public void showAll(TabChangeEvent event){
     	
-        FacesMessage msg = new FacesMessage(event.getTab().getTitle());
-        
-     //   String jo = FacesContext.getCurrentInstance().addMessage(null, msg);
-      //  String jo = FacesContext.getCurrentInstance(msg);
-        
-          System.out.println(msg);
-    	   
-    /*	   FacesContext.getCurrentInstance().addMessage(null, msg);
-    	
-    	
-           FacesContext fc = FacesContext.getCurrentInstance();
-   		this.ms_senderId = getstartmessage(fc);
-    	
-      	PreparedStatement ps = null;  
+    	String name = event.getTab().getTitle();
         Connection con = null;  
-        ResultSet rs = null;
-        otheradverts.clear();
+
+        alladverts.clear();
     if (ds != null) {  
         try {  
             con = ds.getConnection();  
             if (con != null) {
 
-            	// String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id FROM ad WHERE ad.advertiser_id = '" + buyer_id + "'";
-            	String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "'";
-                ps = con.prepareStatement(sql);  
+            	if (name.equals("Eigene Inserate")) {
+            		String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "'"; 
+            		PreparedStatement ps = null;  
+            		ps = con.prepareStatement(sql); 
+                    ResultSet rs = null;
+                    rs = ps.executeQuery();  
+                    
+                    while (rs.next()) {  
+                    	Advert TempObj = new Advert(
+    							rs.getString("text"), rs.getInt("plz"),
+    							rs.getString("street"), rs.getString("name"),
+    							rs.getString("last_name"), rs.getInt("ad.id"),
+    							rs.getDouble("limit"), rs.getDouble("income"),
+    							0, rs.getString("time"), rs.getDate("date"),
+    							rs.getString("category"), rs.getInt("member.id"));
+                    	alladverts.add(TempObj);
+                    
+                    }
+                    ps.close();  
+
+            	}
+            	
+            	if (name.equals("Fremde Inserate")) {
+            		String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "'";
+            		PreparedStatement ps = null;  
+            		ps = con.prepareStatement(sql); 
+                    ResultSet rs = null;
+                    rs = ps.executeQuery();  
+                    
+                    while (rs.next()) {  
+                    	Advert TempObj = new Advert(
+    							rs.getString("text"), rs.getInt("plz"),
+    							rs.getString("street"), rs.getString("name"),
+    							rs.getString("last_name"), rs.getInt("ad.id"),
+    							rs.getDouble("limit"), rs.getDouble("income"),
+    							0, rs.getString("time"), rs.getDate("date"),
+    							rs.getString("category"), rs.getInt("member.id"));
+                    	alladverts.add(TempObj);
+                    
+                    }
+                    ps.close();  
+
+            	}
+
+
+            }  
+        } catch (SQLException sqle) {  
+            sqle.printStackTrace();  
+        } finally {  
+            try {  
+                con.close();  
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }       
+  
+    }
+	
+}  
+    
+ public void showAllOhneEvent(){
+    	
+     PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;
+        alladverts.clear();
+    if (ds != null) {  
+        try {  
+            con = ds.getConnection();  
+            if (con != null) {
+
+            	String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "'"; 
+            	ps = con.prepareStatement(sql);  
                 rs = ps.executeQuery();  
                 
              
@@ -985,15 +1053,25 @@ public class Advert implements Serializable{
 							rs.getString("category"), rs.getInt("member.id"));
                 	
                 	
-                	otheradverts.add(TempObj);
+                	alladverts.add(TempObj);
              
                 	
                 }
             }  
         } catch (SQLException sqle) {  
             sqle.printStackTrace();  
-        }    
-    }*/
+        } finally {  
+            try {  
+                con.close();  
+                ps.close();  
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }      
+  
     }
 	
 }  
+    
+    
+}
