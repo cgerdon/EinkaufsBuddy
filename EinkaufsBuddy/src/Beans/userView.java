@@ -248,9 +248,9 @@ public class userView implements Serializable {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "select id, buyer_id, advertiser_id, rating, text, ad_id from rating where buyer_id = "
+					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where buyer_id = "
 							+ id +";";
-				
+					System.out.println(sql);
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 				
@@ -258,13 +258,15 @@ public class userView implements Serializable {
 					while (rs.next()) {
 						
 						RatingResults TempObj = new RatingResults();
-						TempObj.setId(rs.getInt("id"));
+						TempObj.setId(rs.getInt("rating.id"));
 						TempObj.setBuyerid(rs.getInt("buyer_id"));
 						TempObj.setAdvertiserid(rs.getInt("advertiser_id"));
 						TempObj.setRating(rs.getInt("rating"));
 						TempObj.setAdid(rs.getInt("ad_id"));
 						TempObj.setText(rs.getString("text"));
-					
+						TempObj.setVorname(rs.getString("name"));
+						TempObj.setName(rs.getString("last_name"));
+						System.out.println(TempObj.toString());
 						TempList.add(TempObj);
 						
 					

@@ -9,17 +9,37 @@ public class RatingResults {
 	private int rating;
 	private String text;
 	private int adid;
+	private String name;
+	private String vorname;
+	
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getVorname() {
+		return vorname;
+	}
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
+	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+
 	@Override
 	public String toString() {
 		return "RatingResults [id=" + id + ", buyerid=" + buyerid
 				+ ", advertiserid=" + advertiserid + ", rating=" + rating
-				+ ", text=" + text + ", adid=" + adid + "]";
+				+ ", text=" + text + ", adid=" + adid + ", name=" + name
+				+ ", vorname=" + vorname + "]";
 	}
 	public int getBuyerid() {
 		return buyerid;
