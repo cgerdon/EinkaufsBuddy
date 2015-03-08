@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-import java.util.Scanner;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -38,7 +37,7 @@ import org.primefaces.model.StreamedContent;
 @ManagedBean(name = "user")
 // @RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
 @SessionScoped
-public class User implements Serializable{
+public class User implements Serializable {
 
 	/**
 	 * 
@@ -63,100 +62,87 @@ public class User implements Serializable{
 	private String dbPassword;
 	private String dbName;
 	private StreamedContent dbImage;
-	
-	
 
 	public StreamedContent getDbImage() {
 		return dbImage;
 	}
 
-
 	public void setDbImage(StreamedContent dbImage) {
 		this.dbImage = dbImage;
 	}
-
 
 	public Part getFile() {
 		return file;
 	}
 
-
 	public void setFile(Part file) {
 		this.file = file;
 	}
-	
+
 	public void uploadFile() throws IOException {
-				
-				
-				 
-				String fileName = getFileName(file);
-				System.out.println("***** fileName: " + fileName);
-		 
-				String basePath = "C:" + File.separator + "temp" + File.separator;
-				outputFilePath = new File(basePath + fileName);
-		 
-				// Copy uploaded file to destination path
-				InputStream inputStream = null;
-				OutputStream outputStream = null;
-				try {
-					inputStream = file.getInputStream();
-					outputStream = new FileOutputStream(outputFilePath);
-		 
-					int read = 0;
-					final byte[] bytes = new byte[1024];
-					while ((read = inputStream.read(bytes)) != -1) {
-						outputStream.write(bytes, 0, read);
-					}
-		 
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-					
-				} finally {
-					if (outputStream != null) {
-						outputStream.close();
-					}
-					if (inputStream != null) {
-						inputStream.close();
-					}
-				}
-	
-			   // return to same page
+
+		String fileName = getFileName(file);
+
+		String basePath = "C:" + File.separator + "temp" + File.separator;
+		outputFilePath = new File(basePath + fileName);
+
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		try {
+			inputStream = file.getInputStream();
+			outputStream = new FileOutputStream(outputFilePath);
+
+			int read = 0;
+			final byte[] bytes = new byte[1024];
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		} finally {
+			if (outputStream != null) {
+				outputStream.close();
+			}
+			if (inputStream != null) {
+				inputStream.close();
+			}
 		}
+
+	}
 
 	private boolean[][] daytimeavailable;
 	DataSource ds;
-	
+
 	private String getFileName(Part part) {
-		final String partHeader = part.getHeader("content-disposition");
-		System.out.println("***** partHeader: " + partHeader);
+
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
-				System.out.println(content.toString());
-				System.out.println(content.length());
-				if (content.length() > 12){ System.out.println("prüfung is korrekt");
-						updateImg = true;}
+
+				if (content.length() > 12) {
+					updateImg = true;
+				}
 				return content.substring(content.indexOf('=') + 1).trim()
 						.replace("\"", "");
 			}
 		}
 		return null;
 	}
-		
-	
-	private void PicUpload(){
+
+	private void PicUpload() {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		FileInputStream inputStream = null;
 
 		try {
-			
-			
+
 			inputStream = new FileInputStream(outputFilePath);
 			connection = ds.getConnection();
 			statement = connection
-					.prepareStatement("UPDATE member SET picture= ? where id= '" + id + "'");
-					statement.setBinaryStream(1, (InputStream) inputStream,
+					.prepareStatement("UPDATE member SET picture= ? where id= '"
+							+ id + "'");
+			statement.setBinaryStream(1, (InputStream) inputStream,
 					(int) (outputFilePath.length()));
 
 			statement.executeUpdate();
@@ -174,9 +160,7 @@ public class User implements Serializable{
 			}
 		}
 	}
-	
-	
- 
+
 	public String getPassword2() {
 		return password2;
 	}
@@ -184,7 +168,7 @@ public class User implements Serializable{
 	public void setPassword2(String password2) {
 		this.password2 = password2;
 	}
-	
+
 	public void onDateSelect(SelectEvent event) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
@@ -352,7 +336,6 @@ public class User implements Serializable{
 									.format(birthday) + "' where mail ='"
 							+ email + "';";
 
-
 					ps = con.prepareStatement(sql);
 					i = ps.executeUpdate();
 
@@ -439,8 +422,11 @@ public class User implements Serializable{
 						street = rs.getString("street");
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
-						InputStream binaryStream = rs.getBinaryStream("picture");
-						dbImage = new DefaultStreamedContent(binaryStream, "image");
+						InputStream binaryStream = rs
+								.getBinaryStream("picture");
+						StreamedContent Temp = new DefaultStreamedContent(
+								binaryStream, "image");
+						dbImage = Temp;
 					}
 					showTimes(id);
 				} catch (SQLException sqle) {
@@ -469,7 +455,7 @@ public class User implements Serializable{
 	public String login() {
 		dbData(email);
 		if (email.equals(dbName) && password.equals(dbPassword)) {
-					// Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
+			// Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", email);
 			showTimes(id);
@@ -492,9 +478,9 @@ public class User implements Serializable{
 	}
 
 	// Mathias hinzugefügt: profilchange
-	
-	public void DeleteTimes(int id){
-		
+
+	public void DeleteTimes(int id) {
+
 		PreparedStatement ps = null;
 		Connection con = null;
 
@@ -516,11 +502,12 @@ public class User implements Serializable{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}}
+			}
+		}
 	}
-	
-	public void UpdateTimes(int id){
-		
+
+	public void UpdateTimes(int id) {
+
 		ArrayList<String> Querys = new ArrayList<String>();
 		int rows = daytimeavailable.length;
 
@@ -528,36 +515,41 @@ public class User implements Serializable{
 
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
-				//INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (1, 3, 3);
+				// INSERT INTO `member_day_time_available` (`fk_member_id`,
+				// `fk_day_id`, `fk_time_id`) VALUES (1, 3, 3);
 
-				if (daytimeavailable[row][col] == true){
-				Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES (" + id + "," + row + "," + col + ");");}
+				if (daytimeavailable[row][col] == true) {
+					Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES ("
+							+ id + "," + row + "," + col + ");");
+				}
 			}
 		}
 
-		for(String insertq: Querys){
+		for (String insertq : Querys) {
 			PreparedStatement ps = null;
 			Connection con = null;
-		if (ds != null) {
-			try {
-				con = ds.getConnection();
-				if (con != null) {
-					String sql = insertq;
-					ps = con.prepareStatement(sql);
-					ps.executeUpdate();
-				}
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-			} finally {
+			if (ds != null) {
 				try {
-					con.close();
-					ps.close();
-				} catch (Exception e) {
-					e.printStackTrace();
+					con = ds.getConnection();
+					if (con != null) {
+						String sql = insertq;
+						ps = con.prepareStatement(sql);
+						ps.executeUpdate();
+					}
+				} catch (SQLException sqle) {
+					sqle.printStackTrace();
+				} finally {
+					try {
+						con.close();
+						ps.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			}}}
+			}
+		}
 	}
-	
+
 	public void showTimes(int id) {
 		PreparedStatement ps = null;
 		Connection con = null;
@@ -568,7 +560,7 @@ public class User implements Serializable{
 				if (con != null) {
 					String sql = "select fk_day_id, fk_time_id from member_day_time_available where fk_member_id = "
 							+ id + ";";
-	
+
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					boolean[][] TempObj = new boolean[6][6];
@@ -588,12 +580,13 @@ public class User implements Serializable{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}}
+			}
 		}
+	}
 
 	public String profilchange() throws IOException {
-		//boolean TempObject[][] = new boolean[6][6];
-		//daytimeavailable = TempObject;
+		// boolean TempObject[][] = new boolean[6][6];
+		// daytimeavailable = TempObject;
 		int i = 0;
 		PreparedStatement ps = null;
 		Connection con = null;
@@ -624,10 +617,9 @@ public class User implements Serializable{
 									.format(birthday) + "' where mail ='"
 							+ email + "';";
 
-			
 					ps = con.prepareStatement(sql);
 					i = ps.executeUpdate();
-				
+
 				}
 			}
 		} catch (Exception e) {
@@ -640,24 +632,22 @@ public class User implements Serializable{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Jetzt Zeiten löschen");
+
 		DeleteTimes(id);
-		System.out.println("Jetzt Zeiten updaten");
+
 		UpdateTimes(id);
-		System.out.println("Jetzt Bild upload");
+
 		updateImg = false;
-		System.out.println("Der wert ist " + updateImg);
-		File image = new File(getFileName(file));
-		System.out.println("Der wert ist " + updateImg);
-		if (updateImg == true){uploadFile();
-			PicUpload();}
-		System.out.println("Und das Returnen");
+
+		if (updateImg == true) {
+			uploadFile();
+			PicUpload();
+		}
+
 		if (i > 0) {
 			return "profil?faces-redirect=true";
 		} else
 			return "unsuccess?faces-redirect=true";
 	}
-
-
 
 }
