@@ -17,38 +17,125 @@
 				<p:tab title="Eigene Inserate">
 							    	
 				    <ui:repeat var="ads" value="#{advert.alladverts}">
-				    <p:fieldset legend="#{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px">
-				        <h:panelGrid columns="2" cellpadding="5">
-				            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-							<h:form>
-								<h:panelGrid columns="2" border="1">
-									<h:panelGroup>
-										Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
-										</h:commandLink>
-										<br />
-										<h:outputText value=" Verdienst: #{ads.income} €" />
-										<h:outputText value=" Limit: #{ads.limit} €" />
-									</h:panelGroup>
 				
+					    <p:fieldset legend="Entwurf: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 0 and ads.ad_acc == 0 and ads.ad_buyerID == 0}">
+					        <h:panelGrid columns="2" cellpadding="5" >
+					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+								
+									<h:panelGrid columns="2" border="1">
+										<h:panelGroup>
+											Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+												<h:outputText value="#{ads.name} #{ads.last_name}" />
+											</h:commandLink>
+											<br />
+											<h:outputText value=" Verdienst: #{ads.income} €" />
+											<h:outputText value=" Limit: #{ads.limit} €" />
+										</h:panelGroup>
+					
+					
+										<h:panelGroup>
+					
+											<h:outputText value="#{ads.text}" />
+											<br />
+											<h:commandButton value="ändern" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>
+					
+											<br />
+											<h:outputText value="Kategorie: #{ads.category}" />
+										</h:panelGroup>
+									</h:panelGrid>
+							</h:panelGrid>
+						</p:fieldset>
+						 <p:fieldset legend="Aktiviert: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID == 0}" >
+					        <h:panelGrid columns="2" cellpadding="5" >
+					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+								
+									<h:panelGrid columns="2" border="1">
+										<h:panelGroup>
+											Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+												<h:outputText value="#{ads.name} #{ads.last_name}" />
+											</h:commandLink>
+											<br />
+											<h:outputText value=" Verdienst: #{ads.income} €" />
+											<h:outputText value=" Limit: #{ads.limit} €" />
+										</h:panelGroup>
+					
+					
+										<h:panelGroup>
+					
+											<h:outputText value="#{ads.text}" />
+											<br />
+											<h:commandButton value="ändern" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>
+					
+											<br />
+											<h:outputText value="Kategorie: #{ads.category}" />
+										</h:panelGroup>
+									</h:panelGrid>
+							</h:panelGrid>
+						</p:fieldset>
+						
+						<p:fieldset legend="Interessent: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID != 0 }" >
+					        <h:panelGrid columns="2" cellpadding="5" >
+					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+								
+									<h:panelGrid columns="2" border="1">
+										<h:panelGroup>
+											Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+												<h:outputText value="#{ads.name} #{ads.last_name}" />
+											</h:commandLink>
+											<br />
+											<h:outputText value=" Verdienst: #{ads.income} €" />
+											<h:outputText value=" Limit: #{ads.limit} €" />
+										</h:panelGroup>
+					
+					
+										<h:panelGroup>
+					
+											<h:outputText value="#{ads.text}" />
+											<br />
+							
+					
+											<br />
+											<h:outputText value="Kategorie: #{ads.category}" />
+										</h:panelGroup>
+									</h:panelGrid>
+							</h:panelGrid>
+						</p:fieldset>
+						
+						<p:fieldset legend="Beendet: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0}" >
+					        <h:panelGrid columns="2" cellpadding="5" >
+					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+								
+									<h:panelGrid columns="2" border="1">
+										<h:panelGroup>
+											Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+												<h:outputText value="#{ads.name} #{ads.last_name}" />
+											</h:commandLink>
+											<br />
+											<h:outputText value=" Verdienst: #{ads.income} €" />
+											<h:outputText value=" Limit: #{ads.limit} €" />
+										</h:panelGroup>
+					
+					
+										<h:panelGroup>
+					
+											<h:outputText value="#{ads.text}" />
+											<br />
+											<h:commandButton value="bewerten" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>
+					
+											<br />
+											<h:outputText value="Kategorie: #{ads.category}" />
+										</h:panelGroup>
+									</h:panelGrid>
+							</h:panelGrid>
+						</p:fieldset>
 				
-									<h:panelGroup>
-				
-										<h:outputText value="#{ads.text}" />
-										<br />
-										<h:commandButton value="ändern" action="#{advert.changeData}">
-							 					<f:param name="ad_id" value="#{ads.id}" />
-										</h:commandButton>
-				
-										<br />
-										<h:outputText value="Kategorie: #{ads.category}" />
-									</h:panelGroup>
-								</h:panelGrid>
-							</h:form>
-							        </h:panelGrid>
-							  </p:fieldset>
-						</ui:repeat> 
-
+				</ui:repeat> 	
 				</p:tab>
 				
 				<p:tab title="Fremde Inserate" >
@@ -73,10 +160,7 @@
 				
 										<h:outputText value="#{ads.text}" />
 										<br />
-										<h:commandButton value="ändern" action="#{advert.changeData}">
-							 					<f:param name="ad_id" value="#{ads.id}" />
-										</h:commandButton>
-				
+
 										<br />
 										<h:outputText value="Kategorie: #{ads.category}" />
 									</h:panelGroup>
@@ -98,11 +182,12 @@
 
 <!-- 
 
-
-        <h:commandButton action="#{advert.showown}" value="Eigene Inserate anzeigen"/>
-	        	
-			<h:commandButton action="#{advert.showothers}" value="Fremde Inserate anzeigen"/>
-			
-			
+ 		
+						
+						
+					
+						
+						
+						
 
  -->
