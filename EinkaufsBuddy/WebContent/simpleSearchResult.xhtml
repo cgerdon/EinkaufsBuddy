@@ -3,7 +3,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
 
 	<ui:define name="content">
 	<table>
@@ -21,9 +23,10 @@
  		
 
     <ui:repeat var="ads" value="#{simpleSearch.advertList}">
-    <p:fieldset legend="#{ads.datum} - #{ads.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="true" toggleSpeed="500">
+    <p:fieldset legend=" #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="true" toggleSpeed="500">
         <h:panelGrid columns="2" cellpadding="5">
-            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+             <p:graphicImage value="/resources/images/sample.jpg">
+ 		</p:graphicImage>
 			<h:form>
 				<h:panelGrid columns="2" border="1">
 					<h:panelGroup>
