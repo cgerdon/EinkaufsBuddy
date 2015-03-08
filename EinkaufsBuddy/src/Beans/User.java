@@ -481,7 +481,7 @@ public class User implements Serializable{
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", email);
 			showTimes(id);
-			return "home";
+			return "home?faces-redirect=true";
 
 		} else
 			logout();
