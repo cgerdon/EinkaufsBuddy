@@ -3,8 +3,10 @@ package Beans;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,6 +50,7 @@ public class User implements Serializable{
 	private String email;
 	private String password;
 	private String password2;
+	private boolean updateImg;
 	private Date birthday;
 	private int car;
 	private String abouttext;
@@ -56,6 +59,7 @@ public class User implements Serializable{
 	private int plz;
 	private Part file;
 	private String phone;
+	File outputFilePath;
 	private String dbPassword;
 	private String dbName;
 	private StreamedContent dbImage;
@@ -80,6 +84,45 @@ public class User implements Serializable{
 	public void setFile(Part file) {
 		this.file = file;
 	}
+	
+	public void uploadFile() throws IOException {
+				
+				
+				 
+				String fileName = getFileName(file);
+				System.out.println("***** fileName: " + fileName);
+		 
+				String basePath = "C:" + File.separator + "temp" + File.separator;
+				outputFilePath = new File(basePath + fileName);
+		 
+				// Copy uploaded file to destination path
+				InputStream inputStream = null;
+				OutputStream outputStream = null;
+				try {
+					inputStream = file.getInputStream();
+					outputStream = new FileOutputStream(outputFilePath);
+		 
+					int read = 0;
+					final byte[] bytes = new byte[1024];
+					while ((read = inputStream.read(bytes)) != -1) {
+						outputStream.write(bytes, 0, read);
+					}
+		 
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					
+				} finally {
+					if (outputStream != null) {
+						outputStream.close();
+					}
+					if (inputStream != null) {
+						inputStream.close();
+					}
+				}
+	
+			   // return to same page
+		}
 
 	private boolean[][] daytimeavailable;
 	DataSource ds;
@@ -90,6 +133,9 @@ public class User implements Serializable{
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
 				System.out.println(content.toString());
+				System.out.println(content.length());
+				if (content.length() > 12){ System.out.println("prüfung is korrekt");
+						updateImg = true;}
 				return content.substring(content.indexOf('=') + 1).trim()
 						.replace("\"", "");
 			}
@@ -104,15 +150,17 @@ public class User implements Serializable{
 		FileInputStream inputStream = null;
 
 		try {
-			File image = new File(getFileName(file));
-			inputStream = new FileInputStream(image);
+			
+			
+			inputStream = new FileInputStream(outputFilePath);
 			connection = ds.getConnection();
 			statement = connection
 					.prepareStatement("UPDATE member SET picture= ? where id= '" + id + "'");
 					statement.setBinaryStream(1, (InputStream) inputStream,
-					(int) (image.length()));
+					(int) (outputFilePath.length()));
 
 			statement.executeUpdate();
+
 		} catch (FileNotFoundException e) {
 			System.out.println("FileNotFoundException: - " + e);
 		} catch (SQLException e) {
@@ -543,9 +591,7 @@ public class User implements Serializable{
 			}}
 		}
 
-	public String profilchange(String firstName, String lastName,
-			Date birthday, int car, String phone, String email,
-			String password, String street, int plz, String abouttext) {
+	public String profilchange() throws IOException {
 		//boolean TempObject[][] = new boolean[6][6];
 		//daytimeavailable = TempObject;
 		int i = 0;
@@ -594,14 +640,22 @@ public class User implements Serializable{
 				e.printStackTrace();
 			}
 		}
+		System.out.println("Jetzt Zeiten löschen");
 		DeleteTimes(id);
+		System.out.println("Jetzt Zeiten updaten");
 		UpdateTimes(id);
-		PicUpload();
-
+		System.out.println("Jetzt Bild upload");
+		updateImg = false;
+		System.out.println("Der wert ist " + updateImg);
+		File image = new File(getFileName(file));
+		System.out.println("Der wert ist " + updateImg);
+		if (updateImg == true){uploadFile();
+			PicUpload();}
+		System.out.println("Und das Returnen");
 		if (i > 0) {
-			return "profil";
+			return "profil?faces-redirect=true";
 		} else
-			return "unsuccess";
+			return "unsuccess?faces-redirect=true";
 	}
 
 
