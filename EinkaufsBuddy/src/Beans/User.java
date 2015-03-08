@@ -422,11 +422,7 @@ public class User implements Serializable {
 						street = rs.getString("street");
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
-						InputStream binaryStream = rs
-								.getBinaryStream("picture");
-						StreamedContent Temp = new DefaultStreamedContent(
-								binaryStream, "image");
-						dbImage = Temp;
+						dbImage = new DefaultStreamedContent(rs.getBinaryStream("picture"), "image");
 					}
 					showTimes(id);
 				} catch (SQLException sqle) {
@@ -638,9 +634,10 @@ public class User implements Serializable {
 		UpdateTimes(id);
 
 		updateImg = false;
-
+		System.out.println("Ab hier..." + updateImg);
+		uploadFile();
 		if (updateImg == true) {
-			uploadFile();
+			
 			PicUpload();
 		}
 
@@ -650,4 +647,12 @@ public class User implements Serializable {
 			return "unsuccess?faces-redirect=true";
 	}
 
+
+	 
+	 public long getFixDate() {
+		 return System.currentTimeMillis();
+	}
+
+	private long fixDate;
+	
 }
