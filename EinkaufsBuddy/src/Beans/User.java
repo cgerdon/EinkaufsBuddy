@@ -440,7 +440,7 @@ public class User implements Serializable{
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
 						InputStream binaryStream = rs.getBinaryStream("picture");
-						dbImage = new DefaultStreamedContent(binaryStream, "image/jpeg");
+						dbImage = new DefaultStreamedContent(binaryStream, "image");
 					}
 					showTimes(id);
 				} catch (SQLException sqle) {
