@@ -7,77 +7,86 @@
     
 <ui:define name="content">
         <h:form id="createadvertForm">  
-			<h:panelGrid columns="1">
-			
+			<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 			<h:panelGroup>
-				<h:outputText value="Bevorzugter Markt:" />
-				<h:inputText id="fav_market" value="#{advert.fav_market}"  
-					required="true" requiredMessage="Bitte den bevorzugten Markt angeben" >
-				</h:inputText>
-				<h:message for="fav_market" style="color:red" />
-			</h:panelGroup>	
+			<table>
+				<tr>
+					<td><h:outputText value="Bevorzugter Markt:" /></td>
+					<td><p:inputText id="fav_market" value="#{advert.fav_market}"  
+						required="true" requiredMessage="Bitte den bevorzugten Markt angeben" >
+						</p:inputText>
+					</td>
+					<td><h:message for="fav_market" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Art des Marktes:" /></td>
+					<td><p:selectOneMenu id="fk_category" value="#{advert.fk_category}" size="3" required="true" requiredMessage="Bitte Art des Marktes angeben">
+							<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
+							<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
+							<f:selectItem itemValue="3" itemLabel="Apotheke"/>
+							<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
+							<f:selectItem itemValue="5" itemLabel="Bäcker"/>
+							<f:selectItem itemValue="6" itemLabel="Anderer"/>
+						</p:selectOneMenu>
+					</td>	
+					<td><h:message for="fk_category" style="color:red" /></td>
+				</tr>
 			
-			<h:panelGroup>
-				<h:outputText value="Art des Marktes:" />
-				<h:selectOneListbox id="fk_category" value="#{advert.fk_category}" size="3" required="true" requiredMessage="Bitte Art des Marktes angeben">
-					<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
-					<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
-					<f:selectItem itemValue="3" itemLabel="Apotheke"/>
-					<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
-					<f:selectItem itemValue="5" itemLabel="Bäcker"/>
-					<f:selectItem itemValue="6" itemLabel="Anderer"/>
-				</h:selectOneListbox>
-				<h:message for="fk_category" style="color:red" />
-			</h:panelGroup>	
+				<tr>
+					<td><h:outputText value="Datum:" /></td>
+					<td><p:calendar id="german" value="#{advert.date}" navigator="true" pattern="dd.MM.yyyy" required="true" requiredMessage="Bitte Datum angeben" />
+					</td>
+					<td><h:message for="german" style="color:red" /></td>
+				</tr>
 			
-			<h:panelGroup>
-				<h:outputText value="Datum:" />
-				<p:calendar id="german" value="#{advert.date}" navigator="true" pattern="dd.MM.yyyy" required="true" requiredMessage="Bitte Datum angeben" />
-				<h:message for="german" style="color:red" />
-			</h:panelGroup>	
 			
-			<h:panelGroup>
-				<h:outputText value="Zeit der Anlieferung:" />
-				<h:selectOneRadio id="fk_time_id" value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben">
-					<f:selectItem itemValue="1" itemLabel="Morgens"/>
-					<f:selectItem itemValue="2" itemLabel="Vormittags"/>
-					<f:selectItem itemValue="3" itemLabel="Mittags"/>
-					<f:selectItem itemValue="4" itemLabel="Nachmittags"/>
-					<f:selectItem itemValue="5" itemLabel="Abends"/>
-				</h:selectOneRadio>
-				<h:message for="fk_time_id" style="color:red" />
-			</h:panelGroup>	
+				<tr>
+	        		<td><h:outputText value="Zeit der Anlieferung:" /></td>
+	        		<td><p:selectOneRadio id="fk_time_id" value="#{advert.fk_time_id}" required="true" requiredMessage="Bitte Anlieferungszeitpunkt angeben"  layout="grid" columns="3">
+		            		<f:selectItem itemValue="1" itemLabel="Morgens"/>
+							<f:selectItem itemValue="2" itemLabel="Vormittags"/>
+							<f:selectItem itemValue="3" itemLabel="Mittags"/>
+							<f:selectItem itemValue="4" itemLabel="Nachmittags"/>
+							<f:selectItem itemValue="5" itemLabel="Abends"/>
+	        			</p:selectOneRadio>
+	        		</td>
+	        		<td><h:message for="fk_time_id" style="color:red" /></td>
+    			</tr>
+	
+
 			
-			<h:panelGroup>  
-				<h:outputText value="Budget in Euro:" />  
-				<h:inputText id="limit" value="#{advert.limit}"  
-					required="true" requiredMessage="Bitte Budget angeben" />
-				<h:message for="limit" style="color:red" /> 
-            </h:panelGroup> 
-            
-			<h:panelGroup>
-				<h:outputText value="Vergütung in Euro:" />  
-				<h:inputText id="income" value="#{advert.income}"  
-					required="true" requiredMessage="Bitte Vergütung angeben" /> 
-				<h:message for="income" style="color:red" />  
-  			</h:panelGroup>
-  			
-			<h:panelGroup>  
-				<h:outputText value="Einkaufsliste:" /> 
-				<h:inputTextarea id="text" value="#{advert.text}"  
-					required="true" requiredMessage="Bitte Einkaufsliste angeben" /> 
-				<h:message for="text" style="color:red" />
-			</h:panelGroup>	
-			
-			<h:panelGroup>   
-        		<h:outputText value="Aktivschaltung:" />
-				<h:selectBooleanCheckbox id="active" value="#{advert.status}" /> 
+			 	<tr>
+					<td><h:outputText value="Budget in Euro:" /></td>  
+					<td><p:inputText id="limit" value="#{advert.limit}"  
+						required="true" requiredMessage="Bitte Budget angeben" />
+					</td>
+					<td><h:message for="limit" style="color:red" /> </td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Vergütung in Euro:" /></td>  
+					<td><p:inputText id="income" value="#{advert.income}"  
+						required="true" requiredMessage="Bitte Vergütung angeben" /> 
+					</td>
+					<td><h:message for="income" style="color:red" /></td>  
+ 				</tr>
+ 				<tr>
+					<td><h:outputText value="Einkaufsliste:" /></td> 
+					<td><p:inputTextarea id="text" value="#{advert.text}"  
+						required="true" requiredMessage="Bitte Einkaufsliste angeben" /> 
+					</td>
+					<td><h:message for="text" style="color:red" /></td>
+				</tr>	
+				<tr>
+        			<td><h:outputText value="Aktivschaltung:" /></td>
+					<td><p:selectBooleanCheckbox id="active" value="#{advert.status}" /></td>
+				</tr> 
+			</table>	
 			</h:panelGroup>	
 			
 			</h:panelGrid>
                  
-				<h:commandButton value="Speichern" action="#{advert.add}" /> 
-				<h:button value="Abbrechen" outcome="viewadverts?faces-redirect=true" /> 
+				<p:commandButton value="Speichern" action="#{advert.add}" /> 
+				<p:button value="Abbrechen" outcome="viewadverts?faces-redirect=true" /> 
              
 		</h:form>  
 </ui:define>
