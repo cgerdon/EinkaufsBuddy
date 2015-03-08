@@ -44,7 +44,16 @@ public class Advert implements Serializable{
     private Date date;
     private int fk_time_id;
     private double income;
-    private double limit;
+    private int idvombesitzer;
+    public int getIdvombesitzer() {
+		return idvombesitzer;
+	}
+
+	public void setIdvombesitzer(int idvombesitzer) {
+		this.idvombesitzer = idvombesitzer;
+	}
+
+	private double limit;
     private int fk_category;
     private String text;
     private boolean status;
@@ -95,7 +104,7 @@ public class Advert implements Serializable{
 		FacesContext fc2 = FacesContext.getCurrentInstance();
 		ms_advertID = getadvertid(fc2);
 		FacesContext fc = FacesContext.getCurrentInstance();
-		this.ad_id = getresulttodetail(fc); 
+		this.idvombesitzer = getresulttodetail(fc); 
 		PreparedStatement ps = null;  
         Connection con = null;  
         ResultSet rs = null;
@@ -121,7 +130,8 @@ public class Advert implements Serializable{
                     	text = rs.getString("ad.text");
                     	zeitpunkt = rs.getString("times_available.time");
                     	category = rs.getString("category.category");
-                    	advertiser_id = rs.getInt("advertiser_id");
+                    	//advertiser_id = rs.getInt("advertiser_id");
+                    	//System.out.println("asdasdasdasdsa "+ advertiser_id);
                     	buyer_id = rs.getInt("buyer_id");
                     	
                     }
@@ -592,6 +602,7 @@ public class Advert implements Serializable{
 	                    	//Mathias: musste die SQL ändern, da das nicht das macht, was es machen soll!
 	      		          	// String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
 	                    	// Funktioniert im Mom nicht, da die Detailseite immer noch nicht funktioniert
+	                    	
 	                    	String sql = "UPDATE ad SET ad.buyer_id='" + advertiser_id + "' WHERE ad.id ='" + ms_advertID + "'";
 
 	                    	ps = con.prepareStatement(sql);  
@@ -609,9 +620,9 @@ public class Advert implements Serializable{
 	    		  String sqlmessage = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`, `advert`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";  
 	    		  PreparedStatement psmessage = null; 
 	    		  psmessage = con.prepareStatement(sqlmessage);   
-	    		  
+
 	    		  psmessage.setInt(1, advertiser_id);  
-	    		  psmessage.setInt(2, ad_id);  
+	    		  psmessage.setInt(2, idvombesitzer);  
 	    		  psmessage.setString(3, datumConverter); 
 	    		  psmessage.setByte(4, b);  
 	    		  psmessage.setInt(5, ms_advertID); 
@@ -641,7 +652,7 @@ public class Advert implements Serializable{
 				            	   PreparedStatement ps4 = null;  
 				            	   String sql4 = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
 				                   ps4 = con.prepareStatement(sql4);  
-				                   ps4.setInt(1, ad_id);  
+				                   ps4.setInt(1, idvombesitzer);  
 				                   ps4.setInt(2, advertiser_id);  
 				                   ps4.setString(3, datumConverter2); 
 				                   ps4.setByte(4, c);  
