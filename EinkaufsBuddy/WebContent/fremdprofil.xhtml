@@ -114,7 +114,8 @@
 				<table>
 				<ui:repeat var="ratings" value="#{userView.ratingList}">
 				<tr>
-					<td>Rating von #{ratings.vorname} #{ratings.name}: #{ratings.rating} / 5</td>
+					<td>Rating von #{ratings.vorname} #{ratings.name}: </td>
+					<td> #{ratings.rating} / 5 </td>
 					<td>#{ratings.text}</td>
 				</tr>
 				</ui:repeat>
