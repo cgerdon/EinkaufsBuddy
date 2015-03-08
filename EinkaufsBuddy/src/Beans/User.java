@@ -3,6 +3,7 @@ package Beans;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,6 +25,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import org.primefaces.context.RequestContext;
@@ -49,12 +52,37 @@ public class User implements Serializable{
 	private byte[] picture;
 	private String street;
 	private int plz;
+	private Part file;
 	private String phone;
 	private String dbPassword;
 	private String dbName;
+	
+	
+
+	public Part getFile() {
+		return file;
+	}
+
+
+	public void setFile(Part file) {
+		this.file = file;
+	}
 
 	private boolean[][] daytimeavailable;
 	DataSource ds;
+	
+	private String getFileName(Part part) {
+		final String partHeader = part.getHeader("content-disposition");
+		System.out.println("***** partHeader: " + partHeader);
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(content.indexOf('=') + 1).trim()
+						.replace("\"", "");
+			}
+		}
+		return null;
+	}
+		
 	
 	private void PicUpload(){
 		Connection connection = null;
@@ -62,7 +90,7 @@ public class User implements Serializable{
 		FileInputStream inputStream = null;
 
 		try {
-			File image = new File("C:/honda.jpg");
+			File image = new File(getFileName(file));
 			inputStream = new FileInputStream(image);
 			connection = ds.getConnection();
 			statement = connection
