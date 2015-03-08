@@ -1,32 +1,18 @@
 package Beans;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
- 
-
-import java.nio.file.Paths;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.servlet.http.Part;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -39,11 +25,8 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
-
-import com.sun.faces.facelets.util.Path;
 
 @ManagedBean(name = "user")
 // @RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
@@ -62,7 +45,6 @@ public class User implements Serializable{
 	private String password2;
 	private Date birthday;
 	private int car;
-	private Blob pictureblob;
 	private String abouttext;
 	private byte[] picture;
 	private String street;
@@ -70,76 +52,23 @@ public class User implements Serializable{
 	private String phone;
 	private String dbPassword;
 	private String dbName;
-	private Part part;
-	private String statusMessage;
 
 	private boolean[][] daytimeavailable;
 	DataSource ds;
 	
-	public String uploadFile() throws IOException {
-		
-		
-		 
-		String fileName = getFileName(part);
-		System.out.println("***** fileName: " + fileName);
- 
-		String basePath = "C:" + File.separator + "temp" + File.separator;
-		File outputFilePath = new File(basePath + fileName);
- 
-		// Copy uploaded file to destination path
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-		try {
-			inputStream = part.getInputStream();
-			outputStream = new FileOutputStream(outputFilePath);
- 
-			int read = 0;
-			final byte[] bytes = new byte[1024];
-			while ((read = inputStream.read(bytes)) != -1) {
-				outputStream.write(bytes, 0, read);
-			}
- 
-			statusMessage = "File upload successfull !!";
-		} catch (IOException e) {
-			e.printStackTrace();
-			statusMessage = "File upload failed !!";
-		} finally {
-			if (outputStream != null) {
-				outputStream.close();
-			}
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		}
-		WriteImgtoDb();
-		return null;    // return to same page
-	}
- 
-	public String getPassword2() {
-		return password2;
-	}
-
-	public void setPassword2(String password2) {
-		this.password2 = password2;
-	}
-
-	private void WriteImgtoDb() throws FileNotFoundException {
-		String basePath = "C:" + File.separator + "temp" + File.separator;
-		
-	   
-	    Connection connection = null;
+	private void PicUpload(){
+		Connection connection = null;
 		PreparedStatement statement = null;
 		FileInputStream inputStream = null;
-		File outputFilePath = new File(basePath + getFileName(part));
-		try {
-			
 
-			inputStream = new FileInputStream(outputFilePath);
+		try {
+			File image = new File("C:/honda.jpg");
+			inputStream = new FileInputStream(image);
 			connection = ds.getConnection();
-			statement = connection.prepareStatement("insert into member(picture) where mail = " + email 
-							+ " values(?)");
-			statement.setBinaryStream(1, (InputStream) inputStream,
-					(int) (outputFilePath.length()));
+			statement = connection
+					.prepareStatement("UPDATE member SET picture= ? where id= '" + id + "'");
+					statement.setBinaryStream(1, (InputStream) inputStream,
+					(int) (image.length()));
 
 			statement.executeUpdate();
 		} catch (FileNotFoundException e) {
@@ -154,44 +83,16 @@ public class User implements Serializable{
 				System.out.println("SQLException Finally: - " + e);
 			}
 		}
+	}
+	
+	
+ 
+	public String getPassword2() {
+		return password2;
+	}
 
-
-		outputFilePath.delete();
-	}
-
-	public Part getPart() {
-		return part;
-	}
- 
-	public void setPart(Part part) {
-		this.part = part;
-	}
- 
-	public String getStatusMessage() {
-		return statusMessage;
-	}
- 
-	public void setStatusMessage(String statusMessage) {
-		this.statusMessage = statusMessage;
-	}
- 
-	// Extract file name from content-disposition header of file part
-	private String getFileName(Part part) {
-		final String partHeader = part.getHeader("content-disposition");
-		System.out.println("***** partHeader: " + partHeader);
-		for (String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				System.out.println(content.substring(content.indexOf('=') + 1).trim().replace("\"", ""));
-				String extension = "";
-				int i = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").lastIndexOf('.');
-				if (i > 0) {
-				    extension = content.substring(content.indexOf('=') + 1).trim().replace("\"", "").substring(i+1);
-				}
-				return "uploaded" + "." + extension;
-				
-			}
-		}
-		return null;
+	public void setPassword2(String password2) {
+		this.password2 = password2;
 	}
 	
 	public void onDateSelect(SelectEvent event) {
@@ -441,7 +342,6 @@ public class User implements Serializable{
 						firstName = rs.getString("name");
 						lastName = rs.getString("last_name");
 						email = rs.getString("mail");
-						pictureblob = rs.getBlob("picture");
 						// password = rs.getString("password_hash");
 						birthday = rs.getDate("birthdate");
 						car = rs.getInt("car");
@@ -652,6 +552,7 @@ public class User implements Serializable{
 		}
 		DeleteTimes(id);
 		UpdateTimes(id);
+		PicUpload();
 
 		if (i > 0) {
 			return "profil";
@@ -659,12 +560,6 @@ public class User implements Serializable{
 			return "unsuccess";
 	}
 
-	public Blob getPictureblob() {
-		return pictureblob;
-	}
 
-	public void setPictureblob(Blob pictureblob) {
-		this.pictureblob = pictureblob;
-	}
 
 }

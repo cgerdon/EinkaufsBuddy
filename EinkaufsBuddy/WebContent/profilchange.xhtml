@@ -41,18 +41,7 @@
 
 				<h:outputLabel value="Über dich: " />
 				<h:inputText value="#{user.abouttext}" binding="#{abouttext}" />
-				<h:outputLabel value="Profilbild: " />
-				<h:inputFile id="file" label="file" value="#{user.part}">
-
-					<f:validator validatorId="FileUploadValidator" />
-				</h:inputFile>
-				<h:commandButton id="submit" action="#{user.uploadFile}"
-					value="Bild hochladen" />
-				<br />
-
-				<h:outputText value="#{user.statusMessage}"
-					rendered="#{not empty user.statusMessage}" />
-					
+				<h:outputLabel value="Profilbild: "/>
 					</h:panelGrid>
 	<h2>Verfügbare Zeiten</h2>
 	<br />
