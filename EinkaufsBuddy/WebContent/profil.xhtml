@@ -6,42 +6,36 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das ist dein Profil, #{user.firstName}</h1>
-		
+	
 		<h:form>  
-			<h:panelGrid columns="2">
-				<h:outputLabel value="Name: "/>
-		      	<h:outputText value="#{user.firstName}"/>
-		      	<h:outputLabel value="Nachname: "/>
-		      	<h:outputText value="#{user.lastName}"/>
-		        <h:outputLabel value="Geburtstag: "/>
-		        <h:outputText value="#{user.birthday}">
-		        	<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
-		        </h:outputText>
-		        <h:outputLabel value="Auto: "/>
-		    	<h:form rendered="#{user.car == '1'}">
-		    	<h:outputLabel value="Ja "/>
-		    	</h:form>
-		        <h:outputLabel value="Telefon: "/>
-		        <h:outputText value="#{user.phone}"/>
+			<p:panel id="basic"
+				header="Das ist dein Profil, #{user.firstName} #{user.lastName}"
+				style="margin-bottom:20px">
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Geburtstag: " />
+					<h:outputText value="#{user.birthday}">
+						<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin" />
+					</h:outputText>
+					<h:outputLabel value="Auto: " />
+					<h:outputText value="Ja" rendered="#{user.car == 1}" />
+					<h:outputText value="Nein" rendered="#{user.car == 0}" />
+					<h:outputLabel value="Telefon: " />
+					<h:outputText value="#{user.phone}" />
+					<h:outputLabel value="Straße: " />
+					<h:outputText value="#{user.street}" />
+					<h:outputLabel value="PLZ: " />
+					<h:outputText value="#{user.plz}" />
 
-				<h:outputLabel value="E-Mail: "/>
-		      	<h:outputText value="#{user.email}"/>     	
-  		        
-		        <h:outputLabel value="Straße: "/>
-		        <h:outputText value="#{user.street}"/>
-		        <h:outputLabel value="PLZ: "/>
-		        <h:outputText value="#{user.plz}"/>
-      
-		        <h:outputLabel value="Über dich: "/>
-		        <h:outputText value="#{user.abouttext}"/>
-		        <h:outputLabel value="Bild: "/>
+					<h:outputLabel value="Über: " />
+					<h:outputText value="#{user.abouttext}" />
+					 <h:outputLabel value="Bild: "/>
 		        <p:graphicImage value="#{user.dbImage}">
 		         <f:param name="aaa" value="#{user.fixDate}"/>
  	</p:graphicImage>
-        	</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
       
-	        <p:commandButton action="profilchange" value="Ändern"/>
+	        <p:commandButton action="profilchange" value="Ändern" icon="ui-icon-scissors"/>
         </h:form>  
 	</ui:define>
   

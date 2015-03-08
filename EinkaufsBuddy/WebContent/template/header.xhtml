@@ -11,10 +11,11 @@
 	</h:outputLink>	
 	 
 	
-	<h:form styleClass="login-logout-form" rendered="#{user.id == 0}">
-			<p:button value="Registrieren" outcome="register" />
+	<h:form styleClass="login-logout-form"  rendered="#{user.id == 0}">
+			<p:button value="Registrieren" style="width:125px" icon="ui-icon-disk"
+  outcome="register" />
 			
-			<p:commandButton id="login-window-button" value="Login" type="button" />
+			<p:commandButton id="login-window-button" value="Login" type="button" icon="ui-icon-key"/>
    				<p:overlayPanel id="login-window" for="login-window-button" hideEffect="fade">
         			<h:panelGrid columns="2">
 		  				<h:outputLabel value="Mailadresse: " />
