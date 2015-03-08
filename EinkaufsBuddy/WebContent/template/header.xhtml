@@ -18,14 +18,12 @@
    				<p:overlayPanel id="login-window" for="login-window-button" hideEffect="fade">
         			<h:panelGrid columns="2">
 		  				<h:outputLabel value="Mailadresse: " />
-<p:inputText id="email" value="#{user.email}"  
-                            required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
-                             <f:validateRegex
-		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></p:inputText>
+		  				<p:inputText id="email" value="#{user.email}" required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
+                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></p:inputText>
 
 		    			<h:outputLabel value="Passwort: " />
 						<p:password id="pwd1" value="#{user.password}" label="Passwort 1" required="true" requiredMessage="Bitte ein Passwort eingeben!" />
-						
+						<h:outputLabel value=" " />
 						<p:commandButton value="Login" icon="ui-icon-key" action="#{user.login}" style="width:130px" />
                                 
 
