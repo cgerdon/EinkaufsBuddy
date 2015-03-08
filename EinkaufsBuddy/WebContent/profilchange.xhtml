@@ -6,10 +6,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-		<h1>Profil ändern</h1>
 
 		<h:form id="inputForm" enctype="multipart/form-data">
-			<h:panelGrid columns="2">
+		
+		<p:panel id="basic"
+				header="Das ist dein Profil, #{user.firstName} #{user.lastName}"
+				style="margin-bottom:20px">
+<h:panelGrid columns="2">
 				<h:outputLabel value="E-Mail: " />
 				<h:outputText value="#{user.email}" binding="#{email}" />
 				<h:outputLabel value="Vorname: " />
@@ -26,25 +29,29 @@
 				<p:calendar id="german" value="#{user.birthday}" locale="de"
 					navigator="true" pattern="dd.MM.yyyy" binding="#{birthday}" />
 				<h:outputLabel value="Auto: " />
-				<h:selectOneMenu value="#{user.car}" converter="javax.faces.Integer">
+				<p:selectOneMenu value="#{user.car}" converter="javax.faces.Integer">
 					<f:selectItem itemValue="1" itemLabel="Ja" />
 					<f:selectItem itemValue="0" itemLabel="Nein" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<h:outputLabel value="Telefon: " />
-				<h:inputText value="#{user.phone}" binding="#{phone}" />
+				<p:inputText value="#{user.phone}" binding="#{phone}" />
 
 
-					<h:outputLabel value="Straße: " />
-				<h:inputText value="#{user.street}" binding="#{street}" />
+				<h:outputLabel value="Straße: " />
+				<p:inputText value="#{user.street}" binding="#{street}" />
 				<h:outputLabel value="PLZ: " />
-				<h:inputText value="#{user.plz}" binding="#{plz}" />
+				<p:inputText value="#{user.plz}" binding="#{plz}" />
 
 				<h:outputLabel value="Über dich: " />
-				<h:inputText value="#{user.abouttext}" binding="#{abouttext}" />
+				<p:inputText value="#{user.abouttext}" binding="#{abouttext}" />
 				<h:outputLabel value="Profilbild: "/>
 				<h:inputFile id="file" value="#{user.file}"/>
 					</h:panelGrid>
-	<h2>Verfügbare Zeiten</h2>
+			</p:panel>
+		
+			
+	<p:panel id="zeiten" header="Verfügbare Zeiten"
+				style="margin-bottom:20px">
 	<br />
 	<table border="0">
   <tr>
@@ -121,7 +128,7 @@
 					value="#{user.daytimeavailable[5][5]}" /></td>
   </tr>
 </table>
-
+</p:panel>
 		
 
 			
