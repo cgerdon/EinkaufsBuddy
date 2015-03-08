@@ -30,6 +30,8 @@ import javax.sql.DataSource;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @ManagedBean(name = "user")
 // @RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
@@ -56,8 +58,19 @@ public class User implements Serializable{
 	private String phone;
 	private String dbPassword;
 	private String dbName;
+	private StreamedContent dbImage;
 	
 	
+
+	public StreamedContent getDbImage() {
+		return dbImage;
+	}
+
+
+	public void setDbImage(StreamedContent dbImage) {
+		this.dbImage = dbImage;
+	}
+
 
 	public Part getFile() {
 		return file;
@@ -76,6 +89,7 @@ public class User implements Serializable{
 		System.out.println("***** partHeader: " + partHeader);
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
+				System.out.println(content.toString());
 				return content.substring(content.indexOf('=') + 1).trim()
 						.replace("\"", "");
 			}
@@ -359,7 +373,7 @@ public class User implements Serializable{
 				try {
 					con = ds.getConnection();
 					if (con != null) {
-						String sql = "select id, mail, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone, picture from member where mail = '"
+						String sql = "select id, mail, picture, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone, picture from member where mail = '"
 								+ uName + "'";
 						ps = con.prepareStatement(sql);
 						rs = ps.executeQuery();
@@ -377,6 +391,8 @@ public class User implements Serializable{
 						street = rs.getString("street");
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
+						InputStream binaryStream = rs.getBinaryStream("picture");
+						dbImage = new DefaultStreamedContent(binaryStream, "image/jpeg");
 					}
 					showTimes(id);
 				} catch (SQLException sqle) {
