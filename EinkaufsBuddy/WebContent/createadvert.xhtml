@@ -9,6 +9,7 @@
         <h:form id="createadvertForm">  
 			<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 			<h:panelGroup>
+			<p:messages autoUpdate="true"/>
 			<table>
 				<tr>
 					<td><h:outputText value="Bevorzugter Markt:" /></td>
@@ -16,7 +17,7 @@
 						required="true" requiredMessage="Bitte den bevorzugten Markt angeben" >
 						</p:inputText>
 					</td>
-					<td><h:message for="fav_market" style="color:red" /></td>
+					<td><p:message for="fav_market" style="color:red" /></td>
 				</tr>
 				<tr>
 					<td><h:outputText value="Art des Marktes:" /></td>
@@ -29,14 +30,14 @@
 							<f:selectItem itemValue="6" itemLabel="Anderer"/>
 						</p:selectOneMenu>
 					</td>	
-					<td><h:message for="fk_category" style="color:red" /></td>
+					<td><p:message for="fk_category" style="color:red" /></td>
 				</tr>
 			
 				<tr>
 					<td><h:outputText value="Datum:" /></td>
 					<td><p:calendar id="german" value="#{advert.date}" navigator="true" pattern="dd.MM.yyyy" required="true" requiredMessage="Bitte Datum angeben" />
 					</td>
-					<td><h:message for="german" style="color:red" /></td>
+					<td><p:message for="german" style="color:red" /></td>
 				</tr>
 			
 			
@@ -50,7 +51,7 @@
 							<f:selectItem itemValue="5" itemLabel="Abends"/>
 	        			</p:selectOneRadio>
 	        		</td>
-	        		<td><h:message for="fk_time_id" style="color:red" /></td>
+	        		<td><p:message for="fk_time_id" style="color:red" /></td>
     			</tr>
 	
 
@@ -60,21 +61,21 @@
 					<td><p:inputText id="limit" value="#{advert.limit}"  
 						required="true" requiredMessage="Bitte Budget angeben" />
 					</td>
-					<td><h:message for="limit" style="color:red" /> </td>
+					<td><p:message for="limit" style="color:red" /> </td>
 				</tr>
 				<tr>
 					<td><h:outputText value="Vergütung in Euro:" /></td>  
 					<td><p:inputText id="income" value="#{advert.income}"  
 						required="true" requiredMessage="Bitte Vergütung angeben" /> 
 					</td>
-					<td><h:message for="income" style="color:red" /></td>  
+					<td><p:message for="income" style="color:red" /></td>  
  				</tr>
  				<tr>
 					<td><h:outputText value="Einkaufsliste:" /></td> 
 					<td><p:inputTextarea id="text" value="#{advert.text}"  
 						required="true" requiredMessage="Bitte Einkaufsliste angeben" /> 
 					</td>
-					<td><h:message for="text" style="color:red" /></td>
+					<td><p:message for="text" style="color:red" /></td>
 				</tr>	
 				<tr>
         			<td><h:outputText value="Aktivschaltung:" /></td>
