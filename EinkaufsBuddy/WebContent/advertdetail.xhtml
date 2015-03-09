@@ -31,7 +31,8 @@
 
 					<h:panelGroup>
 
-						<h:outputText value="#{advert.text}" />
+						<!--  <h:outputText value="#{advert.text}" /> -->
+						<h:inputTextarea resizable="false"  rows="1" cols="10" readonly="true" value="#{advert.text}" scrollable="false" style="border-color: white"  />
 						<br />
 						<h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}" rendered="#{advert.idvombesitzer != user.id}"/>
 
