@@ -1131,8 +1131,12 @@ public class Advert implements Serializable{
                     rs = ps.executeQuery();  
                     
                     while (rs.next()) {  
+                    	text = rs.getString("text");
+                    	if (rs.getString("text").length()>20) {
+							text = rs.getString("text").substring(0,20) + "...";
+						}
                     	Advert TempObj = new Advert(
-    							rs.getString("text"), rs.getInt("plz"),
+                    			text, rs.getInt("plz"),
     							rs.getString("street"), rs.getString("name"),
     							rs.getString("last_name"), rs.getInt("ad.id"),
     							rs.getDouble("limit"), rs.getDouble("income"),
@@ -1155,8 +1159,13 @@ public class Advert implements Serializable{
                     rs = ps.executeQuery();  
                     
                     while (rs.next()) {  
+                    	text = rs.getString("text");
+                    	if (rs.getString("text").length()>20) {
+							text = rs.getString("text").substring(0,20) + "...";
+						}
                     	Advert TempObj = new Advert(
-    							rs.getString("text"), rs.getInt("plz"),
+                    			
+                    			text, rs.getInt("plz"),
     							rs.getString("street"), rs.getString("name"),
     							rs.getString("last_name"), rs.getInt("ad.id"),
     							rs.getDouble("limit"), rs.getDouble("income"),
@@ -1204,10 +1213,12 @@ public class Advert implements Serializable{
                 
              
                 while (rs.next()) {  
-              
-                	
+                	text = rs.getString("text");
+                	if (rs.getString("text").length()>20) {
+						text = rs.getString("text").substring(0,20) + "...";
+					}
                 	Advert TempObj = new Advert(
-							rs.getString("text"), rs.getInt("plz"),
+                			text, rs.getInt("plz"),
 							rs.getString("street"), rs.getString("name"),
 							rs.getString("last_name"), rs.getInt("ad.id"),
 							rs.getDouble("limit"), rs.getDouble("income"),
