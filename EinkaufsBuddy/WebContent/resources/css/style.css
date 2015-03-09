@@ -385,3 +385,9 @@ ul li.ui-menuitem-active>a{
 .ui-fieldset{
 background-color: rgb(250,230,175);
 }
+
+.ButtonHeaderSimple{
+	text-align: right;
+	position: relative; 
+	float: right; 
+}

@@ -8,23 +8,22 @@
 	xmlns:of="http://omnifaces.org/functions">
 
 	<ui:define name="content">
-	<table>
-	<tr >
-	<td><p:outputLabel value="Es wurden insgesamt #{simpleSearch.summeAds} passende Inserate gefunden" /></td>
-	<td align="right"><h:form align="right"><p:menuButton value="Sortieren nach...">
-        <p:menuitem value="Datum" action="#{simpleSearch.sortByDate}"  icon="ui-icon-calendar"/>
-        <p:menuitem value="Entfernung" action="#{simpleSearch.sortByDistance}" icon="ui-icon-transferthick-e-w"/>
- 
-    </p:menuButton>
-					
-				</h:form></td>
-	</tr>
-	</table>
- 		<br />
+	<h:form>
+	<p:panel>
+	  	<f:facet name="header" >
+	  	<p:outputLabel value="Es wurden insgesamt #{simpleSearch.summeAds} passende Inserate gefunden" />
+       		<h:panelGroup styleClass="ButtonHeaderSimple" layout="block">
+       		<h:outputText  value="Sortieren: "/>
+	        	<p:commandButton value="Datum" action="#{simpleSearch.sortByDate}" />
+	        	<p:commandButton value="Entfernung" action="#{simpleSearch.sortByDistance}" />
+   			</h:panelGroup>
+		</f:facet>
+	
+ 		
 
     <ui:repeat var="ads" value="#{simpleSearch.advertList}">
     <p:fieldset legend=" #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="true" toggleSpeed="500">
-			<h:form>
+			
 				<table>
 					<colgroup>
 					    <col width="180px"/>
@@ -78,12 +77,12 @@
 						
 					</tr>
 				</table>
-			</h:form>
+		
 			  </p:fieldset>
 		</ui:repeat> 
 
-
-
+</p:panel>
+	</h:form>
 	</ui:define>
 
 </ui:composition>
