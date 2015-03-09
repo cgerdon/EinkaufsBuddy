@@ -8,23 +8,15 @@
 	<ui:define name="content">
 		<h1>Das sind deine Nachrichten,
 			<h:outputText value="#{message.ms_receiverFirstName} "/>
-			<h:outputText value="#{message.ms_receiverLastName} (ID: "/>
-			<h:outputText value="#{message.ms_receiverId})"/>
-		
-		
-		! </h1>
+			<h:outputText value="#{message.ms_receiverLastName}!"/>		
+		</h1>
 		
 				
 		<h:form>	
 	
-					<h:dataTable id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
-							
-
-							
-
-									
-							<h:column >
-
+					<h:dataTable   id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
+						<h:column headerClass="TableHeader1">
+							<f:facet name="header">Name: </f:facet>    	
 							<h:panelGroup styleClass="messageoverviewName">
 								<h:outputText value="#{messageoverview.ms_receiverFirstName} "/>
 								<h:outputText  value="#{messageoverview.ms_receiverLastName}" />
@@ -32,16 +24,18 @@
 							<h:panelGroup styleClass="messagecycle" rendered="#{messageoverview.ms_anzahl > 0}">
 								<h:outputText  value="#{messageoverview.ms_anzahl}" />
 							</h:panelGroup>
-							</h:column>
+						</h:column>
 														
-							<h:column>
-							<h:panelGroup styleClass="tabellenabstand">
+						<h:column headerClass="TableHeader2">
+							<f:facet name="header">Letzte Nachricht: </f:facet>   
+							
+							<h:panelGroup styleClass="tabellenabstand">	
 								<h:outputText value="#{messageoverview.ms_time}" />
 							</h:panelGroup>
 								
-							</h:column>	
+						</h:column>	
 							
-							<h:column>
+						<h:column>
 			
 								<h:panelGroup styleClass="tabellenabstand">
 									<p:commandButton value="ansehen" action="#{message.showMessage}" >
