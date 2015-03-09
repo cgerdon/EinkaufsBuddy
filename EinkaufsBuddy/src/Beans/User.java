@@ -588,6 +588,7 @@ public class User implements Serializable {
 						street = rs.getString("street");
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
+						System.out.println("DAS BILD WIRD GELADEN");
 						dbImage = new DefaultStreamedContent(rs.getBinaryStream("picture"), "image");
 					}
 					showTimes(id);
