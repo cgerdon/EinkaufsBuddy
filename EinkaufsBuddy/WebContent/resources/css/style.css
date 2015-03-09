@@ -1,3 +1,12 @@
+
+.Banner{
+	width: 100%; 
+	border-style: solid;
+	border-width: thin ;
+	border-color: rgb(236,186,49);
+	border-radius: 5px;
+}
+
 .ui-panel-titlebar{
 	height: 25px; 
 }
@@ -7,9 +16,11 @@
 }
 
 .TableHeader1, .TableHeader2{
+	
 	text-align: left; 
-	color: green; 
+	color: rgb(187,34,43); 
 	padding-bottom: 10px;
+	padding-top: 20px;
 }
 
 .TableHeader2{ 
@@ -66,7 +77,7 @@
   	top: 0px;
 	bottom: auto;
 	border: 20px solid;
-	border-color: yellow transparent transparent transparent;
+	border-color: rgb(250,230,175) transparent transparent transparent;
 }
 
 /* Bubbles rechts */ 
@@ -92,7 +103,7 @@
  	top: 0px;
 	bottom: auto;
 	border: 20px solid;
-	border-color: yellow transparent transparent transparent;
+	border-color: rgb(250,230,175) transparent transparent transparent;
 }
 
 .ui-datascroller-content{
@@ -103,7 +114,7 @@
 	padding: 2px 10px; 
 	min-width: 50%;
 	margin-left: 30px; 
-	background-color: yellow;
+	background-color: rgb(250,230,175);
 	border-radius: 5px;
 	position: relative; 	
 }
@@ -119,7 +130,7 @@
 	padding: 5px 10px; 
 	min-width: 50%;
 	margin-right: 30px; 
-	background-color: yellow;
+	background-color: rgb(250,230,175);
 	position: relative; 
 	float: right; 
 	border-radius: 5px;
@@ -167,11 +178,11 @@
 .messagesideboxbutton{
 	border-radius: 2px;
 	width: 100%; 
-	background-color: green;
+	background-color: rgb(236,186,49);
 }
 
 .messagesideboxbutton:hover{
-	background-color: #D5FF95
+	background-color: rgb(250,230,175);
 }
 
 .textareastyle{
@@ -186,8 +197,8 @@
 
 
 /*** master ***/
-h1{
-	color:red;
+h1, h2, h3{
+	color: rgb(187,34,43);
 }
 
 #page {
@@ -199,7 +210,7 @@ h1{
 	padding: 5px 1em;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	background-color: #D5FF95;
+	background-color: rgb(250,230,175);
 	border-radius: 5px;
 	min-height: 500px; 
 }
@@ -220,16 +231,16 @@ h1{
 	padding-bottom: 5px;
 	float: left;
 	width: 15%;
-	background-color: #D5FF95;
+	background-color: rgb(250,230,175);
 	border-radius: 5px;
 	text-align:center;
 }
 
 #content {
 	padding: 5px;
-	width: 80%;
+	width: 83%;
 	margin-left: auto;
-	background-color: #D5FF95;
+	background-color: rgb(250,230,175);
 	border-radius: 5px;
 	min-height: 500px; 
 }
@@ -256,17 +267,19 @@ h1{
 }
 
 .ui-button.ui-state-default {
-	background-color: green !important;
+	background-color: rgb(236,186,49) !important;
 	padding: 0px !important;
 	margin-top: 0px !important;
 	font-size: 1em;
+	
 	width: 100px;
 	height: 25px;
 	box-shadow: none !important;
 	text-shadow: none !important;
 }
 .ui-button.ui-state-hover {
-	background-color: #D5FF95 !important;
+	background-color: rgb(250,230,175) !important;
+	
 	box-shadow: none !important;
 }
 
@@ -304,7 +317,7 @@ ul li.ui-menuitem-active>a{
 /*** footer ***/
 
 #footer {
-	background-color: #D5FF95;
+	background-color: rgb(250,230,175);
 	border-radius: 5px;
 	padding: 5px;
 }
@@ -316,13 +329,13 @@ ul li.ui-menuitem-active>a{
 .footer-links {
 	margin-left: 10px;
 	font-size: 80%; 
-	color: #000000; 
+	color: rgb(187,34,43);  
 	text-decoration: none; 
 	text-underline: none; 
 }
 
 .footer-links:hover {
-	color: green; 
+	color: rgb(236,186,49); 
 }
 
 #footer-copyright {
@@ -334,10 +347,13 @@ ul li.ui-menuitem-active>a{
 	font-weight: bold;
 }
 
-/*** Startseite Logout ***/
+
+/*** Startseite Logout
+187 34 43
+ ***/
 #simplesearchform{
-	padding-top: 10em;
-	padding-bottom: 10em;
+	padding-top: 5em;
+	padding-bottom: 5em;
 	text-align: center;
 }
 
