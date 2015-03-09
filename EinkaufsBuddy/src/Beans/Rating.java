@@ -1,7 +1,9 @@
 package Beans;  
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
 
 
 import javax.faces.bean.ManagedBean;
@@ -14,10 +16,14 @@ import javax.sql.DataSource;
 @ManagedBean(name = "rating") 
 
 @SessionScoped  
-public class Rating{  
+public class Rating implements Serializable{  
 	
 
-     DataSource ds;  
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3764405341697498243L;
+	DataSource ds;  
     private int buyer;
     private int advertiser;
     private int ad;
@@ -94,22 +100,29 @@ public class Rating{
 	}
 
 
-	public void addRating() {  
+	public String addRating(int buyerid, int adid, int advid, int type){  
       
-       //INSERT INTO `rating` (`buyer_id`, `advertiser_id`, `rating`, `text`, `ad_id`) VALUES (2, 3, 5, 'Sie war Einsam. Und es gab einen Jägermeister für mich!', 4);
             PreparedStatement ps = null;  
             Connection con = null;  
             try {  
                 if (ds != null) {  
                     con = ds.getConnection();  
                     if (con != null) {  
-                        String sql = "INSERT INTO `rating` (`buyer_id`, `advertiser_id`, `rating`, `text`, `ad_id`) VALUES (?, ?, ?, ?, ?);";  
+                    	System.out.println(buyerid);
+                    	System.out.println(adid);
+                    	System.out.println(rating);
+                    	System.out.println("Hier sollte der Text stehen: " + text);
+                    	System.out.println(advid);
+                    	System.out.println(type);
+                        String sql = "INSERT INTO `rating` (`buyer_id`, `advertiser_id`, `rating`, `text`, `ad_id`, type) VALUES (?, ?, ?, ?, ?, ?);";  
                         ps = con.prepareStatement(sql);  
-                        ps.setInt(1, buyer);  
-                        ps.setInt(2, advertiser);  
+                        ps.setInt(1, buyerid);  
+                        ps.setInt(2, advid);  
                         ps.setInt(3, rating);  
                         ps.setString(4, text);  
-                        ps.setInt(5, ad);
+                        ps.setInt(5, adid);
+                        ps.setInt(6, type);
+                        System.out.println(ps.toString());
                         ps.executeUpdate();  
                     }  
                 }
@@ -123,6 +136,7 @@ public class Rating{
                     e.printStackTrace();  
                 }  
             }  
+            return "home?faces-redirect=true";
     }  
   
 	
