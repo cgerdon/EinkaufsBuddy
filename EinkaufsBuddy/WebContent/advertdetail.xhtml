@@ -9,6 +9,9 @@
     
 <ui:define name="content">
 		<h:form id="changeadvertForm"> 
+		
+		<p:panel id="basic"	header="Inserat Nr. #{advert.ad_id}!" style="margin-bottom:20px">
+		
 		    <p:fieldset legend="#{of:formatDate(advert.datum, 'dd.MM.yyyy')} -  #{advert.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="false">
 			<h:form>
 				<table border="0">
@@ -90,7 +93,7 @@
 				</table>
 			</h:form>
 			  </p:fieldset>
-
+</p:panel>
 		</h:form>
 </ui:define>
   
