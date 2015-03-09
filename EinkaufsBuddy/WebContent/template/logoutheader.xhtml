@@ -8,14 +8,15 @@
 		
 	 	<h:form id="messagecyclemenurepeat" styleClass="login-logout-form" rendered="#{user.id != 0}">  
 	 	
-	 			<p:commandButton value="Profil" action="#{navigation.NaviProfil}" icon="ui-icon-note" />
-	 			<p:commandButton value="Inserate" action="#{navigation.NaviInserate}" icon="ui-icon-document-b" />	
+	 			<p:commandButton value="Profil" action="#{navigation.NaviProfil}" icon="ui-icon-document-b" />
+	 			<p:commandButton value="Inserate" action="#{navigation.NaviInserate}" icon="ui-icon-search" />	
 	 			<p:commandButton value="Nachrichten" action="#{message.showAllMessage}" style="width:125px" icon="ui-icon-mail-closed" />  
 	 			<h:panelGroup styleClass="messagecyclehaeder" rendered="#{message.ms_gesamtanzahl > 0}">
 					<h:outputText  value="#{message.ms_gesamtanzahl}" />
 				</h:panelGroup>
 				
-				<p:commandButton value="Logout" action="#{user.logout}" icon="ui-icon-search" />  
+				<p:commandButton value="Logout" action="#{user.logout}" icon="ui-icon-circle-close
+ " />  
 				
 				<p:poll interval="5" listener="#{message.showGesamtMessage}" update="messagecyclemenurepeat" rendered="#{user.id != 0 and message.ms_senderId == 0}"/>
 				<p:poll interval="5" listener="#{message.showGesamtMessageOhne}" update="messagecyclemenurepeat" rendered="#{user.id != 0 and message.ms_senderId != 0}"/>
