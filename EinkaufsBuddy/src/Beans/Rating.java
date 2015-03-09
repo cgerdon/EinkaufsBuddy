@@ -98,6 +98,40 @@ public class Rating implements Serializable{
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
+	
+	public void ChangeAdFields(int adid, int spalte){
+		//UPDATE `einkaufsbuddy`.`ad` SET `advertiserrate`=1 WHERE  `id`=52;
+		 PreparedStatement ps = null;  
+         Connection con = null;  
+         String sql = "";
+         if (spalte == 2){
+        	 sql = "UPDATE `einkaufsbuddy`.`ad` SET `advertiserrate`= 1 WHERE  `id`="+adid+";";
+        	 
+         }
+         else {
+        	 sql = "UPDATE `einkaufsbuddy`.`ad` SET `buyerrate`= 1 WHERE  `id`="+adid+";";
+         }
+         System.out.println(sql);
+         try {  
+             if (ds != null) {  
+                 con = ds.getConnection();  
+                 if (con != null) {  
+                 	 ps = con.prepareStatement(sql);  
+                     
+                     ps.executeUpdate();  
+                 }  
+             }
+         } catch (Exception e) {  
+             System.out.println(e);  
+         } finally {  
+             try {  
+                 con.close();  
+                 ps.close();  
+             } catch (Exception e) {  
+                 e.printStackTrace();  
+             }  
+         }  
+	}
 
 
 	public String addRating(int buyerid, int adid, int advid, int type){  
@@ -137,6 +171,8 @@ public class Rating implements Serializable{
                     e.printStackTrace();  
                 }  
             }  
+            if (type == 1) {ChangeAdFields(adid, 1);}
+            else {ChangeAdFields(adid, 2);}
             return "home?faces-redirect=true";
     }  
   
