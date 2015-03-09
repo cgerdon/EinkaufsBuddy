@@ -1,3 +1,7 @@
+.ui-panel-titlebar{
+	height: 25px; 
+}
+
 .ui-tabs-nav{
 	height: 50px; 
 }
@@ -109,6 +113,7 @@
 .rechtswer{
 	color: red;
 }
+
 
 .rightmessage{
 	padding: 5px 10px; 

@@ -6,16 +6,15 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Nachrichtenverlauf mit
-			<h:outputText value="#{message.ms_senderName} "/>
-		 </h1>
-		
+
 		<h:form>
+		<p:panel id="basic"	header="Nachrichtenverlauf mit #{message.ms_senderName}">
+		<br/>
 		<h:panelGroup id="messagerepeat2">
 			<p:focus for="textarea"/>
-			<h:inputText id="textarea" styleClass="textareastyle" value="#{message.ms_text}" size="80" maxlength="60" autocomplete="off"/>
+			<h:inputText id="textarea" styleClass="textareastyle" value="#{message.ms_text}" size="80" maxlength="80" autocomplete="off"/>
 			<p:commandButton value="senden" actionListener="#{message.writeMessage}" update="messagerepeat2"/>
-			
+		
 			<br/>
 			<br/>
 				<p:dataScroller id="messagerepeat" var="messagedetails" value="#{message.messagedetails}" mode="inline">
@@ -60,7 +59,7 @@
 					
 				</p:dataScroller>
 			</h:panelGroup>
-			
+			</p:panel>
 			<p:poll interval="2" listener="#{message.reloadMessage}" update="messagerepeat"/>
 			
 		</h:form>

@@ -6,14 +6,9 @@
 	xmlns:p="http://primefaces.org/ui">
     
 	<ui:define name="content">
-		<h1>Das sind deine Nachrichten,
-			<h:outputText value="#{message.ms_receiverFirstName} "/>
-			<h:outputText value="#{message.ms_receiverLastName}!"/>		
-		</h1>
-		
-				
-		<h:form>	
 	
+		<h:form>	
+			<p:panel id="basic"	header="Das sind deine Nachrichten, #{message.ms_receiverFirstName} #{message.ms_receiverLastName}!" style="margin-bottom:20px">
 					<h:dataTable   id="messageoverviewrepeat" var="messageoverview" value="#{message.messageoverview}">
 						<h:column headerClass="TableHeader1">
 							<f:facet name="header">Name: </f:facet>    	
@@ -50,7 +45,7 @@
 							    </h:panelGroup>
 						</h:column>	
 					</h:dataTable>  
-							    
+				</p:panel>			    
 							    
 							    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
 							        <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
