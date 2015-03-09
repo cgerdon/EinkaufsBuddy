@@ -8,43 +8,79 @@
 <ui:define name="content">
 		<h:form id="changeadvertForm"> 
 		    <p:fieldset legend="#{advert.datum} -  #{advert.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="false">
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
 			<h:form>
-				<h:panelGrid columns="2" border="1">
-					<h:panelGroup>
-						<h:outputText style="font-weight:bold" value="Limit: #{advert.limit}  €" />
-						<br />	
-						Inserat von <h:commandLink action="#{userView.showProfil(advert.advertiser_id)}">
-							<h:outputText value="#{advert.name} #{advert.last_name}" />
+				<table border="0">
+					<colgroup>
+					    <col width="180px"/>
+					    <col width="250px"/>
+					    <col width="250px"/>
+					</colgroup>
+
+					<tr>
+						<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+ 						</p:graphicImage>
+ 						</td>	
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="center"><h:commandLink action="#{userView.showProfil(advert.advertiser_id)}">
+							<h:outputText value="#{advert.name} #{advert.last_name}"/>
 						</h:commandLink>
 						<h:commandLink action="#{message.startMessage}" rendered="#{advert.advertiser_id != user.id}">
 							<h:graphicImage class="message"
 								value="resources/images/message.png" alt="message" />
-
 							<f:param name="startmessage" value="#{advert.advertiser_id}" />
 						</h:commandLink>
-						<br />
-						<h:outputText value=" Verdienst: #{advert.income} €" />
-					</h:panelGroup>
+						</td>
+						
+						<td></td>
+						
+					</tr>
 
+					<tr>
+						<td></td>
+						<td><p:outputLabel value="Einkaufslimit:"/></td>
+						<td><h:outputText value="#{advert.limit} €" /></td>
 
-					<h:panelGroup>
+						
+					</tr>
+					<tr>
+						<td></td>
+						<td><p:outputLabel value="Kategorie:"/></td>
+						<td><h:outputText value="#{advert.category}" /></td>
 
-						<!--  <h:outputText value="#{advert.text}" /> -->
-						<h:inputTextarea resizable="false"  rows="1" cols="10" readonly="true" value="#{advert.text}" scrollable="false" style="border-color: white"  />
-						<br />
-						<h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}" rendered="#{advert.idvombesitzer != user.id}"/>
+						
+					</tr>
+					<tr>
+						<td></td>
+						<td><p:outputLabel value="Markt:"/></td>
+						<td><h:outputText value="#{advert.fav_market}" /></td>
 
-						<br />
-						<h:outputText value="Kategorie: #{advert.category}" />
-					</h:panelGroup>
-				</h:panelGrid>
+						
+					</tr>
+					<tr>
+						<td></td>
+						<td><p:outputLabel value="Einkaufsliste:"/></td>
+						<td><p:inputTextarea resizable="false"  rows="2" cols="20" readonly="true" value="#{advert.text}" autoResize="true" style="border-color: white"  /></td>
+
+						
+					</tr>
+					<tr>
+						<td></td>
+						<td><h3><p:outputLabel value="Verdienst:"/></h3></td>
+						<td><h3><h:outputText value="#{advert.income} €" /></h3></td>
+						
+					</tr>
+					<tr>
+						<td></td>
+						<td><h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}" rendered="#{advert.idvombesitzer != user.id}"/></td>
+						<td></td>
+						
+					</tr>
+				</table>
 			</h:form>
-			        </h:panelGrid>
 			  </p:fieldset>
-					
-				
 
 		</h:form>
 </ui:define>
