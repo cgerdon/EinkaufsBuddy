@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -23,6 +24,10 @@ public class userView implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -5820720967637889546L;
+	//Mathias
+	@ManagedProperty(value="#{user.id}")
+    private int aduser_id; 
+	
 	private int id;
 	private String name;
 	private String last_name;
@@ -49,6 +54,18 @@ public class userView implements Serializable {
 
 	
 	
+	public int getAduser_id() {
+		return aduser_id;
+	}
+
+
+
+	public void setAduser_id(int aduser_id) {
+		this.aduser_id = aduser_id;
+	}
+
+
+
 	public int getAnzahl() {
 		return anzahl;
 	}
@@ -218,8 +235,12 @@ public class userView implements Serializable {
 		}
 
 		mittel();
+		if (aduser_id == id){
+		return "profil?faces-redirect=true";
+		}
+		else {
 		return "fremdprofil?faces-redirect=true";
-
+		}
 	}
 
 	private void mittel() {
