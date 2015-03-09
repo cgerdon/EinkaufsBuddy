@@ -114,7 +114,7 @@
 				</table>
 			</p:panel>
 			
-			<p:panel id="ratings" header="Bewertungen" footer="Im Durchschnitt: #{user.mittel} aus #{user.anzahl} Bewertungen" style="margin-bottom:20px">
+			<p:panel id="ratings" header="Bewertungen (#{user.anzahl} Bewertungen insgesamt)">
 				<h:panelGrid columns="1">
 					<h:graphicImage library="images"
 						name="stars/#{user.mittelstar}.png" />
@@ -134,7 +134,7 @@
 				</h:panelGrid>
 	
 		</p:panel>
-      
+      <br />
 	        <p:commandButton action="profilchange" value="Ändern" icon="ui-icon-scissors"/>
         </h:form>  
 	</ui:define>

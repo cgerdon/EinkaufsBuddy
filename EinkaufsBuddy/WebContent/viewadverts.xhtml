@@ -3,7 +3,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
     
 <ui:define name="content">
 
@@ -295,7 +297,7 @@
 										</h:panelGroup>
 								</h:panelGrid>
 							
-							<h:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.id, user.id, 1)}">
+							<h:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
 							</h:commandButton>
 						</h:panelGrid>
 					</p:fieldset>
