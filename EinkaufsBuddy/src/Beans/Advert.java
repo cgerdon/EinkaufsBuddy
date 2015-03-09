@@ -78,7 +78,62 @@ public class Advert implements Serializable{
 	private int ad_rate;
 	//Mathias 
 	private int ms_advertID;
+	//Christoph
+	int buyer_id_todb;
 	
+	public int getBuyer_id_todb() {
+		return buyer_id_todb;
+	}
+
+	public void setBuyer_id_todb(int buyer_id_todb) {
+		this.buyer_id_todb = buyer_id_todb;
+	}
+
+	public int getAdvertiser_id_todb() {
+		return advertiser_id_todb;
+	}
+
+	public void setAdvertiser_id_todb(int advertiser_id_todb) {
+		this.advertiser_id_todb = advertiser_id_todb;
+	}
+
+	public int getRating_todb() {
+		return rating_todb;
+	}
+
+	public void setRating_todb(int rating_todb) {
+		this.rating_todb = rating_todb;
+	}
+
+	public String getText_todb() {
+		return Text_todb;
+	}
+
+	public void setText_todb(String text_todb) {
+		Text_todb = text_todb;
+	}
+
+	public int getAdid_todb() {
+		return adid_todb;
+	}
+
+	public void setAdid_todb(int adid_todb) {
+		this.adid_todb = adid_todb;
+	}
+
+	public int getType_todb() {
+		return type_todb;
+	}
+
+	public void setType_todb(int type_todb) {
+		this.type_todb = type_todb;
+	}
+
+	int advertiser_id_todb;
+	int rating_todb;
+	String Text_todb;
+	int adid_todb;
+	int type_todb;
     DataSource ds;  
   
     
@@ -99,6 +154,17 @@ public class Advert implements Serializable{
 	
 	public int getAd_id() {
 		return ad_id;
+	}
+	
+	public String startrating(int buyerid, int adid, int advid, int type){
+	
+		buyer_id_todb = buyerid;
+		advertiser_id_todb = advid;
+		adid_todb = adid;
+		type_todb = type;
+		System.out.println("Buyer ID ist " + buyer_id_todb + " und Advertiser ID ist " + advertiser_id_todb + " und adid ist "+ adid_todb + " der type ist " + type_todb);
+		
+		return "ratingadvert?faces-redirect=true";
 	}
 
 	public String showAd(int ad_id){
