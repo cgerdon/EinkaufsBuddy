@@ -218,7 +218,7 @@ public class userView implements Serializable {
 		}
 
 		mittel();
-		return "fremdprofil";
+		return "fremdprofil?faces-redirect=true";
 
 	}
 

@@ -800,7 +800,7 @@ public class Advert implements Serializable{
 		// ownadverts = getAd_idfromSQL(ad_id);
 		getAd_idfromSQL(ad_id);
 
-		return "changeadvert";
+		return "changeadvert?faces-redirect=true";
 	} 
 		
 	
@@ -1018,7 +1018,7 @@ public class Advert implements Serializable{
             if (con != null) {
 
             	if (name.equals("Eigene Inserate")) {
-            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
+            		String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC,buyerinter ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
             		PreparedStatement ps = null;  
             		ps = con.prepareStatement(sql); 
                     ResultSet rs = null;
@@ -1092,7 +1092,7 @@ public class Advert implements Serializable{
             con = ds.getConnection();  
             if (con != null) {
 
-            	String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
+            	String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, buyerinter ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
             	ps = con.prepareStatement(sql);  
                 rs = ps.executeQuery();  
                 
@@ -1147,7 +1147,7 @@ public class Advert implements Serializable{
             	ps = con.prepareStatement(sql);  
             	ps.executeUpdate();  
 
-            	String sql2 = "UPDATE message SET message.advertanab=4 WHERE message.text =" + advertID + " AND message.receiver_id= " + memberID + " AND message.sender_id =" + advertiser_id + ";" ;
+            	String sql2 = "UPDATE message SET message.advertanab=4 WHERE message.text =" + advertID + " AND message.receiver_id= " + memberID + " AND message.sender_id =" + advertiser_id + " AND message.advert = 2 ;" ;
             	ps2 = con.prepareStatement(sql2);  
             	ps2.executeUpdate();            
                 	
@@ -1187,7 +1187,7 @@ public class Advert implements Serializable{
             	ps = con.prepareStatement(sql);  
             	ps.executeUpdate();  
 
-            	String sql2 = "UPDATE message SET message.advertanab=3 WHERE message.text =" + advertID + " AND message.receiver_id =" + advertiser_id + ";" ;
+            	String sql2 = "UPDATE message SET message.advertanab=3 WHERE message.text =" + advertID + " AND message.receiver_id =" + advertiser_id + " AND message.advert = 2 ;" ;
             	ps2 = con.prepareStatement(sql2);  
             	ps2.executeUpdate();            
                 	
@@ -1221,7 +1221,7 @@ public class Advert implements Serializable{
          con = ds.getConnection();  
          if (con != null) {
           
-         	String sql = "UPDATE ad SET ad.buyer_id= null, ad.accepted_id= 9 WHERE ad.id =" + advertID + ";";
+         	String sql = "UPDATE ad SET ad.buyer_id= null, ad.accepted_id= 9 WHERE ad.id =" + advertID + " ;";
          	ps = con.prepareStatement(sql);  
          	ps.executeUpdate();            
              	
@@ -1259,7 +1259,7 @@ public class Advert implements Serializable{
          	ps = con.prepareStatement(sql);  
          	ps.executeUpdate();  
 
-         	String sql2 = "UPDATE message SET message.advertanab=3 WHERE message.text =" + advertID + " AND message.receiver_id =" + advertiser_id + ";" ;
+         	String sql2 = "UPDATE message SET message.advertanab=3 WHERE message.text =" + advertID + " AND message.receiver_id =" + advertiser_id + " AND message.advert = 2 ;" ;
          	ps2 = con.prepareStatement(sql2);  
          	ps2.executeUpdate();            
              	

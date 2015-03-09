@@ -579,7 +579,7 @@ public class message implements Serializable {
 		
 		ms_senderName = giveSenderName(ms_senderId);
 		
-        return "messagedetailvonsuche";    
+        return "messagedetail?faces-redirect=true";    
     }   
 
 	
