@@ -705,9 +705,105 @@ public class Advert implements Serializable{
 	
 
 	
+	public String executeJob2(int entfernung) {
+
+	      PreparedStatement ps = null;  
+	      Connection con = null;  
+	      try {  
+	                if (ds != null) {  
+	                    con = ds.getConnection();  
+	                    if (con != null) {  
+	                    	//Mathias: musste die SQL ändern, da das nicht das macht, was es machen soll!
+	      		          	// String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
+	                    	// Funktioniert im Mom nicht, da die Detailseite immer noch nicht funktioniert
+	                    	
+	                    	String sql = "UPDATE ad SET ad.buyer_id='" + advertiser_id + "', ad.entfernung = "+ entfernung +" WHERE ad.id ='" + ms_advertID + "'";
+
+	                    	ps = con.prepareStatement(sql);  
+	                       ps.executeUpdate();  
+	          
+	                                      
+	                      System.out.println(advertiser_id);  
+	                      System.out.println(ms_advertID); 
+	  /* ***Mathias braucht den Platz für die Nachrichtenübermittlung **** */ 
+	              
+	      			Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
+	      			String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
+	      			byte b = 1; 
+	      		
+	    		  String sqlmessage = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`, `advert`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";  
+	    		  PreparedStatement psmessage = null; 
+	    		  psmessage = con.prepareStatement(sqlmessage);   
+
+	    		  psmessage.setInt(1, advertiser_id);  
+	    		  psmessage.setInt(2, idvombesitzer);  
+	    		  psmessage.setString(3, datumConverter); 
+	    		  psmessage.setByte(4, b);  
+	    		  psmessage.setInt(5, ms_advertID); 
+	    		  psmessage.setByte(6, b);  
+                psmessage.setByte(7, b);  
+                psmessage.setByte(8, (byte)2); 
+                psmessage.executeUpdate();  
+	              
+				           	   int hvar = 0; 
+				               PreparedStatement ps3 = null;
+				               ResultSet rs2 = null;  
+				         	   String sql3 = "SELECT COUNT(message.id) FROM message WHERE (message.receiver_id=" + ad_id + " AND message.sender_id=" + advertiser_id + ") OR (message.receiver_id=" + advertiser_id + " AND message.sender_id=" + ad_id + ");" ;
+				               ps3 = con.prepareStatement(sql3);  
+				               rs2 = ps3.executeQuery();
+				               
+				               
+				               while (rs2.next()) {
+				            	   hvar =  rs2.getInt("COUNT(message.id)");	 
+				                }	
+				               
+				               if (hvar==1){
+				            	   
+				            	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10000);		
+				            	   String datumConverter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp2);
+				            	   byte c=2; 
+				            	   
+				            	   PreparedStatement ps4 = null;  
+				            	   String sql4 = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`) VALUES (?, ?, ?, ?, ?, ?, ?);";  
+				                   ps4 = con.prepareStatement(sql4);  
+				                   ps4.setInt(1, idvombesitzer);  
+				                   ps4.setInt(2, advertiser_id);  
+				                   ps4.setString(3, datumConverter2); 
+				                   ps4.setByte(4, c);  
+				                   ps4.setString(5, "SystemFirstMessage"); 
+				                   ps4.setByte(6, c);  
+				                   ps4.setByte(7, c);  
+				
+				                  ps4.executeUpdate();   
+				
+				               }
+	              
+	                        
+	              
+	                        
+	                        
+	                        
+	                        
+	                        
+	                        
+	/* ***Mathias ENDE **** */                       
+	                      }  
+	              }  
+	            } catch (Exception e) {  
+	                System.out.println(e);  
+	            } finally {  
+	                try {  
+	                    con.close();  
+	                    ps.close();  
+	                } catch (Exception e) {  
+	                    e.printStackTrace();  
+	                }  
+	            }  
+
+		return "advertdetail?faces-redirect=true";    
+	}
 	
-	
-	public String executeJob(int entfernung) {
+	public String executeJob() {
 
 	      PreparedStatement ps = null;  
 	      Connection con = null;  
@@ -750,7 +846,7 @@ public class Advert implements Serializable{
 				           	   int hvar = 0; 
 				               PreparedStatement ps3 = null;
 				               ResultSet rs2 = null;  
-				         	   String sql3 = "SELECT COUNT(message.id) FROM message WHERE (message.receiver_id=" + ad_id + " AND message.sender_id=" + advertiser_id + ") OR (message.receiver_id=" + advertiser_id + " AND message.sender_id=" + ad_id + ");" ;
+				         	   String sql3 = "SELECT COUNT(message.id) FROM message WHERE (message.receiver_id=" + idvombesitzer + " AND message.sender_id=" + advertiser_id + ") OR (message.receiver_id=" + advertiser_id + " AND message.sender_id=" + idvombesitzer + ");" ;
 				               ps3 = con.prepareStatement(sql3);  
 				               rs2 = ps3.executeQuery();
 				               
