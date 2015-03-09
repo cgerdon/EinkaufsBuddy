@@ -16,8 +16,10 @@
 	<h:form  id="simplesearchform">
 		<h:panelGrid  columns="1" styleClass="simplesearchformmittig" >
 		<h:panelGroup layout="block">
- 		<p:inputText id="plz" value="#{simpleSearch.plzInput}" required="true" requiredMessage="Bitte PLZ eingeben" />
-			
+		<p:inputMask id="plz" value="#{simpleSearch.plzInput}" required="true" requiredMessage="Bitte PLZ eingeben" 
+   mask="9?99999"
+   maxlength="5"
+   placeHolder=" "/>
 			<p:watermark for="plz" value="PLZ, z.B. 67059" id="watermark" />
        </h:panelGroup>
        
@@ -26,6 +28,7 @@
 				 <p:messages id="messages" autoUpdate="true"/>
 		</h:panelGroup>
 	</h:panelGrid>
+
 	</h:form>
 
 	</ui:define>

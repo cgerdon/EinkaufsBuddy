@@ -5,9 +5,39 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
     
-	<ui:define name="content">
-		<h1>Das ist die Kontaktseite! </h1>
+<ui:define name="content">
+	
+	<h1>Kontakt</h1>
+	
+	<h:form  id="simplesearchform">
+		<h:panelGrid  columns="1" styleClass="simplesearchformmittig" >
+       
+       <h:panelGroup layout="block">
+        <table>  
+                  <tr>  
+                    <td><h:outputText value="Mailadresse:" /></td>  
+                    <td><p:inputText id="email" value="#{Mailer.sender}"> </p:inputText></td>  
+                </tr>  
+                <tr>  
+                    <td><h:outputText value="Titel:" /></td>  
+                    <td> <p:inputText id="titel" value="#{Mailer.titel}" />
+        			</td>  
+                </tr>  
+                 <tr>  
+                    <td><h:outputText value="Text:" /></td>  
+                    <td> <p:inputText id="text" value="#{Mailer.text}"/>
+        			</td>  
+                </tr>  
+                <tr>  
+                    <td> 
+                    <p:commandButton value="Senden" id="senden" action="#{mailer.SendMail}"  icon="ui-icon-search" /></td>
+                </tr>  
+            </table>  
+				
+		</h:panelGroup>
+	</h:panelGrid>
+	</h:form>
+
 	</ui:define>
   
 </ui:composition>
-
