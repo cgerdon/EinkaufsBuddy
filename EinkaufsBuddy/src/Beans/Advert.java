@@ -618,7 +618,6 @@ public class Advert implements Serializable{
 	}
 
 	public String add() {  
-        int i = 0;
      
         
             PreparedStatement ps = null;  
@@ -641,7 +640,7 @@ public class Advert implements Serializable{
                         ps.setString(9, fav_market);
                         ps.setString(10, null);
 
-                        i = ps.executeUpdate();
+                        ps.executeUpdate();
 
                     }  
                 }  
@@ -656,10 +655,9 @@ public class Advert implements Serializable{
                 }  
             }  
          
-        if (i > 0) {  
-            return "successad";  
-        } else  
-            return "unsuccess";  
+ 
+            return "viewadverts?faces-redirect=true";  
+       
     }   
 	
 	
