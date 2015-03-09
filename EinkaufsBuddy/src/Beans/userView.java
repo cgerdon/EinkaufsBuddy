@@ -265,7 +265,10 @@ public class userView implements Serializable {
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
-
+		String TempVorname = null;
+		String Tempnachname = null;
+		int tempid = -1;
+		System.out.println("Ab hier");
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
@@ -274,9 +277,45 @@ public class userView implements Serializable {
 					System.out.println(sql);
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-				
+					
 					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					while (rs.next()) {
+					
+						System.out.println("2.");
+						if (rs.getInt("type") == rs.getInt("buyer_id")){
+							System.out.println("Es tritt ein");
+							tempid = rs.getInt("advertiser_id");
+						} else tempid = rs.getInt("buyer_id");
+						System.out.println("weiter");
+						PreparedStatement ps2 = null;
+						Connection con2 = null;
+						ResultSet rs2 = null;
+						System.out.println("noch weiter");
+						if (ds != null) {
+							System.out.println("2.query");
+							try {
+								con2 = ds.getConnection();
+								if (con2 != null) {
+									System.out.println("2.query start");
+									String sql2 = "select name, last_name from member where id = " + tempid;
+									ps2 = con2.prepareStatement(sql2);
+									rs2 = ps2.executeQuery();
+									System.out.println(sql2);
+
+									while (rs2.next()) {
+										TempVorname = rs2.getString("name");
+										Tempnachname = rs2.getString("last_name");
+									
+									}
+									
+								}}finally {  
+					                try {  
+					                    con2.close();  
+					                    ps2.close();  
+							} catch (SQLException sqle) {
+								sqle.printStackTrace();
+							}
+						}
 						
 						RatingResults TempObj = new RatingResults();
 						TempObj.setId(rs.getInt("rating.id"));
@@ -285,15 +324,15 @@ public class userView implements Serializable {
 						TempObj.setRating(rs.getInt("rating"));
 						TempObj.setAdid(rs.getInt("ad_id"));
 						TempObj.setText(rs.getString("text"));
-						TempObj.setVorname(rs.getString("name"));
-						TempObj.setName(rs.getString("last_name"));
+						TempObj.setVorname(TempVorname);
+						TempObj.setName(Tempnachname);
 						System.out.println(TempObj.toString());
 						TempList.add(TempObj);
 						
 					
 					}
 					RatingList = TempList;
-				}}finally {  
+				}}}finally {  
 	                try {  
 	                    con.close();  
 	                    ps.close();  
@@ -301,8 +340,7 @@ public class userView implements Serializable {
 				sqle.printStackTrace();
 			}
 		}
-		
-	}
+		}
 		
 		
 		}
