@@ -298,7 +298,7 @@ public class simpleSearch implements Serializable {
 				con = ds.getConnection();
 				if (con != null) {
 
-					String sql = "SELECT member.id, member.picture, member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id where ad.buyer_id is null and  ad.status > 0;";
+					String sql = "SELECT member.id, member.picture, member.name, member.last_name, ad.text, ad.accepted_id, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id where (ad.buyer_id is null and ad.status > 0) and  ad.accepted_id != 9;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;

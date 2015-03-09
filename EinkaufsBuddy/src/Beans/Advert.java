@@ -42,12 +42,38 @@ public class Advert implements Serializable{
 	@ManagedProperty(value="#{user.id}")
     private int advertiser_id; 
     private Date date;
-    private int fk_time_id;
+    private int entfernung;
+    private int distance;
+    public int getDistance() {
+		return distance;
+	}
+
+
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
+	private int fk_time_id;
     private double income;
     private int idvombesitzer;
     public int getIdvombesitzer() {
 		return idvombesitzer;
 	}
+    
+    
+
+	public int getEntfernung() {
+		return entfernung;
+	}
+
+
+
+	public void setEntfernung(int entfernung) {
+		this.entfernung = entfernung;
+	}
+
+
 
 	public void setIdvombesitzer(int idvombesitzer) {
 		this.idvombesitzer = idvombesitzer;
@@ -180,7 +206,7 @@ public class Advert implements Serializable{
 		return "ratingadvert?faces-redirect=true";
 	}
 
-	public String showAd(int ad_id){
+	public String showAd(int ad_id, int entfernungvomformular){
 		FacesContext fc2 = FacesContext.getCurrentInstance();
 		ms_advertID = getadvertid(fc2);
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -203,10 +229,12 @@ public class Advert implements Serializable{
                          
                     	datum = rs.getDate("ad.date");
                     	ad_id = rs.getInt("ad.id");
+                    	entfernung = entfernungvomformular;
                     	income = rs.getDouble("ad.income");
                     	limit = rs.getDouble("ad.limit");
                     	name = rs.getString("member.name");
                     	last_name = rs.getString("member.last_name");
+                    	fav_market = rs.getString("ad.fav_market");
                     	text = rs.getString("ad.text");
                     	zeitpunkt = rs.getString("times_available.time");
                     	category = rs.getString("category.category");
@@ -564,6 +592,7 @@ public class Advert implements Serializable{
 	this.last_name = last_name;
 	this.id = id;
 	this.limit = limit;
+	this.distance = distance;
 	this.income = income;
 	this.zeitpunkt = zeitpunkt;
 	this.datum = datum;
@@ -678,7 +707,7 @@ public class Advert implements Serializable{
 	
 	
 	
-	public String executeJob() {
+	public String executeJob(int entfernung) {
 
 	      PreparedStatement ps = null;  
 	      Connection con = null;  
@@ -690,7 +719,7 @@ public class Advert implements Serializable{
 	      		          	// String sql = "UPDATE ad SET ad.buyer_id='" + buyer_id + "' WHERE ad.id ='" + ad_id + "'";
 	                    	// Funktioniert im Mom nicht, da die Detailseite immer noch nicht funktioniert
 	                    	
-	                    	String sql = "UPDATE ad SET ad.buyer_id='" + advertiser_id + "' WHERE ad.id ='" + ms_advertID + "'";
+	                    	String sql = "UPDATE ad SET ad.buyer_id='" + advertiser_id + "', ad.entfernung = "+ entfernung +" WHERE ad.id ='" + ms_advertID + "'";
 
 	                    	ps = con.prepareStatement(sql);  
 	                       ps.executeUpdate();  
@@ -1119,7 +1148,7 @@ public class Advert implements Serializable{
             	}
             	
             	if (name.equals("Fremde Inserate")) {
-            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.buyerrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "' ORDER BY accepted_id ASC, buyerrate ASC, date DESC;";
+            		String sql = "SELECT ad.id, ad.accepted_id, ad.entfernung, ad.status, ad.buyerrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "' ORDER BY accepted_id ASC, buyerrate ASC, date DESC;";
             		PreparedStatement ps = null;  
             		ps = con.prepareStatement(sql); 
                     ResultSet rs = null;
@@ -1131,7 +1160,7 @@ public class Advert implements Serializable{
     							rs.getString("street"), rs.getString("name"),
     							rs.getString("last_name"), rs.getInt("ad.id"),
     							rs.getDouble("limit"), rs.getDouble("income"),
-    							0, rs.getString("time"), rs.getDate("date"),
+    							rs.getInt("entfernung"), rs.getString("time"), rs.getDate("date"),
     							rs.getString("category"), rs.getInt("member.id"),
     							rs.getInt("ad.status"),rs.getInt("ad.buyer_id"),
     							rs.getInt("ad.accepted_id"), rs.getInt("ad.buyerrate") );
@@ -1169,7 +1198,7 @@ public class Advert implements Serializable{
             con = ds.getConnection();  
             if (con != null) {
 
-            	String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, buyerinter ASC, accepted_id ASC, advertiserrate ASC, date DESC; "; 
+            	String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.entfernung, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, buyerinter ASC, accepted_id ASC, advertiserrate ASC, date DESC; "; 
             	ps = con.prepareStatement(sql);  
                 rs = ps.executeQuery();  
                 
@@ -1182,7 +1211,7 @@ public class Advert implements Serializable{
 							rs.getString("street"), rs.getString("name"),
 							rs.getString("last_name"), rs.getInt("ad.id"),
 							rs.getDouble("limit"), rs.getDouble("income"),
-							0, rs.getString("time"), rs.getDate("date"),
+							rs.getInt("entfernung"), rs.getString("time"), rs.getDate("date"),
 							rs.getString("category"), rs.getInt("member.id"),
 							rs.getInt("ad.status"), rs.getInt("ad.buyer_id"),
 							rs.getInt("ad.accepted_id"), rs.getInt("ad.advertiserrate") );
@@ -1404,7 +1433,7 @@ public class Advert implements Serializable{
                 con = ds.getConnection();  
                 if (con != null) {
                 	
-                    String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_id + "'"; 
+                    String sql = "SELECT ad.id, entfernung, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_id + "'"; 
                   
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
@@ -1417,6 +1446,8 @@ public class Advert implements Serializable{
                     	limit = rs.getDouble("ad.limit");
                     	name = rs.getString("member.name");
                     	last_name = rs.getString("member.last_name");
+                    	fav_market = rs.getString("ad.fav_market");
+                    	entfernung = rs.getInt("entfernung");
                     	text = rs.getString("ad.text");
                     	zeitpunkt = rs.getString("times_available.time");
                     	category = rs.getString("category.category");

@@ -3,11 +3,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
     
 <ui:define name="content">
 		<h:form id="changeadvertForm"> 
-		    <p:fieldset legend="#{advert.datum} -  #{advert.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="false">
+		    <p:fieldset legend="#{of:formatDate(advert.datum, 'dd.MM.yyyy')} -  #{advert.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="false">
 			<h:form>
 				<table border="0">
 					<colgroup>
@@ -37,7 +39,11 @@
 						<td></td>
 						
 					</tr>
-
+					<tr>
+					<td></td>
+					<td><p:outputLabel value="Entfernung:"/></td>
+					<td><h:outputText value="#{advert.entfernung} km" /></td>
+					</tr>
 					<tr>
 						<td></td>
 						<td><p:outputLabel value="Einkaufslimit:"/></td>
@@ -74,7 +80,7 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><h:commandButton value="Einkauf erledigen" action="#{advert.executeJob}" rendered="#{advert.idvombesitzer != user.id}"/></td>
+						<td><h:commandButton value="Einkauf erledigen" action="#{advert.executeJob(advert.entfernung)}" rendered="#{advert.idvombesitzer != user.id}"/></td>
 						<td></td>
 						
 					</tr>

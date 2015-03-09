@@ -54,7 +54,7 @@
 						</td>
 						
 						<td><h:outputText value="Entfernung: #{ads.distance} km" /></td>
-						<td><h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+						<td><h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id, ads.distance)}">
 							<f:param name="resulttodetail" value="#{ads.memberid}" />
 							<f:param name="advertid" value="#{ads.id}" />
 						</h:commandButton>
