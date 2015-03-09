@@ -206,7 +206,7 @@ public class Advert implements Serializable{
 		return "ratingadvert?faces-redirect=true";
 	}
 
-	public String showAd(int ad_id, int entfernungvomformular){
+	public String showAd(int ad_ide, int entfernungvomformular){
 		FacesContext fc2 = FacesContext.getCurrentInstance();
 		ms_advertID = getadvertid(fc2);
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -220,7 +220,7 @@ public class Advert implements Serializable{
                 con = ds.getConnection();  
                 if (con != null) {
                 	
-                    String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_id + "'"; 
+                    String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_ide + "'"; 
                     System.out.println(sql);
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
@@ -1529,8 +1529,8 @@ public class Advert implements Serializable{
  
 	return "viewadverts?faces-redirect=true";
 }  
-	public String showAd2(int ad_id){
-
+	public String showAd2(int ad_ide){
+		
 		PreparedStatement ps = null;  
         Connection con = null;  
         ResultSet rs = null;
@@ -1540,7 +1540,7 @@ public class Advert implements Serializable{
                 con = ds.getConnection();  
                 if (con != null) {
                 	
-                    String sql = "SELECT ad.id, entfernung, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_id + "'"; 
+                    String sql = "SELECT ad.id, entfernung, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_ide + "'"; 
                   
                     ps = con.prepareStatement(sql);  
                     rs = ps.executeQuery();  
