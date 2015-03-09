@@ -15,22 +15,19 @@
        <h:panelGroup layout="block">
         <table>  
                   <tr>  
-                    <td><h:outputText value="Mailadresse:" /></td>  
-                    <td><p:inputText id="email" value="#{Mailer.sender}"> </p:inputText></td>  
+                    <td><h:outputText value="Mailadresse:" for="email"/><p:inputText id="email" value="#{user.sender}"> </p:inputText></td>  
                 </tr>  
                 <tr>  
-                    <td><h:outputText value="Titel:" /></td>  
-                    <td> <p:inputText id="titel" value="#{Mailer.titel}" />
+                    <td><h:outputText value="Titel:" for ="titel"/><p:inputText id="titel" value="#{user.titel}" />
         			</td>  
                 </tr>  
                  <tr>  
-                    <td><h:outputText value="Text:" /></td>  
-                    <td> <p:inputText id="text" value="#{Mailer.text}"/>
+                   <td> <p:inputTextarea rows="10" cols="50" id="text" value="#{user.text}"/>
         			</td>  
                 </tr>  
                 <tr>  
                     <td> 
-                    <p:commandButton value="Senden" id="senden" action="#{mailer.SendMail}"  icon="ui-icon-search" /></td>
+                    <p:commandButton value="Senden" id="senden" action="#{user.SendMail}"  icon="ui-icon-search" /></td>
                 </tr>  
             </table>  
 				
