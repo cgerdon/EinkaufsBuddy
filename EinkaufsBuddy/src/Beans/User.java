@@ -158,6 +158,8 @@ public class User implements Serializable {
      } catch (MessagingException e) {
          throw new RuntimeException(e);
      }
+
+     
      return "home?faces-redirect=true";
  }
 

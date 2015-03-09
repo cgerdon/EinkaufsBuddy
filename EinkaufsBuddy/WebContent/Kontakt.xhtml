@@ -10,24 +10,28 @@
 	<h1>Kontakt</h1>
 	
 	<h:form  id="simplesearchform">
+
 		<h:panelGrid  columns="1" styleClass="simplesearchformmittig" >
        
        <h:panelGroup layout="block">
         <table>  
                   <tr>  
-                    <td><h:outputText value="Mailadresse:" for="email"/><p:inputText id="email" value="#{user.sender}"> </p:inputText></td>  
-                </tr>  
-                <tr>  
-                    <td><h:outputText value="Titel:" for ="titel"/><p:inputText id="titel" value="#{user.titel}" />
+                    <td><h:outputText value="Mailadresse:" for="email"/><p:inputText id="email" value="#{user.sender}"  required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
+                             <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/></p:inputText> 
+
+                    <h:outputText value="Titel:" for ="titel" /> <p:inputText id="titel" required="true" requiredMessage="Bitte einen Titel eingeben!" value="#{user.titel}" />
         			</td>  
                 </tr>  
                  <tr>  
-                   <td> <p:inputTextarea rows="10" cols="50" id="text" value="#{user.text}"/>
+                   <td> <p:inputTextarea rows="10" cols="50" id="text" value="#{user.text}" required="true" requiredMessage="Bitte einen Text eingeben!"/>
         			</td>  
                 </tr>  
                 <tr>  
                     <td> 
-                    <p:commandButton value="Senden" id="senden" action="#{user.SendMail}"  icon="ui-icon-search" /></td>
+                    <p:commandButton value="Senden" id="senden" action="#{user.SendMail}"  icon="ui-icon-mail-closed
+ " /></td>
+                 <p:messages id="messages" autoUpdate="true"/>
                 </tr>  
             </table>  
 				
