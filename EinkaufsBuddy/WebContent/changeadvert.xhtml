@@ -6,56 +6,58 @@
 	xmlns:p="http://primefaces.org/ui">
     
 <ui:define name="content">
-		<h:form id="changeadvertForm"> 
-			<h:panelGrid columns="1">
-					
-					<h:outputText value="ID:" />
-					<h:inputText id="advertiser_id" value="#{advert.advertiser_id}" disabled="true"/>
-					
-					<h:outputText value="Bevorzugter Markt:" />
-					<h:inputText value="#{advert.fav_market}" />
-										
-					<h:outputText value="Art des Marktes:" />
-					<h:selectOneListbox value="#{advert.fk_category}" size="3" >
-						<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
-						<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
-						<f:selectItem itemValue="3" itemLabel="Apotheke"/>
-						<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
-						<f:selectItem itemValue="5" itemLabel="Bäcker"/>
-						<f:selectItem itemValue="6" itemLabel="Anderer"/>
-					</h:selectOneListbox>				
-				
-					<h:outputText value="Datum:" />
-					<p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="yyyy-MMM-dd"/>
-
-			
-					<h:outputText value="Zeit der Anlieferung:" />
-					<h:selectOneRadio value="#{advert.fk_time_id}">
-						<f:selectItem itemValue="1" itemLabel="Morgens"/>
-						<f:selectItem itemValue="2" itemLabel="Vormittags"/>
-						<f:selectItem itemValue="3" itemLabel="Mittags"/>
-						<f:selectItem itemValue="4" itemLabel="Nachmittags"/>
-						<f:selectItem itemValue="5" itemLabel="Abends"/>
-					</h:selectOneRadio>			
-			
-			 
-					<h:outputText value="Budget in Euro:" />  
-					<h:inputText value="#{advert.limit}" />          
-            
-			
-					<h:outputText value="Vergütung in Euro:" />  
-					<h:inputText value="#{advert.income}" /> 
-  			
-			  
-					<h:outputText value="Einkaufsliste:" /> 
-					<h:inputTextarea value="#{advert.text}"/> 
-			  
-        			<h:outputText value="Aktivschaltung:" />
-					<h:selectBooleanCheckbox value="#{advert.status}" /> 
-					
-					
-			</h:panelGrid>		
-		
+		<h:form id="changeadvertForm">
+			<p:panel id="basic" header="Inserat ändern" style="margin-bottom:20px"> 
+				<table>
+					<tr>
+						<td><h:outputText value="Bevorzugter Markt:" /></td>
+						<td><h:inputText value="#{advert.fav_market}" /></td>
+					</tr>
+					<tr>					
+						<td><h:outputText value="Art des Marktes:" /></td>
+						<td><p:selectOneMenu id="fk_category" value="#{advert.fk_category}" size="3">
+								<f:selectItem itemValue="1" itemLabel="Supermarkt"/>
+								<f:selectItem itemValue="2" itemLabel="Baumarkt"/>
+								<f:selectItem itemValue="3" itemLabel="Apotheke"/>
+								<f:selectItem itemValue="4" itemLabel="Tierbedarf"/>
+								<f:selectItem itemValue="5" itemLabel="Bäcker"/>
+								<f:selectItem itemValue="6" itemLabel="Anderer"/>
+							</p:selectOneMenu>			
+						</td>
+					</tr>
+					<tr>	
+						<td><h:outputText value="Datum:" /></td>
+						<td><p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="yyyy-MMM-dd"/></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Zeit der Anlieferung:" /></td>
+						<td><p:selectOneRadio id="fk_time_id" value="#{advert.fk_time_id}" layout="grid" columns="3">
+			            		<f:selectItem itemValue="1" itemLabel="Morgens"/>
+								<f:selectItem itemValue="2" itemLabel="Vormittags"/>
+								<f:selectItem itemValue="3" itemLabel="Mittags"/>
+								<f:selectItem itemValue="4" itemLabel="Nachmittags"/>
+								<f:selectItem itemValue="5" itemLabel="Abends"/>
+		        			</p:selectOneRadio>		
+						</td>
+			 		</tr>
+			 		<tr>
+						<td><h:outputText value="Budget in Euro:" /></td>  
+						<td><h:inputText value="#{advert.limit}" /></td>          
+            		</tr>
+					<tr>
+						<td><h:outputText value="Vergütung in Euro:" /></td>  
+						<td><h:inputText value="#{advert.income}" /></td> 
+  					</tr>
+			  		<tr>
+						<td><h:outputText value="Einkaufsliste:" /></td> 
+						<td><h:inputTextarea value="#{advert.text}"/></td> 
+			  		</tr>
+			  		<tr>
+	        			<td><h:outputText value="Aktivschaltung:" /></td>
+						<td><h:selectBooleanCheckbox value="#{advert.status}" /></td> 
+					</tr>
+				</table>			
+			</p:panel>
 				
 					<p:commandButton value="Speichern" action="#{advert.updateInfos}"/>
 					<p:commandButton value="Inserat löschen" action="#{message.advert.deleteAd}">
