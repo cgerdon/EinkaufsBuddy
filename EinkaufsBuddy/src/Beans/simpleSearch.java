@@ -25,6 +25,7 @@ import javax.sql.DataSource;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
+import org.primefaces.model.DefaultStreamedContent;
 
 @ManagedBean(name = "simpleSearch")
 // geändert von Mathias: @RequestScoped ersetzt durch @SessionScoped
@@ -271,6 +272,10 @@ public class simpleSearch implements Serializable {
 			}
 		}
 	}
+	
+	public void nearSearch(){
+		
+	}
 
 	
 
@@ -293,7 +298,7 @@ public class simpleSearch implements Serializable {
 				con = ds.getConnection();
 				if (con != null) {
 
-					String sql = "SELECT member.id, member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id where ad.buyer_id is null and  ad.status > 0;";
+					String sql = "SELECT member.id, member.picture, member.name, member.last_name, ad.text, ad.date, member.plz, times_available.time, member.street, ad.id, ad.limit, ad.income, category.category from ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id where ad.buyer_id is null and  ad.status > 0;";
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					int i = 0;
@@ -311,14 +316,25 @@ public class simpleSearch implements Serializable {
 						
 						}
 						//rs.getString("fav_market"),
+						DefaultStreamedContent dbImage = new DefaultStreamedContent();
+						if (rs.getBinaryStream("picture") == null){
+							//dbImage
+						}
+						else {
+						dbImage = new DefaultStreamedContent(rs.getBinaryStream("picture"), "image");}
+						String Text = "";
+						if (rs.getString("text").length()>20) {
+							Text = rs.getString("text").substring(0,20) + "...";
+						}
+						else{Text = rs.getString("text");}
 						SimpleSearchResults TempObj = new SimpleSearchResults(
-								rs.getString("text"), RealPLZ,
+								Text, RealPLZ,
 								RealStreet, rs.getString("name"),
 								rs.getString("last_name"), rs.getInt("ad.id"),
 								rs.getDouble("limit"), rs.getDouble("income"),
 								0, rs.getString("time"), rs.getDate("date"),
 								rs.getString("category"),
-								rs.getInt("member.id"));
+								rs.getInt("member.id"), dbImage);
 						
 						//joel für advertdetail
 						text=rs.getString("text");

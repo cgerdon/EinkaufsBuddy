@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Comparator;
 
+import org.primefaces.model.DefaultStreamedContent;
+
 public class SimpleSearchResults implements Serializable{
 	/**
 	 * 
@@ -23,8 +25,17 @@ public class SimpleSearchResults implements Serializable{
 	private Date datum;
 	private String category;
 	private int memberid;
+	private DefaultStreamedContent dbImage;
 	
 	
+
+	public DefaultStreamedContent getDbImage() {
+		return dbImage;
+	}
+
+	public void setDbImage(DefaultStreamedContent dbImage) {
+		this.dbImage = dbImage;
+	}
 
 	public int getMemberid() {
 		return memberid;
@@ -72,7 +83,7 @@ public class SimpleSearchResults implements Serializable{
 	//String fav_market,
 	public SimpleSearchResults(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
-			int distance, String zeitpunkt, Date datum, String category, int memberid) {
+			int distance, String zeitpunkt, Date datum, String category, int memberid, DefaultStreamedContent dbImage) {
 		super();
 		this.text = text;
 		//this.fav_market=fav_market;
@@ -88,6 +99,7 @@ public class SimpleSearchResults implements Serializable{
 		this.datum = datum;
 		this.category = category;
 		this.memberid = memberid;
+		this.dbImage = dbImage;
 	}
 
 	public String getText() {
