@@ -178,6 +178,8 @@
 										</h:panelGroup>
 									</h:panelGrid>
 								<h:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.id, user.id, 2)}">
+														<f:param name="resulttodetail" value="#{ads.memberid}" />
+							<f:param name="advertid" value="#{ads.id}" />
 								</h:commandButton>
 							</h:panelGrid>
 						</p:fieldset>
@@ -296,8 +298,10 @@
 												<h:outputText value="Kategorie: #{ads.category}" />
 										</h:panelGroup>
 								</h:panelGrid>
-							
+							#{ads.memberid} #{ads.ad_buyerID} #{user.id} #{ads.id} 
 							<h:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
+							<f:param name="resulttodetail" value="#{ads.memberid}" />
+							<f:param name="advertid" value="#{ads.id}" />
 							</h:commandButton>
 						</h:panelGrid>
 					</p:fieldset>
