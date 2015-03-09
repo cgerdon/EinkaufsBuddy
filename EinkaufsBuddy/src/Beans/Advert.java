@@ -75,6 +75,7 @@ public class Advert implements Serializable{
 	private int ad_status;
 	private int ad_acc;
 	private int ad_buyerID;
+	private int ad_rate;
 	//Mathias 
 	private int ms_advertID;
 	
@@ -176,6 +177,14 @@ public class Advert implements Serializable{
 
 
 
+
+	public int getAd_rate() {
+		return ad_rate;
+	}
+
+	public void setAd_rate(int ad_rate) {
+		this.ad_rate = ad_rate;
+	}
 
 	public int getAd_acc() {
 		return ad_acc;
@@ -468,7 +477,7 @@ public class Advert implements Serializable{
 
 	public Advert(String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
-			int distance, String zeitpunkt, Date datum, String category, int memberid, int ad_status, int ad_buyerID, int ad_acc){
+			int distance, String zeitpunkt, Date datum, String category, int memberid, int ad_status, int ad_buyerID, int ad_acc, int ad_rate){
 	this.text = text;
 	this.plz = plz;
 	this.street = street;
@@ -484,6 +493,7 @@ public class Advert implements Serializable{
 	this.ad_status = ad_status; 
 	this.ad_buyerID = ad_buyerID;
 	this.ad_acc = ad_acc;
+	this.ad_rate = ad_rate;
 	
 	
 	
@@ -1008,7 +1018,7 @@ public class Advert implements Serializable{
             if (con != null) {
 
             	if (name.equals("Eigene Inserate")) {
-            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "'"; 
+            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
             		PreparedStatement ps = null;  
             		ps = con.prepareStatement(sql); 
                     ResultSet rs = null;
@@ -1023,7 +1033,7 @@ public class Advert implements Serializable{
     							0, rs.getString("time"), rs.getDate("date"),
     							rs.getString("category"), rs.getInt("member.id"),
     							rs.getInt("ad.status"),rs.getInt("ad.buyer_id"),
-    							rs.getInt("ad.accepted_id"));
+    							rs.getInt("ad.accepted_id"), rs.getInt("ad.advertiserrate") );
                     	alladverts.add(TempObj);
                     
                     }
@@ -1032,7 +1042,7 @@ public class Advert implements Serializable{
             	}
             	
             	if (name.equals("Fremde Inserate")) {
-            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "'";
+            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.buyerrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "' ORDER BY accepted_id ASC, buyerrate ASC, date ASC;";
             		PreparedStatement ps = null;  
             		ps = con.prepareStatement(sql); 
                     ResultSet rs = null;
@@ -1047,12 +1057,9 @@ public class Advert implements Serializable{
     							0, rs.getString("time"), rs.getDate("date"),
     							rs.getString("category"), rs.getInt("member.id"),
     							rs.getInt("ad.status"),rs.getInt("ad.buyer_id"),
-    							rs.getInt("ad.accepted_id"));
+    							rs.getInt("ad.accepted_id"), rs.getInt("ad.buyerrate") );
                     	alladverts.add(TempObj);
                     	
-                    	System.out.println(rs.getInt("ad.status"));
-                    	System.out.println(rs.getInt("ad.buyer_id"));
-                    	System.out.println(rs.getInt("ad.accepted_id"));
                     }
                     ps.close();  
 
@@ -1085,7 +1092,7 @@ public class Advert implements Serializable{
             con = ds.getConnection();  
             if (con != null) {
 
-            	String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "'"; 
+            	String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
             	ps = con.prepareStatement(sql);  
                 rs = ps.executeQuery();  
                 
@@ -1101,11 +1108,8 @@ public class Advert implements Serializable{
 							0, rs.getString("time"), rs.getDate("date"),
 							rs.getString("category"), rs.getInt("member.id"),
 							rs.getInt("ad.status"), rs.getInt("ad.buyer_id"),
-							rs.getInt("ad.accepted_id"));
+							rs.getInt("ad.accepted_id"), rs.getInt("ad.advertiserrate") );
                 	
-                	System.out.println(rs.getInt("ad.status"));
-                	System.out.println(rs.getInt("ad.buyer_id"));
-                	System.out.println(rs.getInt("ad.accepted_id"));
                 	
                 	alladverts.add(TempObj);
              
@@ -1126,6 +1130,192 @@ public class Advert implements Serializable{
     }
 	
 }  
+   
+ 
+ public String adCancel(int advertID, int memberID){
+	 
+        Connection con = null;  
+        PreparedStatement ps = null; 
+        PreparedStatement ps2 = null; 
+        alladverts.clear();
+    if (ds != null) {  
+        try {  
+            con = ds.getConnection();  
+            if (con != null) {
+             
+            	String sql = "UPDATE ad SET ad.buyer_id= null WHERE ad.id =" + advertID + ";";
+            	ps = con.prepareStatement(sql);  
+            	ps.executeUpdate();  
+
+            	String sql2 = "UPDATE message SET message.advertanab=4 WHERE message.text =" + advertID + " AND message.receiver_id= " + memberID + " AND message.sender_id =" + advertiser_id + ";" ;
+            	ps2 = con.prepareStatement(sql2);  
+            	ps2.executeUpdate();            
+                	
+                
+            }  
+        } catch (SQLException sqle) {  
+            sqle.printStackTrace();  
+        } finally {  
+            try {  
+                con.close();  
+                ps.close(); 
+                ps2.close(); 
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }      
+  
+    }
     
+	return "viewadverts?faces-redirect=true";
+}  
+ 
+ 
+
+ public String buyerCancel(int advertID){
+
+        Connection con = null;  
+        PreparedStatement ps = null; 
+        PreparedStatement ps2 = null; 
+        alladverts.clear();
+    if (ds != null) {  
+        try {  
+            con = ds.getConnection();  
+            if (con != null) {
+             
+            	String sql = "UPDATE ad SET ad.buyer_id= null WHERE ad.id =" + advertID + ";";
+            	ps = con.prepareStatement(sql);  
+            	ps.executeUpdate();  
+
+            	String sql2 = "UPDATE message SET message.advertanab=3 WHERE message.text =" + advertID + " AND message.receiver_id =" + advertiser_id + ";" ;
+            	ps2 = con.prepareStatement(sql2);  
+            	ps2.executeUpdate();            
+                	
+                
+            }  
+        } catch (SQLException sqle) {  
+            sqle.printStackTrace();  
+        } finally {  
+            try {  
+                con.close();  
+                ps.close(); 
+                ps2.close(); 
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }      
+  
+    }
     
+	return "viewadverts?faces-redirect=true";
+}  
+ 
+ public String addelete(int advertID){
+
+     Connection con = null;  
+     PreparedStatement ps = null; 
+
+     alladverts.clear();
+ if (ds != null) {  
+     try {  
+         con = ds.getConnection();  
+         if (con != null) {
+          
+         	String sql = "UPDATE ad SET ad.buyer_id= null, ad.accepted_id= 9 WHERE ad.id =" + advertID + ";";
+         	ps = con.prepareStatement(sql);  
+         	ps.executeUpdate();            
+             	
+             
+         }  
+     } catch (SQLException sqle) {  
+         sqle.printStackTrace();  
+     } finally {  
+         try {  
+             con.close();  
+             ps.close(); 
+
+         } catch (Exception e) {  
+             e.printStackTrace();  
+         }  
+     }      
+
+ }
+ 
+	return "viewadverts?faces-redirect=true";
+}  
+
+ public String  adcanceldelete(int advertID){
+
+     Connection con = null;  
+     PreparedStatement ps = null; 
+     PreparedStatement ps2 = null; 
+     alladverts.clear();
+ if (ds != null) {  
+     try {  
+         con = ds.getConnection();  
+         if (con != null) {
+          
+          	String sql = "UPDATE ad SET ad.buyer_id= null, ad.accepted_id= 9 WHERE ad.id =" + advertID + ";";
+         	ps = con.prepareStatement(sql);  
+         	ps.executeUpdate();  
+
+         	String sql2 = "UPDATE message SET message.advertanab=3 WHERE message.text =" + advertID + " AND message.receiver_id =" + advertiser_id + ";" ;
+         	ps2 = con.prepareStatement(sql2);  
+         	ps2.executeUpdate();            
+             	
+             
+         }  
+     } catch (SQLException sqle) {  
+         sqle.printStackTrace();  
+     } finally {  
+         try {  
+             con.close();  
+             ps.close(); 
+             ps2.close(); 
+         } catch (Exception e) {  
+             e.printStackTrace();  
+         }  
+     }      
+
+ }
+ 
+	return "viewadverts?faces-redirect=true";
+}  
+ 
+
+ public String addeactive(int advertID){
+
+     Connection con = null;  
+     PreparedStatement ps = null; 
+
+     alladverts.clear();
+ if (ds != null) {  
+     try {  
+         con = ds.getConnection();  
+         if (con != null) {
+          
+         	String sql = "UPDATE ad SET ad.status= 0 WHERE ad.id =" + advertID + ";";
+         	ps = con.prepareStatement(sql);  
+         	ps.executeUpdate();            
+             	
+             
+         }  
+     } catch (SQLException sqle) {  
+         sqle.printStackTrace();  
+     } finally {  
+         try {  
+             con.close();  
+             ps.close(); 
+
+         } catch (Exception e) {  
+             e.printStackTrace();  
+         }  
+     }      
+
+ }
+ 
+	return "viewadverts?faces-redirect=true";
+}  
+ 
+ 
 }

@@ -31,11 +31,10 @@
 							<h:commandLink value="#{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}" />
 							
 							<h:outputText  value="  " rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 1}"/>
-							<p:commandButton value="Annehmen" action="#{message.InseratAnAb(2, messagedetails.ms_id, messagedetails.ms_text)}" rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 1}" />
-							<p:commandButton value="Ablehnen" action="#{message.InseratAnAb(3, messagedetails.ms_id, messagedetails.ms_text)}" rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 1}" />
-							
+								
 							<h:outputText  value=" - wurde angenommen." rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 2}"/>
 							<h:outputText  value=" - wurde abgelehnt" rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 3}"/>
+							<h:outputText  value=" - wurde zurückgezogen" rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 4}"/>			
 						</h:panelGroup>
 				
 					
@@ -55,6 +54,7 @@
 							
 							<h:outputText  value=" - wurde angenommen." rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 2}"/>
 							<h:outputText  value=" - wurde abgelehnt" rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 3}"/>			
+							<h:outputText  value=" - wurde zurückgezogen" rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 4}"/>			
 						</h:panelGroup>
 		
 					

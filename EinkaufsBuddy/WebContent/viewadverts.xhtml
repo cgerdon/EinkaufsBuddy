@@ -18,8 +18,8 @@
 							    	
 				    <ui:repeat var="ads" value="#{advert.alladverts}">
 				
-					    <p:fieldset legend="Entwurf: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 0 and ads.ad_acc == 0 and ads.ad_buyerID == 0}">
-					        <h:panelGrid columns="2" cellpadding="5" >
+					    <p:fieldset legend="Entwurf: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 0 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}">
+					        <h:panelGrid columns="3" cellpadding="5" >
 					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
 								
 									<h:panelGrid columns="2" border="1">
@@ -37,7 +37,7 @@
 					
 											<h:outputText value="#{ads.text}" />
 											<br />
-											<h:commandButton value="ändern" action="#{advert.changeData}">
+											<h:commandButton value="Detail" action="#{advert.changeData}">
 								 					<f:param name="ad_id" value="#{ads.id}" />
 											</h:commandButton>
 					
@@ -45,10 +45,16 @@
 											<h:outputText value="Kategorie: #{ads.category}" />
 										</h:panelGroup>
 									</h:panelGrid>
+								<h:panelGroup>	
+								<h:commandButton value="ändern" action="#{advert.changeData}">
+								 	<f:param name="ad_id" value="#{ads.id}" />
+								</h:commandButton>
+								<h:commandButton value="Entwurf löschen" action="#{advert.addelete(ads.id)}"/>
+								</h:panelGroup>
 							</h:panelGrid>
 						</p:fieldset>
-						 <p:fieldset legend="Aktiviert: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID == 0}" >
-					        <h:panelGrid columns="2" cellpadding="5" >
+						 <p:fieldset legend="Aktiviert: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}" >
+					        <h:panelGrid columns="3" cellpadding="5" >
 					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
 								
 									<h:panelGrid columns="2" border="1">
@@ -66,7 +72,7 @@
 					
 											<h:outputText value="#{ads.text}" />
 											<br />
-											<h:commandButton value="ändern" action="#{advert.changeData}">
+											<h:commandButton value="Detail" action="#{advert.changeData}">
 								 					<f:param name="ad_id" value="#{ads.id}" />
 											</h:commandButton>
 					
@@ -74,11 +80,18 @@
 											<h:outputText value="Kategorie: #{ads.category}" />
 										</h:panelGroup>
 									</h:panelGrid>
+								<h:panelGroup>
+								<h:commandButton value="ändern" action="#{advert.changeData}">
+								 	<f:param name="ad_id" value="#{ads.id}" />
+								</h:commandButton>
+								<h:commandButton value="deaktivieren" action="#{advert.addeactive(ads.id)}"/>
+								<h:commandButton value="löschen" action="#{advert.addelete(ads.id)}"/>
+								</h:panelGroup>
 							</h:panelGrid>
 						</p:fieldset>
 						
-						<p:fieldset legend="Interessent: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID != 0 }" >
-					        <h:panelGrid columns="2" cellpadding="5" >
+						<p:fieldset legend="Interesse: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID != 0 and ads.ad_rate == 0}" >
+					        <h:panelGrid columns="3" cellpadding="5" >
 					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
 								
 									<h:panelGrid columns="2" border="1">
@@ -96,17 +109,23 @@
 					
 											<h:outputText value="#{ads.text}" />
 											<br />
-							
+											<h:commandButton value="Detail" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>							
 					
 											<br />
 											<h:outputText value="Kategorie: #{ads.category}" />
 										</h:panelGroup>
 									</h:panelGrid>
+								<h:panelGroup>	
+								<h:commandButton value="Interessent ablehnen" action="#{advert.buyerCancel(ads.id)}"/>
+								<h:commandButton value="ablehnen und löschen" action="#{advert.adcanceldelete(ads.id)}"/>
+								</h:panelGroup>
 							</h:panelGrid>
 						</p:fieldset>
 						
-						<p:fieldset legend="Beendet: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0}" >
-					        <h:panelGrid columns="2" cellpadding="5" >
+						<p:fieldset legend="Angenommen: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0  and ads.ad_rate == 0}" >
+					        <h:panelGrid columns="3" cellpadding="5" >
 					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
 								
 									<h:panelGrid columns="2" border="1">
@@ -124,7 +143,40 @@
 					
 											<h:outputText value="#{ads.text}" />
 											<br />
-											<h:commandButton value="bewerten" action="#{advert.changeData}">
+											<h:commandButton value="Detail" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>
+					
+											<br />
+											<h:outputText value="Kategorie: #{ads.category}" />
+										</h:panelGroup>
+									</h:panelGrid>
+								<h:commandButton value="bewerten" action="#{advert.changeData}">
+								 	<f:param name="ad_id" value="#{ads.id}" />
+								</h:commandButton>
+							</h:panelGrid>
+						</p:fieldset>
+						
+						<p:fieldset legend="Bewertet: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0 and ads.ad_rate == 1}" >
+					        <h:panelGrid columns="3" cellpadding="5" >
+					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+								
+									<h:panelGrid columns="2" border="1">
+										<h:panelGroup>
+											Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+												<h:outputText value="#{ads.name} #{ads.last_name}" />
+											</h:commandLink>
+											<br />
+											<h:outputText value=" Verdienst: #{ads.income} €" />
+											<h:outputText value=" Limit: #{ads.limit} €" />
+										</h:panelGroup>
+					
+					
+										<h:panelGroup>
+					
+											<h:outputText value="#{ads.text}" />
+											<br />
+											<h:commandButton value="Detail" action="#{advert.changeData}">
 								 					<f:param name="ad_id" value="#{ads.id}" />
 											</h:commandButton>
 					
@@ -140,9 +192,9 @@
 				
 				<p:tab title="Fremde Inserate" >
 				
-					    <ui:repeat var="ads" value="#{advert.alladverts}">
-				    <p:fieldset legend="#{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px">
-				        <h:panelGrid columns="2" cellpadding="5">
+				<ui:repeat var="ads" value="#{advert.alladverts}">
+				<p:fieldset legend="Interesse: #{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 0}">
+				        <h:panelGrid columns="3" cellpadding="5">
 				            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
 							<h:form>
 								<h:panelGrid columns="2" border="1">
@@ -160,15 +212,85 @@
 				
 										<h:outputText value="#{ads.text}" />
 										<br />
-
+											<h:commandButton value="Detail" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>
 										<br />
 										<h:outputText value="Kategorie: #{ads.category}" />
 									</h:panelGroup>
 								</h:panelGrid>
 							</h:form>
-							        </h:panelGrid>
-							  </p:fieldset>
-						</ui:repeat> 
+							<h:commandButton value="Anfrage zurückziehen" action="#{advert.adCancel(ads.id, ads.memberid)}"/>
+
+						</h:panelGrid>
+					</p:fieldset>
+							  
+				    <p:fieldset legend="Angenommen: #{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 1}">
+				        <h:panelGrid columns="3" cellpadding="5">
+				            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+							<h:form>
+								<h:panelGrid columns="2" border="1">
+									<h:panelGroup>
+										Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText value="#{ads.name} #{ads.last_name}" />
+										</h:commandLink>
+										<br />
+										<h:outputText value=" Verdienst: #{ads.income} €" />
+										<h:outputText value=" Limit: #{ads.limit} €" />
+									</h:panelGroup>
+				
+				
+									<h:panelGroup>
+				
+										<h:outputText value="#{ads.text}" />
+										<br />
+											<h:commandButton value="Detail" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>
+										<br />
+										<h:outputText value="Kategorie: #{ads.category}" />
+									</h:panelGroup>
+								</h:panelGrid>
+							</h:form>
+							<h:commandButton value="bewerten" action="#{advert.changeData}">
+								<f:param name="ad_id" value="#{ads.id}" />
+							</h:commandButton>
+						</h:panelGrid>
+					</p:fieldset>
+							  
+					<p:fieldset legend="Bewertet: #{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px" rendered="#{ads.ad_rate == 1 and ads.ad_acc == 1}">
+				        <h:panelGrid columns="3" cellpadding="5">
+				            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
+							<h:form>
+								<h:panelGrid columns="2" border="1">
+									<h:panelGroup>
+										Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText value="#{ads.name} #{ads.last_name}" />
+										</h:commandLink>
+										<br />
+										<h:outputText value=" Verdienst: #{ads.income} €" />
+										<h:outputText value=" Limit: #{ads.limit} €" />
+									</h:panelGroup>
+				
+				
+									<h:panelGroup>
+				
+										<h:outputText value="#{ads.text}" />
+										<br />
+											<h:commandButton value="Detail" action="#{advert.changeData}">
+								 					<f:param name="ad_id" value="#{ads.id}" />
+											</h:commandButton>
+										<br />
+										<h:outputText value="Kategorie: #{ads.category}" />
+									</h:panelGroup>
+								</h:panelGrid>
+							</h:form>
+						</h:panelGrid>
+					</p:fieldset>		  
+							  
+							  
+							  
+			</ui:repeat> 
 	
 				</p:tab>
 			</p:tabView>
