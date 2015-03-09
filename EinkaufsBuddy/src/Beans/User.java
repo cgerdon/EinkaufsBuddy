@@ -63,6 +63,70 @@ public class User implements Serializable {
 	private String abouttext;
 	private byte[] picture;
 	private String street;
+	private int anzahl;
+	private double mittel;
+	private double mittelstar;
+	private  ArrayList<RatingResults> RatingList;
+	public int getAnzahl() {
+		return anzahl;
+	}
+
+
+
+
+
+	public void setAnzahl(int anzahl) {
+		this.anzahl = anzahl;
+	}
+
+
+
+
+
+	public double getMittel() {
+		return mittel;
+	}
+
+
+
+
+
+	public void setMittel(double mittel) {
+		this.mittel = mittel;
+	}
+
+
+
+
+
+	public double getMittelstar() {
+		return mittelstar;
+	}
+
+
+
+
+
+	public void setMittelstar(double mittelstar) {
+		this.mittelstar = mittelstar;
+	}
+
+
+
+
+
+	public ArrayList<RatingResults> getRatingList() {
+		return RatingList;
+	}
+
+
+
+
+
+	public void setRatingList(ArrayList<RatingResults> ratingList) {
+		RatingList = ratingList;
+	}
+
 	private int plz;
 	private Part file;
 	private String phone;
@@ -388,6 +452,8 @@ public class User implements Serializable {
 	public void setStreet(String street) {
 		this.street = street;
 	}
+	
+	
 
 	public int getPlz() {
 		return plz;
@@ -555,12 +621,85 @@ public class User implements Serializable {
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", email);
 			showTimes(id);
+			try {
+				getRatings(id);
+				
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+
+			mittel();
 			return "home?faces-redirect=true";
 
 		} else
 			logout();
 		return "error";
 	}
+	
+	private void mittel() {
+		mittel = 0;
+		for(RatingResults object: RatingList){
+			mittel += object.getRating();
+			}
+	
+		mittel = mittel / RatingList.size();
+		
+		if (RatingList.size() == 0) {mittel = 0; mittelstar = 0; anzahl = 0;}
+		else {double f = 0.5;
+		mittelstar = f * Math.round(mittel/f);
+		anzahl = RatingList.size();}
+		
+	}
+
+
+
+	public void getRatings(int id) throws SQLException {
+		PreparedStatement ps = null;
+		Connection con = null;
+		ResultSet rs = null;
+
+		if (ds != null) {
+			try {
+				con = ds.getConnection();
+				if (con != null) {
+					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where buyer_id = "
+							+ id +";";
+					System.out.println(sql);
+					ps = con.prepareStatement(sql);
+					rs = ps.executeQuery();
+				
+					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
+					while (rs.next()) {
+						
+						RatingResults TempObj = new RatingResults();
+						TempObj.setId(rs.getInt("rating.id"));
+						TempObj.setBuyerid(rs.getInt("buyer_id"));
+						TempObj.setAdvertiserid(rs.getInt("advertiser_id"));
+						TempObj.setRating(rs.getInt("rating"));
+						TempObj.setAdid(rs.getInt("ad_id"));
+						TempObj.setText(rs.getString("text"));
+						TempObj.setVorname(rs.getString("name"));
+						TempObj.setName(rs.getString("last_name"));
+						System.out.println(TempObj.toString());
+						TempList.add(TempObj);
+						
+					
+					}
+					RatingList = TempList;
+				}}finally {  
+	                try {  
+	                    con.close();  
+	                    ps.close();  
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+		}
+		
+	}
+		
+		
+		}
 
 	public void logout() {
 		FacesContext.getCurrentInstance().getExternalContext()

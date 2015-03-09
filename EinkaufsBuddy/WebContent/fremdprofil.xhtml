@@ -115,9 +115,12 @@
 					<h:graphicImage library="images"
 						name="stars/#{userView.mittelstar}.png" />
 					<table>
+					<th>Von:</th>
+					<th>Bewertung:</th>
+					<th>Text:</th>
 						<ui:repeat var="ratings" value="#{userView.ratingList}">
 							<tr>
-								<td>Rating von #{ratings.vorname} #{ratings.name}:</td>
+								<td>#{ratings.vorname} #{ratings.name}</td>
 								<td>#{ratings.rating} / 5</td>
 								<td>#{ratings.text}</td>
 							</tr>

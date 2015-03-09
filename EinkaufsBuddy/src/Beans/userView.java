@@ -31,8 +31,7 @@ public class userView implements Serializable {
 	private int id;
 	private String name;
 	private String last_name;
-	private double mittel;
-	private double mittelstar;
+
 	private Date birthdate;
 	private int car;
 	private String abouttext;
@@ -42,6 +41,8 @@ public class userView implements Serializable {
 	private String phone;
 	private boolean[][] daytimeavailable;
 	private int anzahl;
+	private double mittel;
+	private double mittelstar;
 	private  ArrayList<RatingResults> RatingList;
 	
 	//private Rating rating;
