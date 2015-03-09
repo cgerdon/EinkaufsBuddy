@@ -60,10 +60,19 @@
 			</p:panel>
 				
 					<p:commandButton value="Speichern" action="#{advert.updateInfos}"/>
-					<p:commandButton value="Inserat löschen" action="#{message.advert.deleteAd}">
-								        <p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+
+					<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
+							<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
 					</p:commandButton>
+					
+					
+					
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+						<p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
 		</h:form>
+		
 </ui:define>
   
 </ui:composition> 

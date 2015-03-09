@@ -12,7 +12,12 @@
         <h:form>  
 	
 		<p:remoteCommand action="#{advert.showAllOhneEvent}" autoRun="true" asnc="true" update="tabviewupdate"/>
-
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+			<p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		
 			<p:tabView id="tabviewupdate" >
 				<p:ajax event="tabChange" listener="#{advert.showAll}" update="tabviewupdate"/>
 				
@@ -20,204 +25,317 @@
 							    	
 				    <ui:repeat var="ads" value="#{advert.alladverts}">
 				
-					    <p:fieldset legend="Entwurf: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 0 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}">
-					        <h:panelGrid columns="3" cellpadding="5" >
-					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-								
-									<h:panelGrid columns="2" border="1">
-										<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+					    <p:fieldset legend="Entwurf: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 0 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}">
+					      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-									</h:panelGrid>
-								<h:panelGroup>	
-								<h:commandButton value="ändern" action="#{advert.changeData}">
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
+										
+								<h:panelGroup styleClass="adfunctionright" layout="block">	
+								<p:commandButton value="ändern" action="#{advert.changeData}">
 								 	<f:param name="ad_id" value="#{ads.id}" />
-								</h:commandButton>
-								<h:commandButton value="Entwurf löschen" action="#{advert.addelete(ads.id)}"/>
+								</p:commandButton>
+								<p:commandButton value="löschen" action="#{advert.addelete(ads.id)}">
+										<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+								</p:commandButton>
 								</h:panelGroup>
-							</h:panelGrid>
+							
 						</p:fieldset>
-						 <p:fieldset legend="Aktiviert: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}" >
-					        <h:panelGrid columns="3" cellpadding="5" >
-					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-								
-									<h:panelGrid columns="2" border="1">
-																			<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+						 <p:fieldset legend="Aktiviert: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}" >
+					 		      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-										</h:panelGrid>
-										<h:panelGroup>
-								<h:commandButton value="ändern" action="#{advert.changeData}">
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
+								<h:panelGroup styleClass="adfunctionright" layout="block">	
+								
+								<p:commandButton value="deaktivieren" action="#{advert.addeactive(ads.id)}"/>
+								<p:commandButton value="ändern" action="#{advert.changeData}">
 								 	<f:param name="ad_id" value="#{ads.id}" />
-								</h:commandButton>
-								<h:commandButton value="deaktivieren" action="#{advert.addeactive(ads.id)}"/>
-								<h:commandButton value="löschen" action="#{advert.addelete(ads.id)}"/>
+								</p:commandButton>
+								<p:commandButton value="löschen" action="#{advert.addelete(ads.id)}">	
+									<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+								</p:commandButton>
 								</h:panelGroup>
-							</h:panelGrid>
+							
 						</p:fieldset>
 						
-						<p:fieldset legend="Interesse: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID != 0 and ads.ad_rate == 0}" >
-					        <h:panelGrid columns="3" cellpadding="5" >
-					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-								
-									<h:panelGrid columns="2" border="1">
-												<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+						<p:fieldset legend="Interesse: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID != 0 and ads.ad_rate == 0}" >
+					     		      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-									</h:panelGrid>
-								<h:panelGroup>	
-								<h:commandButton value="Interessent ablehnen" action="#{advert.buyerCancel(ads.id)}"/>
-								<h:commandButton value="ablehnen und löschen" action="#{advert.adcanceldelete(ads.id)}"/>
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
+								<h:panelGroup styleClass="adfunctionright" layout="block">		
+								<p:commandButton value="ablehnen" action="#{advert.buyerCancel(ads.id)}"/>
+								<p:commandButton value="löschen" action="#{advert.adcanceldelete(ads.id)}">
+									<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+								</p:commandButton>
 								</h:panelGroup>
-							</h:panelGrid>
+							
 						</p:fieldset>
 						
-						<p:fieldset legend="Angenommen: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0  and ads.ad_rate == 0}" >
-					        <h:panelGrid columns="3" cellpadding="5" >
-					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-								
-									<h:panelGrid columns="2" border="1">
-												<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+						<p:fieldset legend="Angenommen: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0  and ads.ad_rate == 0}" >
+					        		      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-									</h:panelGrid>
-								<h:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.id, user.id, 2)}">
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
+								<h:panelGroup styleClass="adfunctionright" layout="block">			
+								<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.id, user.id, 2)}">
 														<f:param name="resulttodetail" value="#{ads.memberid}" />
-							<f:param name="advertid" value="#{ads.id}" />
-								</h:commandButton>
-							</h:panelGrid>
+								<f:param name="advertid" value="#{ads.id}" />
+								</p:commandButton>
+							</h:panelGroup>
 						</p:fieldset>
 						
-						<p:fieldset legend="Bewertet: #{ads.datum} - #{ads.zeitpunkt}" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0 and ads.ad_rate == 1}" >
-					        <h:panelGrid columns="3" cellpadding="5" >
-					            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-								
-									<h:panelGrid columns="2" border="1">
-											<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+						<p:fieldset legend="Bewertet: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0 and ads.ad_rate == 1}" >
+		      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-									</h:panelGrid>
-							</h:panelGrid>
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
 						</p:fieldset>
 				<br />
 				</ui:repeat> 	
@@ -226,121 +344,183 @@
 				<p:tab title="Fremde Inserate" >
 				
 				<ui:repeat var="ads" value="#{advert.alladverts}">
-				<p:fieldset legend="Interesse: #{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 0}">
-				        <h:panelGrid columns="3" cellpadding="5">
-				            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-							
-								<h:panelGrid columns="2" border="1">
-												<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+				<p:fieldset legend="Interesse: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" style="margin-bottom:20px" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 0}">
+				       		      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-								</h:panelGrid>
-							
-							<h:commandButton value="Anfrage zurückziehen" action="#{advert.adCancel(ads.id, ads.memberid)}"/>
-
-						</h:panelGrid>
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
+							<h:panelGroup styleClass="adfunctionright" layout="block">	
+							<p:commandButton value="zurückziehen" action="#{advert.adCancel(ads.id, ads.memberid)}"/>
+							</h:panelGroup>
+					
 					</p:fieldset>
 							  
-				    <p:fieldset legend="Angenommen: #{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 1}">
-				        <h:panelGrid columns="3" cellpadding="5">
-				            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-							
-								<h:panelGrid columns="2" border="1">
-												<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+				    <p:fieldset legend="Angenommen: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" style="margin-bottom:20px" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 1}">
+				      		      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-								</h:panelGrid>
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
 							#{ads.memberid} #{ads.ad_buyerID} #{user.id} #{ads.id} 
-							<h:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
+							<h:panelGroup styleClass="adfunctionright" layout="block">	
+							<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
 							<f:param name="resulttodetail" value="#{ads.memberid}" />
 							<f:param name="advertid" value="#{ads.id}" />
-							</h:commandButton>
-						</h:panelGrid>
+							</p:commandButton>
+							</h:panelGroup>
 					</p:fieldset>
 							  
-					<p:fieldset legend="Bewertet: #{ads.datum} - #{ads.zeitpunkt}" style="margin-bottom:20px" rendered="#{ads.ad_rate == 1 and ads.ad_acc == 1}">
-				        <h:panelGrid columns="3" cellpadding="5">
-				            <h:graphicImage value="resources/images/sample.jpg" alt="image" />
-							
-								<h:panelGrid columns="2" border="1">
-														<h:panelGroup>
-												Inserat von <h:commandLink action="#{userView.showProfil(ads.memberid)}">
-											<h:outputText value="#{ads.name} #{ads.last_name}" />
+					<p:fieldset legend="Bewertet: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" style="margin-bottom:20px" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_rate == 1 and ads.ad_acc == 1}">
+				       		      				<table>
+											<colgroup>
+											    <col width="180px"/>
+											    <col width="250px"/>
+											    <col width="200px"/>
+											</colgroup>
+						
+											<tr>
+												<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						 						</p:graphicImage>
+						 						</td>	
+												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
+												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+											</tr>
+											
+						
+											
+											<tr>
+												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+													<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
 												</h:commandLink>
 												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 													<h:graphicImage class="message"
 														value="resources/images/message.png" alt="message" />
-						
 													<f:param name="startmessage" value="#{ads.memberid}" />
 												</h:commandLink>
-												<br />
-												<h:outputText value=" Verdienst: #{ads.income} €" />
-											</h:panelGroup>
-						
-						
-											<h:panelGroup>
-						
-												<h:outputText value="#{ads.text}" />
-												<br />
-												<h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
+												</td>
+												
+												<td><h:outputText value="Entfernung: 0 km" /></td>
+												<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 													<f:param name="resulttodetail" value="#{ads.memberid}" />
 													<f:param name="advertid" value="#{ads.id}" />
-												</h:commandButton>
-						
-												<br />
-												<h:outputText value="Kategorie: #{ads.category}" />
-										</h:panelGroup>
-								</h:panelGrid>
-						
-						</h:panelGrid>
+												</p:commandButton>
+												</td>
+												
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+												</td>
+												
+												<td></td>
+												
+											</tr>
+											<tr>
+												<td></td>
+												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+												
+												<td></td>
+												
+											</tr>
+										</table>
 					</p:fieldset>		  
 							  
 							  

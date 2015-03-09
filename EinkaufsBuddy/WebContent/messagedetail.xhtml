@@ -27,7 +27,7 @@
 							<h:outputText styleClass="chattext" value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
 							
 							<h:outputText  value="Anfrage zu Inserat: " rendered="#{messagedetails.ms_advertId == 2}"/>
-							<h:commandLink value="#{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}" />
+							<h:commandLink value="#{messagedetails.ms_text}"  action="#{advert.showAd2(messagedetails.ms_text)}" rendered="#{messagedetails.ms_advertId == 2}" />
 							
 							<h:outputText  value="  " rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 1}"/>
 								
@@ -45,7 +45,7 @@
 							<h:outputText styleClass="chattext"  value="#{messagedetails.ms_text}" rendered="#{messagedetails.ms_advertId == 1}"/>
 							
 							<h:outputText  value="Anfrage zu Inserat: " rendered="#{messagedetails.ms_advertId == 2}"/>
-							<h:commandLink value="#{messagedetails.ms_text}"  rendered="#{messagedetails.ms_advertId == 2}" />
+							<h:commandLink value="#{messagedetails.ms_text}" action="#{advert.showAd2(messagedetails.ms_text)}" rendered="#{messagedetails.ms_advertId == 2}" />
 							
 							<h:outputText  value="  " rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 1}"/>
 							<p:commandButton value="Annehmen" action="#{message.InseratAnAb(2, messagedetails.ms_id, messagedetails.ms_text)}" rendered="#{messagedetails.ms_advertId == 2 and messagedetails.ms_advertanab == 1}" />

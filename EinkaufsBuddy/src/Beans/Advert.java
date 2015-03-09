@@ -1095,7 +1095,7 @@ public class Advert implements Serializable{
             if (con != null) {
 
             	if (name.equals("Eigene Inserate")) {
-            		String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC,buyerinter ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
+            		String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC,buyerinter ASC, accepted_id ASC, advertiserrate ASC, date DESC; "; 
             		PreparedStatement ps = null;  
             		ps = con.prepareStatement(sql); 
                     ResultSet rs = null;
@@ -1119,7 +1119,7 @@ public class Advert implements Serializable{
             	}
             	
             	if (name.equals("Fremde Inserate")) {
-            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.buyerrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "' ORDER BY accepted_id ASC, buyerrate ASC, date ASC;";
+            		String sql = "SELECT ad.id, ad.accepted_id, ad.status, ad.buyerrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON ad.advertiser_id=member.id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.buyer_id= '" + advertiser_id + "' ORDER BY accepted_id ASC, buyerrate ASC, date DESC;";
             		PreparedStatement ps = null;  
             		ps = con.prepareStatement(sql); 
                     ResultSet rs = null;
@@ -1169,7 +1169,7 @@ public class Advert implements Serializable{
             con = ds.getConnection();  
             if (con != null) {
 
-            	String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, buyerinter ASC, accepted_id ASC, advertiserrate ASC, date ASC; "; 
+            	String sql = "SELECT IF(ad.buyer_id>0,1,0) AS buyerinter, ad.id, ad.accepted_id, ad.status, ad.advertiserrate, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.advertiser_id = '" + advertiser_id + "' ORDER BY status ASC, buyerinter ASC, accepted_id ASC, advertiserrate ASC, date DESC; "; 
             	ps = con.prepareStatement(sql);  
                 rs = ps.executeQuery();  
                 
@@ -1393,6 +1393,51 @@ public class Advert implements Serializable{
  
 	return "viewadverts?faces-redirect=true";
 }  
- 
+	public String showAd2(int ad_id){
+
+		PreparedStatement ps = null;  
+        Connection con = null;  
+        ResultSet rs = null;
+        
+        if (ds != null) {  
+            try {  
+                con = ds.getConnection();  
+                if (con != null) {
+                	
+                    String sql = "SELECT ad.id, ad.advertiser_id, ad.date, ad.fk_time_id, ad.limit, ad.income, ad.text, ad.fk_category, ad.status, ad.fav_market, ad.buyer_id, member.id, member.name, member.last_name, member.plz, times_available.time, member.street, category.category FROM ad LEFT JOIN member ON member.id=ad.advertiser_id LEFT JOIN times_available ON ad.fk_time_id = times_available.id LEFT JOIN category ON ad.fk_category = category.id WHERE ad.id = '" + ad_id + "'"; 
+                  
+                    ps = con.prepareStatement(sql);  
+                    rs = ps.executeQuery();  
+               
+                    while (rs.next()) {  
+                         
+                    	datum = rs.getDate("ad.date");
+                    	ad_id = rs.getInt("ad.id");
+                    	income = rs.getDouble("ad.income");
+                    	limit = rs.getDouble("ad.limit");
+                    	name = rs.getString("member.name");
+                    	last_name = rs.getString("member.last_name");
+                    	text = rs.getString("ad.text");
+                    	zeitpunkt = rs.getString("times_available.time");
+                    	category = rs.getString("category.category");
+                    	buyer_id = rs.getInt("buyer_id");
+                    	
+                    }
+                }  
+            } catch (Exception e) {  
+                System.out.println(e);  
+            } finally {  
+                try {  
+                    con.close();  
+                    ps.close();  
+                } catch (Exception e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+
+		
+        }
+		return "advertdetail?faces-redirect=true";
+	}
  
 }

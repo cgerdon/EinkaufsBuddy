@@ -1,3 +1,7 @@
+.adfunctionright{
+	text-align: right;
+}
+
 
 .Banner{
 	width: 100%; 
@@ -194,8 +198,6 @@
 }
 
 
-
-
 /*** master ***/
 h1, h2, h3{
 	color: rgb(187,34,43);
@@ -295,7 +297,7 @@ h1, h2, h3{
  .ui-menuitem Each menu item 
  .ui-menuitem-link Anchor element in a link item 
  .ui-menuitem-text Text element in an item
-***/
+**
 ul li.ui-menuitem-active>a{
     background-image: none !important;
     background-color: #D5FF95 !important;
@@ -313,7 +315,7 @@ ul li.ui-menuitem-active>a{
 	background-color: #D5FF95 !important;
 	box-shadow: none !important;
  }
-
+*/
 /*** footer ***/
 
 #footer {
@@ -326,15 +328,22 @@ ul li.ui-menuitem-active>a{
 	margin-left: auto;
 }
 
-.footer-links {
+.footer-links, .profillinks {
 	margin-left: 10px;
-	font-size: 80%; 
 	color: rgb(187,34,43);  
 	text-decoration: none; 
 	text-underline: none; 
 }
 
-.footer-links:hover {
+.profillinktext{
+	color: rgb(187,34,43); 
+}
+.footer-links{
+	font-size: 80%;
+}
+
+
+.footer-links:hover, .profillinktext:hover {
 	color: rgb(236,186,49); 
 }
 
@@ -348,9 +357,7 @@ ul li.ui-menuitem-active>a{
 }
 
 
-/*** Startseite Logout
-187 34 43
- ***/
+/*** Startseite Logout ***/
 #simplesearchform{
 	padding-top: 5em;
 	padding-bottom: 5em;
@@ -369,3 +376,12 @@ ul li.ui-menuitem-active>a{
     border-radius: 1px;
 }
 
+.message:hover{
+	background-color: rgb(236,186,49);
+	
+}
+
+
+.ui-fieldset{
+background-color: rgb(250,230,175);
+}
