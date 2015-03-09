@@ -13,8 +13,11 @@
 						<h:column headerClass="TableHeader1">
 							<f:facet name="header">Name: </f:facet>    	
 							<h:panelGroup styleClass="messageoverviewName">
-								<h:outputText value="#{messageoverview.ms_receiverFirstName} "/>
-								<h:outputText  value="#{messageoverview.ms_receiverLastName}" />
+								<h:commandLink styleClass="profillinks" action="#{userView.showProfil(messageoverview.ms_senderId)}">	
+									<h:outputText styleClass="profillinktext" value="#{messageoverview.ms_receiverFirstName} #{messageoverview.ms_receiverLastName}"/>		
+								</h:commandLink>							
+
+
 							</h:panelGroup>
 							<h:panelGroup styleClass="messagecycle" rendered="#{messageoverview.ms_anzahl > 0}">
 								<h:outputText  value="#{messageoverview.ms_anzahl}" />
