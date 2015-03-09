@@ -270,7 +270,7 @@ public class userView implements Serializable {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, type, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where (type = 2 and buyer_id = "+ id +") or (type=1 and advertiser_id="+ id +")";
+					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, type, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where (type = "+ id +" and buyer_id = "+ id +") or (type= "+ id +" and advertiser_id="+ id +")";
 					System.out.println(sql);
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();

@@ -121,7 +121,8 @@ public class Rating implements Serializable{
                         ps.setInt(3, rating);  
                         ps.setString(4, text);  
                         ps.setInt(5, adid);
-                        ps.setInt(6, type);
+                        System.out.println("In type steht " + type + "und in advid steht " + advid + " und in buyerid steht "+ buyerid);
+                        ps.setInt(6, advid);
                         System.out.println(ps.toString());
                         ps.executeUpdate();  
                     }  

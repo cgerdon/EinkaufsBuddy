@@ -134,7 +134,9 @@ public class Advert implements Serializable{
 	String Text_todb;
 	int adid_todb;
 	int type_todb;
-    DataSource ds;  
+    DataSource ds;
+
+	private int hierdiememberid;  
   
     
     public Advert() {  
@@ -157,11 +159,22 @@ public class Advert implements Serializable{
 	}
 	
 	public String startrating(int buyerid, int adid, int advid, int type){
-	
+		FacesContext fc = FacesContext.getCurrentInstance();
+		this.idvombesitzer = getresulttodetail(fc); 
+		FacesContext fc2 = FacesContext.getCurrentInstance();
+		adid_todb = getadvertid(fc2);
+		System.out.println(idvombesitzer);
 		buyer_id_todb = buyerid;
-		advertiser_id_todb = advid;
-		adid_todb = adid;
+		advertiser_id_todb = idvombesitzer;
+		
+		//adid_todb = adid;
 		type_todb = type;
+		if (type_todb == 2){
+			int temp = buyer_id_todb;
+			buyer_id_todb = advertiser_id_todb;
+			advertiser_id_todb = temp;
+			
+		}
 		System.out.println("Buyer ID ist " + buyer_id_todb + " und Advertiser ID ist " + advertiser_id_todb + " und adid ist "+ adid_todb + " der type ist " + type_todb);
 		
 		return "ratingadvert?faces-redirect=true";
