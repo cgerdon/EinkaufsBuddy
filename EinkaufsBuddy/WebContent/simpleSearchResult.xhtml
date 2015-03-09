@@ -27,32 +27,33 @@
 			<h:form>
 				<table>
 					<colgroup>
-					    <col width="150px"/>
-					    <col width="400px"/>
+					    <col width="180px"/>
+					    <col width="250px"/>
 					    <col width="200px"/>
 					</colgroup>
+
 					<tr>
-						<td><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
+						<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
  						</p:graphicImage>
  						</td>	
-						<td><h3><h:outputText value=" #{ads.distance} km Entfernung - #{ads.limit}  €" /></h3></td>
+						<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
 						<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
 					</tr>
 					
 
 					
 					<tr>
-						<td><h:commandLink action="#{userView.showProfil(ads.memberid)}">
+						<td align="center"><h:commandLink action="#{userView.showProfil(ads.memberid)}">
 							<h:outputText value="#{ads.name} #{ads.last_name}"/>
 						</h:commandLink>
 						<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 							<h:graphicImage class="message"
 								value="resources/images/message.png" alt="message" />
-
 							<f:param name="startmessage" value="#{ads.memberid}" />
 						</h:commandLink>
 						</td>
-						<td><h:outputText value="#{ads.text}"/></td>
+						
+						<td><h:outputText value="Entfernung: #{ads.distance} km" /></td>
 						<td><h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id)}">
 							<f:param name="resulttodetail" value="#{ads.memberid}" />
 							<f:param name="advertid" value="#{ads.id}" />
@@ -61,11 +62,18 @@
 						
 						
 					</tr>
-					
-					
+					<tr>
+						<td></td>
+						<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+						</td>
+						
+						<td></td>
+						
+					</tr>
 					<tr>
 						<td></td>
 						<td><h:outputText value="Kategorie: #{ads.category}" /></td>
+						
 						<td></td>
 						
 					</tr>

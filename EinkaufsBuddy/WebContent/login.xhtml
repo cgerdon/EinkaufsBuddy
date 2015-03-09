@@ -14,7 +14,7 @@
 		<h:panelGroup layout="block">
  		 <table>  
                   <tr>  
-                    <td><h:outputText value="Mail:" for ="email"/></td>  
+                    <td><p:outputLabel value="Mail:"/></td>  
                     <td><p:inputText id="email" value="#{user.email}"  
                             required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
                              <f:validateRegex
@@ -22,7 +22,7 @@
                     <td></td>  
                 </tr>  
                 <tr>  
-                    <td><h:outputText value="Passwort:" for ="pwd1"/></td>  
+                    <td><p:outputLabel value="Passwort:"/></td>  
                     <td> <p:password id="pwd1" value="#{user.password}" label="Passwort 1" required="true" requiredMessage="Bitte ein Passwort eingeben!" />
         			</td>  
                     <td></td>  
