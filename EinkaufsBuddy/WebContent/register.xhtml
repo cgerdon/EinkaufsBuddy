@@ -14,19 +14,19 @@
 		<h:panelGroup layout="block">
  		 <table>  
                 <tr>  
-                    <td><h:outputText value="Vorname:" /></td>  
+                    <td><h:outputText value="Vorname:" for ="fname"/></td>  
                     <td><p:inputText id="fname" value="#{user.firstName}"  
                             required="true" requiredMessage="Bitte Vornamen angeben" /></td>  
                     <td><h:message for="fname" style="color:red" /></td>  
                 </tr>  
                 <tr>  
-                    <td><h:outputText value="Nachname:" /></td>  
+                    <td><h:outputText value="Nachname:" for ="lname"/></td>  
                     <td><p:inputText id="lname" value="#{user.lastName}"  
                             required="true" requiredMessage="Bitte Nachname angeben" /></td>  
                     <td><h:message for="lname" style="color:red" /></td>  
                 </tr>  
                 <tr>  
-                    <td><h:outputText value="Mail:" /></td>  
+                    <td><h:outputText value="Mail:" for ="email"/></td>  
                     <td><p:inputText id="email" value="#{user.email}"  
                             required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
                              <f:validateRegex
@@ -34,9 +34,9 @@
                     <td></td>  
                 </tr>  
                 <tr>  
-                    <td><h:outputText value="Passwort:" /></td>  
+                    <td><h:outputText value="Passwort:" for ="pwd1"/></td>  
                     <td> <p:password id="pwd1" value="#{user.password}" match="pwd2" label="Passwort 1" required="true" requiredMessage="Bitte ein Passwort eingeben!" validatorMessage="Passwörter stimmen nicht überein!" />
-        			<p:password id="pwd2" value="#{user.password2}" label="Passwort 2" required="true" requiredMessage="Bitte die Wiederholung eingeben!"/>
+        			<h:outputText value="Wiederholung:" for ="pwd2"/><p:password id="pwd2" value="#{user.password2}" label="Passwort 2" required="true" requiredMessage="Bitte die Wiederholung eingeben!"/>
         			</td>  
                     <td></td>  
                 </tr>  
