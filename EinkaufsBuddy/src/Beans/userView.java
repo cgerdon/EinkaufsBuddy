@@ -43,6 +43,7 @@ public class userView implements Serializable {
 	private int anzahl;
 	private double mittel;
 	private double mittelstar;
+	boolean ratingsexist = false;
 	private  ArrayList<RatingResults> RatingList;
 	
 	//private Rating rating;
@@ -190,30 +191,40 @@ public class userView implements Serializable {
 	DataSource ds;
 
 	public String showProfil(int id) {
-		// Oh gott, bitte muss ich die NIE wieder anschauen.
-	
+		System.out.println("Die ID vom Nutzer ist " + id);
+		//RatingList.clear();
 		this.id = id;
+		System.out.println("gleich die statements");
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
+		System.out.println("gleich die query");
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
 					String sql = "select id, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone from member where id = '"
 							+ id + "'";
-					
+					System.out.println(sql);
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-					rs.next();
+					while(rs.next()){
 					name = rs.getString("name");
+					System.out.println(name);
 					last_name = rs.getString("last_name");
+					System.out.println(last_name);
 					birthdate = rs.getDate("birthdate");
+					System.out.println(birthdate);
 					car = rs.getInt("car");
+					System.out.println(birthdate);
 					abouttext = rs.getString("abouttext");
+					System.out.println(abouttext);
 					street = rs.getString("street");
+					System.out.println(street);
 					plz = rs.getInt("plz");
+					System.out.println(plz);
 					phone = rs.getString("phone");
+					System.out.println(phone);}
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
@@ -226,15 +237,19 @@ public class userView implements Serializable {
 				}
 			}
 		}
+		System.out.println("jetzt show times");
 		showTimes(id);
+		System.out.println("ende show times erfolgreich");
 		try {
+			
 			getRatings(id);
 			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-
+		System.out.println("jetzt show times");
+		
 		mittel();
 		if (aduser_id == id){
 		return "profil?faces-redirect=true";
@@ -246,16 +261,25 @@ public class userView implements Serializable {
 
 	private void mittel() {
 		mittel = 0;
+		anzahl = 0;
+		mittelstar = 0;
+		
+		System.out.println("mittel gestartet");
+		//System.out.println(RatingList.size());
+		System.out.println(ratingsexist);
+		if (ratingsexist){
+			
+		
 		for(RatingResults object: RatingList){
 			mittel += object.getRating();
 			}
 	
 		mittel = mittel / RatingList.size();
-		
-		if (RatingList.size() == 0) {mittel = 0; mittelstar = 0; anzahl = 0;}
-		else {double f = 0.5;
+		double f = 0.5;
 		mittelstar = f * Math.round(mittel/f);
-		anzahl = RatingList.size();}
+		anzahl = RatingList.size();
+		}
+
 		
 	}
 
@@ -277,8 +301,9 @@ public class userView implements Serializable {
 					System.out.println(sql);
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-					
+					System.out.println("sql fertig");
 					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
+					
 					while (rs.next()) {
 					
 						System.out.println("2.");
@@ -290,14 +315,20 @@ public class userView implements Serializable {
 						PreparedStatement ps2 = null;
 						Connection con2 = null;
 						ResultSet rs2 = null;
-						System.out.println("noch weiter");
+						System.out.println("noch weiter " + tempid);
+													
+						
 						if (ds != null) {
 							System.out.println("2.query");
 							try {
 								con2 = ds.getConnection();
 								if (con2 != null) {
 									System.out.println("2.query start");
+									if (tempid == -1){
+									}
+									else{
 									String sql2 = "select name, last_name from member where id = " + tempid;
+									
 									ps2 = con2.prepareStatement(sql2);
 									rs2 = ps2.executeQuery();
 									System.out.println(sql2);
@@ -307,7 +338,7 @@ public class userView implements Serializable {
 										Tempnachname = rs2.getString("last_name");
 									
 									}
-									
+									}
 								}}finally {  
 					                try {  
 					                    con2.close();  
@@ -331,6 +362,7 @@ public class userView implements Serializable {
 						
 					
 					}
+					ratingsexist = true;	
 					RatingList = TempList;
 				}}}finally {  
 	                try {  

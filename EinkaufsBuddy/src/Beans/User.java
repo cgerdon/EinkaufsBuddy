@@ -621,7 +621,6 @@ public class User implements Serializable {
 			// Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", email);
-			session.setAttribute("id", id);
 			showTimes(id);
 			try {
 				getRatings(id);
@@ -727,7 +726,7 @@ public class User implements Serializable {
 					
 					}
 					RatingList = TempList;
-				}}}finally {  
+				}}}finally {  	
 	                try {  
 	                    con.close();  
 	                    ps.close();  
@@ -735,8 +734,7 @@ public class User implements Serializable {
 				sqle.printStackTrace();
 			}
 		}
-		
-	}
+		}
 		
 		
 		}

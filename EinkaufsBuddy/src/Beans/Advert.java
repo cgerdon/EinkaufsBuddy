@@ -803,7 +803,7 @@ public class Advert implements Serializable{
 		return "advertdetail?faces-redirect=true";    
 	}
 	
-	public String executeJob() {
+	public String executeJob(int entfernung) {
 
 	      PreparedStatement ps = null;  
 	      Connection con = null;  
