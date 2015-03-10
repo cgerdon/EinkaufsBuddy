@@ -1,12 +1,8 @@
 package Beans;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +16,6 @@ import java.util.Properties;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-//import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.Message;
@@ -33,15 +28,15 @@ import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
+//import javax.faces.bean.RequestScoped;
 
 @ManagedBean(name = "user")
 // @RequestScoped von Mathias gelöscht und durch @SessionScoped ersetzt
@@ -58,7 +53,7 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private String password2;
-	private boolean updateImg;
+
 	private Date birthday;
 	private int car;
 	private String abouttext;
@@ -130,7 +125,6 @@ public class User implements Serializable {
 	}
 
 	private int plz;
-	private Part file;
 	private String phone;
 	File outputFilePath;
 	private String dbPassword;
@@ -237,98 +231,11 @@ public class User implements Serializable {
 		this.dbImage = dbImage;
 	}
 
-	public Part getFile() {
-		return file;
-	}
-
-	public void setFile(Part file) {
-		this.file = file;
-	}
-
-	public void uploadFile() throws IOException {
-
-		String fileName = getFileName(file);
-
-		String basePath = "C:" + File.separator + "temp" + File.separator;
-		outputFilePath = new File(basePath + fileName);
-		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
-	            .getExternalContext().getContext();
-	String realPath = ctx.getRealPath("/");
-	System.out.println(realPath);
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-		try {
-			inputStream = file.getInputStream();
-			outputStream = new FileOutputStream(outputFilePath);
-
-			int read = 0;
-			final byte[] bytes = new byte[1024];
-			while ((read = inputStream.read(bytes)) != -1) {
-				outputStream.write(bytes, 0, read);
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-
-		} finally {
-			if (outputStream != null) {
-				outputStream.close();
-			}
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		}
-
-	}
+	
 
 	private static boolean[][] daytimeavailable;
 	static DataSource ds;
 
-	private String getFileName(Part part) {
-
-		for (String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-
-				if (content.length() > 12) {
-					updateImg = true;
-				}
-				return content.substring(content.indexOf('=') + 1).trim()
-						.replace("\"", "");
-			}
-		}
-		return null;
-	}
-
-	private void PicUpload() {
-		Connection connection = null;
-		PreparedStatement statement = null;
-		FileInputStream inputStream = null;
-
-		try {
-
-			inputStream = new FileInputStream(outputFilePath);
-			connection = ds.getConnection();
-			statement = connection
-					.prepareStatement("UPDATE member SET picture= ? where id= '"
-							+ id + "'");
-			statement.setBinaryStream(1, (InputStream) inputStream,
-					(int) (outputFilePath.length()));
-
-			statement.executeUpdate();
-
-		} catch (FileNotFoundException e) {
-			System.out.println("FileNotFoundException: - " + e);
-		} catch (SQLException e) {
-			System.out.println("SQLException: - " + e);
-		} finally {
-			try {
-				connection.close();
-				statement.close();
-			} catch (SQLException e) {
-				System.out.println("SQLException Finally: - " + e);
-			}
-		}
-	}
 
 	public String getPassword2() {
 		return password2;
@@ -905,14 +812,8 @@ System.out.println("Alte Zeiten werden gelöscht!");
 
 		UpdateTimes(id);
 
-//		updateImg = false;
-//		System.out.println("Ab hier..." + updateImg);
-//		uploadFile();
-//		if (updateImg == true) {
-//			
-//			PicUpload();
-//		}
 		loadProfil();
+		
 		if (i > 0) {
 			return "profil?faces-redirect=true";
 		} else
@@ -925,7 +826,6 @@ System.out.println("Alte Zeiten werden gelöscht!");
 		 return System.currentTimeMillis();
 	}
 
-	private long fixDate;
 	
 	public static  void loadProfil() throws SQLException {
 		System.out.println(id);
@@ -937,13 +837,40 @@ System.out.println("Alte Zeiten werden gelöscht!");
 		System.out.println("Ende Ratings");
 		
 	}
+	
+	private UploadedFile file;
+	 
+    public UploadedFile getFile() {
+        return file;
+    }
+ 
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+ 
+    public void upload() {
+        System.out.println("Upload beginnt");
+        if (file != null) {
+            try {
+                System.out.println(file.getFileName());
+                InputStream fin2 = file.getInputstream();
+                Connection con = ds.getConnection();
+                PreparedStatement pre = con.prepareStatement("insert into member (image_name,picture) values(?,?)");
+                pre.setString(1, file.getFileName().toString());
+                pre.setBinaryStream(2, fin2, file.getSize());
+                pre.executeUpdate();
+                System.out.println("Ist in der DB!");
+                pre.close();
+                 
+            } catch (Exception e) {
+                System.out.println("Exception-File Upload." + e.getMessage());
+            }
+        }
+        else{
+        
+        }
+    }
 
 
-
-
-
-	public void setFixDate(long fixDate) {
-		this.fixDate = fixDate;
-	}
 	
 }

@@ -44,6 +44,8 @@
 
 				<h:outputLabel value="Über dich: " />
 				<p:inputText value="#{user.abouttext}" binding="#{abouttext}" />
+				<h:outputLabel for="image" value="Bild auswählen: *" />
+                <p:fileUpload value="#{user.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
 </h:panelGrid>
 				
 			</p:panel>

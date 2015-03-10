@@ -49,4 +49,14 @@
         <servlet-name>Faces Servlet</servlet-name>  
         <url-pattern>*.faces</url-pattern>  
     </servlet-mapping>  
+    <servlet>
+        <description></description>
+        <display-name>DisplayImage</display-name>
+        <servlet-name>DisplayImage</servlet-name>
+        <servlet-class>Beans.DisplayImage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DisplayImage</servlet-name>
+        <url-pattern>/DisplayImage</url-pattern>
+    </servlet-mapping>
 </web-app>  	
