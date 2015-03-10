@@ -8,100 +8,82 @@
 	xmlns:of="http://omnifaces.org/functions">
     
 <ui:define name="content">
-		<h:form id="changeadvertForm"> 
+		<h:form> 
 		
 		<p:panel id="basic"	header="Inserat Nr. #{advert.ad_id}!" style="margin-bottom:20px">
 		
-		    <p:fieldset legend="#{of:formatDate(advert.datum, 'dd.MM.yyyy')} -  #{advert.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="false">
-			<h:form>
-				<table border="0">
+		    <p:fieldset legend="#{of:formatDate(advert.datum, 'dd.MM.yyyy')} -  #{advert.zeitpunkt}" id="default" style="margin-bottom:20px" toggleable="false">			
+				<table>
 					<colgroup>
 					    <col width="180px"/>
-					    <col width="250px"/>
-					    <col width="250px"/>
+					    <col width="130px"/>
+					    <col width="200px"/>
 					</colgroup>
 
 					<tr>
 						<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
  						</p:graphicImage>
  						</td>	
-						<td></td>
-						<td></td>
+						<td><h:outputText value="Entfernung:" /></td>
+						<td><h:outputText value="#{advert.entfernung} km" /></td>
+						<td><h3><h:outputText value="Verdienst:"/></h3></td>
+						<td><h3><h:outputText value="#{advert.income}">
+									<f:convertNumber type="currency" currencySymbol="€"/>
+								</h:outputText>
+							</h3>
+						</td>
 					</tr>
+					
+
+					
 					<tr>
-						<td align="center"><h:commandLink action="#{userView.showProfil(advert.advertiser_id)}">
-							<h:outputText value="#{advert.name} #{advert.last_name}"/>
+						<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(advert.memberid)}">
+							<h:outputText styleClass="profillinks" value="#{advert.name} #{advert.last_name}"/>
 						</h:commandLink>
-						<h:commandLink action="#{message.startMessage}" rendered="#{advert.advertiser_id != user.id}">
+						<h:commandLink action="#{message.startMessage}" rendered="#{advert.memberid != advert.id}">
 							<h:graphicImage class="message"
 								value="resources/images/message.png" alt="message" />
-							<f:param name="startmessage" value="#{advert.advertiser_id}" />
+							<f:param name="startmessage" value="#{advert.memberid}" />
 						</h:commandLink>
 						</td>
 						
-						<td></td>
-						
-					</tr>
-					<tr>
-					<td></td>
-					<td><p:outputLabel value="Entfernung:"/></td>
-					<td><h:outputText value="#{advert.entfernung} km" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><p:outputLabel value="Einkaufslimit:"/></td>
+						<td><h:outputText value="Einkaufslimit:"/></td>
 						<td><h:outputText value="#{advert.limit}">
-						<f:convertNumber type="currency" currencySymbol="€"/></h:outputText>
-				</td>
-
+								<f:convertNumber type="currency" currencySymbol="€"/></h:outputText>
+						</td>
+						<td><h:commandButton value="Einkauf erledigen" action="#{advert.executeJob(advert.entfernung)}" rendered="#{advert.idvombesitzer != user.id}"/></td>
+						
 						
 					</tr>
 					<tr>
 						<td></td>
-						<td><p:outputLabel value="Kategorie:"/></td>
+						<td><h:outputText value="Kategorie:" /></td>
 						<td><h:outputText value="#{advert.category}" /></td>
-
+						<td></td>
 						
 					</tr>
 					<tr>
 						<td></td>
 						<td><p:outputLabel value="Markt:"/></td>
-						<td><h:outputText value="#{advert.fav_market}" /></td>
+						<td><p:outputLabel value="#{advert.fav_market}"/></td>
+						<td></td>
+						
+					</tr>
+					<tr>
+						<td></td>
+						<td><p:outputLabel value="Einkaufslistet: "/></td>
+						<td><p:inputTextarea resizable="false"  rows="10" cols="25" readonly="true" value="#{advert.text}" autoResize="true" style="border-color: white"  /></td>
 
-						
 					</tr>
-					<tr>
-						<td></td>
-						<td><p:outputLabel value="Einkaufsliste:"/></td>
-						<td><p:inputTextarea resizable="false"  rows="2" cols="20" readonly="true" value="#{advert.text}" autoResize="true" style="border-color: white"  /></td>
-
-						
-					</tr>
-					<tr>
-						<td></td>
-						<td><h3><p:outputLabel value="Verdienst:"/></h3></td>
-						<td><h3><h:outputText value="#{advert.income}">
-						<f:convertNumber type="currency" currencySymbol="€"/></h:outputText></h3></td>
-						
-					</tr>
-					<tr>
-						<td></td>
-						<td><h:commandButton value="Einkauf erledigen" action="#{advert.executeJob(advert.entfernung)}" rendered="#{advert.idvombesitzer != user.id}"/></td>
-						<td></td>
-						
-					</tr>
+					
+					
 				</table>
-			</h:form>
 			  </p:fieldset>
+		
+			  
 </p:panel>
 		</h:form>
 </ui:define>
   
 </ui:composition> 
 
-
-<!-- 
-	
-
-
- -->
