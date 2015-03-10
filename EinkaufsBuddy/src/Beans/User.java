@@ -33,6 +33,7 @@ import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
@@ -51,7 +52,7 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3257203081351623458L;
-	private int id;
+	private static int id;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -63,10 +64,11 @@ public class User implements Serializable {
 	private String abouttext;
 	private byte[] picture;
 	private String street;
-	private int anzahl;
-	private double mittel;
-	private double mittelstar;
-	private  ArrayList<RatingResults> RatingList;
+	private static int anzahl;
+	private static double mittel;
+	private static double mittelstar;
+	static boolean ratingsexist = false;
+	private static  ArrayList<RatingResults> RatingList;
 	public int getAnzahl() {
 		return anzahl;
 	}
@@ -76,7 +78,7 @@ public class User implements Serializable {
 
 
 	public void setAnzahl(int anzahl) {
-		this.anzahl = anzahl;
+		User.anzahl = anzahl;
 	}
 
 
@@ -92,7 +94,7 @@ public class User implements Serializable {
 
 
 	public void setMittel(double mittel) {
-		this.mittel = mittel;
+		User.mittel = mittel;
 	}
 
 
@@ -108,7 +110,7 @@ public class User implements Serializable {
 
 
 	public void setMittelstar(double mittelstar) {
-		this.mittelstar = mittelstar;
+		User.mittelstar = mittelstar;
 	}
 
 
@@ -249,7 +251,10 @@ public class User implements Serializable {
 
 		String basePath = "C:" + File.separator + "temp" + File.separator;
 		outputFilePath = new File(basePath + fileName);
-
+		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+	            .getExternalContext().getContext();
+	String realPath = ctx.getRealPath("/");
+	System.out.println(realPath);
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
 		try {
@@ -276,8 +281,8 @@ public class User implements Serializable {
 
 	}
 
-	private boolean[][] daytimeavailable;
-	DataSource ds;
+	private static boolean[][] daytimeavailable;
+	static DataSource ds;
 
 	private String getFileName(Part part) {
 
@@ -346,7 +351,7 @@ public class User implements Serializable {
 	}
 
 	public void setDaytimeavailable(boolean[][] daytimeavailable) {
-		this.daytimeavailable = daytimeavailable;
+		User.daytimeavailable = daytimeavailable;
 	}
 
 	public void click() {
@@ -370,7 +375,7 @@ public class User implements Serializable {
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		User.id = id;
 	}
 
 	public String getDbPassword() {
@@ -561,42 +566,7 @@ public class User implements Serializable {
 	}
 
 	public void dbData(String uName) {
-		if (uName != null) {
-			PreparedStatement ps = null;
-			Connection con = null;
-			ResultSet rs = null;
-
-			if (ds != null) {
-				try {
-					con = ds.getConnection();
-					if (con != null) {
-						String sql = "select id, mail, picture, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone, picture from member where mail = '"
-								+ uName + "'";
-						ps = con.prepareStatement(sql);
-						rs = ps.executeQuery();
-						rs.next();
-						dbName = rs.getString("mail");
-						dbPassword = rs.getString("password_hash");
-						id = rs.getInt("id");
-						firstName = rs.getString("name");
-						lastName = rs.getString("last_name");
-						email = rs.getString("mail");
-						// password = rs.getString("password_hash");
-						birthday = rs.getDate("birthdate");
-						car = rs.getInt("car");
-						abouttext = rs.getString("abouttext");
-						street = rs.getString("street");
-						plz = rs.getInt("plz");
-						phone = rs.getString("phone");
-						System.out.println("DAS BILD WIRD GELADEN");
-						dbImage = new DefaultStreamedContent(rs.getBinaryStream("picture"), "image");
-					}
-					showTimes(id);
-				} catch (SQLException sqle) {
-					sqle.printStackTrace();
-				}
-			}
-		}
+		
 	}
 
 	public String changeData() {
@@ -616,21 +586,50 @@ public class User implements Serializable {
 	}
 
 	public String login() {
-		dbData(email);
+		System.out.println("Login starten!");
+		if (email != null) {
+			PreparedStatement ps = null;
+			Connection con = null;
+			ResultSet rs = null;
+
+			if (ds != null) {
+				try {
+					con = ds.getConnection();
+					if (con != null) {
+						String sql = "select id, mail, picture, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone, picture from member where mail = '"
+								+ email + "'";
+						ps = con.prepareStatement(sql);
+						rs = ps.executeQuery();
+						rs.next();
+						dbName = rs.getString("mail");
+						dbPassword = rs.getString("password_hash");
+						id = rs.getInt("id");
+						firstName = rs.getString("name");
+						lastName = rs.getString("last_name");
+						email = rs.getString("mail");
+						// password = rs.getString("password_hash");
+						birthday = rs.getDate("birthdate");
+						car = rs.getInt("car");
+						abouttext = rs.getString("abouttext");
+						street = rs.getString("street");
+						plz = rs.getInt("plz");
+						phone = rs.getString("phone");
+						System.out.println("DAS BILD WIRD GELADEN");
+						dbImage = new DefaultStreamedContent(rs.getBinaryStream("picture"), "image");
+					}
+					
+				} catch (SQLException sqle) {
+					sqle.printStackTrace();
+				}
+			}
+		}
+		System.out.println("Logindaten überprüfen!");
 		if (email.equals(dbName) && password.equals(dbPassword)) {
 			// Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", email);
-			showTimes(id);
-			try {
-				getRatings(id);
-				
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-
-			mittel();
+			
+			System.out.println("Login fertig!");
 			return "home?faces-redirect=true";
 
 		} else
@@ -638,65 +637,47 @@ public class User implements Serializable {
 		return "error";
 	}
 	
-	private void mittel() {
-		mittel = 0;
-		for(RatingResults object: RatingList){
-			mittel += object.getRating();
-			}
-	
-		mittel = mittel / RatingList.size();
-		
-		if (RatingList.size() == 0) {mittel = 0; mittelstar = 0; anzahl = 0;}
-		else {double f = 0.5;
-		mittelstar = f * Math.round(mittel/f);
-		anzahl = RatingList.size();}
-		
-	}
-
-
-
-	public void getRatings(int id) throws SQLException {
+	public static void getRatings(int id) throws SQLException {
+		ArrayList<RatingResults> Leer = new ArrayList<RatingResults>();
+		RatingList = Leer;
+		ratingsexist = false;
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
 		String TempVorname = null;
 		String Tempnachname = null;
 		int tempid = -1;
-		System.out.println("Ab hier");
+		
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
 					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, type, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where (type = "+ id +" and buyer_id = "+ id +") or (type= "+ id +" and advertiser_id="+ id +")";
-					System.out.println(sql);
+					
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					
 					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					while (rs.next()) {
 					
-						System.out.println("2.");
 						if (rs.getInt("type") == rs.getInt("buyer_id")){
-							System.out.println("Es tritt ein");
 							tempid = rs.getInt("advertiser_id");
 						} else tempid = rs.getInt("buyer_id");
-						System.out.println("weiter");
 						PreparedStatement ps2 = null;
 						Connection con2 = null;
 						ResultSet rs2 = null;
-						System.out.println("noch weiter");
 						if (ds != null) {
-							System.out.println("2.query");
 							try {
 								con2 = ds.getConnection();
 								if (con2 != null) {
-									System.out.println("2.query start");
+			
 									String sql2 = "select name, last_name from member where id = " + tempid;
 									ps2 = con2.prepareStatement(sql2);
 									rs2 = ps2.executeQuery();
-									System.out.println(sql2);
+			
 
 									while (rs2.next()) {
+										ratingsexist = true;
 										TempVorname = rs2.getString("name");
 										Tempnachname = rs2.getString("last_name");
 									
@@ -720,7 +701,6 @@ public class User implements Serializable {
 						TempObj.setText(rs.getString("text"));
 						TempObj.setVorname(TempVorname);
 						TempObj.setName(Tempnachname);
-						System.out.println(TempObj.toString());
 						TempList.add(TempObj);
 						
 					
@@ -734,12 +714,27 @@ public class User implements Serializable {
 				sqle.printStackTrace();
 			}
 		}
+			mittel = 0;
+			mittelstar = 0;
+			anzahl = 0;
+			
+			
+			if (ratingsexist){
+			for(RatingResults object: RatingList){
+				mittel += object.getRating();
+				}
+		
+			mittel = mittel / RatingList.size();
+			double f = 0.5;
+			mittelstar = f * Math.round(mittel/f);
+			anzahl = RatingList.size();}
 		}
 		
 		
 		}
 
 	public void logout() {
+		System.out.println("Logout gestartet!");
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();
 		FacesContext
@@ -748,12 +743,13 @@ public class User implements Serializable {
 				.getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null,
 						"/login.xhtml");
+		System.out.println("Logout fertig!");
 	}
 
 	// Mathias hinzugefügt: profilchange
 
 	public void DeleteTimes(int id) {
-
+System.out.println("Alte Zeiten werden gelöscht!");
 		PreparedStatement ps = null;
 		Connection con = null;
 
@@ -777,9 +773,11 @@ public class User implements Serializable {
 				}
 			}
 		}
+		System.out.println("Alte Zeiten fertig gelöscht!");
 	}
 
 	public void UpdateTimes(int id) {
+		System.out.println("Neue Zeiten schreiben!");
 
 		ArrayList<String> Querys = new ArrayList<String>();
 		int rows = daytimeavailable.length;
@@ -788,9 +786,7 @@ public class User implements Serializable {
 
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
-				// INSERT INTO `member_day_time_available` (`fk_member_id`,
-				// `fk_day_id`, `fk_time_id`) VALUES (1, 3, 3);
-
+				
 				if (daytimeavailable[row][col] == true) {
 					Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES ("
 							+ id + "," + row + "," + col + ");");
@@ -821,9 +817,11 @@ public class User implements Serializable {
 				}
 			}
 		}
+		System.out.println("Zeiten sind aktuell");
 	}
 
-	public void showTimes(int id) {
+	public static void showTimes(int id) {
+		
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
@@ -837,12 +835,11 @@ public class User implements Serializable {
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					boolean[][] TempObj = new boolean[6][6];
-					// hier die magie
 					while (rs.next()) {
 						TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = true;
 					}
 					daytimeavailable = TempObj;
-					// ende magie
+
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();
@@ -857,9 +854,7 @@ public class User implements Serializable {
 		}
 	}
 
-	public String profilchange() throws IOException {
-		// boolean TempObject[][] = new boolean[6][6];
-		// daytimeavailable = TempObject;
+	public String profilchange() throws IOException, SQLException {
 		int i = 0;
 		PreparedStatement ps = null;
 		Connection con = null;
@@ -910,14 +905,14 @@ public class User implements Serializable {
 
 		UpdateTimes(id);
 
-		updateImg = false;
-		System.out.println("Ab hier..." + updateImg);
-		uploadFile();
-		if (updateImg == true) {
-			
-			PicUpload();
-		}
-
+//		updateImg = false;
+//		System.out.println("Ab hier..." + updateImg);
+//		uploadFile();
+//		if (updateImg == true) {
+//			
+//			PicUpload();
+//		}
+		loadProfil();
 		if (i > 0) {
 			return "profil?faces-redirect=true";
 		} else
@@ -931,5 +926,24 @@ public class User implements Serializable {
 	}
 
 	private long fixDate;
+	
+	public static  void loadProfil() throws SQLException {
+		System.out.println(id);
+		System.out.println("Lade Zeiten");
+		showTimes(id);
+		System.out.println("Ende Lade Zeiten");
+		System.out.println("Lade Ratings");
+		getRatings(id);
+		System.out.println("Ende Ratings");
+		
+	}
+
+
+
+
+
+	public void setFixDate(long fixDate) {
+		this.fixDate = fixDate;
+	}
 	
 }

@@ -44,9 +44,8 @@
 
 				<h:outputLabel value="Über dich: " />
 				<p:inputText value="#{user.abouttext}" binding="#{abouttext}" />
-				<h:outputLabel value="Profilbild: "/>
-				<h:inputFile id="file" value="#{user.file}"/>
-					</h:panelGrid>
+</h:panelGrid>
+				
 			</p:panel>
 		
 			
@@ -133,9 +132,9 @@
 
 			
 
-			<h:commandButton
+			<p:commandButton
 				action="#{user.profilchange}"
-				value="Ändern" />
+				value="Speichern" />
 			<p:messages id="messages"  autoUpdate="true" />
 		</h:form>
 	</ui:define>

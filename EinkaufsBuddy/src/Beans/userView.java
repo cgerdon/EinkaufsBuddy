@@ -190,11 +190,9 @@ public class userView implements Serializable {
 
 	DataSource ds;
 
-	public String showProfil(int id) {
-		System.out.println("Die ID vom Nutzer ist " + id);
-		//RatingList.clear();
-		this.id = id;
-		System.out.println("gleich die statements");
+	public String showProfil(int id) throws SQLException {
+		System.out.println(id);
+		System.out.println("Lade Profil");
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
@@ -205,8 +203,7 @@ public class userView implements Serializable {
 				if (con != null) {
 					String sql = "select id, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone from member where id = '"
 							+ id + "'";
-					System.out.println(sql);
-					ps = con.prepareStatement(sql);
+						ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					while(rs.next()){
 					name = rs.getString("name");
@@ -237,26 +234,17 @@ public class userView implements Serializable {
 				}
 			}
 		}
-		System.out.println("jetzt show times");
+		System.out.println("Profil fertig!");
+		System.out.println("Lade Zeiten");
 		showTimes(id);
-		System.out.println("ende show times erfolgreich");
-		try {
-			
-			getRatings(id);
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-		System.out.println("jetzt show times");
+		System.out.println("Ende Lade Zeiten");
+		System.out.println("Lade Ratings");
+		getRatings(id);
+		System.out.println("Ende Ratings");
 		
-		mittel();
-		if (aduser_id == id){
-		return "profil?faces-redirect=true";
-		}
-		else {
+		
 		return "fremdprofil?faces-redirect=true";
-		}
+		
 	}
 
 	private void mittel() {
@@ -286,59 +274,51 @@ public class userView implements Serializable {
 
 
 	public void getRatings(int id) throws SQLException {
+		ArrayList<RatingResults> Leer = new ArrayList<RatingResults>();
+		RatingList = Leer;
+		ratingsexist = false;
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
 		String TempVorname = null;
 		String Tempnachname = null;
 		int tempid = -1;
-		System.out.println("Ab hier");
+		
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
 					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, type, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where (type = "+ id +" and buyer_id = "+ id +") or (type= "+ id +" and advertiser_id="+ id +")";
-					System.out.println(sql);
+					
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-					System.out.println("sql fertig");
-					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					
+					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					while (rs.next()) {
 					
-						System.out.println("2.");
 						if (rs.getInt("type") == rs.getInt("buyer_id")){
-							System.out.println("Es tritt ein");
 							tempid = rs.getInt("advertiser_id");
 						} else tempid = rs.getInt("buyer_id");
-						System.out.println("weiter");
 						PreparedStatement ps2 = null;
 						Connection con2 = null;
 						ResultSet rs2 = null;
-						System.out.println("noch weiter " + tempid);
-													
-						
 						if (ds != null) {
-							System.out.println("2.query");
 							try {
 								con2 = ds.getConnection();
 								if (con2 != null) {
-									System.out.println("2.query start");
-									if (tempid == -1){
-									}
-									else{
+			
 									String sql2 = "select name, last_name from member where id = " + tempid;
-									
 									ps2 = con2.prepareStatement(sql2);
 									rs2 = ps2.executeQuery();
-									System.out.println(sql2);
+			
 
 									while (rs2.next()) {
+										ratingsexist = true;
 										TempVorname = rs2.getString("name");
 										Tempnachname = rs2.getString("last_name");
 									
 									}
-									}
+									
 								}}finally {  
 					                try {  
 					                    con2.close();  
@@ -357,14 +337,12 @@ public class userView implements Serializable {
 						TempObj.setText(rs.getString("text"));
 						TempObj.setVorname(TempVorname);
 						TempObj.setName(Tempnachname);
-						System.out.println(TempObj.toString());
 						TempList.add(TempObj);
 						
 					
 					}
-					ratingsexist = true;	
 					RatingList = TempList;
-				}}}finally {  
+				}}}finally {  	
 	                try {  
 	                    con.close();  
 	                    ps.close();  
@@ -372,8 +350,21 @@ public class userView implements Serializable {
 				sqle.printStackTrace();
 			}
 		}
-		}
+			mittel = 0;
+			mittelstar = 0;
+			anzahl = 0;
+			
+			
+			if (ratingsexist){
+			for(RatingResults object: RatingList){
+				mittel += object.getRating();
+				}
 		
+			mittel = mittel / RatingList.size();
+			double f = 0.5;
+			mittelstar = f * Math.round(mittel/f);
+			anzahl = RatingList.size();}
+		}
 		
 		}
 
@@ -387,19 +378,15 @@ public class userView implements Serializable {
 				if (con != null) {
 					String sql = "select fk_day_id, fk_time_id from member_day_time_available where fk_member_id = "
 							+ id + ";";
-					
+
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					boolean[][] TempObj = new boolean[6][6];
-					// hier die magie
 					while (rs.next()) {
 						TempObj[rs.getInt("fk_day_id")][rs.getInt("fk_time_id")] = true;
-						
-
 					}
-			
 					daytimeavailable = TempObj;
-					// ende magie
+
 				}
 			} catch (SQLException sqle) {
 				sqle.printStackTrace();

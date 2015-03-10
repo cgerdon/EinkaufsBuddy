@@ -1,5 +1,7 @@
 package Beans;
 
+import java.sql.SQLException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -7,7 +9,8 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean(name = "navigation") 
 public class Navigation {
 
-	public String NaviProfil(){
+	public String NaviProfil() throws SQLException{
+		User.loadProfil();
 		return "profil?faces-redirect=true";
 	}
 	
