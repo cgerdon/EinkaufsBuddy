@@ -37,13 +37,13 @@
 
 					
 					<tr>
-						<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(advert.memberid)}">
+						<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(advert.idvombesitzer)}">
 							<h:outputText styleClass="profillinks" value="#{advert.name} #{advert.last_name}"/>
 						</h:commandLink>
-						<h:commandLink action="#{message.startMessage}" rendered="#{advert.memberid != advert.id}">
+						<h:commandLink action="#{message.startMessage}" rendered="#{advert.idvombesitzer != advert.id}">
 							<h:graphicImage class="message"
 								value="resources/images/message.png" alt="message" />
-							<f:param name="startmessage" value="#{advert.memberid}" />
+							<f:param name="startmessage" value="#{advert.idvombesitzer}" />
 						</h:commandLink>
 						</td>
 						
