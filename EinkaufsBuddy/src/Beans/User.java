@@ -762,6 +762,7 @@ System.out.println("Alte Zeiten werden gelöscht!");
 	}
 
 	public String profilchange() throws IOException, SQLException {
+		upload();
 		int i = 0;
 		PreparedStatement ps = null;
 		Connection con = null;
@@ -811,7 +812,7 @@ System.out.println("Alte Zeiten werden gelöscht!");
 		DeleteTimes(id);
 
 		UpdateTimes(id);
-
+		
 		loadProfil();
 		
 		if (i > 0) {
@@ -838,17 +839,17 @@ System.out.println("Alte Zeiten werden gelöscht!");
 		
 	}
 	
-	private UploadedFile file;
+	private static UploadedFile file;
 	 
     public UploadedFile getFile() {
         return file;
     }
  
     public void setFile(UploadedFile file) {
-        this.file = file;
+        User.file = file;
     }
  
-    public void upload() {
+    public static void upload() {
         System.out.println("Upload beginnt");
         if (file != null) {
             try {
@@ -867,7 +868,7 @@ System.out.println("Alte Zeiten werden gelöscht!");
             }
         }
         else{
-        
+        	System.out.println("Da gabs n Fehler!");
         }
     }
 
