@@ -27,8 +27,8 @@
 				<table>
 					<colgroup>
 					    <col width="180px"/>
-					    <col width="250px"/>
-					    <col width="200px"/>
+					    <col width="180px"/>
+					    <col width="140px"/>
 					</colgroup>
 
 					<tr>
@@ -36,14 +36,19 @@
  						</p:graphicImage>
  						</td>	
 						<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-						<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
+						<td><h3><h:outputText value=" Verdienst:" /></h3></td>
+						<td><h3><h:outputText value="#{ads.income}">
+									<f:convertNumber type="currency" currencySymbol="€"/>
+								</h:outputText>
+							</h3
+						></td>
 					</tr>
 					
 
 					
 					<tr>
-						<td align="center"><h:commandLink action="#{userView.showProfil(ads.memberid)}">
-							<h:outputText value="#{ads.name} #{ads.last_name}"/>
+						<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+							<h:outputText styleClass="profillinks" value="#{ads.name} #{ads.last_name}"/>
 						</h:commandLink>
 						<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
 							<h:graphicImage class="message"
@@ -52,7 +57,8 @@
 						</h:commandLink>
 						</td>
 						
-						<td><h:outputText value="Entfernung: #{ads.distance} km" /></td>
+						<td><h:outputText value="Entfernung:" /></td>
+						<td><h:outputText value="#{ads.distance} km" /></td>
 						<td><h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id, ads.distance)}">
 							<f:param name="resulttodetail" value="#{ads.memberid}" />
 							<f:param name="advertid" value="#{ads.id}" />
@@ -63,16 +69,18 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
+						<td><h:outputText value="Einkaufslimit:"/></td>
+						<td><h:outputText value="#{ads.limit}">
+								<f:convertNumber type="currency" currencySymbol="€"/>
+							</h:outputText>
 						</td>
-						
 						<td></td>
 						
 					</tr>
 					<tr>
 						<td></td>
-						<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-						
+						<td><h:outputText value="Kategorie:" /></td>
+						<td><h:outputText value="#{ads.category}" /></td>
 						<td></td>
 						
 					</tr>
