@@ -21,8 +21,7 @@
 					</colgroup>
 
 					<tr>
-						<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
- 						</p:graphicImage>
+						<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{advert.idvombesitzer}"></h:graphicImage>
  						</td>	
 						<td><h:outputText value="Entfernung:" /></td>
 						<td><h:outputText value="#{advert.entfernung} km" /></td>
@@ -51,7 +50,7 @@
 						<td><h:outputText value="#{advert.limit}">
 								<f:convertNumber type="currency" currencySymbol="€"/></h:outputText>
 						</td>
-						<td><h:commandButton value="Einkauf erledigen" action="#{advert.executeJob(advert.entfernung)}" rendered="#{advert.idvombesitzer != user.id}"/></td>
+						<td><p:commandButton value="Einkauf erledigen" action="#{advert.executeJob(advert.entfernung)}" rendered="#{advert.idvombesitzer != user.id}"/></td>
 						
 						
 					</tr>

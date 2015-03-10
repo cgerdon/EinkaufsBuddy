@@ -894,7 +894,7 @@ public class Advert implements Serializable{
 	                }  
 	            }  
 
- 		return "advertdetail?faces-redirect=true";    
+ 		return "viewadverts?faces-redirect=true";    
 	}
 	
 	public ArrayList<Advert> getAd_idfromSQL(int ad_id){

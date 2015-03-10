@@ -32,8 +32,8 @@
 					</colgroup>
 
 					<tr>
-						<td align="center"><p:graphicImage value="/resources/images/sample.jpg" width="72" height="72">
- 						</p:graphicImage>
+						<td align="center">
+						<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
  						</td>	
 						<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
 						<td><h3><h:outputText value=" Verdienst:" /></h3></td>
@@ -59,10 +59,10 @@
 						
 						<td><h:outputText value="Entfernung:" /></td>
 						<td><h:outputText value="#{ads.distance} km" /></td>
-						<td><h:commandButton value="Detailansicht" action="#{advert.showAd(ads.id, ads.distance)}">
+						<td><p:commandButton value="Detailansicht" action="#{advert.showAd(ads.id, ads.distance)}">
 							<f:param name="resulttodetail" value="#{ads.memberid}" />
 							<f:param name="advertid" value="#{ads.id}" />
-						</h:commandButton>
+						</p:commandButton>
 						</td>
 						
 						

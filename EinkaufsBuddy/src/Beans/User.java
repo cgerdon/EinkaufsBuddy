@@ -585,7 +585,7 @@ public class User implements Serializable {
 
 	}
 
-	public void logout() {
+	public String logout() {
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();
 		FacesContext
@@ -594,6 +594,8 @@ public class User implements Serializable {
 				.getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null,
 						"/login.xhtml");
+		id= 0; 
+		return "login?faces-redirect=true";
 	}
 
 	// Mathias hinzugefügt: profilchange

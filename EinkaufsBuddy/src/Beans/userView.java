@@ -190,7 +190,7 @@ public class userView implements Serializable {
 
 	DataSource ds;
 
-	public String showProfil(int id) throws SQLException {
+	public String showProfil(int ide) throws SQLException {
 		System.out.println(id);
 		System.out.println("Lade Profil");
 		PreparedStatement ps = null;
@@ -202,10 +202,11 @@ public class userView implements Serializable {
 				con = ds.getConnection();
 				if (con != null) {
 					String sql = "select id, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone from member where id = '"
-							+ id + "'";
+							+ ide + "'";
 						ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
 					while(rs.next()){
+					id = rs.getInt("id");
 					name = rs.getString("name");
 					System.out.println(name);
 					last_name = rs.getString("last_name");

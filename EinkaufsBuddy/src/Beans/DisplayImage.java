@@ -29,13 +29,14 @@ public class DisplayImage extends HttpServlet {
             throws ServletException, IOException {
         Statement stmt = null;
         ResultSet rs;
+        Connection con;
         InputStream sImage;
         try {
  
             String id = request.getParameter("Image_id");
             System.out.println("inside servlet–>" + id);
  
-            Connection con = ds.getConnection();
+            con = ds.getConnection();
             stmt = con.createStatement();
             String strSql = "select picture from member where id='" + id + "' ";
             rs = stmt.executeQuery(strSql);
@@ -50,9 +51,15 @@ public class DisplayImage extends HttpServlet {
                             write(bytearray, 0, size);
                 }
             }
- 
+            con.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
+		} finally {
+			
+			try {
+				stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    }}
 }
