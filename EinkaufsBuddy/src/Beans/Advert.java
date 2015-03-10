@@ -652,11 +652,7 @@ public class Advert implements Serializable{
 	                    e.printStackTrace();  
 	                }  
 	            }  
-
-	        if (i > 0) {  
-	           return "successad";  
-	        } else  
-	            return "unsuccess";  
+	      		return "viewadverts?faces-redirect=true";
 	}
 
 	public String add() {  
