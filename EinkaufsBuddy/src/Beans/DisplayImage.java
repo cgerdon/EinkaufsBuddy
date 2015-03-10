@@ -38,9 +38,16 @@ public class DisplayImage extends HttpServlet {
  
             con = ds.getConnection();
             stmt = con.createStatement();
-            String strSql = "select picture from member where id='" + id + "' ";
+            String strSql = "select picture, image_name from member where id='" + id + "' ";
             rs = stmt.executeQuery(strSql);
+            System.out.println(rs.toString());
+            
             if (rs.next()) {
+            	if (rs.getString("image_name") == null){
+            		System.out.println("andere methode wird geladen");
+                	loaddefault(request, response);
+            	}
+            	else{
                 byte[] bytearray = new byte[1048576];
                 int size = 0;
                 sImage = rs.getBinaryStream(1);
@@ -50,8 +57,11 @@ public class DisplayImage extends HttpServlet {
                     response.getOutputStream().
                             write(bytearray, 0, size);
                 }
-            }
-            con.close();
+                con.close();
+            	}
+            } 
+
+            
         } catch (Exception e) {
             e.printStackTrace();
 		} finally {
@@ -62,4 +72,47 @@ public class DisplayImage extends HttpServlet {
 				e.printStackTrace();
 			}
     }}
+
+	private void loaddefault(HttpServletRequest request,
+            HttpServletResponse response) {
+		System.out.println("andere methode wurde geladen");
+		 Statement stmt2 = null;
+	        ResultSet rs2;
+	        Connection con2;
+	        InputStream sImage2;
+	        try {
+	 
+	            String id = "39";
+	            System.out.println("inside servlet–>" + id);
+	 
+	            con2 = ds.getConnection();
+	            stmt2 = con2.createStatement();
+	            String strSql2 = "select picture from member where id='" + id + "' ";
+	            rs2 = stmt2.executeQuery(strSql2);
+	            if (rs2.next()) {
+	                byte[] bytearray = new byte[1048576];
+	                int size = 0;
+	                sImage2 = rs2.getBinaryStream(1);
+	                response.reset();
+	                response.setContentType("image/jpeg");
+	                while ((size = sImage2.read(bytearray)) != -1) {
+	                    response.getOutputStream().
+	                            write(bytearray, 0, size);
+	                }
+	                con2.close();
+	                
+	            } 
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+			} finally {
+				
+				try {
+					stmt2.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	    }
+		
+	}
 }
