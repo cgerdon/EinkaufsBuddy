@@ -36,6 +36,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+
 //import javax.faces.bean.RequestScoped;
 
 @ManagedBean(name = "user")
@@ -63,62 +64,35 @@ public class User implements Serializable {
 	private static double mittel;
 	private static double mittelstar;
 	static boolean ratingsexist = false;
-	private static  ArrayList<RatingResults> RatingList;
+	private static ArrayList<RatingResults> RatingList;
+
 	public int getAnzahl() {
 		return anzahl;
 	}
-
-
-
-
 
 	public void setAnzahl(int anzahl) {
 		User.anzahl = anzahl;
 	}
 
-
-
-
-
 	public double getMittel() {
 		return mittel;
 	}
-
-
-
-
 
 	public void setMittel(double mittel) {
 		User.mittel = mittel;
 	}
 
-
-
-
-
 	public double getMittelstar() {
 		return mittelstar;
 	}
-
-
-
-
 
 	public void setMittelstar(double mittelstar) {
 		User.mittelstar = mittelstar;
 	}
 
-
-
-
-
 	public ArrayList<RatingResults> getRatingList() {
 		return RatingList;
 	}
-
-
-
-
 
 	public void setRatingList(ArrayList<RatingResults> ratingList) {
 		RatingList = ratingList;
@@ -130,98 +104,70 @@ public class User implements Serializable {
 	private String dbPassword;
 	private String dbName;
 	private StreamedContent dbImage;
-	
 
 	private String sender;
 	private String titel;
 	private String text;
-	
+
 	public String getSender() {
 		return sender;
 	}
-
-
-
-
 
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
 
-
-
-
-
 	public String getTitel() {
 		return titel;
 	}
-
-
-
-
 
 	public void setTitel(String titel) {
 		this.titel = titel;
 	}
 
-
-
-
-
 	public String getText() {
 		return text;
 	}
-
-
-
-
 
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	public String SendMail() {
 
+		final String username = "einkaufsbuddy@gmail.com";
+		final String password = "buddydeseinkaufs";
 
+		Properties props = new Properties();
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
 
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				});
 
-	public String SendMail(){
+		try {
 
-	 final String username = "einkaufsbuddy@gmail.com";
-     final String password = "buddydeseinkaufs";
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(sender));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse("einkaufsbuddy@gmail.com"));
+			message.setSubject(titel);
+			message.setText(text);
 
-     Properties props = new Properties();
-     props.put("mail.smtp.starttls.enable", "true");
-     props.put("mail.smtp.auth", "true");
-     props.put("mail.smtp.host", "smtp.gmail.com");
-     props.put("mail.smtp.port", "587");
+			Transport.send(message);
 
-     Session session = Session.getInstance(props,
-       new javax.mail.Authenticator() {
-         protected PasswordAuthentication getPasswordAuthentication() {
-             return new PasswordAuthentication(username, password);
-         }
-       });
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 
-     try {
-
-         Message message = new MimeMessage(session);
-         message.setFrom(new InternetAddress(sender));
-         message.setRecipients(Message.RecipientType.TO,
-             InternetAddress.parse("einkaufsbuddy@gmail.com"));
-         message.setSubject(titel);
-         message.setText(text);
-
-         Transport.send(message);
-
-         System.out.println("E-Mail erfolgreich versendet!");
-
-     } catch (MessagingException e) {
-         throw new RuntimeException(e);
-     }
-
-     
-     return "home?faces-redirect=true";
- }
+		return "home?faces-redirect=true";
+	}
 
 	public StreamedContent getDbImage() {
 		return dbImage;
@@ -231,11 +177,8 @@ public class User implements Serializable {
 		this.dbImage = dbImage;
 	}
 
-	
-
 	private static boolean[][] daytimeavailable;
 	static DataSource ds;
-
 
 	public String getPassword2() {
 		return password2;
@@ -364,8 +307,6 @@ public class User implements Serializable {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	
-	
 
 	public int getPlz() {
 		return plz;
@@ -473,7 +414,7 @@ public class User implements Serializable {
 	}
 
 	public void dbData(String uName) {
-		
+
 	}
 
 	public String changeData() {
@@ -493,7 +434,7 @@ public class User implements Serializable {
 	}
 
 	public String login() {
-		System.out.println("Login starten!");
+
 		if (email != null) {
 			PreparedStatement ps = null;
 			Connection con = null;
@@ -521,29 +462,25 @@ public class User implements Serializable {
 						street = rs.getString("street");
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
-						System.out.println("DAS BILD WIRD GELADEN");
-						dbImage = new DefaultStreamedContent(rs.getBinaryStream("picture"), "image");
 					}
-					
+
 				} catch (SQLException sqle) {
 					sqle.printStackTrace();
 				}
 			}
 		}
-		System.out.println("Logindaten überprüfen!");
 		if (email.equals(dbName) && password.equals(dbPassword)) {
 			// Mathias hinzugefügt wegen LOGIN/LOGOUT Seiten
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", email);
-			
-			System.out.println("Login fertig!");
+
 			return "home?faces-redirect=true";
 
 		} else
 			logout();
 		return "error";
 	}
-	
+
 	public static void getRatings(int id) throws SQLException {
 		ArrayList<RatingResults> Leer = new ArrayList<RatingResults>();
 		RatingList = Leer;
@@ -554,22 +491,28 @@ public class User implements Serializable {
 		String TempVorname = null;
 		String Tempnachname = null;
 		int tempid = -1;
-		
+
 		if (ds != null) {
 			try {
 				con = ds.getConnection();
 				if (con != null) {
-					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, type, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where (type = "+ id +" and buyer_id = "+ id +") or (type= "+ id +" and advertiser_id="+ id +")";
-					
+					String sql = "select rating.id, member.name, member.last_name, buyer_id, advertiser_id, type, rating, text, ad_id from rating left join member on member.id = rating.advertiser_id where (type = "
+							+ id
+							+ " and buyer_id = "
+							+ id
+							+ ") or (type= "
+							+ id + " and advertiser_id=" + id + ")";
+
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-					
+
 					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					while (rs.next()) {
-					
-						if (rs.getInt("type") == rs.getInt("buyer_id")){
+
+						if (rs.getInt("type") == rs.getInt("buyer_id")) {
 							tempid = rs.getInt("advertiser_id");
-						} else tempid = rs.getInt("buyer_id");
+						} else
+							tempid = rs.getInt("buyer_id");
 						PreparedStatement ps2 = null;
 						Connection con2 = null;
 						ResultSet rs2 = null;
@@ -577,71 +520,72 @@ public class User implements Serializable {
 							try {
 								con2 = ds.getConnection();
 								if (con2 != null) {
-			
-									String sql2 = "select name, last_name from member where id = " + tempid;
+
+									String sql2 = "select name, last_name from member where id = "
+											+ tempid;
 									ps2 = con2.prepareStatement(sql2);
 									rs2 = ps2.executeQuery();
-			
 
 									while (rs2.next()) {
 										ratingsexist = true;
 										TempVorname = rs2.getString("name");
-										Tempnachname = rs2.getString("last_name");
-									
+										Tempnachname = rs2
+												.getString("last_name");
+
 									}
-									
-								}}finally {  
-					                try {  
-					                    con2.close();  
-					                    ps2.close();  
-							} catch (SQLException sqle) {
-								sqle.printStackTrace();
+
+								}
+							} finally {
+								try {
+									con2.close();
+									ps2.close();
+								} catch (SQLException sqle) {
+									sqle.printStackTrace();
+								}
 							}
+
+							RatingResults TempObj = new RatingResults();
+							TempObj.setId(rs.getInt("rating.id"));
+							TempObj.setBuyerid(rs.getInt("buyer_id"));
+							TempObj.setAdvertiserid(rs.getInt("advertiser_id"));
+							TempObj.setRating(rs.getInt("rating"));
+							TempObj.setAdid(rs.getInt("ad_id"));
+							TempObj.setText(rs.getString("text"));
+							TempObj.setVorname(TempVorname);
+							TempObj.setName(Tempnachname);
+							TempList.add(TempObj);
+
 						}
-						
-						RatingResults TempObj = new RatingResults();
-						TempObj.setId(rs.getInt("rating.id"));
-						TempObj.setBuyerid(rs.getInt("buyer_id"));
-						TempObj.setAdvertiserid(rs.getInt("advertiser_id"));
-						TempObj.setRating(rs.getInt("rating"));
-						TempObj.setAdid(rs.getInt("ad_id"));
-						TempObj.setText(rs.getString("text"));
-						TempObj.setVorname(TempVorname);
-						TempObj.setName(Tempnachname);
-						TempList.add(TempObj);
-						
-					
+						RatingList = TempList;
 					}
-					RatingList = TempList;
-				}}}finally {  	
-	                try {  
-	                    con.close();  
-	                    ps.close();  
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
+				}
+			} finally {
+				try {
+					con.close();
+					ps.close();
+				} catch (SQLException sqle) {
+					sqle.printStackTrace();
+				}
 			}
-		}
 			mittel = 0;
 			mittelstar = 0;
 			anzahl = 0;
-			
-			
-			if (ratingsexist){
-			for(RatingResults object: RatingList){
-				mittel += object.getRating();
+
+			if (ratingsexist) {
+				for (RatingResults object : RatingList) {
+					mittel += object.getRating();
 				}
-		
-			mittel = mittel / RatingList.size();
-			double f = 0.5;
-			mittelstar = f * Math.round(mittel/f);
-			anzahl = RatingList.size();}
-		}
-		
-		
+
+				mittel = mittel / RatingList.size();
+				double f = 0.5;
+				mittelstar = f * Math.round(mittel / f);
+				anzahl = RatingList.size();
+			}
 		}
 
+	}
+
 	public void logout() {
-		System.out.println("Logout gestartet!");
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();
 		FacesContext
@@ -650,13 +594,11 @@ public class User implements Serializable {
 				.getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null,
 						"/login.xhtml");
-		System.out.println("Logout fertig!");
 	}
 
 	// Mathias hinzugefügt: profilchange
 
 	public void DeleteTimes(int id) {
-System.out.println("Alte Zeiten werden gelöscht!");
 		PreparedStatement ps = null;
 		Connection con = null;
 
@@ -680,11 +622,9 @@ System.out.println("Alte Zeiten werden gelöscht!");
 				}
 			}
 		}
-		System.out.println("Alte Zeiten fertig gelöscht!");
 	}
 
 	public void UpdateTimes(int id) {
-		System.out.println("Neue Zeiten schreiben!");
 
 		ArrayList<String> Querys = new ArrayList<String>();
 		int rows = daytimeavailable.length;
@@ -693,7 +633,7 @@ System.out.println("Alte Zeiten werden gelöscht!");
 
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
-				
+
 				if (daytimeavailable[row][col] == true) {
 					Querys.add("INSERT INTO `member_day_time_available` (`fk_member_id`, `fk_day_id`, `fk_time_id`) VALUES ("
 							+ id + "," + row + "," + col + ");");
@@ -724,11 +664,10 @@ System.out.println("Alte Zeiten werden gelöscht!");
 				}
 			}
 		}
-		System.out.println("Zeiten sind aktuell");
 	}
 
 	public static void showTimes(int id) {
-		
+
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
@@ -812,67 +751,60 @@ System.out.println("Alte Zeiten werden gelöscht!");
 		DeleteTimes(id);
 
 		UpdateTimes(id);
-		
+
 		loadProfil();
-		
+
 		if (i > 0) {
 			return "profil?faces-redirect=true";
 		} else
 			return "unsuccess?faces-redirect=true";
 	}
 
-
-	 
-	 public long getFixDate() {
-		 return System.currentTimeMillis();
+	public long getFixDate() {
+		return System.currentTimeMillis();
 	}
 
-	
-	public static  void loadProfil() throws SQLException {
-		System.out.println(id);
-		System.out.println("Lade Zeiten");
+	public static void loadProfil() throws SQLException {
+
 		showTimes(id);
-		System.out.println("Ende Lade Zeiten");
-		System.out.println("Lade Ratings");
+
 		getRatings(id);
-		System.out.println("Ende Ratings");
-		
+
 	}
-	
+
 	private static UploadedFile file;
-	 
-    public UploadedFile getFile() {
-        return file;
-    }
- 
-    public void setFile(UploadedFile file) {
-        User.file = file;
-    }
- 
-    public static void upload() {
-        System.out.println("Upload beginnt");
-        if (file != null) {
-            try {
-                System.out.println(file.getFileName());
-                InputStream fin2 = file.getInputstream();
-                Connection con = ds.getConnection();
-                
-                PreparedStatement pre = con.prepareStatement("UPDATE member SET image_name = ? , picture = ? WHERE id = " + id);
-                pre.setString(1, file.getFileName().toString());
-                pre.setBinaryStream(2, fin2, file.getSize());
-                pre.executeUpdate();
-                System.out.println("Ist in der DB!");
-                pre.close();
-                 
-            } catch (Exception e) {
-                System.out.println("Exception-File Upload." + e.getMessage());
-            }
-        }
-        else{
-        	System.out.println("Da gabs n Fehler!");
-        }
-    }
 
+	public UploadedFile getFile() {
+		return file;
+	}
 
-	
+	public void setFile(UploadedFile file) {
+		User.file = file;
+	}
+
+	public static void upload() {
+
+		if (file != null) {
+			try {
+
+				InputStream fin2 = file.getInputstream();
+				Connection con = ds.getConnection();
+
+				PreparedStatement pre = con
+						.prepareStatement("UPDATE member SET image_name = ? , picture = ? WHERE id = "
+								+ id);
+				pre.setString(1, file.getFileName().toString());
+				pre.setBinaryStream(2, fin2, file.getSize());
+				pre.executeUpdate();
+
+				pre.close();
+
+			} catch (Exception e) {
+				System.out.println("Exception-File Upload." + e.getMessage());
+			}
+		} else {
+			System.out.println("Da gabs n Fehler!");
+		}
+	}
+
 }
