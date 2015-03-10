@@ -45,7 +45,10 @@
 				<h:outputLabel value="Über dich: " />
 				<p:inputText value="#{user.abouttext}" binding="#{abouttext}" />
 				<h:outputLabel value="Bild auswählen: *" />
-                <p:fileUpload value="#{user.file}" id="file" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+                <p:fileUpload value="#{user.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+                <f:facet name="footer">
+                    <p:commandButton value="Submit" ajax="false" 
+                                     actionListener="#{user.upload}"/></f:facet> 
 </h:panelGrid>
 				
 			</p:panel>

@@ -50,7 +50,7 @@ public class User implements Serializable {
 	private static int id;
 	private String firstName;
 	private String lastName;
-	private String email;
+	private static String email;
 	private String password;
 	private String password2;
 
@@ -314,7 +314,7 @@ public class User implements Serializable {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		User.email = email;
 	}
 
 	public String getPassword() {
@@ -478,7 +478,7 @@ public class User implements Serializable {
 
 	public String changeData() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		this.email = getMailParam(fc);
+		User.email = getMailParam(fc);
 
 		dbData(email);
 		return "changedata";
@@ -856,7 +856,8 @@ System.out.println("Alte Zeiten werden gelöscht!");
                 System.out.println(file.getFileName());
                 InputStream fin2 = file.getInputstream();
                 Connection con = ds.getConnection();
-                PreparedStatement pre = con.prepareStatement("insert into member (image_name,picture) values(?,?)");
+                
+                PreparedStatement pre = con.prepareStatement("UPDATE member SET image_name = ? , picture = ? WHERE id = " + id);
                 pre.setString(1, file.getFileName().toString());
                 pre.setBinaryStream(2, fin2, file.getSize());
                 pre.executeUpdate();
