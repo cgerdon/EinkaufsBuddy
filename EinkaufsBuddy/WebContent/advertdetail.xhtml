@@ -94,11 +94,13 @@
 					</h:panelGroup>
 		
 		
-		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 0}" >			
+		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 0}" >			
+				<p:commandButton value="zurück" action="#{navigation.zursimplesearch}" rendered="#{advert.advid != user.id}"/>			
 				<p:commandButton value="erledigen" action="#{advert.executeJob(advert.entfernung)}" rendered="#{advert.advid != user.id}"/>			
 		</h:panelGroup>
 		
-		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 1}" >			
+		<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 1}" >			
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="ändern" action="#{advert.changeData}">
 				<f:param name="ad_id" value="#{advert.advid}" />
 			</p:commandButton>
@@ -107,7 +109,8 @@
 			</p:commandButton>	
 		</h:panelGroup>
 		
-		<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 2}" >			
+		<h:panelGroup style="margin-top:4em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 2}" >			
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="deaktivieren" action="#{advert.addeactive(advert.ad_id)}" />	
 			<p:commandButton value="ändern" action="#{advert.changeData}">
 				<f:param name="ad_id" value="#{advert.ad_id}" />
@@ -117,15 +120,16 @@
 			</p:commandButton>		
 		</h:panelGroup>	
 		
-		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 3}" >			
+		<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 3}" >			
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="ablehnen" action="#{advert.buyerCancel(advert.ad_id)}"/>	
 			<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
 				<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
 			</p:commandButton>			
 		</h:panelGroup>			
 		
-		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 4}" >			
-		<!--   Buttons Variable anpassen / zurück Buttons!!!-->	#{advert.buyer_id} #{advert.ad_id} #{user.id}
+		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 4}" >			
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="bewerten" action="#{advert.startrating(advert.buyer_id, advert.ad_id, user.id, 2)}">
 				<f:param name="resulttodetail" value="#{user.id}" />
 				<f:param name="advertid" value="#{advert.ad_id}" />	
@@ -134,12 +138,15 @@
 		
 	
 		
-		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 6}" >			
-			<p:commandButton value="zurückziehen" action="#{advert.adCancel(advert.ad_id, ads.memberid)}"/>			
+		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 6}" >			
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
+			<p:commandButton value="zurückziehen" action="#{advert.adCancel(advert.ad_id, advert.advid)}"/>			
 		</h:panelGroup>		
 		
-		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 7}" >
-<p:commandButton value="bewerten" action="#{advert.startrating(user.id, advert.ad_id, advert.advid, 1)}">
+		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 7}" >
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
+
+			<p:commandButton value="bewerten" action="#{advert.startrating(user.id, advert.ad_id, advert.advid, 1)}">
 				<f:param name="resulttodetail" value="#{advert.advid}" />
 				<f:param name="advertid" value="#{advert.ad_id}" />
 			</p:commandButton>		

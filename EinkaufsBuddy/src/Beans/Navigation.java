@@ -26,4 +26,13 @@ public class Navigation {
 		return "home?faces-redirect=true";
 	}	
 	
+	public String zursimplesearch(){
+		return "simpleSearchResult?faces-redirect=true";
+	}
+	
+	public String zurviewadvert(){
+		return "viewadverts?faces-redirect=true";
+	}
+	
+	
 }
