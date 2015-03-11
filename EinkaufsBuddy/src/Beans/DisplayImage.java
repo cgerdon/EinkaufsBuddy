@@ -46,6 +46,8 @@ public class DisplayImage extends HttpServlet {
             	if (rs.getString("image_name") == null){
             		System.out.println("andere methode wird geladen");
                 	loaddefault(request, response);
+                	con.close();
+                    stmt.close();
             	}
             	else{
                 byte[] bytearray = new byte[1048576];
@@ -53,25 +55,22 @@ public class DisplayImage extends HttpServlet {
                 sImage = rs.getBinaryStream(1);
                 response.reset();
                 response.setContentType("image/jpeg");
+                con.close();
+                stmt.close();
                 while ((size = sImage.read(bytearray)) != -1) {
                     response.getOutputStream().
                             write(bytearray, 0, size);
                 }
-                con.close();
+
             	}
             } 
 
             
         } catch (Exception e) {
             e.printStackTrace();
-		} finally {
-			
-			try {
-				stmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
+	
 			}
-    }}
+    }
 
 	private void loaddefault(HttpServletRequest request,
             HttpServletResponse response) {
@@ -100,7 +99,7 @@ public class DisplayImage extends HttpServlet {
 	                            write(bytearray, 0, size);
 	                }
 	                con2.close();
-	                
+	                stmt2.close();
 	            } 
 	            
 	        } catch (Exception e) {
@@ -109,6 +108,7 @@ public class DisplayImage extends HttpServlet {
 				
 				try {
 					stmt2.close();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
