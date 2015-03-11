@@ -81,12 +81,12 @@ public class SimpleSearchResults implements Serializable{
 		this.fav_market = fav_market;
 	}
 	//String fav_market,
-	public SimpleSearchResults(String text, int plz, String street,
+	public SimpleSearchResults(String favMarket, String text, int plz, String street,
 			String name, String last_name, int id, double limit, double income,
 			int distance, String zeitpunkt, Date datum, String category, int memberid, DefaultStreamedContent dbImage) {
 		super();
 		this.text = text;
-		//this.fav_market=fav_market;
+		this.fav_market = favMarket;
 		this.plz = plz;
 		this.street = street;
 		this.name = name;
