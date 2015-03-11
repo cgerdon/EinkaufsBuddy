@@ -432,14 +432,16 @@ background-color: rgb(250,230,175);
 	min-height: 10em; 
 }
 
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+  	width: 90%;
+}	
+
 .ui-inputtextarea.ui-state-hover.meinput {
 	background-color: rgb(236,186,49) !important;
 	
 	box-shadow: none !important;
 }
 	
-.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
-  	width: 90%;
-}	
+
 	
 }
