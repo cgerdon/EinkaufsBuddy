@@ -45,9 +45,7 @@
 				<h:outputLabel value="Über dich: " />
 				<p:inputText value="#{user.abouttext}" binding="#{abouttext}" />
 				<h:outputLabel value="Bild auswählen: *" />
-                <p:fileUpload value="#{user.file}" mode="simple"  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
-                                    <p:commandButton value="Hochladen" ajax="false" 
-                                     actionListener="#{user.upload}"/>
+                <p:fileUpload fileUploadListener="#{user.upload}" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" description="Select Images"/>
 </h:panelGrid>
 				
 			</p:panel>

@@ -99,11 +99,6 @@ public class User implements Serializable {
 		RatingList = ratingList;
 	}
 	
-	 public void handleFileUpload(FileUploadEvent event) {
-	        FacesMessage message = new FacesMessage("Erfolgreich:", event.getFile().getFileName() + " wurde gespeichert!");
-	        FacesContext.getCurrentInstance().addMessage(null, message);
-	        upload();
-	    }
 
 	private int plz;
 	private String phone;
@@ -791,19 +786,22 @@ public class User implements Serializable {
 		User.file = file;
 	}
 
-	public static void upload() {
-
-		if (file != null) {
+	public static void upload(FileUploadEvent event) { 
+		        FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
+		        FacesContext.getCurrentInstance().addMessage(null, msg);
+		
 			try {
+				
+				System.out.println(event.getFile().toString());
 
-				InputStream fin2 = file.getInputstream();
+				InputStream fin2 = event.getFile().getInputstream();
 				Connection con = ds.getConnection();
 
 				PreparedStatement pre = con
 						.prepareStatement("UPDATE member SET image_name = ? , picture = ? WHERE id = "
 								+ id);
-				pre.setString(1, file.getFileName().toString());
-				pre.setBinaryStream(2, fin2, file.getSize());
+				pre.setString(1, event.getFile().getFileName().toString());
+				pre.setBinaryStream(2, fin2, event.getFile().getSize());
 				pre.executeUpdate();
 
 				pre.close();
@@ -811,9 +809,8 @@ public class User implements Serializable {
 			} catch (Exception e) {
 				System.out.println("Exception-File Upload." + e.getMessage());
 			}
-		} else {
-			System.out.println("Da gabs n Fehler!");
-		}
+		 
+		
 	}
 
 }
