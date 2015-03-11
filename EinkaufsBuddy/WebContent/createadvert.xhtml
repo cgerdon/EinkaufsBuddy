@@ -60,14 +60,18 @@
 			 	<tr>
 					<td><h:outputText value="Budget in Euro:" /></td>  
 					<td><p:inputText id="limit" value="#{advert.limit}"  
-						required="true" requiredMessage="Bitte Budget angeben" />
+						required="true" locale="de" requiredMessage="Bitte Budget angeben">
+						<f:convertNumber pattern="#,###,##0.00"/>
+						</p:inputText>
 					</td>
 					<td><p:message for="limit" style="color:red" /> </td>
 				</tr>
 				<tr>
 					<td><h:outputText value="Vergütung in Euro:" /></td>  
 					<td><p:inputText id="income" value="#{advert.income}"  
-						required="true" requiredMessage="Bitte Vergütung angeben" /> 
+						required="true" requiredMessage="Bitte Vergütung angeben">
+						<f:convertNumber pattern="#,###,##0.00"/>
+						</p:inputText> 
 					</td>
 					<td><p:message for="income" style="color:red" /></td>  
  				</tr>
