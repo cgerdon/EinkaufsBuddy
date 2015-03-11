@@ -1,6 +1,8 @@
 .adfunctionright{
+	padding-top:5em;
 	text-align: right;
 }
+
 
 
 .Banner{
@@ -390,4 +392,50 @@ background-color: rgb(250,230,175);
 	text-align: right;
 	position: relative; 
 	float: right; 
+}
+
+.ButtonTest{
+	
+	text-align: center;
+}
+
+.verdienst{
+	color: rgb(187,34,43);
+ 	background-color: rgb(236,186,49);
+    position: absolute; 
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50px; 
+    margin-top: 3em; 
+    margin-bottom: 50px;
+}
+
+.verdienstu{
+	color: rgb(187,34,43);
+ 	background-color: rgb(236,186,49);
+    position: absolute; 
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50px; 
+    margin-top: 1em; 
+    margin-bottom: 20px;
+}
+
+
+.ui-inputtextarea.ui-state-default.meinput {
+	background-color: rgb(236,186,49)!important;
+	box-shadow: none !important;
+	border: 1 ; 
+	border-color: rgb(236,186,49);
+	min-height: 10em; 
+}
+
+.ui-inputtextarea.ui-state-hover.meinput {
+	background-color: rgb(236,186,49) !important;
+	
+	box-shadow: none !important;
+}
+	
 }

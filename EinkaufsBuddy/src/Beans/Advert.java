@@ -44,7 +44,36 @@ public class Advert implements Serializable{
     private Date date;
     private int entfernung;
     private int distance;
-    public int getDistance() {
+    private int advid;
+    
+    private int statusadvert;
+    
+    
+    public int getStatusadvert() {
+		return statusadvert;
+	}
+
+
+
+	public void setStatusadvert(int statusadvert) {
+		this.statusadvert = statusadvert;
+	}
+
+
+
+	public int getAdvid() {
+		return advid;
+	}
+
+
+
+	public void setAdvid(int advid) {
+		this.advid = advid;
+	}
+
+
+
+	public int getDistance() {
 		return distance;
 	}
 
@@ -226,7 +255,7 @@ public class Advert implements Serializable{
                     rs = ps.executeQuery();  
                
                     while (rs.next()) {  
-                         
+                    	advid = rs.getInt("ad.advertiser_id");
                     	datum = rs.getDate("ad.date");
                     	ad_id = rs.getInt("ad.id");
                     	entfernung = entfernungvomformular;
@@ -241,7 +270,7 @@ public class Advert implements Serializable{
                     	//advertiser_id = rs.getInt("advertiser_id");
                     	//System.out.println("asdasdasdasdsa "+ advertiser_id);
                     	buyer_id = rs.getInt("buyer_id");
-                    	
+                    	statusadvert = 0; 
                     }
                 }  
             } catch (Exception e) {  
@@ -1525,8 +1554,8 @@ public class Advert implements Serializable{
  
 	return "viewadverts?faces-redirect=true";
 }  
-	public String showAd2(int ad_ide){
-		
+	public String showAd2(int ad_ide, int statusadvert){
+		this.statusadvert = statusadvert;
 		PreparedStatement ps = null;  
         Connection con = null;  
         ResultSet rs = null;
@@ -1542,7 +1571,7 @@ public class Advert implements Serializable{
                     rs = ps.executeQuery();  
                
                     while (rs.next()) {  
-                         
+                    	advid = rs.getInt("ad.advertiser_id");
                     	datum = rs.getDate("ad.date");
                     	ad_id = rs.getInt("ad.id");
                     	income = rs.getDouble("ad.income");

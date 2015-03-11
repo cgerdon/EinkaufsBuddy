@@ -9,41 +9,32 @@
 	
 	<h:form>
 	
-<p:panel id="basic"	header="Kontaktformular">
-	<h:panelGroup layout="block">
-	<br/>
-	<br/>
-	<h:panelGrid  style="margin: auto;" columns="1">
-		<table>
-
-		<tr>	
-			<td><p:inputMask id="email" value="#{user.sender}"  required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!" size="50">
-					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
-				</p:inputMask>
-				<p:watermark for="email" value="E-Mail Adresse" id="watermark1" />
-			</td>	
-		</tr>
-		<tr>
-			<td><p:inputMask id="betreff" required="true" requiredMessage="Bitte einen Titel eingeben!" value="#{user.titel}" size="50" />
-				<p:watermark for="betreff" value="Betreff" id="watermark2" />
-			</td>
-		</tr>
-		<tr>
-			<td><p:inputTextarea id="messagetext" rows="10" cols="50" value="#{user.text}" required="true" requiredMessage="Bitte einen Text eingeben!" counter="display" maxlength="600" size="600" counterTemplate="{0} verbleibende Zeichen."/>
-				<p:watermark for="messagetext" value="Nachrichtentext" id="watermark3" />
-    			<h:outputText id="display" />
-    		</td>
-    	</tr>	
-		<tr>
-       		<td><p:commandButton style="margin:auto;" value="Senden" id="senden" action="#{user.SendMail}"  icon="ui-icon-mail-closed" />
-				 <p:messages id="messages" autoUpdate="true"/>
-			</td>
-		</tr>
-		</table>
-		<br/>
-	</h:panelGrid>
-</h:panelGroup>	
-</p:panel>
+		<p:panel id="basic"	header="Kontaktformular">
+			<h:panelGroup layout="block">
+				<br/>
+				<br/>
+				<h:panelGrid  style="margin: auto;" columns="1">
+			
+					<p:inputMask id="email" value="#{user.sender}"  required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!" size="50">
+						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+					</p:inputMask>
+					<p:watermark for="email" value="E-Mail Adresse" id="watermark1" />
+				
+					<p:inputMask id="betreff" required="true" requiredMessage="Bitte einen Titel eingeben!" value="#{user.titel}" size="50" />
+						<p:watermark for="betreff" value="Betreff" id="watermark2" />
+					<p:inputTextarea id="messagetext" rows="10" cols="50" value="#{user.text}" required="true" requiredMessage="Bitte einen Text eingeben!" counter="display" maxlength="600" size="600" counterTemplate="{0} verbleibende Zeichen."/>
+					<p:watermark for="messagetext" value="Nachrichtentext" id="watermark3" />
+			    	<h:outputText id="display" />
+					
+					<br/>
+			       	<h:panelGroup styleClass="ButtonTest" layout="block">
+			       	<p:commandButton  value="Senden" id="senden" action="#{user.SendMail}"  icon="ui-icon-mail-closed" />
+					</h:panelGroup>
+					<p:messages id="messages" autoUpdate="true"/>
+				</h:panelGrid>	
+				<br/>
+			</h:panelGroup>	
+		</p:panel>
 
 	</h:form>
 

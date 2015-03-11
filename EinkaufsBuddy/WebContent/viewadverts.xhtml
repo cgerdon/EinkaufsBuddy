@@ -26,311 +26,450 @@
 				    <ui:repeat var="ads" value="#{advert.alladverts}">
 				
 					    <p:fieldset legend="Entwurf: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 0 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}">
-					      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: 0 km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
 										
-								<h:panelGroup styleClass="adfunctionright" layout="block">	
-								<p:commandButton value="ändern" action="#{advert.changeData}">
-								 	<f:param name="ad_id" value="#{ads.id}" />
-								</p:commandButton>
-								<p:commandButton value="löschen" action="#{advert.addelete(ads.id)}">
-										<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
-								</p:commandButton>
-								</h:panelGroup>
-							
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="0 km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
+					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:4em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,1)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="ändern" action="#{advert.changeData}">
+												<f:param name="ad_id" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="löschen" action="#{advert.addelete(ads.id)}">
+												<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+											</p:commandButton>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>					      				
+							      				
 						</p:fieldset>
+						
 						 <p:fieldset legend="Aktiviert: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID == 0 and ads.ad_rate == 0}" >
-					 		      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+		
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: 0 km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
-								<h:panelGroup styleClass="adfunctionright" layout="block">	
-								
-								<p:commandButton value="deaktivieren" action="#{advert.addeactive(ads.id)}"/>
-								<p:commandButton value="ändern" action="#{advert.changeData}">
-								 	<f:param name="ad_id" value="#{ads.id}" />
-								</p:commandButton>
-								<p:commandButton value="löschen" action="#{advert.addelete(ads.id)}">	
-									<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
-								</p:commandButton>
-								</h:panelGroup>
-							
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
+										
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="0 km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
+					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:4em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,2)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="deaktivieren" action="#{advert.addeactive(ads.id)}"/>
+											<p:commandButton value="ändern" action="#{advert.changeData}">
+											 	<f:param name="ad_id" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="löschen" action="#{advert.addelete(ads.id)}">	
+												<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+											</p:commandButton>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>					      				
 						</p:fieldset>
 						
 						<p:fieldset legend="Interesse: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 0 and ads.ad_buyerID != 0 and ads.ad_rate == 0}" >
-					     		      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+		
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: 0 km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
-								<h:panelGroup styleClass="adfunctionright" layout="block">		
-								<p:commandButton value="ablehnen" action="#{advert.buyerCancel(ads.id)}"/>
-								<p:commandButton value="löschen" action="#{advert.adcanceldelete(ads.id)}">
-									<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
-								</p:commandButton>
-								</h:panelGroup>
-							
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
+										
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="0 km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
+					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:4em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,3)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="ablehnen" action="#{advert.buyerCancel(ads.id)}"/>
+											<p:commandButton value="löschen" action="#{advert.adcanceldelete(ads.id)}">
+													<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+											</p:commandButton>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>							
 						</p:fieldset>
 						
 						<p:fieldset legend="Angenommen: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0  and ads.ad_rate == 0}" >
-					        		      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+	
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: 0 km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
-								<h:panelGroup styleClass="adfunctionright" layout="block">			
-								<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.id, user.id, 2)}">
-														<f:param name="resulttodetail" value="#{ads.memberid}" />
-								<f:param name="advertid" value="#{ads.id}" />
-								</p:commandButton>
-							</h:panelGroup>
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
+										
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="0 km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
+					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,4)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.id, user.id, 2)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>			
 						</p:fieldset>
 						
 						<p:fieldset legend="Bewertet: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_status == 1 and ads.ad_acc == 1 and ads.ad_buyerID != 0 and ads.ad_rate == 1}" >
-		      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+		
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: 0 km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
+										
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="0 km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
+					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,5)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>		
 						</p:fieldset>
 				<br />
 				</ui:repeat> 	
@@ -340,183 +479,265 @@
 				
 				<ui:repeat var="ads" value="#{advert.alladverts}">
 				<p:fieldset legend="Interesse: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" style="margin-bottom:20px" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 0}">
-				       		      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+		
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: #{ads.distance} km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
-							<h:panelGroup styleClass="adfunctionright" layout="block">	
-							<p:commandButton value="zurückziehen" action="#{advert.adCancel(ads.id, ads.memberid)}"/>
-							</h:panelGroup>
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
+										
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="#{ads.distance} km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
 					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,6)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="zurückziehen" action="#{advert.adCancel(ads.id, ads.memberid)}"/>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>						       		
 					</p:fieldset>
 							  
 				    <p:fieldset legend="Angenommen: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" style="margin-bottom:20px" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_rate == 0 and ads.ad_acc == 1}">
-				      		      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+			
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext"  value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: #{ads.distance} km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
-							#{ads.memberid} #{ads.ad_buyerID} #{user.id} #{ads.id} 
-							<h:panelGroup styleClass="adfunctionright" layout="block">	
-							<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
-							<f:param name="resulttodetail" value="#{ads.memberid}" />
-							<f:param name="advertid" value="#{ads.id}" />
-							</p:commandButton>
-							</h:panelGroup>
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
+										
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="#{ads.distance} km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
+					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,7)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+											<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>		
 					</p:fieldset>
 							  
 					<p:fieldset legend="Bewertet: #{of:formatDate(ads.datum, 'dd.MM.yyyy')} - #{ads.zeitpunkt}" style="margin-bottom:20px" toggleable="true" toggleSpeed="500" rendered="#{ads.ad_rate == 1 and ads.ad_acc == 1}">
-				       		      				<table>
-											<colgroup>
-											    <col width="180px"/>
-											    <col width="250px"/>
-											    <col width="200px"/>
-											</colgroup>
-						
-											<tr>
-												<td align="center"><h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}"></h:graphicImage>
-						 						</td>	
-												<td><h:outputText value=" Einkaufsliste: #{ads.text}"/></td>
-												<td><h3><h:outputText value=" Verdienst: #{ads.income} €" /></h3></td>
-											</tr>
+			
+							<h:panelGroup style="position: relative; float: left;">
+								<h:panelGrid style="width:15em; text-align:center;" >
+									<h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{ads.memberid}" />
+									<h:panelGroup>
+										<h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
+											<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
+										</h:commandLink>
+										<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
+											<h:graphicImage class="message"
+												value="resources/images/message.png" alt="message" />
+											<f:param name="startmessage" value="#{ads.memberid}" />
+										</h:commandLink>
+									</h:panelGroup>
+								</h:panelGrid>	
+		 					</h:panelGroup>
+		 					
+		 					<h:panelGroup style="position: relative; float: left;">
+			 					<h:panelGroup style="position: relative; float: left;">
+				 					<h:panelGroup style="position: relative; float: left;">
+				 						<h:panelGrid columns="2" style=" width:20em; padding-top: 1em;">
+		
+											<h:outputLabel value="Kategorie:" />
+											<h:outputText value="#{ads.category}" />							
 											
-						
+											<h:outputLabel value="Markt:"/>
+											<h:outputText value="#{ads.fav_market}"/>
 											
-											<tr>
-												<td align="center"><h:commandLink styleClass="profillinks" action="#{userView.showProfil(ads.memberid)}">
-													<h:outputText styleClass="profillinktext" value="#{ads.name} #{ads.last_name}"/>
-												</h:commandLink>
-												<h:commandLink action="#{message.startMessage}" rendered="#{ads.memberid != user.id}">
-													<h:graphicImage class="message"
-														value="resources/images/message.png" alt="message" />
-													<f:param name="startmessage" value="#{ads.memberid}" />
-												</h:commandLink>
-												</td>
-												
-												<td><h:outputText value="Entfernung: #{ads.distance} km" /></td>
-												<td><p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id)}">
-													<f:param name="resulttodetail" value="#{ads.memberid}" />
-													<f:param name="advertid" value="#{ads.id}" />
-												</p:commandButton>
-												</td>
-												
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Einkaufslimit: #{ads.limit} €"/> 
-												</td>
-												
-												<td></td>
-												
-											</tr>
-											<tr>
-												<td></td>
-												<td><h:outputText value="Kategorie: #{ads.category}" /></td>
-												
-												<td></td>
-												
-											</tr>
-										</table>
+											<h:outputLabel value="Einkaufslimit:"/>
+											
+											<h:panelGroup>	
+												<h:panelGrid columns="2" >
+													<h:outputText value="#{ads.limit}">
+														<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+													</h:outputText>
+													<h:outputText value="  €" />
+												</h:panelGrid>
+											</h:panelGroup>
+										
+											<h:panelGroup style=" margin-top: 10px;">
+											
+											<h:outputLabel value="Entfernung:" />
+											</h:panelGroup>
+											<h:panelGroup style=" margin-top: 10px;">
+												<h:outputText value="#{ads.distance} km" />
+											</h:panelGroup>	
+											
+											<h:outputLabel value="Einkaufsliste: " />
+											<h:outputText value="#{ads.text}" />
+			
+										</h:panelGrid>	
+									</h:panelGroup>
+					
+					
+									<h:panelGroup style=" margin-left:1em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
+										<h:panelGrid >
+											<h:outputLabel  value="Verdienst:"/>
+											<h:panelGroup styleClass="verdienstu">
+												<h:panelGroup>	
+													<h:panelGrid columns="2" style="margin: auto;" >
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="#{ads.income}">
+															<f:convertNumber pattern="#0.000" minFractionDigits="2" />
+														</h:outputText>
+														<h:outputText style="color: rgb(187,34,43); font-weight: bold;" value="  €" />
+													</h:panelGrid>
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:panelGrid>
+	
+									</h:panelGroup>
+						
+									<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block">			
+										<h:panelGrid columns="1">	
+											<p:commandButton value="Detailansicht" action="#{advert.showAd2(ads.id,8)}">
+												<f:param name="resulttodetail" value="#{ads.memberid}" />
+												<f:param name="advertid" value="#{ads.id}" />
+											</p:commandButton>
+										</h:panelGrid>			
+									</h:panelGroup>
+										
+									</h:panelGroup>
+								</h:panelGroup>		
 					</p:fieldset>		  
-							  
-							  
-							  
+	  			<br/>
 			</ui:repeat> 
 	
 				</p:tab>
@@ -526,17 +747,3 @@
         
 </ui:define>
 </ui:composition>
-
-
-
-<!-- 
-
- 		
-						
-						
-					
-						
-						
-						
-
- -->
