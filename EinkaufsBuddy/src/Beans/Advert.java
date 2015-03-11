@@ -115,8 +115,23 @@ public class Advert implements Serializable{
     private String fav_market;
     private int buyer_id;
     private int ad_count;
+    
+    public String advertsadd(){
+    	fk_time_id = 1;  
+        limit = 0;  
+        income = 0;  
+        text = "";
+        fk_category = 1;
+        status = false; 
+        fav_market = "";
+        date = null;
+        
+		return "createadvert?faces-redirect=true";
+	}
 
-    //für die Anzeige der Inserate
+  
+
+	//für die Anzeige der Inserate
     private int plz;
 	private String street;
 	private String name;

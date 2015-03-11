@@ -16,11 +16,7 @@ public class Navigation {
 	
 	public String NaviInserate(){
 		return "viewadverts?faces-redirect=true";
-	}		
-	
-	public String advertsadd(){
-		return "createadvert?faces-redirect=true";
-	}	
+	}			
 	
 	public String advertssearch(){
 		return "home?faces-redirect=true";

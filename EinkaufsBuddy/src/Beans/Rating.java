@@ -142,12 +142,6 @@ public class Rating implements Serializable{
                 if (ds != null) {  
                     con = ds.getConnection();  
                     if (con != null) {  
-                    	System.out.println(buyerid);
-                    	System.out.println(adid);
-                    	System.out.println(rating);
-                    	System.out.println("Hier sollte der Text stehen: " + text);
-                    	System.out.println(advid);
-                    	System.out.println(type);
                         String sql = "INSERT INTO `rating` (`buyer_id`, `advertiser_id`, `rating`, `text`, `ad_id`, type) VALUES (?, ?, ?, ?, ?, ?);";  
                         ps = con.prepareStatement(sql);  
                         ps.setInt(1, buyerid);  
@@ -173,6 +167,8 @@ public class Rating implements Serializable{
             }  
             if (type == 1) {ChangeAdFields(adid, 1);}
             else {ChangeAdFields(adid, 2);}
+            rating = 0;  
+            text = "";  
             return "home?faces-redirect=true";
     }  
   
