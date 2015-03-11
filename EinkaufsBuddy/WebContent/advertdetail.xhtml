@@ -99,38 +99,59 @@
 		</h:panelGroup>
 		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 1}" >			
-				<p:commandButton value="ändern"  />		
-				<p:commandButton value="löschen"  />	
+			<p:commandButton value="ändern" action="#{advert.changeData}">
+				<f:param name="ad_id" value="#{advert.advid}" />
+			</p:commandButton>
+			<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
+				<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+			</p:commandButton>	
 		</h:panelGroup>
 		
 		<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 2}" >			
-				<p:commandButton value="deaktivieren"  />	
-				<p:commandButton value="ändern"  />		
-				<p:commandButton value="löschen"  />			
+			<p:commandButton value="deaktivieren" action="#{advert.addeactive(advert.ad_id)}" />	
+			<p:commandButton value="ändern" action="#{advert.changeData}">
+				<f:param name="ad_id" value="#{advert.ad_id}" />
+			</p:commandButton>
+			<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
+				<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+			</p:commandButton>		
 		</h:panelGroup>	
 		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 3}" >			
-				<p:commandButton value="ablehnen"  />		
-				<p:commandButton value="löschen"  />			
+			<p:commandButton value="ablehnen" action="#{advert.buyerCancel(advert.ad_id)}"/>	
+			<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
+				<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
+			</p:commandButton>			
 		</h:panelGroup>			
 		
 		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 4}" >			
-				<p:commandButton value="bewerten"  />			
+		<!--   Buttons Variable anpassen / zurück Buttons!!!-->	
+			<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, advert.ad_id, user.id, 2)}">
+				<f:param name="resulttodetail" value="#{ads.memberid}" />
+				<f:param name="advertid" value="#{aadvert.ad_id}" />
+			</p:commandButton>		
 		</h:panelGroup>		
 		
 	
 		
 		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 6}" >			
-				<p:commandButton value="zurückziehen"  />			
+			<p:commandButton value="zurückziehen" action="#{advert.adCancel(advert.ad_id, ads.memberid)}"/>			
 		</h:panelGroup>		
 		
 		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 7}" >			
-				<p:commandButton value="bewerten"  />			
+			<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
+				<f:param name="resulttodetail" value="#{ads.memberid}" />
+				<f:param name="advertid" value="#{ads.id}" />
+			</p:commandButton>		
 		</h:panelGroup>		
 		
 	
 		
 		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+			<p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
 		
 		
 		
