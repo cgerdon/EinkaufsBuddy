@@ -11,17 +11,16 @@
 			<p:panel id="basic"
 				header="Eine Bewertung hinzufügen"
 				style="margin-bottom:20px">
+				<br />
 				<h:panelGrid columns="2">
-					<h:outputLabel value="Bewertung" />
+					<br /><br /><br /><h:outputLabel value="Bewertung" />
 					<p:rating value="#{rating.rating}" />
 					<h:outputLabel value="Text" />
 					<p:inputText value="#{rating.text}" />
+					<br /><br /><br />
+					    <p:commandButton style="width:125px" action="#{rating.addRating(advert.buyer_id_todb, advert.adid_todb, advert.advertiser_id_todb, advert.type_todb)}" value="Bewerten" icon="ui-icon-star"/>
 				</h:panelGrid>
 			</p:panel>
-			
-			
-      
-	        <p:commandButton action="#{rating.addRating(advert.buyer_id_todb, advert.adid_todb, advert.advertiser_id_todb, advert.type_todb)}" value="Bewerten" icon="ui-icon-star"/>
         </h:form>  
 	</ui:define>
   
