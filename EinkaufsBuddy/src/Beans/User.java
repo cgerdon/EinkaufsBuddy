@@ -160,14 +160,16 @@ public class User implements Serializable {
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse("einkaufsbuddy@gmail.com"));
 			message.setSubject(titel);
-			message.setText(text);
+			message.setText(text + " Das war eine Mail von " + sender );
 
 			Transport.send(message);
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
-
+		sender = "";
+		text = "";
+		titel = "";
 		return "home?faces-redirect=true";
 	}
 
@@ -409,6 +411,10 @@ public class User implements Serializable {
 				}
 			}
 		}
+		firstName = "";
+		password = "";
+		lastName = "";
+		email = "";
 		if (i > 0) {
 			return "home?faces-redirect=true";
 		} else
