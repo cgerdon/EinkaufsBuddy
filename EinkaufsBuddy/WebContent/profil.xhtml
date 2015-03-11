@@ -1,13 +1,13 @@
 <ui:composition template="template/master.xhtml"
- 	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-    
+
 	<ui:define name="content">
-	
-		<h:form>  
+
+		<h:form>
 			<p:panel id="basic"
 				header="Das ist dein Profil, #{user.firstName} #{user.lastName}"
 				style="margin-bottom:20px">
@@ -29,12 +29,13 @@
 					<h:outputLabel value="Über: " />
 					<h:outputText value="#{user.abouttext}" />
 					<h:outputLabel value="Bild:" />
-					 <h:graphicImage style="width:7em; height:7em;" value="DisplayImage?Image_id=#{user.id}"></h:graphicImage>
-			
- 
+					<h:graphicImage style="width:7em; height:7em;"
+						value="DisplayImage?Image_id=#{user.id}"></h:graphicImage>
+
+
 				</h:panelGrid>
 			</p:panel>
-			
+
 			<p:panel id="zeiten" header="Verfügbare Zeiten"
 				style="margin-bottom:20px">
 				<table>
@@ -113,30 +114,35 @@
 					</tr>
 				</table>
 			</p:panel>
-			
-			<p:panel id="ratings" header="Bewertungen (#{user.anzahl} Bewertungen insgesamt)">
+
+			<p:panel id="ratings"
+				header="Bewertungen (#{user.anzahl} Bewertungen insgesamt)">
 				<h:panelGrid columns="1">
 					<h:graphicImage library="images"
 						name="stars/#{user.mittelstar}.png" />
-					<table>
-					<th>Von:</th>
-					<th>Bewertung:</th>
-					<th>Text:</th>
-						<ui:repeat var="ratings" value="#{user.ratingList}">
-							<tr>
-								<td>#{ratings.vorname} #{ratings.name}</td>
-								<td>#{ratings.rating} / 5</td>
-								<td>#{ratings.text}</td>
-							</tr>
-						</ui:repeat>
-					</table>
-
 				</h:panelGrid>
-	
-		</p:panel>
-      <br />
-	        <p:commandButton action="profilchange?faces-redirect=true" value="Ändern" icon="ui-icon-scissors"/>
-        </h:form>  
+				<h:dataTable style="TableHeader3" headerClass="TableHeader1" var="ratings" value="#{user.ratingList}">
+					<h:column>
+						<f:facet name="header"><h:outputLabel value="Von" /></f:facet>    				
+     <h:outputLabel value="#{ratings.vorname} #{ratings.name}     " />
+   </h:column>
+					<h:column>
+						<f:facet name="header"><h:outputLabel value="Bewertung" /></f:facet>    				
+    <p:rating value="#{ratings.rating}" readonly="true" />
+   </h:column>
+					<h:column>
+						<f:facet name="header"><h:outputLabel value="Text" /> </f:facet>    				
+   <h:outputLabel value="#{ratings.text}" /> 
+   </h:column>
+
+
+				</h:dataTable>
+
+			</p:panel>
+			<br />
+			<p:commandButton action="profilchange?faces-redirect=true"
+				value="Ändern" icon="ui-icon-scissors" />
+		</h:form>
 	</ui:define>
-  
+
 </ui:composition>
