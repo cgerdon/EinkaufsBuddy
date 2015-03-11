@@ -11,42 +11,46 @@
 	
 	<h:form  id="register">
 		<h:panelGrid columns="1" styleClass="simplesearchformmittig">
-		<h:panelGroup layout="block">
- 		 <table>  
-                <tr>  
-                    <td><h:outputText value="Vorname:" for ="fname"/></td>  
-                    <td><p:inputText id="fname" value="#{user.firstName}"  
-                            required="true" requiredMessage="Bitte Vornamen angeben" /></td>  
-                    <td><h:message for="fname" style="color:red" /></td>  
-                </tr>  
-                <tr>  
-                    <td><h:outputText value="Nachname:" for ="lname"/></td>  
-                    <td><p:inputText id="lname" value="#{user.lastName}"  
-                            required="true" requiredMessage="Bitte Nachname angeben" /></td>  
-                    <td><h:message for="lname" style="color:red" /></td>  
-                </tr>  
-                <tr>  
-                    <td><h:outputText value="Mail:" for ="email"/></td>  
-                    <td><p:inputText id="email" value="#{user.email}"  
+		
+ 		  
+           	<h:panelGroup>
+                 <h:outputText value="Vorname:" for ="fname"/> 
+                 <p:inputText id="fname" value="#{user.firstName}"  
+                            required="true" requiredMessage="Bitte Vornamen angeben" />  
+                  <h:message for="fname" style="color:red" />
+            </h:panelGroup>
+           
+            <h:panelGroup>
+                    <h:outputText value="Nachname:" for ="lname"/>  
+                   <p:inputText id="lname" value="#{user.lastName}"  
+                            required="true" requiredMessage="Bitte Nachname angeben" />  
+                    <h:message for="lname" style="color:red" />
+        </h:panelGroup>
+         
+            <h:panelGroup>
+                   <h:outputText value="Mail:" for ="email"/> 
+                    <p:inputText id="email" value="#{user.email}"  
                             required="true" requiredMessage="Bitte Mailadresse angeben" validatorMessage="Ungültiges E-Mail Format!">
                              <f:validateRegex
-		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></p:inputText></td>  
-                    <td></td>  
-                </tr>  
-                <tr>  
-                    <td><h:outputText value="Passwort:" for ="pwd1"/></td>  
-                    <td> <p:password id="pwd1" value="#{user.password}" match="pwd2" label="Passwort 1" required="true" requiredMessage="Bitte ein Passwort eingeben!" validatorMessage="Passwörter stimmen nicht überein!" />
-        			<h:outputText value="Wiederholung:" for ="pwd2"/><p:password id="pwd2" value="#{user.password2}" label="Passwort 2" required="true" requiredMessage="Bitte die Wiederholung eingeben!"/>
-        			</td>  
-                    <td></td>  
-                </tr>  
-                <tr>  
-                    <td />  
-                    <td><p:commandButton value="Registrieren" icon="ui-icon-key" action="#{user.add}" style="width:130px" />
-                    <p:messages id="messages"  autoUpdate="true"/></td>  
-                </tr>  
-            </table>  
-       </h:panelGroup>
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></p:inputText>
+                
+            </h:panelGroup>
+            
+            <h:panelGroup>  
+                  <h:outputText value="Passwort:" for ="pwd1"/> 
+                  <p:password id="pwd1" value="#{user.password}" match="pwd2" label="Passwort 1" required="true" requiredMessage="Bitte ein Passwort eingeben!" validatorMessage="Passwörter stimmen nicht überein!" />
+             </h:panelGroup>
+            
+            <h:panelGroup>  
+                	<h:outputText value="Wiederholung:" for ="pwd2"/>
+                	<p:password id="pwd2" value="#{user.password2}" label="Passwort 2" required="true" requiredMessage="Bitte die Wiederholung eingeben!"/>
+              </h:panelGroup>
+            <h:panelGroup>  
+            <br/>
+			<p:commandButton value="Registrieren" icon="ui-icon-key" action="#{user.add}" style="width:130px" />
+           <p:messages id="messages"  autoUpdate="true"/>  
+  </h:panelGroup>
+     
        
 	</h:panelGrid>
 	</h:form>

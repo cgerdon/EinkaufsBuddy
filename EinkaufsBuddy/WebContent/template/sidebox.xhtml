@@ -15,12 +15,12 @@
 		<p:calendar id="bis" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.toDate}"/>
 	
 	<p:outputLabel for="entfernung" value="Entfernung in Km:"/>
-	<p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" />
+	<p:inputText styleClass="sideboxresize" id="entfernung" value="#{simpleSearch.sliderDistance}" />
 	<p:slider for="entfernung" minValue="0" maxValue="50"/>
 	
     
     <p:outputLabel for="einkaufslimit" value="Einkaufslimit in Euro:"/>
-    <p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" />
+    <p:inputText styleClass="sideboxresize" id="einkaufslimit" value="#{simpleSearch.sliderLimit}" />
     <p:slider for="einkaufslimit" minValue="0" maxValue="100" />
     <br/>
 
