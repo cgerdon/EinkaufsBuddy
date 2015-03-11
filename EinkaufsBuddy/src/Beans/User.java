@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -97,6 +98,12 @@ public class User implements Serializable {
 	public void setRatingList(ArrayList<RatingResults> ratingList) {
 		RatingList = ratingList;
 	}
+	
+	 public void handleFileUpload(FileUploadEvent event) {
+	        FacesMessage message = new FacesMessage("Erfolgreich:", event.getFile().getFileName() + " wurde gespeichert!");
+	        FacesContext.getCurrentInstance().addMessage(null, message);
+	        upload();
+	    }
 
 	private int plz;
 	private String phone;
@@ -444,7 +451,7 @@ public class User implements Serializable {
 				try {
 					con = ds.getConnection();
 					if (con != null) {
-						String sql = "select id, mail, picture, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone, picture from member where mail = '"
+						String sql = "select id, mail, password_hash, name, last_name, birthdate, car, abouttext, fk_sex, street, plz, phone  from member where mail = '"
 								+ email + "'";
 						ps = con.prepareStatement(sql);
 						rs = ps.executeQuery();
@@ -703,7 +710,7 @@ public class User implements Serializable {
 	}
 
 	public String profilchange() throws IOException, SQLException {
-		upload();
+		
 		int i = 0;
 		PreparedStatement ps = null;
 		Connection con = null;
