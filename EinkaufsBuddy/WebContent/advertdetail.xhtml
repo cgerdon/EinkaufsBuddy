@@ -125,10 +125,10 @@
 		</h:panelGroup>			
 		
 		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 4}" >			
-		<!--   Buttons Variable anpassen / zurück Buttons!!!-->	
-			<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, advert.ad_id, user.id, 2)}">
-				<f:param name="resulttodetail" value="#{ads.memberid}" />
-				<f:param name="advertid" value="#{aadvert.ad_id}" />
+		<!--   Buttons Variable anpassen / zurück Buttons!!!-->	#{advert.buyer_id} #{advert.ad_id} #{user.id}
+			<p:commandButton value="bewerten" action="#{advert.startrating(advert.buyer_id, advert.ad_id, user.id, 2)}">
+				<f:param name="resulttodetail" value="#{user.id}" />
+				<f:param name="advertid" value="#{advert.ad_id}" />	
 			</p:commandButton>		
 		</h:panelGroup>		
 		
@@ -138,10 +138,10 @@
 			<p:commandButton value="zurückziehen" action="#{advert.adCancel(advert.ad_id, ads.memberid)}"/>			
 		</h:panelGroup>		
 		
-		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 7}" >			
-			<p:commandButton value="bewerten" action="#{advert.startrating(ads.ad_buyerID, ads.memberid, user.id, 1)}">
-				<f:param name="resulttodetail" value="#{ads.memberid}" />
-				<f:param name="advertid" value="#{ads.id}" />
+		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 7}" >
+<p:commandButton value="bewerten" action="#{advert.startrating(user.id, advert.ad_id, advert.advid, 1)}">
+				<f:param name="resulttodetail" value="#{advert.advid}" />
+				<f:param name="advertid" value="#{advert.ad_id}" />
 			</p:commandButton>		
 		</h:panelGroup>		
 		
