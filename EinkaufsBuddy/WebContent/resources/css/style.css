@@ -438,4 +438,8 @@ background-color: rgb(250,230,175);
 	box-shadow: none !important;
 }
 	
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+  	width: 90%;
+}	
+	
 }

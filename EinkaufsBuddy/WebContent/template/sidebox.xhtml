@@ -7,16 +7,26 @@
 	
 	<h:form id="filtersimplesearch">
 	<h2>Filter:</h2>
-	<br />
-	<p><p:outputLabel for="von" value="Von:" />	<p:calendar id="von" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.fromDate}" /></p>
-	<p><p:outputLabel for="bis" value="Bis:" />	<p:calendar id="bis" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.toDate}"/></p>
-	<p:outputLabel for="entfernung" value="Entfernung in Km:"/><p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" /><p:slider for="entfernung" minValue="0" maxValue="50"/><br/>
+
+	<h:panelGrid columns="1">
+	<p:outputLabel for="von" value="Von:" />	
+		<p:calendar id="von" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.fromDate}" />
+	<p:outputLabel for="bis" value="Bis:" />	
+		<p:calendar id="bis" navigator="true" pattern="dd.MM.yyyy" value="#{simpleSearch.toDate}"/>
+	
+	<p:outputLabel for="entfernung" value="Entfernung in Km:"/>
+	<p:inputText id="entfernung" value="#{simpleSearch.sliderDistance}" />
+	<p:slider for="entfernung" minValue="0" maxValue="50"/>
+	
     
-    <p:outputLabel for="einkaufslimit" value="Einkaufslimit in Euro:"/><p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" /><p:slider for="einkaufslimit" minValue="0" maxValue="100" /><br/>
+    <p:outputLabel for="einkaufslimit" value="Einkaufslimit in Euro:"/>
+    <p:inputText id="einkaufslimit" value="#{simpleSearch.sliderLimit}" />
+    <p:slider for="einkaufslimit" minValue="0" maxValue="100" />
+    <br/>
 
     <p:commandButton value="Filtern" action="#{simpleSearch.filterAds()}" icon="ui-icon-refresh" />
     <p:commandButton value="Reset" action="#{simpleSearch.reset()}"  icon="ui-icon-trash"/>
-	
+	</h:panelGrid>
 	</h:form>
 	
 </ui:composition>
