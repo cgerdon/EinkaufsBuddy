@@ -27,7 +27,7 @@
 					</tr>
 					<tr>	
 						<td><h:outputText value="Datum:" /></td>
-						<td><p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="yyyy-MMM-dd"/></td>
+						<td><p:calendar id="german" value="#{advert.date}" locale="de" navigator="true" pattern="dd.MM.yyyy"/></td>
 					</tr>
 					<tr>
 						<td><h:outputText value="Zeit der Anlieferung:" /></td>
@@ -42,15 +42,20 @@
 			 		</tr>
 			 		<tr>
 						<td><h:outputText value="Budget in Euro:" /></td>  
-						<td><h:inputText value="#{advert.limit}" /></td>          
+						<td><p:inputText value="#{advert.limit}">
+						<f:convertNumber pattern="#,###,##0.00"/>
+						</p:inputText> </td>          
             		</tr>
 					<tr>
 						<td><h:outputText value="Vergütung in Euro:" /></td>  
-						<td><h:inputText value="#{advert.income}" /></td> 
+						<td><p:inputText value="#{advert.income}">
+						<f:convertNumber pattern="#,###,##0.00"/>
+						</p:inputText> </td> 
   					</tr>
 			  		<tr>
 						<td><h:outputText value="Einkaufsliste:" /></td> 
-						<td><h:inputTextarea value="#{advert.text}" rows="10" cols="25"/></td> 
+						<td><p:inputTextarea id="text" value="#{advert.text}" rows="10" cols="25" 
+						required="true" requiredMessage="Bitte Einkaufsliste angeben" /></td> 
 			  		</tr>
 			  		<tr>
 	        			<td><h:outputText value="Aktivschaltung:" /></td>
