@@ -75,6 +75,8 @@
 							</h:panelGroup>
 					</h:panelGroup>
 			
+		<h:panelGroup style="position: relative; float: left;" >
+			
 					<h:panelGroup style=" margin-left:2em; margin-right:2em; width:5em; position: relative; float: left; padding-top: 1em;" >
 						<h:panelGrid >
 							<h:outputLabel  value="Verdienst:"/>
@@ -94,12 +96,16 @@
 					</h:panelGroup>
 		
 		
+		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 0}" >			
+			<h:panelGrid columns="1" >	
 				<p:commandButton value="zurück" action="#{navigation.zursimplesearch}" rendered="#{advert.advid != user.id}"/>			
 				<p:commandButton value="erledigen" action="#{advert.executeJob(advert.entfernung)}" rendered="#{advert.advid != user.id}"/>			
+			</h:panelGrid>
 		</h:panelGroup>
 		
 		<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 1}" >			
+		<h:panelGrid columns="1" >	
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="ändern" action="#{advert.changeData}">
 				<f:param name="ad_id" value="#{advert.advid}" />
@@ -107,9 +113,11 @@
 			<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
 				<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
 			</p:commandButton>	
+		</h:panelGrid>	
 		</h:panelGroup>
 		
 		<h:panelGroup style="margin-top:4em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 2}" >			
+		<h:panelGrid columns="1" >	
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="deaktivieren" action="#{advert.addeactive(advert.ad_id)}" />	
 			<p:commandButton value="ändern" action="#{advert.changeData}">
@@ -118,22 +126,27 @@
 			<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
 				<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
 			</p:commandButton>		
+		</h:panelGrid>
 		</h:panelGroup>	
 		
 		<h:panelGroup style="margin-top:6em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 3}" >			
+		<h:panelGrid columns="1" >		
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="ablehnen" action="#{advert.buyerCancel(advert.ad_id)}"/>	
 			<p:commandButton value="löschen" action="#{advert.addelete(advert.ad_id)}">
 				<p:confirm header="Confirmation" message="Bist du dir sicher?" icon="ui-icon-alert" />
 			</p:commandButton>			
+		</h:panelGrid>
 		</h:panelGroup>			
 		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 4}" >			
+		<h:panelGrid columns="1" >	
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="bewerten" action="#{advert.startrating(advert.buyer_id, advert.ad_id, user.id, 2)}">
 				<f:param name="resulttodetail" value="#{user.id}" />
 				<f:param name="advertid" value="#{advert.ad_id}" />	
 			</p:commandButton>		
+		</h:panelGrid>
 		</h:panelGroup>		
 		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 5}" >			
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
@@ -141,16 +154,20 @@
 	
 		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 6}" >			
+		<h:panelGrid columns="1" >		
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="zurückziehen" action="#{advert.adCancel(advert.ad_id, advert.advid)}"/>			
+		</h:panelGrid>
 		</h:panelGroup>		
 		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 7}" >
+		<h:panelGrid columns="1" >	
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
 			<p:commandButton value="bewerten" action="#{advert.startrating(user.id, advert.ad_id, advert.advid, 1)}">
 				<f:param name="resulttodetail" value="#{advert.advid}" />
 				<f:param name="advertid" value="#{advert.ad_id}" />
 			</p:commandButton>		
+		</h:panelGrid>
 		</h:panelGroup>		
 		
 		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 8}" >
@@ -168,10 +185,8 @@
 		</p:confirmDialog>
 		
 		
-		
-			
-		</h:panelGroup>
-			
+	</h:panelGroup>
+		</h:panelGroup>	
 			
 		
 		</p:fieldset>
