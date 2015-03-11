@@ -33,6 +33,10 @@ public class Navigation {
 	public String zurviewadvert(){
 		return "viewadverts?faces-redirect=true";
 	}
+
 	
+	public String zurmessagedetail(){
+		return "messagedetail?faces-redirect=true";
+	}
 	
 }

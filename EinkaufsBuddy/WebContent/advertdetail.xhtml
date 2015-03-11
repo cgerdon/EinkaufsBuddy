@@ -135,7 +135,9 @@
 				<f:param name="advertid" value="#{advert.ad_id}" />	
 			</p:commandButton>		
 		</h:panelGroup>		
-		
+		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 5}" >			
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
+		</h:panelGroup>		
 	
 		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 6}" >			
@@ -145,15 +147,20 @@
 		
 		<h:panelGroup style="margin-top:8em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 7}" >
 			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>	
-
 			<p:commandButton value="bewerten" action="#{advert.startrating(user.id, advert.ad_id, advert.advid, 1)}">
 				<f:param name="resulttodetail" value="#{advert.advid}" />
 				<f:param name="advertid" value="#{advert.ad_id}" />
 			</p:commandButton>		
 		</h:panelGroup>		
 		
-	
+		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 8}" >
+			<p:commandButton value="zurück" action="#{navigation.zurviewadvert}"/>		
+		</h:panelGroup>		
 		
+	
+		<h:panelGroup style="margin-top:10em; position: relative; float: left;" layout="block" rendered="#{advert.statusadvert == 20}" >
+			<p:commandButton value="zurück" action="#{navigation.zurmessagedetail}"/>		
+		</h:panelGroup>	
 		
 		<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
 			<p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
