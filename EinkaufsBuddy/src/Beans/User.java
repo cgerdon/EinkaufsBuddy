@@ -390,13 +390,12 @@ public class User implements Serializable {
 				if (ds != null) {
 					con = ds.getConnection();
 					if (con != null) {
-						String sql = "INSERT INTO member(name, password_hash, last_name, mail, birthdate) VALUES(?,?,?,?,?)";
+						String sql = "INSERT INTO member(name, password_hash, last_name, mail) VALUES(?,?,?,?)";
 						ps = con.prepareStatement(sql);
 						ps.setString(1, firstName);
 						ps.setString(2, password);
 						ps.setString(3, lastName);
 						ps.setString(4, email);
-						ps.setString(5, "0000-00-00");
 						i = ps.executeUpdate();
 					}
 				}
