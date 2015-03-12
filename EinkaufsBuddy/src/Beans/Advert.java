@@ -771,7 +771,7 @@ public class Advert implements Serializable{
 	      			String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
 	      			byte b = 1; 
 	      		
-	    		  String sqlmessage = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`, `advert`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";  
+	    		 String sqlmessage = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`, `advert`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";  
 	    		  PreparedStatement psmessage = null; 
 	    		  psmessage = con.prepareStatement(sqlmessage);   
 
@@ -783,7 +783,10 @@ public class Advert implements Serializable{
 	    		  psmessage.setByte(6, b);  
                 psmessage.setByte(7, b);  
                 psmessage.setByte(8, (byte)2); 
-                psmessage.executeUpdate();  
+                psmessage.executeUpdate(); 
+                psmessage.close();  
+	                  
+	                    
 	              
 				           	   int hvar = 0; 
 				               PreparedStatement ps3 = null;
@@ -796,7 +799,7 @@ public class Advert implements Serializable{
 				               while (rs2.next()) {
 				            	   hvar =  rs2.getInt("COUNT(message.id)");	 
 				                }	
-				               
+				               ps3.close();
 				               if (hvar==1){
 				            	   
 				            	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10000);		
@@ -815,7 +818,7 @@ public class Advert implements Serializable{
 				                   ps4.setByte(7, c);  
 				
 				                  ps4.executeUpdate();   
-				
+				                  ps4.close();
 				               }
 	              
 	                        
@@ -835,6 +838,8 @@ public class Advert implements Serializable{
 	                try {  
 	                    con.close();  
 	                    ps.close();  
+
+	                    
 	                } catch (Exception e) {  
 	                    e.printStackTrace();  
 	                }  
@@ -868,7 +873,7 @@ public class Advert implements Serializable{
 	      			Timestamp tstamp = new Timestamp(System.currentTimeMillis());		
 	      			String datumConverter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tstamp);
 	      			byte b = 1; 
-	      		
+	      			
 	    		  String sqlmessage = "INSERT INTO `message` (`sender_id`, `receiver_id`, `time_sent`, `read`, `text`, `del_sender`, `del_receiver`, `advert`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";  
 	    		  PreparedStatement psmessage = null; 
 	    		  psmessage = con.prepareStatement(sqlmessage);   
@@ -882,7 +887,7 @@ public class Advert implements Serializable{
                   psmessage.setByte(7, b);  
                   psmessage.setByte(8, (byte)2); 
                   psmessage.executeUpdate();  
-	              
+                  psmessage.close();
 				           	   int hvar = 0; 
 				               PreparedStatement ps3 = null;
 				               ResultSet rs2 = null;  
@@ -894,7 +899,7 @@ public class Advert implements Serializable{
 				               while (rs2.next()) {
 				            	   hvar =  rs2.getInt("COUNT(message.id)");	 
 				                }	
-				               
+				               ps3.close();
 				               if (hvar==1){
 				            	   
 				            	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10000);		
@@ -913,7 +918,7 @@ public class Advert implements Serializable{
 				                   ps4.setByte(7, c);  
 				
 				                  ps4.executeUpdate();   
-				
+				                  ps4.close();
 				               }
 	              
 	                        
@@ -995,7 +1000,7 @@ public class Advert implements Serializable{
                         		ownadverts.add(TempObj);
                         	*/	
                         	}
-                       
+                        	ps.close();
                     	}  
                 } catch (SQLException sqle) {  
                     sqle.printStackTrace();  
@@ -1069,7 +1074,7 @@ public class Advert implements Serializable{
                 ps = con.prepareStatement(sql);  
                 ps.executeUpdate();  
                 
-            }  
+            }  ps.close();
         } catch (SQLException sqle) {  
             sqle.printStackTrace();  
         }    

@@ -470,7 +470,7 @@ public class User implements Serializable {
 						plz = rs.getInt("plz");
 						phone = rs.getString("phone");
 					}
-
+					ps.close();
 				} catch (SQLException sqle) {
 					sqle.printStackTrace();
 				}
@@ -512,7 +512,7 @@ public class User implements Serializable {
 
 					ps = con.prepareStatement(sql);
 					rs = ps.executeQuery();
-
+					
 					ArrayList<RatingResults> TempList = new ArrayList<RatingResults>();
 					while (rs.next()) {
 

@@ -636,7 +636,7 @@ public class message implements Serializable {
 		                     	  message TempObj = new message(i, rs.getInt("message.id"), ms_time, rs.getInt("message.sender_id"), null, rs.getString("member.name"), rs.getString("member.last_name"), rs.getString("message.text"), rs.getInt("message.advert"), rs.getInt("message.advertanab") );
 		                    	   messagedetails.add(TempObj);  
 		                       }
-		                       
+		                       ps2.close();
 		                       
 		                       
 				                       if (messagedetails.size()==1){
@@ -652,7 +652,7 @@ public class message implements Serializable {
 				                           while (rs2.next()) {
 				                        	   hvar =  rs2.getInt("COUNT(message.id)");	 
 				                            }	
-				                           
+				                           ps3.close();
 				                           if (hvar==1){
 				                        	   
 				                        	   Timestamp tstamp2 = new Timestamp(System.currentTimeMillis()-10000);		
@@ -671,14 +671,14 @@ public class message implements Serializable {
 				                               ps4.setByte(7, c);  
 				
 				                              ps4.executeUpdate();   
-		
+				                              ps4.close();
 				                           }
 				                           
 		
 					                	   sql2 = "SELECT message.id, message.time_sent, message.sender_id, member.name, member.last_name, message.text, message.advert, message.advertanab FROM message JOIN member ON message.sender_id=member.id WHERE ((message.receiver_id=" + ms_senderId + " AND message.sender_id=" + ms_receiverId + ") OR (message.receiver_id=" + ms_receiverId + " AND message.sender_id=" + ms_senderId + ")) AND ((message.receiver_id=" + ms_receiverId + " AND message.del_receiver=1) OR (message.sender_id=" + ms_receiverId + " AND message.del_sender=1)) ORDER BY message.time_sent DESC;" ;  
 				                           ps2 = con.prepareStatement(sql2);  
 				                           rs = ps2.executeQuery();
-				                  
+				                           ps2.close();
 				                           messagedetails.clear();
 				                           i = 0; 
 				                           while (rs.next()) {  
@@ -750,6 +750,7 @@ public class message implements Serializable {
                 try {  
                     con.close();  
                     ps.close();  
+                    ps2.close();
                 } catch (Exception e) {  
                     e.printStackTrace();  
                 }  
@@ -786,7 +787,7 @@ public class message implements Serializable {
                         String sql2 = "UPDATE ad SET ad.buyer_id = null WHERE ad.id= " + advertiserID + " ;";  
                         ps2 = con.prepareStatement(sql2);  
                         ps2.executeUpdate();  
-                    	
+                        ps2.close();
                     }
                     
                     if (banab == 2){
@@ -794,7 +795,7 @@ public class message implements Serializable {
                         String sql2 = "UPDATE ad SET ad.accepted_id = 1 WHERE ad.id= " + advertiserID + " ;";  
                         ps2 = con.prepareStatement(sql2);  
                         ps2.executeUpdate(); 
-                    	
+                        ps2.close();
                     }
                     
                     

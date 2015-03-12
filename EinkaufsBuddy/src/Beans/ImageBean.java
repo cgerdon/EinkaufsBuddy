@@ -68,6 +68,7 @@ public class ImageBean {
                 tbl.setImageName(rs.getString("Image_name"));
                 imageInfo.add(tbl);
             }
+            stmt.close();
         } catch (SQLException e) {
             System.out.println("Exception in getAllImage::" + e.getMessage());
         }
